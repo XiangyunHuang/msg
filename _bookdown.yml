@@ -1,0 +1,14 @@
+delete_merged_file: true
+language:
+  label:
+    fig: "图 "
+    tab: "表 "
+  ui:
+    edit: "编辑"
+    chapter_name: ["第 ", " 章"]
+
+rmd_files: 
+- "index.Rmd"
+
+
+- "references.Rmd"

@@ -1,0 +1,15 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+_main.rds
+*.log
+rsconnect
+packages.bib
+.project
+_book/
+_bookdown_files/
+tmp/
+*-tikzDictionary
+temp.Rmd
+.DS_Store
