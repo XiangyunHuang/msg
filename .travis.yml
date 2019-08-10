@@ -1,0 +1,38 @@
+language: r
+dist: xenial
+services:
+  - docker
+cache:
+  packages: true
+  directories:
+    - _bookdown_files
+    - $HOME/.npm
+    
+latex: false
+pandoc: false
+
+env:
+  global:
+    - MAKEFLAGS="-j 2"
+    - R_VERSION=3.6.1
+
+before_install:
+  # install stable node
+  - nvm install stable  
+  - npm install netlify-cli -g
+  # deploy with messages 
+  - export COMMIT_MSG=$(git log -1 --format='%h %<(50,trunc)%s')
+  - echo $COMMIT_MSG
+  - export DEPLOY_MSG=${COMMIT_MSG//[\'\"\`]/}
+  - echo $DEPLOY_MSG
+
+script:
+  - docker-compose run book bash -c "sh ./_build.sh"
+  - docker-compose down
+
+deploy:
+  provider: script
+  script: netlify deploy --prod --dir _book --message "$DEPLOY_MSG"
+  skip_cleanup: true
+  on:
+    branch: master
