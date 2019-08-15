@@ -10,6 +10,6 @@ language:
 new_session: yes
 rmd_files: 
 - "index.Rmd"
-
+- "foreword.Rmd"
 
 - "references.Rmd"
