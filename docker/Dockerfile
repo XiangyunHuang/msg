@@ -26,6 +26,7 @@ RUN apt-get update \
   libxpm-dev \
   libxaw7-dev \
   graphviz \
+  ggobi \
   file \  
   libgtk2.0-dev \
   && install2.r --error \
