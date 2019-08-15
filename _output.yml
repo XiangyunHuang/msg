@@ -7,7 +7,7 @@ bookdown::gitbook:
         <li><a href="./">现代统计图形</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    download: ["rmd", "pdf"]
+    download: ["pdf"]
     edit:
       link: https://github.com/XiangyunHuang/MSG-Book/edit/master/%s
       text: "Edit"  
@@ -22,6 +22,6 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   pandoc_args: ["--top-level-division=chapter", "--lua-filter=sidebar.lua"]
-  quote_footer: ["\\begin{flushright}", "\\end{flushright}"]
+  quote_footer: ["\\hspace*{\\fill} ", ""]
   toc_depth: 3
   dev: "cairo_pdf"
