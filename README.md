@@ -9,7 +9,7 @@
 | -------- | --------- | ------------------------------------------------- | ------ |
 | 0        | 序言      | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
 | 1        | 历史      | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
-| 2        | 工具      | [pzhaonet](https://github.com/pzhaonet)           | [x]本地编译成功。[]交叉引用。[]参考文献。[]图的短标题。[]盘古之白。|
+| 2        | 工具      | [pzhaonet](https://github.com/pzhaonet)           | [x]本地编译成功。<br>[ ]交叉引用。<br>[ ]参考文献。<br>[ ]图的短标题。<br>[ ]盘古之白。|
 | 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
 | 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           | 尚未开工。 |
 | 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
