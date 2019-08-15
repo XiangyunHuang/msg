@@ -1,4 +1,4 @@
-FROM xiangyunhuang/rcppml:latest
+FROM xiangyunhuang/r-devel:latest
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
@@ -64,8 +64,6 @@ RUN apt-get update \
   rggobi \
   leaflet \
   vcd
-
-  
 
 ## Install adobe fonts
 RUN mkdir -p /usr/share/fonts/opentype/adobe ~/.fonts \
