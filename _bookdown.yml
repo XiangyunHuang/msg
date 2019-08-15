@@ -11,5 +11,6 @@ new_session: yes
 rmd_files: 
 - "index.Rmd"
 - "foreword.Rmd"
+- "history.Rmd"
 
 - "references.Rmd"
