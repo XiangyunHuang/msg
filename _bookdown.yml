@@ -12,5 +12,6 @@ rmd_files:
 - "index.Rmd"
 - "foreword.Rmd"
 - "history.Rmd"
+- "tools.Rmd"
 
 - "references.Rmd"
