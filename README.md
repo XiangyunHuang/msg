@@ -5,17 +5,17 @@
 
 以下是任务分配表。认领人一栏为空的，表示暂时无人认领，等待有志之士加入。
 
-| 章节序号 | 章节标题  | 认领人                                            |
-| -------- | --------- | ------------------------------------------------- |
-| 0        | 序言      | [XiangyunHuang](https://github.com/XiangyunHuang) |
-| 1        | 历史      | [XiangyunHuang](https://github.com/XiangyunHuang) |
-| 2        | 工具      | [pzhaonet](https://github.com/pzhaonet)           |
-| 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) |
-| 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           |
-| 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) |
-| 6        | 数据      |                                                   |
-| 7        | 原则      |                                                   |
-| A        | 程序初步  |                                                   |
-| B        | 细节技巧  |                                                   |
-| C        | 图形界面  |                                                   |
-| D        | 本书 R 包 |                                                   |
+| 章节序号  | 章节标题  | 认领人                                            | 当前进度  |
+| -------- | --------- | ------------------------------------------------- | ------ |
+| 0        | 序言      | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
+| 1        | 历史      | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
+| 2        | 工具      | [pzhaonet](https://github.com/pzhaonet)           | [x]本地编译成功。[]交叉引用。[]参考文献。[]图的短标题。[]盘古之白。|
+| 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
+| 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           | 尚未开工。 |
+| 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
+| 6        | 数据      |                                                   | |
+| 7        | 原则      |                                                   | |
+| A        | 程序初步  |                                                   |  |
+| B        | 细节技巧  |                                                   |  |
+| C        | 图形界面  |                                                   |  |
+| D        | 本书 R 包 |                                                   |  |
