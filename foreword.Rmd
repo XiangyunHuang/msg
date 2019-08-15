@@ -46,7 +46,7 @@
 电子版读者可以用按住Alt键再用鼠标选中除去>和+的代码。另外，本书R代码以等宽正体排版，代码中带有程序起始符以及续行符，并且用不同颜色分别标记函数、参数、数字、字符和注释等部分；代码输出则不带高亮，例：
 
 ```{r}
-install.packages('MSG') # 安装本书配套的MSG包
+if(!require('MSG')) install.packages('MSG') # 安装本书配套的MSG包
 library(MSG) # 加载本书配套的R包MSG
 data(PlantCounts) # 加载数据供下面的回归模型使用
 summary(fit <- lm(counts ~ altitude, data = PlantCounts))
