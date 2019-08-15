@@ -46,6 +46,7 @@ RUN apt-get update \
   plot3D \
   plotly \
   scatterplot3d \
+  leaflet \
   magick \
   MSG \
   rgl \
@@ -63,7 +64,7 @@ RUN apt-get update \
   raster \
   randomForest \
   rggobi \
-  leaflet \
+  tikzDevice \
   vcd
 
 ## Install adobe fonts
