@@ -14,4 +14,7 @@ rmd_files:
 - "history.Rmd"
 - "tools.Rmd"
 
+- "elements.Rmd"
+
+
 - "references.Rmd"
