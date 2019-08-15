@@ -27,46 +27,44 @@ RUN apt-get update \
   libxaw7-dev \
   graphviz \
   file \  
+  libgtk2.0-dev \
   && install2.r --error \
+  animation \
+  alphahull \
   bookdown \
   cowplot \
-  igraph \
-  ggforce \
-  ggraph \
+  corrplot \
+  formatR \
   ggbeeswarm \
   ggExtra \
-  ggfortify \
   ggridges \
   ggthemes \
   ggwordcloud \
+  gWidgetsRGtk2 \
   plotrix \
   plot3D \
   plotly \
   scatterplot3d \
   magick \
-  odbc \
+  MSG \
+  rgl \
+  RColorBrewer \
   extrafont \
   fontcm \
   showtext \
-## install spatial packages
+  sns \
   sp \
   maps \
   mapdata \
   mapproj \
   maptools \
-  gstat \
-  spatialreg \
-  spdep \
   sf \
-  stars \
   raster \
-  satellite \
+  randomForest \
+  rggobi \
   leaflet \
-  cartography \
-  mapview \
-  tmap \
-  && install2.r --error --repos https://nowosad.github.io/drat/ \
-    spDataLarge
+  vcd
+
   
 
 ## Install adobe fonts
