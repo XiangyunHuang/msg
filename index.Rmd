@@ -5,7 +5,7 @@ author: "谢益辉"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib]
+bibliography: [book.bib, MSG-packages.bib, Modern-Stat-Graphics.bib]
 biblio-style: apalike
 link-citations: yes
 description: "现代统计图形书稿"
