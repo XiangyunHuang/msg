@@ -16,6 +16,7 @@ rmd_files:
 - "tools.Rmd"
 
 - "elements.Rmd"
+- "gallery.Rmd"
 
 - "system.Rmd"
 - "references.Rmd"

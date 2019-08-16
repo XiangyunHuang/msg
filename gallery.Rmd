@@ -1,0 +1,92 @@
+# 图库 {#gallery}
+
+> 他解释说："你要明白，我认为人的大脑原本像一间空空的屋子，必须有选择地用一些家具填满它。只有笨蛋才把他碰到的各种各样的破烂都塞进去。这样的话，那些可能用得上的知识就被挤了出来；或者，充其量也只是把那些破烂同其它东西混杂在一块儿。结果，在需要时却难得找到了。因此，一个善于工作的人，对于将什么东西纳入自己的头脑里是非常仔细的。他只会容纳那些工作时用得着的工具，而且又将这些工具分门别类，安排得井然有序。如果认为这间屋子的墙壁富有弹性，可以随意扩展，那就大错特错了。毫无疑问，总有一天，当你增加点滴知识时，却把从前熟悉的知识给忘记了。因此，不要让无用的信息挤掉那些有用的信息，这一点是至关重要的。"
+>
+> --- 柯南$\cdot$ 道尔《血字的研究》
+
+```{r, echo=FALSE}
+library('formatR')
+```
+
+本章中，我们结合 R 语言中的相关函数以及数据实例对各种统计图形依次作出介绍。从第 \@ref(hist) 节到 \@ref(pie) 节的所有图形都是基于 **graphics** 包所作，其后的图形均来自于其它函数包。图形的介绍顺序大致按函数的字母序，但直方图、箱线图和散点图等常见图形放在前面，而饼图被有意安排在最后。
+
+## 直方图 {#hist}
+
+直方图（Histogram）是展示连续数据分布最常用的工具，它本质上是对密度函数的一种估计。在介绍作图方法之前我们有必要先了解一下它的基本数学思想，本节仅作简要介绍，
+详细的数学理论参见 @Scott92。
+
+我们知道，对于连续随机变量来说，其密度函数即为分布函数的导数：
+
+\begin{equation} 
+f(x)=F'(x)=\lim_{h\rightarrow0}\frac{F(x+h)-F(x)}{h}
+(\#eq:density)
+\end{equation} 
+
+因此我们不妨自然而然地从分布函数的估计出发得到密度函数的估计。当我们拿到一批数据 $X_1,X_2,\ldots,X_n$ 时，我们最容易想到的分布函数估计就是经验分布函数：
+
+\begin{equation} 
+\hat{F}_{n}(x)=\frac{1}{n}\sum_{i=1}^{n}\mathbf{I}(X_{i}\leq x)
+(\#eq:empirical)
+\end{equation} 
+
+其中 $\mathbf{I}(\cdot)$ 为示性函数；结合公式 \@ref(eq:density) 和 \@ref(eq:empirical) 以及示性函数的性质，我们可以直接得到以下密度函数估计：
+
+\begin{equation} 
+\hat{f}_{n}(x)=\lim_{h\rightarrow0}\frac{1}{n}\sum_{i=1}^{n}\frac{\mathbf{I}(x<X_{i}\leq x+h)}{h}
+(\#eq:den-est)
+\end{equation} 
+
+公式 \@ref(eq:den-est) 实际上已经给出了直方图作为密度函数估计工具的基本思想：划分区间并计数有多少数据点落入该区间。实际数据不可能无限稠密，因此 $h\rightarrow0$ 的条件往往是不可能实现的，于是我们退而求其次，只是在某一些区间段里面估计区间上的密度。首先我们将实数轴划分为若干宽度为 $h$ 的区间（我们称 $h$ 为"窗宽"）：
+
+\begin{equation} 
+b_{1}<b_{2}<\cdots<b_{j}<b_{j+1}<\cdots;\;b_{j+1}-b_{j}=h,\,j=1,2,\cdots
+(\#eq:den-est2)
+\end{equation} 
+
+然后根据以下直方图密度估计表达式计算区间 $(b_j,b_{j+1}]$ 上的密度估计值：
+
+\begin{equation} 
+\hat{f}_{n}(x)=\frac{1}{nh}\sum_{i=1}^{n}\mathbf{I}(b_{j}<X_{i}\leq b_{j+1});\;x\in(b_{j},b_{j+1}]
+(\#eq:den-formula)
+\end{equation} 
+
+
+最后我们将密度估计值以矩形的形式表示出来，就完成了直方图的基本制作。当然我们没有必要使用这样原始的方式制作直方图，R 中提供了 *hist()* 函数，其默认用法如下：
+
+```{r}
+usage(hist.default)
+```
+
+其中，[x]{.sans-serif} 为欲估计分布的数值向量；[breaks]{.sans-serif} 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的；[freq]{.sans-serif} 和 [probability]{.sans-serif} 参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）；[labels]{.sans-serif} 为逻辑值，决定是否将频数的数值添加到矩形条的上方；其它参数诸如 [density]{.sans-serif}、[angle]{.sans-serif}、[border]{.sans-serif} 均可参见低层作图函数"矩形"（*rect()*，\@ref(polygon)节）。
+
+
+(ref:fig-hist-geyser-s) 喷泉间隔时间直方图
+
+(ref:fig-hist-geyser) 喷泉间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
+
+
+```{r hist-geyser,fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)'}
+par(mfrow=c(2,2),mar = c(2, 3, 2, .5),mgp=c(2,.5,0))
+data(geyser,package='MASS')
+hist(geyser$waiting,main='(1) freq = TRUE',xlab='waiting')
+hist(geyser$waiting,freq=FALSE,xlab='waiting',main='(2) freq = FALSE')
+hist(geyser$waiting,breaks=5,density=10,xlab='waiting',main='(3) breaks = 5')
+hist(geyser$waiting,breaks=40,col='red',xlab='waiting',main='(4) breaks = 40')
+```
+
+我们以黄石国家公园喷泉数据 `geyser` [@Venables02]为例。图\@ref(fig:hist-geyser) 展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。另外一点需要提醒的是关于直方图中的密度曲线，SPSS 软件在绘制直方图时会有选项提示是否添加正态分布密度曲线，这也是完全的误导，因为数据不一定来自正态分布，添加正态分布的密度曲线显然是不合理的，相比之下，图 \@ref(fig:hist-density) 的做法才是真正从数据本来的分布出发得到的密度曲线。
+
+
+(ref:fig-hist-density-s) 直方图与密度曲线的结合
+
+(ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 *density()* 可以计算出数据的核密度估计，然后利用低层作图函数 *lines()* 将核密度估计曲线添加到直方图中。
+
+```{r hist-density,fig.width=3.5, fig.height=2, results='hide', tidy=TRUE, fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)'}
+demo('hist_geyser',package='MSG')
+```
+
+
+直方图函数在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上
+（例如图 \@ref(fig:layout-margin)）。
+
+由于直方图需要对连续型数据做离散分组，因此它有一个明显的缺点，就是它的形状依赖于分组的端点，例如若有好几个相同的数值正好处在分组端点上，那么我们只要稍微向左或向右移动一下分组端点，这些数据点就会被划分入不同的区间，导致矩形条的高度变化。@Scott92 提出了一种解决这种直方图不稳定性问题的办法叫"移动平均直方图"（Average Shifted Histogram，简称 ASH），它的思想是使用一系列移动的区间去划分数据，比如 $(b_1+ih/n,b_2+ih/n,\ldots,b_n+ih/n)$，$i=0,\cdots,n-1$，最后将这 $n$ 种划分方法的频数结果"平均"起来，就得到了 ASH 图，这样有效避免了边界点的归属问题。然而，在核密度估计理论已经非常完备的今天，我们几乎没有必要再用这种技巧去克服原来的问题了，毕竟 ASH 与核密度估计比起来显得还是太粗糙。图 \@ref(fig:hist-density) 的核密度曲线基于函数 *density()* 计算而来，它的参数包括核函数和窗宽等，实际应用中我们可能需要尝试不同的核函数以及窗宽值，@Venables02 第 5.6 小节介绍了一些选择的经验可供参考。
