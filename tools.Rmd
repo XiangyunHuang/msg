@@ -4,7 +4,7 @@
 >
 > --- 柯南 $\cdot$ 道尔《查尔斯 $\cdot$ 密尔沃顿》
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, include=FALSE, message=FALSE}
 if(!require('tikzDevice')) install.packages('tikzDevice')
 r = getOption("repos")
 r["CRAN"] = "http://cran.us.r-project.org"
