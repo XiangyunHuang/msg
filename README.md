@@ -13,9 +13,9 @@
 | -------- | --------- | ------------------------------------------------- | ------ |
 | 0        | 序言      | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
 | 1        | 历史      | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
-| 2        | 工具      | [pzhaonet](https://github.com/pzhaonet)           | [x]本地编译成功。<br>[x]交叉引用。<br>[x]参考文献。<br>[x]图的短标题。<br>[x]盘古之白。|
+| 2        | 工具      | [pzhaonet](https://github.com/pzhaonet)           | 完工。<br> [x]本地编译成功。<br>[x]交叉引用。<br>[x]参考文献。<br>[x]图的短标题。<br>[x]盘古之白。|
 | 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
-| 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           | 4.1 完成。 <br>| 4.2 正在进行。
+| 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           | 4.1 完工。 <br> 4.2 正在进行。|
 | 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
 | 6        | 数据      |                                                   | |
 | 7        | 原则      |                                                   | |
