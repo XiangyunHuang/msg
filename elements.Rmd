@@ -1,4 +1,4 @@
-# 元素 {#elements}
+# 元素 {#cha:elements}
 
 > 他从信封里拿出一页四折叠的半张 $13\times17$ 英寸的信纸。他把信纸打开铺在桌上，中间有一行铅字拼贴成的句子： 
 >
@@ -361,7 +361,7 @@ usage(mtext)
 
 ## 图例 {#sec:legend}
 
-```{r text-demo,fig.cap="添加标题、任意文本和周边文本的一个演示"}
+```{r text,fig.cap="添加标题、任意文本和周边文本的一个演示"}
 par(mar = c(4, 4, 4, 3))
 plot(0:10, type = "n", xlab = "", ylab = "", xlim = c(0, 12))
 grid(col = "gray")
