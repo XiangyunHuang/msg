@@ -17,7 +17,7 @@
 | 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
 | 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           | 4.1 完工。 <br> 4.2 正在进行。|
 | 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
-| 6        | 数据      |                                                   | |
+| 6        | 数据      | [XiangyunHuang](https://github.com/XiangyunHuang) | |
 | 7        | 原则      |                                                   | |
 | A        | 程序初步  |                                                   |  |
 | B        | 细节技巧  |                                                   |  |
