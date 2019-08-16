@@ -25,6 +25,7 @@ RUN apt-get update \
   tcl-dev \
   libxpm-dev \
   libxaw7-dev \
+  libpoppler-cpp-dev \
   graphviz \
   ggobi \
   file \  
@@ -42,6 +43,7 @@ RUN apt-get update \
   ggthemes \
   ggwordcloud \
   gWidgetsRGtk2 \
+  pdftools \
   plotrix \
   plot3D \
   plotly \
