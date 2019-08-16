@@ -19,4 +19,6 @@ rmd_files:
 - "gallery.Rmd"
 
 - "system.Rmd"
+- "data.Rmd"
+
 - "references.Rmd"
