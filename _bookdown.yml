@@ -7,6 +7,7 @@ language:
     edit: "编辑"
     chapter_name: ["第 ", " 章"]
 
+before_chapter_script: ["_common.R"]
 new_session: yes
 rmd_files: 
 - "index.Rmd"
