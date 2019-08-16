@@ -40,13 +40,13 @@ knitr::include_graphics('images/cc-by-nc-sa.svg')
 
 ## 捐赠说明 {#donate .unnumbered}
 
-如果本书对您有任何帮助，您不妨考虑为“统计之都”网站（自愿）捐赠：<https://cosx.org/donate/>，捐赠所得将用于推广统计学和自由统计软件。捐赠之后请及时告知网站管理人员：[mailto:admin@cos.name](admin@cos.name)。
+如果本书对您有任何帮助，您不妨考虑为“统计之都”网站（自愿）捐赠：<https://cosx.org/donate/>，捐赠所得将用于推广统计学和自由统计软件。捐赠之后请及时告知网站管理人员：[admin@cos.name](mailto:admin@cos.name)。
 
 
 ## 致谢 {#acknowledgement .unnumbered}
 
 本书写作过程中收到了不少读者反馈，在此一并致谢。感谢魏太云、Dazhi Jiang和郑冰对本书文字的校对和建议；感谢赵彦云老师对本书书名和写作风格的建议；感谢李皞对写lattice系统和rgl包的提议；感谢李丰的“彩蛋”建议；感谢王晓伟、李承文、FreemanZY、agri521、annidy、Zhanwu
-Dai耗费眼神帮我挑选了本书第一例彩蛋（图\@ref{fig:point-random}）；感谢殷腾飞增加动态图形系统GGobi的建议；感谢方莹提供第\@ref{chap:data}章的一些数据指引；本书部分小节的初稿内容来自一些朋友：王晓伟提供了lattice一节的初稿，邱怡轩提供grid和rgl两节的初稿，魏太云提供了《统计词话》的初稿，肖楠提供了RgoogleMaps一节的初稿。
+Dai耗费眼神帮我挑选了本书第一例彩蛋（图\@ref(fig:point-random)）；感谢殷腾飞增加动态图形系统GGobi的建议；感谢方莹提供第\@ref(chap:data)章的一些数据指引；本书部分小节的初稿内容来自一些朋友：王晓伟提供了lattice一节的初稿，邱怡轩提供grid和rgl两节的初稿，魏太云提供了《统计词话》的初稿，肖楠提供了RgoogleMaps一节的初稿。
 
 最后，我要感谢我的父母和亲人们在2008年以来每个长假给我提供绝佳的写作环境，让我心无旁骛地写书；感谢吴喜之老师将R这套工具引入中国人民大学统计学院的课堂，以及王星老师在统计计算和非参数统计课堂上对R的介绍，没有他们的努力，我也许不会踏进R的大门；感谢我的硕士导师赵彦云老师在我的本硕学习期间给我的各种指导；感谢“统计之都”网站的会员们在[COS论坛](https://d.cosx.org/)上S-Plus
 \& R版块和我的交流，他们的问题也使我意识到了图形知识的需求；感谢周筠老师和卢鸫翔编辑以及出版团队；感谢本书写作期间所有给我提供过帮助的人们。
