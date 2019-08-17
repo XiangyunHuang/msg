@@ -5,7 +5,7 @@
 
 预览网址：<https://msg-book.netlify.com>
 
-讨论帖：<https://d.cosx.org/d/420766/28>
+讨论帖：<https://d.cosx.org/d/420857>
 
 以下是任务分配表。认领人一栏为空的，表示暂时无人认领，等待有志之士加入。
 
