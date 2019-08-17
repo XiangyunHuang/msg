@@ -52,6 +52,7 @@ RUN apt-get update \
   leaflet \
   magick \
   MSG \
+  rgeos \
   rgl \
   RColorBrewer \
   extrafont \
