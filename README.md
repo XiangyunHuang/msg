@@ -18,7 +18,7 @@
 | 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           | 4.1 完工。 <br> 4.2 正在进行。|
 | 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。 |
 | 6        | 数据      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。<br> 6.2 正在进行。 |
-| 7        | 原则      |                                                   | |
+| 7        | 原则      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。 |
 | A        | 程序初步  |                                                   |  |
 | B        | 细节技巧  |                                                   |  |
 | C        | 图形界面  |                                                   |  |
