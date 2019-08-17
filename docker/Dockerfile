@@ -71,6 +71,9 @@ RUN apt-get update \
   tikzDevice \
   vcd
 
+RUN install2.r --error \
+  mvtnorm
+  
 ## Install adobe fonts
 RUN mkdir -p /usr/share/fonts/opentype/adobe ~/.fonts \
   && path_prefix="/usr/share/fonts/opentype/adobe" \
