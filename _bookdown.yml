@@ -22,5 +22,7 @@ rmd_files:
 - "data.Rmd"
 - "principle.Rmd"
 
+- "programming.Rmd"
+- "tricks.Rmd"
 
 - "references.Rmd"
