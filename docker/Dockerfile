@@ -57,7 +57,7 @@ RUN apt-get update \
   extrafont \
   fontcm \
   showtext \
-  sns \
+  sna \
   sp \
   maps \
   mapdata \
