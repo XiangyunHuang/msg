@@ -37,6 +37,7 @@ RUN apt-get update \
   cowplot \
   corrplot \
   formatR \
+  GGally \
   ggbeeswarm \
   ggExtra \
   ggridges \
