@@ -413,7 +413,7 @@ histogram(~ Sepal.Length | Species,
 
 ## 动态图形与交互式图形 {#sec:dynamic-graphics}
 
-动态图形指的是可以动态变化的图形，例如三维散点图的自动旋转；交互式图形指的是在图形窗口中，我们可以用鼠标或键盘和图形进行交互，例如用鼠标选取图中的点并高亮之（加深颜色或放大选中的元素）。R 本身并不擅长交互式图形，它的基础图形系统中有非常简单的交互函数，参见附录\@ref(sec:interaction)，但是我们可以利用一些 R 包和第三方软件来克服这个缺陷，一个典型的软件就是 GGobi [@Cook07]，在 R 中我们也可以用 **rggobi** 包[@rggoib]来调用 GGobi。GGobi 是开源软件，可以从 <http://www.ggobi.org> 免费下载安装。装好 GGobi 之后我们可以打开 R 安装 **rggobi** 包并开始使用它：
+动态图形指的是可以动态变化的图形，例如三维散点图的自动旋转；交互式图形指的是在图形窗口中，我们可以用鼠标或键盘和图形进行交互，例如用鼠标选取图中的点并高亮之（加深颜色或放大选中的元素）。R 本身并不擅长交互式图形，它的基础图形系统中有非常简单的交互函数，参见附录\@ref(sec:interaction)，但是我们可以利用一些 R 包和第三方软件来克服这个缺陷，一个典型的软件就是 GGobi [@Cook07]，在 R 中我们也可以用 **rggobi** 包[@rggobi]来调用 GGobi。GGobi 是开源软件，可以从 <http://www.ggobi.org> 免费下载安装。装好 GGobi 之后我们可以打开 R 安装 **rggobi** 包并开始使用它：
 
 ```{r install-ggobi,eval=FALSE}
 install.packages("rggobi") # 安装rggobi以及依赖包
