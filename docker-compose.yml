@@ -9,7 +9,7 @@ services:
        - -c
        - |
          sh ./_build.sh
-         make pdf
+         xvfb-run make pdf
      environment:
        - TRAVIS
        - PWD

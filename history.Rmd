@@ -42,9 +42,11 @@ knitr::include_graphics(path = "images/Snow-cholera-map.jpg")
 
 南丁格尔（Florence Nightingale）是我们耳熟能详的“提灯女士”，她不仅是现代护理的鼻祖及现代护理专业的创始人，而且是历史上使用极坐标面积图的先驱。这种图形外形如玫瑰，因此后来也称之为玫瑰图，其主要构思是用“花瓣”的面积表示统计数值的大小。图\@ref(fig:nightingale-mortality)反映了克里米亚战争（英国等与俄国争夺巴尔干半岛的战争）中英国军队自1854年4月至1856年3月的逐月死亡人数[@Nightingale58]；其中，右图为1854年4月至1855年3月的死亡人数，左图为1855年4月至1856年3月的死亡人数。玫瑰图不仅清楚展示了这两年军队死亡人数的变化，而且更重要的是，她将每个月中三种死亡情况也分别用不同颜色标记出来：蓝色表示死于可预防的疾病、红色表示死于战争伤害、黑色表示死于其它原因。这样我们可以清楚知道军队伤亡原因的结构，尤其是“绝大多数士兵死于可预防的疾病”（图中最高的花瓣）。凭借这一条重要信息，她让英国政府意识到，真正影响战争伤亡的并非战争本身，而是由于军队缺乏有效的医疗护理！
 
-```{r nightingale-mortality,fig.scap="Florence Nightingale的极坐标面积图",fig.cap="(ref:nightingale-mortality)",fig.link="http://en.wikipedia.org/wiki/Florence_Nightingale",echo=FALSE}
+```{r nightingale-mortality,fig.scap="(ref:nightingale-mortality-s)",fig.cap="(ref:nightingale-mortality)",fig.link="http://en.wikipedia.org/wiki/Florence_Nightingale",echo=FALSE}
 knitr::include_graphics(path = "images/Nightingale-mortality.jpg")
 ```
+
+(ref:nightingale-mortality-s) Florence Nightingale 的极坐标面积图
 
 (ref:nightingale-mortality) 南丁格尔的极坐标面积图：两幅图分别是1854年和1855年的军队伤亡人数，一年12个月恰好可以将极坐标分为12等分，每一瓣代表一个月。图中用颜色标记出了三种死亡原因。南丁格尔的重大贡献在于使得英国政府意识到真正影响战争伤亡的并非战争本身，而是由于军队缺乏有效的医疗护理，导致大量的士兵死于可预防的疾病。1857年，在她的努力下，英国皇家陆军卫生委员会成立。同年，军医学校成立。
 

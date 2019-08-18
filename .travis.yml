@@ -15,6 +15,7 @@ env:
   global:
     - MAKEFLAGS="-j 2"
     - R_VERSION=3.6.1
+    - DISPLAY=:99.0
 
 before_install:
   # install stable node
@@ -25,6 +26,11 @@ before_install:
   - echo $COMMIT_MSG
   - export DEPLOY_MSG=${COMMIT_MSG//[\'\"\`]/}
   - echo $DEPLOY_MSG
+
+before_script:
+  # packages in docker images
+  - docker pull xiangyunhuang/msg-book
+  - docker run --rm -it --name=book xiangyunhuang/msg-book Rscript -e "xfun::session_info(c('rmarkdown','bookdown'))"
 
 script:
   - docker-compose run book bash -c "sh ./_build.sh"

@@ -273,9 +273,13 @@ usage(arrows)
 
 类似于线段，前四个参数表示箭头的起点和终点坐标，`length`表示箭头尖上短线的长度（单位：英寸），`angle`表示箭头尖短线的角度（默认为30°），`code`表示箭头的样式（整数1~3分别表示尾部箭头、首部箭头和两端都带箭头），注意若`length`设置为0，那么将不会画出箭头（只有箭头线的主体即一条线段）。关于曲线、直线、线段和箭头函数的示例代码和效果参见图\@ref(fig:lines-demo)
 
-```{r xspline-demo,results='hide',fig.scap="X-样条各种形状的展示",fig.cap="X-样条各种形状的展示：观察shape参数的取值（图中标注的数字）与样条形状的对应关系。"}
+```{r xspline-demo,results='hide',fig.scap="(ref:xspline-demo-s)",fig.cap="(ref:xspline-demo)"}
 demo("xsplineDemo", package = "MSG")
 ```
+
+(ref:xspline-demo-s) X-样条各种形状的展示
+
+(ref:xspline-demo) X-样条各种形状的展示：观察`shape`参数的取值（图中标注的数字）与样条形状的对应关系。
 
 下面我们再介绍一下一种特殊的曲线 --- X-样条（X-spline），样条是用光滑曲线连接若干数据点的曲线，注意它与前面提到的曲线`lines()`的区别在于数据点之间的连接线。样条函数用法如下：
 
@@ -294,11 +298,11 @@ usage(rect)
 usage(polygon)
 ```
 
-矩形函数的前四个参数分别制定左下角和右上角的坐标，用以确定矩形的位置，同样，多边形函数的前两个参数给出一系列坐标点，用以围成一个多边形；`density`参数设置阴影线的填充密度（每英寸填充多少条线），如果设置了一个正值，那么颜色填充参数col将被用到阴影线上，只有当`density`被设置为负数或`NA`或`NULL`时`col`才可以填充整个区块颜色；`angle`参数设置填充线条的角度；`col`设置填充颜色；`border`设置边框颜色，若设置为`FALSE`或`NA`，那么边框线将被省略。
+矩形函数的前四个参数分别制定左下角和右上角的坐标，用以确定矩形的位置，同样，多边形函数的前两个参数给出一系列坐标点，用以围成一个多边形；`density`参数设置阴影线的填充密度（每英寸填充多少条线），如果设置了一个正值，那么颜色填充参数`col`将被用到阴影线上，只有当`density`被设置为负数或`NA`或`NULL`时`col`才可以填充整个区块颜色；`angle`参数设置填充线条的角度；`col`设置填充颜色；`border`设置边框颜色，若设置为`FALSE`或`NA`，那么边框线将被省略。
 
 绘制多边形时要清楚它的过程：线条会随着横纵坐标逐点延伸，也就是画普通折线的过程，当走到最后一点时，就会重新延伸回第一点，这就是多边形的绘制基本原理。一般来说，大部分作图函数对于缺失数据都会默认省略不画，不会对图形造成什么影响，而对于多边形函数，数据中的缺失将构成“分界点”，用以分隔缺失点两端的点群，因此，若数据含缺失值，那么会有多个多边形被作出来。这一点性质对与多边形的灵活运用也是很重要的，我们有时可以故意设置缺失值，用以将图形分割为不同的区域；下文我们将马上看到一个例子。
 
-```{r polygon-demo,fig.scap="多边形和矩形结合使用的一个巧妙图示",fig.cap="(ref:polygon-demo)"}
+```{r polygon-demo,fig.scap="(ref:polygon-demo-s)",fig.cap="(ref:polygon-demo)"}
 x <- rnorm(40) # 产生40个正态随机数
 plot(x, xlab = "", type = "l") # 画线图
 # 请思考为什么坐标值要这样设置：多边形的连线路径
@@ -309,6 +313,8 @@ rect(xy[1], xy[3], xy[2], 0, col = "white")
 lines(x) # 重画一遍x的线条
 abline(h = 0, col = "lightgray") # 添加水平线
 ```
+
+(ref:polygon-demo-s) 多边形和矩形结合使用的一个巧妙图示
 
 (ref:polygon-demo) 多边形和矩形结合使用的一个巧妙图示：将0上下的数值分别用不同颜色填充。本图也可以利用`clip()`函数更方便地完成，请读者自行查阅帮助。
 
@@ -401,7 +407,7 @@ usage(legend)
 ```{r axis-usage}
 usage(axis)
 ```
-```{r axis-demo,fig.scap="中美出口额双坐标轴图示",fig.cap="(ref:axis-demo)"}
+```{r axis-demo,fig.scap="中美出口额双坐标轴图示",fig.cap="(ref:axis-demo)",dev='tikz',fig.process=to_png}
 data(Export.USCN, package = "MSG")
 par(mar = c(4, 4.5, .1, 4.5))
 # 看似条形图，实为粗线条，宽度lwd = 10
@@ -464,14 +470,14 @@ diff(auv)
 
 瀑布图中第一个矩形条高度为939，第二个矩形则从939继续向上画1005-939=66单位，第三个矩形则从1005开始向下画32单位，依此类推。对于访问量下滑的那些日期，可以用特殊颜色标示（比如红色警告），以区分访问量增长的日期。图\@ref(fig:waterfall-chart)给出了R代码和瀑布图结果，其中核心代码只有最后一句，前面的代码仅以布局和美观为目的。从代码可以看到，我们用低层作图函数`rect()`来画瀑布图是非常直观的：前四个参数给定了矩形的位置坐标，而这些位置经过简单的逻辑思考很容易得到。所有任务只是画矩形而已，在缺少对图形元素充分支持的软件包中，我们付出了不必要的代价。
 
-```{r waterfall-chart,fig.scap="“统计之都”网站八月第一周访问数据瀑布图",fig.cap="(ref:waterfall-chart)"}
+```{r waterfall-chart,fig.scap="(ref:waterfall-chart-s)",fig.cap="(ref:waterfall-chart)"}
 par(mar = c(4, 4, .5, .1))
 plot(auv,
   xlab = "八月第一周",
-  ylab = "绝对唯一访问次数", type = "n", xlim = c(0.5, 7.5), ylim = c(
-    0,
-    max(auv)
-  ), xaxt = "n", panel.first = grid()
+  ylab = "绝对唯一访问次数", type = "n",
+  xlim = c(0.5, 7.5),
+  ylim = c(0, max(auv)),
+  xaxt = "n", panel.first = grid()
 )
 axis(1, 1:7, sprintf("周%s", c(
   "一", "二", "三", "四",
@@ -482,6 +488,8 @@ rect(1:7 - 0.3, c(0, auv[1:6]), 1:7 + 0.3, auv, col = c(
   ifelse(diff(auv) < 0, "red", NA)
 ))
 ```
+
+(ref:waterfall-chart-s) “统计之都”网站八月第一周访问数据瀑布图
 
 (ref:waterfall-chart) “统计之都”网站八月第一周访问数据瀑布图：周一访问量为939， 周二上升，周三开始下降（红色矩形表示访问量下降），直到周末降到最低。这个规律在其它星期都存在，也许它反映了大众普遍的劳累和忙碌规律？
 

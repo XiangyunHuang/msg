@@ -2,14 +2,8 @@ FROM xiangyunhuang/r-devel:latest
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-## install DBI odbc 
-  unixodbc-dev \
-  odbc-postgresql \
-  libsqliteodbc \
 ## install webshot
   phantomjs \
-## ebook-convert
-  calibre \
 ## install magick
   libmagick++-dev \
 ## install sf
@@ -20,17 +14,12 @@ RUN apt-get update \
 ## rgl  
   libcgal-dev \ 
   libglu1-mesa-dev \ 
-  libx11-dev \
-  tk-dev \
-  tcl-dev \
-  libxpm-dev \
-  libxaw7-dev \
   libpoppler-cpp-dev \
   graphviz \
   ggobi \
-  file \  
-  libgtk2.0-dev \
-  && install2.r --error \
+  libgtk2.0-dev
+
+RUN xvfb-run install2.r --error \
   animation \
   alphahull \
   bookdown \
@@ -47,9 +36,7 @@ RUN apt-get update \
   pdftools \
   plotrix \
   plot3D \
-  plotly \
   scatterplot3d \
-  leaflet \
   magick \
   MSG \
   rgeos \
@@ -69,25 +56,13 @@ RUN apt-get update \
   randomForest \
   rggobi \
   tikzDevice \
-  vcd
-
-RUN install2.r --error \
+  vcd \
   mvtnorm \
   vioplot \
   TeachingDemos \
   aplpack
   
-## Install adobe fonts
-RUN mkdir -p /usr/share/fonts/opentype/adobe ~/.fonts \
-  && path_prefix="/usr/share/fonts/opentype/adobe" \
-  && url_prefix="https://cs.fit.edu/code/projects/ndworld/repository/revisions/11/raw/Resources/Fonts" \
-  && wget -q --no-check-certificate $url_prefix/AdobeFangsongStd-Regular.otf -P $path_prefix \
-  && wget -q --no-check-certificate $url_prefix/AdobeHeitiStd-Regular.otf -P $path_prefix \
-  && wget -q --no-check-certificate $url_prefix/AdobeKaitiStd-Regular.otf -P $path_prefix \
-  && wget -q --no-check-certificate $url_prefix/AdobeSongStd-Light.otf -P $path_prefix \
-  && fc-cache -fsv \
-## Install System fonts for R Graphics  
-  && wget -q --no-check-certificate http://simonsoftware.se/other/xkcd.ttf -P ~/.fonts/ \
+RUN wget -q --no-check-certificate http://simonsoftware.se/other/xkcd.ttf -P ~/.fonts/ \
   && Rscript -e "extrafont::font_import(paths = '~/.fonts', pattern = '[X/x]kcd', prompt = FALSE)" \
   && Rscript -e "extrafont::font_import(prompt = FALSE)" \
   && Rscript -e "extrafont::font_install('fontcm', prompt = FALSE)" \
