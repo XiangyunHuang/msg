@@ -19,7 +19,7 @@
 | 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。<br> [ ] rgl 演示 |
 | 6        | 数据      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。<br> [ ] 统计词话演示 |
 | 7        | 原则      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。 |
-| A        | 程序初步  | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
-| B        | 细节技巧  | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
+| A        | 程序初步  | [XiangyunHuang](https://github.com/XiangyunHuang) |刚开头  |
+| B        | 细节技巧  | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | C        | 图形界面  | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | D        | 本书 R 包 | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |

@@ -13,7 +13,7 @@ install.packages('MSG')
 
 也可以从作者开发页面下载（<http://github.com/yihui/MSG>）并自行编译安装。这里简要介绍一下它包含的函数和数据。
 
-## 函数说明 {sec:MSG-fun}
+## 函数说明 {#sec:MSG-fun}
 
 `andrews_curve()`
 : 根据数据矩阵画调和曲线图，参见\@ref(sec:andrews-curve)小节
