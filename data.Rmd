@@ -584,7 +584,7 @@ y	&=	(\beta_{0}+\beta_{1}x_{1})+(\beta_{2}+\beta_{3}x_{1})x_{2}+\epsilon \\
 
 若我们将$x_{1}$固定在特定水平，那么$x_{2}$的回归系数为$\alpha_{2}=\beta_{2}+\beta_{3}x_{1}$，它与$x_{1}$有关；同理，$y$与$x_{1}$的关系也受$x_{2}$的不同水平影响。交互作用的含义在传统的统计学教科书中一般都用折线图表示，而折线图只能表示自变量为分类变量时的交互效应，对于连续自变量情况的交互作用图示，我们则很难找到任何示例。
 
-```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="连续型自变量的交互作用气泡图",dev='tikz',fig.process=to_png}
+```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png}
 par(mar = c(4.5, 4.5, 2, 0.2), mfrow = c(1, 2), cex.main = 1)
 sq <- 1:10
 x <- rep(sq, 10)
@@ -602,6 +602,8 @@ symbols(x, z, y,
   main = "$y = 2 + x + 0.5 z + \\epsilon$", inches = 0.2
 )
 ```
+
+(ref:interaction-bubble-s) 连续型自变量的交互作用气泡图
 
 (ref:interaction-bubble) 连续型自变量的交互作用气泡图：左图中$x$与$z$有交互效应，右图无交互效应。气泡图中，气泡的大小与真实的$y$值大小成正比，所以如果我们要查看自变量对$y$的影响，只需要看自变量对气泡大小的影响即可。以左图为例：例如分别给定$x=1$和$x=10$，随着$z$的增大（从下向上看），$y$值在增大，但$x=1$和$x=10$处的增大速度明显不一样（后者快），也就是说，$z$对$y$的影响大小受$x$的取值水平影响。同理可以看右图，任意给定$x$值，$y$随着$z$的增大速度都一样，说明$x$与$z$之间没有交互效应。
 
