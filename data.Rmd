@@ -108,7 +108,7 @@ knitr::include_graphics(path = "images/pork-price-orig.pdf")
 当我们用R重画出图形的时候，我们意识到纵坐标可能也存在问题：原图的纵坐标的零点对应的价格是多少？可以肯定并不是0，这一点通过简单地选取参照物就能判断出来，例如06和07年的差价大约是6.7，两年价格条高度之差和2010年4月的价格条高度差不多，这说明零点可能在8元/千克左右。这个零点选择似乎非常随意，通常我们画图会以真实的0为零点，或者以数据的最小值为零点，很少选取其它位置为零点。关于零点的选取，我们在\@ref(subsec:data-processing)小节中会继续解释。这里我们简要说明一下：如果将零点选在真实的0上，那么我们更容易计算真实的比率（高度之比）；若选在最小值上，那么更容易看出绝对变化值（因为差异被“放大”了）。
 
 ```{r pork-price,fig.scap="更新后的猪肉价格走势图",fig.cap="(ref:pork-price)"}
-par(mfrow = c(2, 2))
+par(mfrow = c(2, 2), mar = c(4, 4, 0.5, 0.5))
 plot(year, price, type = "h", lwd = 5, lend = 1, ylim = c(0, max(price) + 1), yaxs = "i")
 plot(year, price, type = "h", lwd = 5, lend = 1)
 plot(year, price, type = "o", ylim = c(0, max(price) + 1), yaxs = "i")
@@ -137,13 +137,13 @@ summary(canabalt)
 我们关心的重点当然是得分，因此拿到这批数据我们可以先看一下得分的分布，例如用直方图；其次我们会考虑游戏得分和平台是否有关，高分玩家会因为什么原因死亡，等等，这都是基于离散变量的连续变量比较，一个自然而然的选择就是对离散变量的每一分类分别画图。图\@ref(fig:canabalt-boxplot)是基于离散变量的不同分类的箱线图，从图中可以看出，iPad 玩家的平均得分较高，这可能是因为 iPad 相比起 iPhone 或者 iPod touch 来说屏幕较大，玩家易于控制，也可能是因为 iPad 需要专门开机，不像另外两个平台随时都能打开玩，因此 iPad 玩家玩起来会更集中精力。至于死因，由于作者对这款游戏并不在行，玩了几次，得到的结果都是因为跳得不够高而撞墙坠落摔死，最多能跑几百米，因此不了解其它死因的场景。因为撞墙摔死的玩家中有很多人得分超高，看来这种障碍的难度并不小。注意我们画箱线图时，对死因做了重新排序 — 按照得分的中位数排序，这样能方便读者阅读这幅图，否则，读者需要额外花费功夫用眼睛对箱线图排序，对读者来说是不必要的阅读负担。按照原始数据的顺序画图尤其是条形图和饼图中常见的问题，其实排序对于制图者只是举手之劳，对读者却能带来很大的方便。
 
 ```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="游戏得分在不同游戏平台以及死因下的比较"}
-print(qplot(device, score, data = canabalt, geom = "boxplot") +
-  coord_flip())
-print(qplot(reorder(death, score, median), score,
+qplot(device, score, data = canabalt, geom = "boxplot") +
+  coord_flip()
+qplot(reorder(death, score, median), score,
   data = canabalt,
   geom = "boxplot", xlab = "death"
 ) +
-  coord_flip())
+  coord_flip()
 ```
 
 (ref:canabalt-boxplot) 游戏得分在不同游戏平台以及死因下的比较：iPad 玩家的分数平均较高，得分最高的人最终是因为“错过另一扇窗”而死。
@@ -347,7 +347,7 @@ example("gov.cn.pct", package = "MSG")
 
 ```{r PlantCounts,fig.cap="(ref:PlantCounts)",fig.scap="海拔高度与物种数目的LOWESS曲线"}
 data(PlantCounts, package = "MSG")
-par(mar = c(3.5, 3.5, .1, 0.2), mfrow = c(1, 2), pch = 20)
+par(mar = c(4.5, 4.5, .1, 0.2), mfrow = c(1, 2), pch = 20)
 with(PlantCounts, {
   plot(altitude, counts, panel.first = grid(), col = rgb(0, 0, 0, 0.3))
   for (i in seq(0.01, 1, length = 70)) {
@@ -431,7 +431,7 @@ knitr::include_graphics(path = c(
 本节只是介绍了一个非常简单的应用，但也引出了一个重要话题：统计图形如何与它要表达的问题的背景相融合？用通俗的话讲，就是要找“应景”的背景。在这方面，图\@ref(fig:pork-price-orig)实际上做得很好，很有吸引眼球的效果，让人一看就明白要表达的主题。当然，背景元素也不能喧宾夺主，这一点在\@ref(subsec:element-priority)小节中有详细论述。
 
 
-[^china-earthquake]: http://www.bjt.name/2011/03/china-earthquake-map/
+[^china-earthquake]: <http://www.bjt.name/2011/03/china-earthquake-map/>
 
 
 ### 统计词话 {#subsec:cluster}
@@ -556,7 +556,7 @@ coef(summary(lm(y ~ x)))
 coef(summary(lm(y ~ x + z)))
 ```
 ```{r multireg-scatter,fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)"}
-par(mar = c(3.5, 3.5, .1, 0.5), mfrow = c(1, 2))
+par(mar = c(4.5, 4.5, .1, 0.5), mfrow = c(1, 2))
 plot(x, y)
 abline(lm(y ~ x), col = "red")
 plot(x, y, pch = z, col = rainbow(5)[z + 1])
@@ -584,8 +584,8 @@ y	&=	(\beta_{0}+\beta_{1}x_{1})+(\beta_{2}+\beta_{3}x_{1})x_{2}+\epsilon \\
 
 若我们将$x_{1}$固定在特定水平，那么$x_{2}$的回归系数为$\alpha_{2}=\beta_{2}+\beta_{3}x_{1}$，它与$x_{1}$有关；同理，$y$与$x_{1}$的关系也受$x_{2}$的不同水平影响。交互作用的含义在传统的统计学教科书中一般都用折线图表示，而折线图只能表示自变量为分类变量时的交互效应，对于连续自变量情况的交互作用图示，我们则很难找到任何示例。
 
-```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="连续型自变量的交互作用气泡图"}
-par(mar = c(3.5, 3.5, 2, 0.2), mfrow = c(1, 2), cex.main = 1)
+```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="连续型自变量的交互作用气泡图",dev='tikz',fig.process=to_png}
+par(mar = c(4.5, 4.5, 2, 0.2), mfrow = c(1, 2), cex.main = 1)
 sq <- 1:10
 x <- rep(sq, 10)
 z <- rep(sq, each = 10)
@@ -654,7 +654,7 @@ x2 <- c(x, jitter(rep(mean(x), 500), 10))
 y2 <- c(y, jitter(rep(mean(y), 500), 10))
 ```
 ```{r OLS-LMS,fig.cap="(ref:OLS-LMS)",fig.scap="LMS回归的稳健性及其缺点"}
-par(mar = c(3.5, 3.5, 1, 0.2), mfrow = c(1, 2), pch = 20)
+par(mar = c(4.5, 4.5, 1, 0.2), mfrow = c(1, 2), pch = 20)
 olsLms(x1, y1)
 olsLms(x2, y2, cex = c(rep(1, 50), rep(0.1, 500)))
 ```
@@ -689,8 +689,8 @@ for (i in 1:100) {
   betaSim[i] <- coef(update(fit, subset = idx))[2]
 }
 ```
-```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点"}
-par(mar = c(3.5, 3.5, 1, 0.5), mfrow = c(2, 2), pch = 20)
+```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png}
+par(mar = c(4.5, 4.5, 1, 0.5), mfrow = c(2, 2), pch = 20)
 plot(x, y, col = rgb(0, 0, 0, 0.5))
 abline(fit)
 plot(cooks.distance(fit), ylab = "Cook's distance")
@@ -708,7 +708,7 @@ plot(betaSim, ylab = "$\\beta_1$")
 
 本例仅仅是以模拟的方法提供了一种离群点诊断新思路，沿着这种想法，我们可以继续发展新的理论，来弥补传统理论的不足。
 
-## 思考与联系
+## 思考与练习
 
 (ref:randomForest-music) 音乐数据预测概率的棱锥图：四种颜色表示四个艺术家，点越接近于顶点则预测为该艺术家的概率越大。
 
