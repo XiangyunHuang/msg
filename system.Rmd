@@ -681,7 +681,7 @@ usage(saveVideo)
 
 所有函数的第一个参数都是`expr`，它通常是一段用大括号括起来的R代码。下面的代码是一个导出布朗运动动画为HTML页面的例子，其中`img.name`设定了图片的基础文件名，即所有图片将以 bm-plot1、bm-plot2、……、bm-plot50 依次命名（扩展名默认为`.png`），`title`指定了HTML页面的标题，`description`是对动画的一个描述，将会被以R注释的形式写入HTML页面，`ani.height`和`ani.width`分别设定动画的高度和宽度，单位默认为像素。这段代码生成的结果如图\@ref(fig:html-interface)所示。
 
-```{r html-interface,fig.scap="HTML页面内的动画界面",fig.cap="(ref:html-interface)",eval=FALSE}
+```{r,eval=FALSE}
 saveHTML({
   ani.options(interval = 0.05, nmax = 50)
   par(mar = c(4, 4, .1, 0.1), mgp = c(2, 0.7, 0))
@@ -693,6 +693,9 @@ description = c(
   "(x, y), x = x + rnorm(1) and y = y + rnorm(1)."
 ), ani.height = 300, ani.width = 550
 )
+```
+```{r html-interface,fig.scap="HTML页面内的动画界面",fig.cap="(ref:html-interface)",echo=FALSE}
+knitr::include_graphics(path = "images/html-interface.png")
 ```
 
 (ref:html-interface) 这一系列动画导出函数默认都用 PNG 图形设备抓取并保存每一帧图片，这是由选项`ani.options('ani.dev')`设定的，我们也可以使用别的图形设备来记录 R 图形；**animation** 包中的一个演示`demo('rgl_animation')`就展示了这种功能。
@@ -717,8 +720,14 @@ description = c(
 
 此外 **animation** 包还带有大量的演示（demo），这些演示展示了一些另类功能，如`demo('rgl_animation')`展示了如何捕捉 rgl 生成的 3D 动画并转化为动画如图\@ref(fig:animation-pollen)，`demo('game_of_life')`展示了经典游戏 Game of Life，`demo('hanoi')` 展示了我们熟知的汉诺塔游戏（演示递归），`demo('fire')` 展示了跳动火焰的模拟，`demo('flowers')` 展示了从网络上下载图片并转化为动画，`demo('CLEvsLAL')` 则是一场 NBA 球赛的“回放”，等等。
 
-```{r animation-pollen,eval=FALSE,fig.scap="pollen数据中暗藏的特征",fig.cap="(ref:animation-pollen)"}
+```{r,eval=FALSE}
 demo("rgl_animation", package = "animation")
+```
+```{r animation-pollen,fig.scap="pollen数据中暗藏的特征",fig.cap="(ref:animation-pollen)",echo=FALSE,fig.subcap=c("","")}
+knitr::include_graphics(path = c(
+  "images/rgl-animation4.png",
+  "images/rgl-animation19.png"
+))
 ```
 
 (ref:animation-pollen) pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧。
@@ -749,7 +758,7 @@ demo("rgl_animation", package = "animation")
 
 1. **fun**包[@fun]中有一个3D版本的“我的中国心”，效果如图\@ref(fig:China-Heart-3D)；请对照`demo('ChinaHeart3D', package = 'fun')`以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入rgl三维图形。
 
-    ```{r China-Heart-3D,results='hide',fig.cap="(ref:China-Heart-3D)",echo=FALSE}
+    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE}
     knitr::include_graphics(path = "images/China-Heart-3D.png")
     ```
 

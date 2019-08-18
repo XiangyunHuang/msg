@@ -61,7 +61,11 @@ RUN xvfb-run install2.r --error \
   vioplot \
   TeachingDemos \
   aplpack
-  
+
+RUN install2.r --error \
+  igraph \
+  fun
+
 RUN wget -q --no-check-certificate http://simonsoftware.se/other/xkcd.ttf -P ~/.fonts/ \
   && Rscript -e "extrafont::font_import(paths = '~/.fonts', pattern = '[X/x]kcd', prompt = FALSE)" \
   && Rscript -e "extrafont::font_import(prompt = FALSE)" \
