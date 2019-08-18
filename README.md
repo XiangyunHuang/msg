@@ -21,5 +21,5 @@
 | 7        | 原则      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。 |
 | A        | 程序初步  | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
 | B        | 细节技巧  | [XiangyunHuang](https://github.com/XiangyunHuang) |  |
-| C        | 图形界面  |                                                   |  |
-| D        | 本书 R 包 |                                                   |  |
+| C        | 图形界面  | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
+| D        | 本书 R 包 | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |

@@ -24,5 +24,8 @@ rmd_files:
 
 - "programming.Rmd"
 - "tricks.Rmd"
+- "gui.Rmd"
+- "msg.Rmd"
+- "postscript.Rmd"
 
 - "references.Rmd"
