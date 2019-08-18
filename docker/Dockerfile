@@ -72,7 +72,10 @@ RUN apt-get update \
   vcd
 
 RUN install2.r --error \
-  mvtnorm
+  mvtnorm \
+  vioplot \
+  TeachingDemos \
+  aplpack
   
 ## Install adobe fonts
 RUN mkdir -p /usr/share/fonts/opentype/adobe ~/.fonts \
