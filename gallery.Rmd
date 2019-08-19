@@ -1733,11 +1733,11 @@ f_{i}(t)=\begin{cases}
 \frac{X_{i,1}}{\sqrt{2}}+X_{i,2}\sin(t)+X_{i,3}\cos(t)+\cdots\\
 \qquad+X_{i,p-1}\sin(\frac{p-1}{2}t)+X_{i,p}\cos(\frac{p-1}{2}t) & \text{若}p\text{为奇数}\\
 \frac{X_{i,1}}{\sqrt{2}}+X_{i,2}\sin(t)+X_{i,3}\cos(t)+\cdots\\
-\qquad+X_{i,p}\sin(\frac{p}{2}t) & \text{若}p\text{为偶数}
-\end{cases} 
+\qquad+X_{i,p}\sin(\frac{p}{2}t) & \text{若}p\text{为偶数}\\
+\end{cases}
 (\#eq:andrews-curve)
-\end{equation
-}
+\end{equation}
+
 其中 $t\in[-\pi,\pi]$。
 
 这样一来，将 $t$ 取一系列值，则每一行观测数据都可以画出一条曲线，最终可以得到$n$条曲线，也就形成了调和曲线图。这种数学转化表面上看起来很不直观，然而它却有很多好的数学性质及对应的实际意义，这里仅列举两条：
