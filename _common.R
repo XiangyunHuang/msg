@@ -7,3 +7,8 @@ to_png <- function(fig_path) {
 
 is_latex <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "latex")
 is_html <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "html")
+
+knitr::opts_chunk$set(
+  fig.align = "center",
+  out.width = "90%"
+)

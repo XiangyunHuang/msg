@@ -109,7 +109,7 @@ for (i in 1:3) {
 }
 ggraphics(container = g, width = 200, height = 100)
 ```
-```{r color-selector,echo=FALSE,fig.cap="(ref:color-selector)",fig.scap="(ref:color-selector-s)",fig.subcap=c("","")}
+```{r color-selector,echo=FALSE,fig.cap="(ref:color-selector)",fig.scap="(ref:color-selector-s)",fig.subcap=c("",""),out.width="45%"}
 knitr::include_graphics(path = c(
   "images/gwidgets-color-selector1.png",
   "images/gwidgets-color-selector2.png"

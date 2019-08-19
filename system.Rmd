@@ -376,7 +376,7 @@ str(comp)
 
 我们以图\@ref(fig:lattice-data-par)的上图为例，读者可能会认为图中的蓝色线条过于细，并且颜色也不够醒目，想将线条修改为红色并且加粗，则可以按图\@ref(fig:lattice-data-par)下图中的步骤来完成，其中省略了我们可以随时用`trellis.par.get()`来观察当前的参数取值情况；实际这是一个经验积累的过程，当有一定的作图经验后，就可以大概知道参数中都有什么样的取值。
 
-```{r lattice-data-par,fig.scap="制作lattice需要的数据框以及修改lattice的图形参数",fig.cap="(ref:lattice-data-par)",fig.subcap=c("","")}
+```{r lattice-data-par,fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1}
 print(bxp0 <- bwplot(which ~ data, data = comp, horizontal = TRUE))
 trellis.par.set(
   plot.symbol = list(pch = 19, col = "black"),
@@ -385,6 +385,8 @@ trellis.par.set(
 )
 print(bxp0) # 这里的bxp0对象来自前一幅图，可重用
 ```
+
+(ref:lattice-data-par-s) 制作lattice需要的数据框以及修改lattice的图形参数
 
 (ref:lattice-data-par) 制作 lattice 需要的数据框以及修改 lattice 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点。
 
@@ -443,7 +445,7 @@ ggobi(mtcars)
 
 注意由于**rggobi**依赖于**RGtk2**包[@RGtk2]，所以安装的时候也会一并安装**RGtk2**，而**RGtk2**又依赖于 GTK+ 软件，进而也会自动安装 GTK+。读者不必了解这些包或软件之间的依赖关系，只需要按照提示一步步安装即可。从 R 中启动 GGobi 可以对一个数据框使用 `ggobi()`函数， 这样我们就会得到如图\@ref(fig:GGobi-main-window)的窗口。
 
-```{r GGobi-main-window,echo=FALSE,fig.cap="(ref:GGobi-main-window)",fig.scap="GGobi软件的主窗口和图形窗口",fig.subcap=c("","")}
+```{r GGobi-main-window,echo=FALSE,fig.cap="(ref:GGobi-main-window)",fig.scap="GGobi软件的主窗口和图形窗口",fig.subcap=c("",""),out.width="45%"}
 knitr::include_graphics(path = c(
   "images/GGobi-main-window.png",
   "images/GGobi-scatterplot.png"
@@ -474,7 +476,7 @@ Tools
 
 1. 让“条件分割”操作变为动态操作：我们已经不止一次提到图形中的“条件分割”，如\@ref(fig:coplot)小节的条件分割图、 lattice 系统和 ggplot2 系统的切片功能，所有的这些分割都是对数据的静态、固定分割，例如根据一个分类变量把数据分成子集；当我们使用刷子的时候，实际上也是一种条件分割：我们可以观察随着刷子位置的有序移动（如从左到右），其它图中的图形元素的位置变化，尤其是我们用鼠标右键拖动改变刷子形状为一个狭长的矩形条时，这种条件分割的意味就更加清楚，这一点可能不太好理解，参见后面思考与练习 \@ref(enu:GGobi-narrow-brush)
 
-```{r GGobi-brush,fig.scap="GGobi中选取一个观测对应所有图形窗口的更新",fig.cap="(ref:GGobi-brush)",fig.subcap=c("","",""),echo=FALSE,fig.ncol=2}
+```{r GGobi-brush,fig.scap="GGobi中选取一个观测对应所有图形窗口的更新",fig.cap="(ref:GGobi-brush)",fig.subcap=c("","",""),out.width="45%",echo=FALSE,fig.ncol=2}
 knitr::include_graphics(path = c(
   "images/GGobi-hp-mpg.png",
   "images/GGobi-qsec-wt.png",
@@ -733,7 +735,7 @@ knitr::include_graphics(path = "images/html-interface.png")
 ```{r,eval=FALSE}
 demo("rgl_animation", package = "animation")
 ```
-```{r animation-pollen,fig.scap="pollen数据中暗藏的特征",fig.cap="(ref:animation-pollen)",echo=FALSE,fig.subcap=c("","")}
+```{r animation-pollen,fig.scap="pollen数据中暗藏的特征",fig.cap="(ref:animation-pollen)",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
 knitr::include_graphics(path = c(
   "images/rgl-animation4.png",
   "images/rgl-animation19.png"

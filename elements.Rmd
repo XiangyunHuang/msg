@@ -561,7 +561,7 @@ demo("signSTAT", package = "MSG")
 
 1. 利用三角形的边长关系画一个指北箭头如下
 
-    ```{r north-arrow}
+    ```{r north-arrow,fig.width=2,fig.height=2.5,echo=FALSE}
     north.arrow <- function(x, y, h) {
       polygon(c(x, x, x + h / 2), c(y - h, y, y - (1 + sqrt(3) / 2) *
         h), col = "black", border = NA)
@@ -579,7 +579,7 @@ demo("signSTAT", package = "MSG")
 
 1. 一些数学上函数可以产生有趣的“心形曲线”，例如在极坐标系下$r(\theta)=1-\sin(\theta)$生成的就是心形的曲线，笛卡尔坐标下方程$(x^{2}+y^{2}-1)^{3}-x^{2}y^{3}=0$对应的解也可以形成心形曲线。这里我们考虑一种简单的心形曲线如下图所示：
 
-    ```{r heart-curve}
+    ```{r heart-curve,fig.width=2,fig.height=2,echo=FALSE}
     MSG::heart_curve(col = "red")
     abline(v = 0, h = pi / 2, lty = 2, col = "gray")
     ```
@@ -588,7 +588,7 @@ demo("signSTAT", package = "MSG")
 
 1. 温度计形状用来表达比例数据通常很形象，我们可以设定温度计的范围在$[0,\,1]$之间，用汞柱的高度来表达比例。用R构造一支“温度计”很简单，如下图：这些温度计实际上由一个灰圆点、一个红圆点、一条灰线段和一条红线段叠加构成，红线段的长度表示比例大小，其它图形元素都只是背景。请尝试用四个图形元素构造温度计，注意这些图形元素的叠加顺序（例如红线必须在灰线之后画，否则会被覆盖）。\@ref(sec:symbols)小节的符号图中，“符号”的选项之一就是用温度计，但不如这里的温度计形象。对于追求细节完美的用户来说，这里线段末端的样式也值得注意，因为我们实际生活中看到的汞柱末端是弧形的，所以这里要是画成矩形就不合适了；线段末端的三种样式在\@ref(sec:par)小节中有介绍。
 
-    ```{r thermometer-demo}
+    ```{r thermometer-demo,fig.width=4,fig.height=1.5,echo=FALSE}
     par(mar = rep(0, 4))
     plot.new()
     for (i in c(.2, .5, .8)) {

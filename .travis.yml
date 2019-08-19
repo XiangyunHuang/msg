@@ -33,6 +33,7 @@ before_script:
   - docker run --rm -it --name=book xiangyunhuang/msg-book Rscript -e "xfun::session_info(c('rmarkdown','bookdown'))"
 
 script:
+  - mkdir -p _book/interactives && cp -r interactives/* _book/interactives
   - docker-compose run book bash -c "sh ./_build.sh"
   - docker-compose down
 

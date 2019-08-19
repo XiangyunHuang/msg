@@ -8,7 +8,12 @@ documentclass: book
 bibliography: [book.bib, MSG-packages.bib, Modern-Stat-Graphics.bib]
 biblio-style: apalike
 link-citations: yes
+classoption: "UTF8,oneside"
 description: "现代统计图形书稿"
+geometry: margin=1.18in
+colorlinks: yes
+github-repo: XiangyunHuang/MSG-Book
+url: 'https\://bookdown.org/xiangyun/MSG-Book/'
 ---
 
 `r if (knitr::is_latex_output()) '<!--'` 
