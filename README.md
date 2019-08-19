@@ -11,13 +11,13 @@
 
 | 章节序号  | 章节标题  | 认领人                                            | 当前进度  |
 | -------- | --------- | ------------------------------------------------- | ------ |
-| 0        | 序言      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。  |
-| 1        | 历史      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。  |
+| 0        | 序言      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。 |
+| 1        | 历史      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。 |
 | 2        | 工具      | [pzhaonet](https://github.com/pzhaonet)           | 完工。<br> [x]本地编译成功。<br>[x]交叉引用。<br>[x]参考文献。<br>[x]图的短标题。<br>[x]盘古之白。|
-| 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。 |
+| 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           | 即将完工。|
-| 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。<br> [ ] rgl 演示 |
-| 6        | 数据      | [XiangyunHuang](https://github.com/XiangyunHuang) |[ ]参考文献。<br>[ ]盘古之白。<br> [ ] 统计词话演示 |
+| 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) |rgl 演示 |
+| 6        | 数据      | [XiangyunHuang](https://github.com/XiangyunHuang) |统计词话演示 |
 | 7        | 原则      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | A        | 程序初步  | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | B        | 细节技巧  | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
