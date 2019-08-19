@@ -5,7 +5,7 @@
 > --- 柯南$\cdot$ 道尔《血字的研究》
 
 ```{r, echo=FALSE}
-library('formatR')
+library("formatR")
 ```
 
 本章中，我们结合 R 语言中的相关函数以及数据实例对各种统计图形依次作出介绍。从第 \@ref(hist) 节到 \@ref(pie) 节的所有图形都是基于 **graphics** 包所作，其后的图形均来自于其它函数包。图形的介绍顺序大致按函数的字母序，但直方图、箱线图和散点图等常见图形放在前面，而饼图被有意安排在最后。
@@ -66,12 +66,12 @@ usage(hist.default)
 
 
 ```{r hist-geyser,fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)'}
-par(mfrow=c(2,2),mar = c(2, 3, 2, .5),mgp=c(2,.5,0))
-data(geyser,package='MASS')
-hist(geyser$waiting,main='(1) freq = TRUE',xlab='waiting')
-hist(geyser$waiting,freq=FALSE,xlab='waiting',main='(2) freq = FALSE')
-hist(geyser$waiting,breaks=5,density=10,xlab='waiting',main='(3) breaks = 5')
-hist(geyser$waiting,breaks=40,col='red',xlab='waiting',main='(4) breaks = 40')
+par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
+data(geyser, package = "MASS")
+hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
+hist(geyser$waiting, freq = FALSE, xlab = "waiting", main = "(2) freq = FALSE")
+hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", main = "(3) breaks = 5")
+hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) breaks = 40")
 ```
 
 我们以黄石国家公园喷泉数据 `geyser` [@Venables02] 为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。另外一点需要提醒的是关于直方图中的密度曲线，SPSS 软件在绘制直方图时会有选项提示是否添加正态分布密度曲线，这也是完全的误导，因为数据不一定来自正态分布，添加正态分布的密度曲线显然是不合理的，相比之下，图 \@ref(fig:hist-density) 的做法才是真正从数据本来的分布出发得到的密度曲线。
@@ -82,7 +82,7 @@ hist(geyser$waiting,breaks=40,col='red',xlab='waiting',main='(4) breaks = 40')
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 *density()* 可以计算出数据的核密度估计，然后利用低层作图函数 *lines()* 将核密度估计曲线添加到直方图中。
 
 ```{r hist-density,fig.width=3.5, fig.height=2, results='hide', tidy=TRUE, fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)'}
-demo('hist_geyser',package='MSG')
+demo("hist_geyser", package = "MSG")
 ```
 
 
@@ -127,7 +127,7 @@ stem(islands, width = 20)
 
 ```{r stem-process}
 # 去掉陆地名称以便显示数据
-unname(sort(round(islands/1000, 1)))
+unname(sort(round(islands / 1000, 1)))
 ```
 
 然后从 0 到 $18\times10^{3}$、以 $2\times10^{3}$ 为窗宽，分段整理数据，每一段（节）中依次放置落入该段的数据的小数位，堆砌起来便形成了茎叶图的叶子。例如 $11.5$ 落入了 $[10,12]$ 的区间，我们就将尾数 5 放在 10 的右边；类似地，17.0 在 $[16,18]$ 之间，我们将 0 放在 16 右边；关于茎叶图顶部的一长串 0 的解释此处不再赘述。
@@ -137,7 +137,7 @@ unname(sort(round(islands/1000, 1)))
 
 ```{r stem-poisson, fig.cap="(ref:fig-stem-poisson)", fig.scap="(ref:fig-stem-poisson-s)"}
 # 均值lambda为10的泊松分布随机数
-sort(x <- rpois(80, lambda = 10)) 
+sort(x <- rpois(80, lambda = 10))
 stem(x, scale = 2)
 ```
 
@@ -155,7 +155,7 @@ R中相应的函数为 *boxplot()*，其用法^[待更新]如下：
 # 默认用法
 usage(boxplot.default)
 # 公式用法
-usage(graphics:::boxplot.formula) 
+usage(graphics:::boxplot.formula)
 ```
 
 因为 *boxplot()* 是一个泛型函数，所以它可以适应不同的参数类型。目前它支持两种参数类型：公式（ formula ）和数据，后者对我们来说可能更容易理解（给一批数据、作相应的箱线图），而前者在某些情况下更为方便，后面我们会举例说明。参数  x  为一个数值向量或者列表，若为列表则对列表中每一个子对象依次作出箱线图； range  是一个延伸倍数，决定了箱线图的末端（须）延伸到什么位置，这主要是考虑到离群点的原因，在数据中存在离群点的情况下，将箱线图末端直接延伸到最大值和最小值对描述数据分布来说并不合适（图形缺乏稳健性），所以 R 中的箱线图默认只将图形延伸到离箱子两端 $\mathrm{range}\times(Q_3-Q_1)$处，即上下四分位数分别加/减内四分位距（Interquartile
@@ -169,7 +169,7 @@ Range，简称 $\text{IQR}\equiv Q_3-Q_1$）的倍数，超过这个范围的数
 
 ```{r insects-boxplot, fig.width=4.8, fig.height=1.8, tidy=TRUE, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)"}
 par(mar = c(2, 2.5, .2, .1))
-boxplot(count ~ spray, data = InsectSprays, col = "lightgray", horizontal = TRUE, pch = 4)  
+boxplot(count ~ spray, data = InsectSprays, col = "lightgray", horizontal = TRUE, pch = 4)
 ```
 
 
@@ -182,7 +182,7 @@ InsectSprays[sample(nrow(InsectSprays), 10), ]
 为了了解杀虫剂的效果，我们需要对各种杀虫剂下昆虫的数目作出比较。图 \@ref(fig:insects-boxplot) 是一个简单的箱线图展示，不难看出，除了 B 和 D 对应的昆虫数据呈左偏形态外，其它组均有右偏趋势，看起来各组数据的平均水平差异比较明显；另外注意观察图中的两个离群点（以 "$\times$" 表示）。总体看来，C 的效果最好。事实上，我们可以对这个数据作方差分析，检验杀虫剂类型对昆虫数目是否有显著影响：
 
 ```{r insects-aov}
-insects.aov = aov(count ~ spray, data = InsectSprays) 
+insects.aov <- aov(count ~ spray, data = InsectSprays)
 summary(insects.aov)
 ```
 
@@ -195,10 +195,13 @@ summary(insects.aov)
 
 ```{r rnorm-boxplot,fig.width=4.8,fig.height=1.2, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)"}
 par(mar = c(2, 2.5, 0.2, 0.1))
-x = rnorm(150); y = rnorm(50, 0.8)
-boxplot(list(x, y), names = c("x", "y"), horizontal = TRUE, 
-    col = 2:3, notch = TRUE, varwidth = TRUE)
-wilcox.test(x, y)$p.value  # Wilcoxon检验的P值
+x <- rnorm(150)
+y <- rnorm(50, 0.8)
+boxplot(list(x, y),
+  names = c("x", "y"), horizontal = TRUE,
+  col = 2:3, notch = TRUE, varwidth = TRUE
+)
+wilcox.test(x, y)$p.value # Wilcoxon检验的P值
 ```
 
 最后我们再以一个模拟数据的例子展示箱线图凹槽的功能。这里我们分别从正态分布 $\mathrm{N}(0,1)$ 和 $\mathrm{N}(0.5,1)$ 中各自产生 150 和 50 个随机数，然后作箱线图比较两组数据中间位置的差异。图 \@ref(fig:rnorm-boxplot) 为一次模拟的结果，图中的凹槽表明了两组数据的中位数有显著差异，Wilcoxon 秩和检验也证实了这一结论。此外，该图还使用了  varwidth  参数以表明两组数据样本量的大小不同。
@@ -210,12 +213,14 @@ wilcox.test(x, y)$p.value  # Wilcoxon检验的P值
 (ref:fig-vadeaths-barplot) 弗吉尼亚死亡率数据条形图： 堆砌和并列的条形图效果
 
 ```{r vadeaths-barplot, fig.width=4.8, fig.height=4.8, fig.cap = "(ref:fig-vadeaths-barplot)", fig.scap="(ref:fig-vadeaths-barplot-s)"}
-library(RColorBrewer)  # 用分类调色板
+library(RColorBrewer) # 用分类调色板
 par(mfrow = c(2, 1), mar = c(3, 2.5, 0.5, 0.1))
-death = t(VADeaths)[, 5:1]
-barplot(death, col = brewer.pal(4,'Set1'))
-barplot(death, col = brewer.pal(4,'Set1'), beside = TRUE,
-    legend.text = TRUE)
+death <- t(VADeaths)[, 5:1]
+barplot(death, col = brewer.pal(4, "Set1"))
+barplot(death,
+  col = brewer.pal(4, "Set1"), beside = TRUE,
+  legend.text = TRUE
+)
 ```
 
 如同前面 \@ref(begin) 节中曾经提到的，条形图目前是各种统计图形中应用最广泛的，但条形图所能展示的统计量比较贫乏：它只能以矩形条的长度展示原始数值，对数据没有任何概括或推断。
@@ -223,7 +228,7 @@ barplot(death, col = brewer.pal(4,'Set1'), beside = TRUE,
 R 中条形图的函数为 *barplot()*，用法如下：
 
 ```{r barplot-usage}
-usage(barplot.default) 
+usage(barplot.default)
 ```
 
 条形图的主要参数是 height，它指定了长条的长度，这个参数可以接受一个数值向量或者一个数值矩阵作为参数，前者容易理解，后者稍有些复杂，当传入一个矩阵时，条形图针对矩阵的每一列画图，若 beside 为`FALSE`，则矩阵每一列占据一条的位置，该条由若干矩形堆砌而成，这些矩形的长度对应着矩阵的行数据，若 beside 为`TRUE`，这些矩形则并排排列而非堆砌； width 可以设置条的宽度； space 用以设置条之间的间距； names.arg 为条形图的标签，即每一条的名称； legend.text 参数在 height 为矩阵时比较有用，可以用来添加图例； horiz 用以设置条形图的方向（水平或垂直）； density 、 angle 等参数可以参考矩形的章节（\@ref(polygon) 节）； plot 为逻辑值，决定是否将条形图添加到现有图形上。
@@ -233,7 +238,7 @@ usage(barplot.default)
 的上图就不如下图直观），所以我们制图时要考虑清楚我们想展示的是数据的哪一方面，即：将最关键的信息用最能激发视觉感知的形式表现出来。
 
 ```{r vadeaths-data}
-VADeaths  # 弗吉尼亚州死亡数据
+VADeaths # 弗吉尼亚州死亡数据
 ```
 
 ## 散点图 {#plot.default}
@@ -254,17 +259,17 @@ usage(plot.default)
 (ref:fig-scatter-alpha) 半透明散点图中的规律：左图是一幅普通的散点图，图中几乎看不出数据有任何异常特征；右图中对点使用了透明度为 0.01 的红色，图中立即显示出一个深色的圆圈，表明该圆圈上集中了大量数据点。
 
 ```{r scatter-alpha, fig.width=4,fig.height=2, fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha)"}
-demo('alphaDemo',package='MSG')
+demo("alphaDemo", package = "MSG")
 ```
 
 图 \@ref(fig:scatter-alpha)
 展示了一个人造数据的散点图：我们设计了 2 万个样本，其中有 1 万个样本点来自于两个独立的标准正态分布，另 1 万个样本点的坐标落在半径为 0.5 的圆上，最后将这 2 万个样本拼起来并打乱顺序。该数据收录在 **MSG** 包中，名为 `BinormCircle`。虽然数据只有两个变量，但我们用普通的统计模型和数值分析几乎无法找出数据的特征，例如线性回归显示两个变量 `V1` 和 `V2` 的回归系数非常不显著：
 
 ```{r BinormCircle-lm}
-data(BinormCircle, package='MSG')
-head(BinormCircle)  # 数据前6行
+data(BinormCircle, package = "MSG")
+head(BinormCircle) # 数据前6行
 # 回归系数以及P值（不显著）
-coef(summary(lm(V2~V1,BinormCircle)))
+coef(summary(lm(V2 ~ V1, BinormCircle)))
 ```
 
 换用高阶回归的结果也类似，无论回归阶数为多少，系数均不显著，这一点从数据的构造上就可以知道（理论上两个变量的相关系数为 0）。由于样本量太大，普通的散点图上点与点之间严重重叠，所以也很难看出散点图有何异常，而使用半透明色的散点图则很容易看出，在大量的数据点中，还隐藏着一个圆圈，说明有相当一部分数据分布有特殊规律。我们在网页 <http://yihui.name/en/?p=52>
@@ -277,9 +282,9 @@ coef(summary(lm(V2~V1,BinormCircle)))
 (ref:fig-assocplot) 眼睛颜色与头发颜色的关联图
 
 ```{r assocplot,fig.width=4.8,fig.height=4, fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
-(x = margin.table(HairEyeColor, c(1, 2)))
+(x <- margin.table(HairEyeColor, c(1, 2)))
 assocplot(x)
-chisq.test(x)$p.value  # 卡方检验P值
+chisq.test(x)$p.value # 卡方检验P值
 ```
 
 关联图（Cohen-Friendly Association
@@ -337,8 +342,8 @@ usage(graphics:::cdplot.formula)
 
 (ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效。
 
-```{r cdplot,fig=TRUE,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)"}
-demo('cdplotDemo',package='MSG')
+```{r cdplot,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)"}
+demo("cdplotDemo", package = "MSG")
 ```
 
 
@@ -357,19 +362,24 @@ Line）表面上看起来是二维形式，但实际上展示的是三维数据�
 (ref:fig-contour-grid) 网格数据的示意图：体会 x、y 与 z 的对应关系
 
 
-```{r contour-grid,fig=TRUE,fig.width=4.8,fig.height=2.5,echo=FALSE,fig.cap="(ref:fig-contour-grid)",fig.scap="(ref:fig-contour-grid-s)"}
-par(mar = c(2.5, 3, 0.1, 0.1),mgp=c(1.5,.5,0))
-x=1:4;y=1:3
-z=rep(0,12)
-z[c(2,3,8,11,10,5)]=1
-z[c(6,7)]=2
-z[1]=5;z[4]=3;z[12]=4
-plot(expand.grid(x,y),xaxt='n',yaxt='n',type='n',xlab='x',ylab='y',xlim=c(0.5,4.5),ylim=c(.5,3.5),panel.first=grid())
-polygon(c(1,2,3,4,3,2),c(2,1,1,2,3,3),lty=2)
-segments(2,2,3,2)
-text(rep(x,3),rep(y,each=4),paste('z =',z),cex=1.5)
-axis(1,1:4,paste('x =',x))
-axis(2,1:3,paste('y =',y))
+```{r contour-grid,fig.width=4.8,fig.height=2.5,echo=FALSE,fig.cap="(ref:fig-contour-grid)",fig.scap="(ref:fig-contour-grid-s)"}
+par(mar = c(2.5, 3, 0.1, 0.1), mgp = c(1.5, .5, 0))
+x <- 1:4
+y <- 1:3
+z <- rep(0, 12)
+z[c(2, 3, 8, 11, 10, 5)] <- 1
+z[c(6, 7)] <- 2
+z[1] <- 5
+z[4] <- 3
+z[12] <- 4
+plot(expand.grid(x, y), xaxt = "n", yaxt = "n", 
+     type = "n", xlab = "x", ylab = "y",
+     xlim = c(0.5, 4.5), ylim = c(.5, 3.5), panel.first = grid())
+polygon(c(1, 2, 3, 4, 3, 2), c(2, 1, 1, 2, 3, 3), lty = 2)
+segments(2, 2, 3, 2)
+text(rep(x, 3), rep(y, each = 4), paste("z =", z), cex = 1.5)
+axis(1, 1:4, paste("x =", x))
+axis(2, 1:3, paste("y =", y))
 ```
 
 
@@ -396,9 +406,9 @@ usage(contourLines)
 (ref:fig-contour-pop) 2005 年中国 31 地区国民预期寿命和高学历人数密度等高图
 
 
-```{r contour-pop,fig=TRUE,fig.width=4,fig.height=3,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)"}
-par(mar=c(4,4,0.2,0.2))
-demo('contourPop',package='MSG')
+```{r contour-pop,fig.width=4,fig.height=3,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)"}
+par(mar = c(4, 4, 0.2, 0.2))
+demo("contourPop", package = "MSG")
 ```
 
 图 \@ref(fig:contour-pop)
@@ -412,8 +422,8 @@ demo('contourPop',package='MSG')
 
 
 ```{r contour-persp, fig.height=6,fig.width=7,fig.cap="(ref:fig-contour-persp)",fig.scap="(ref:fig-contour-persp-s)"}
-par(mar=rep(0,4))  # 继续前面的例子
-persp(est$x1, est$x2, est$fhat, shade = 0.75,border = NA, col = "lightblue", phi = 20, theta = 15,box = FALSE)
+par(mar = rep(0, 4)) # 继续前面的例子
+persp(est$x1, est$x2, est$fhat, shade = 0.75, border = NA, col = "lightblue", phi = 20, theta = 15, box = FALSE)
 ```
 
 在 **graphics** 包中还有一个类似的等高图函数 *filled.contour()*，它的原理完全类似，只是它用颜色来区分高度值的大小并且有颜色图例，看起来可能更美观一些，\@ref(filled-contour) 小节中我们会详细介绍。
@@ -429,7 +439,7 @@ Plot）的思想源自于统计学中的条件分布，即：给定某一个（�
 R中条件分割图的函数为 *coplot()*，其用法如下：
 
 ```{r coplot-usage}
-usage(coplot) 
+usage(coplot)
 usage(co.intervals)
 ```
 
@@ -447,17 +457,21 @@ co.intervals(1:10, number = 5, overlap = 0.5)
 
 (ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近。
 
-```{r coplot,fig=TRUE,fig.width=4.8,fig.height=4, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
-par(mar = rep(0,4),mgp=c(2,.5,0))
+```{r coplot,fig.width=4.8,fig.height=4, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
+par(mar = rep(0, 4), mgp = c(2, .5, 0))
 library(maps)
-coplot(lat ~ long | depth, data = quakes, number=4,
-ylim=c(-45,-10.72),panel=function(x, y, ...) {
-map("world2", regions=c("New Zealand", "Fiji"),
-add=TRUE, lwd=0.1, fill=TRUE, col="lightgray")
-text(180, -13, "Fiji", adj=1)
-text(170, -35, "NZ")
-points(x, y, col=rgb(0.2,0.2,0.2,.5))
-})
+coplot(lat ~ long | depth,
+  data = quakes, number = 4,
+  ylim = c(-45, -10.72), panel = function(x, y, ...) {
+    map("world2",
+      regions = c("New Zealand", "Fiji"),
+      add = TRUE, lwd = 0.1, fill = TRUE, col = "lightgray"
+    )
+    text(180, -13, "Fiji", adj = 1)
+    text(170, -35, "NZ")
+    points(x, y, col = rgb(0.2, 0.2, 0.2, .5))
+  }
+)
 ```
 
 
@@ -471,11 +485,11 @@ points(x, y, col=rgb(0.2,0.2,0.2,.5))
 
 (ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）。
 
-```{r curve,fig=TRUE,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)"}
-par(par(mar=c(4.5,4,0.2,0.2)), mfrow=c(2,1))
-chippy = function(x) sin(cos(x) * exp(-x/2))
+```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)"}
+par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
+chippy <- function(x) sin(cos(x) * exp(-x / 2))
 curve(chippy, -8, 7, n = 2008)
-curve(sin(x)/x,from=-20,to=20,n=200,xlab=latex2exp::TeX('$t$'),ylab=latex2exp::TeX('$\\varphi_{X}(t)$'))
+curve(sin(x) / x, from = -20, to = 20, n = 200, xlab = latex2exp::TeX("$t$"), ylab = latex2exp::TeX("$\varphi_{X}(t)$"))
 ```
 
 函数曲线图没有什么特殊之处，仅仅是一条曲线而已，R 专门提供了一个函数，目的是为了节省我们去使用低层作图函数（如 *lines()*）的精力和时间。利用这个函数，我们可以方便地对任何一元函数作出它在某段定义域上的曲线。
@@ -501,9 +515,9 @@ usage(curve)
 
 (ref:fig-dotchart) 弗吉尼亚死亡率数据的 Cleveland 点图
 
-```{r dotchart,fig=TRUE,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)"}
-par(mar=c(4,4,0.2,0.2))
-dotchart(t(VADeaths)[, 5:1],  col = brewer.pal(4,'Set1'),pch=19,cex=.65)
+```{r dotchart,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)"}
+par(mar = c(4, 4, 0.2, 0.2))
+dotchart(t(VADeaths)[, 5:1], col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
 ```
 
 R中点图的函数为*dotchart()*，用法如下：
@@ -529,7 +543,7 @@ Plot），与等高图的原理完全类似，只是颜色等高图用不同颜�
 (ref:fig-filled-contour) 新西兰 Maunga Whau 火山高度数据颜色等高图
 
 ```{r filled-contour,fig.height=4.3,fig.width=7,results="hide",fig.cap="(ref:fig-filled-contour)",fig.scap="(ref:fig-filled-contour-s)"}
-demo('volcano',package='MSG')
+demo("volcano", package = "MSG")
 ```
 
 R中的颜色等高图函数为 *filled.contour()*，其用法如下：
@@ -623,9 +637,9 @@ usage(fourfoldplot)
 
 (ref:fig-fourfoldplot) 加州伯克利分校录取数据四瓣图
 
-```{r fourfoldplot,fig=TRUE,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-fourfoldplot)",fig.scap="(ref:fig-fourfoldplot-s)"}
-ftable(UCBAdmissions)  # 以紧凑形式展现出来的UCB录取数据
-fourfoldplot(UCBAdmissions, mfcol = c(2, 3))  # 2行3列排版
+```{r fourfoldplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-fourfoldplot)",fig.scap="(ref:fig-fourfoldplot-s)"}
+ftable(UCBAdmissions) # 以紧凑形式展现出来的UCB录取数据
+fourfoldplot(UCBAdmissions, mfcol = c(2, 3)) # 2行3列排版
 ```
 
 图 \@ref(fig:fourfoldplot)
@@ -635,7 +649,7 @@ fourfoldplot(UCBAdmissions, mfcol = c(2, 3))  # 2行3列排版
 
 
 ```{r UCB-OR}
-(x = apply(UCBAdmissions, 3, function(x) (x[1, 1] * x[2, 2])/(x[1, 2] * x[2, 1])))
+(x <- apply(UCBAdmissions, 3, function(x) (x[1, 1] * x[2, 2]) / (x[1, 2] * x[2, 1])))
 ```
 
 
@@ -645,9 +659,11 @@ C 和 E 系的优比大于1，观察图 \@ref(fig:fourfoldplot)
 其次我们完全可以将优比的置信区间分别算出来，看它们是否包含数值1：
 
 ```{r UCB-CI}
-y = qnorm(0.975) * sqrt(apply(UCBAdmissions, 3,function(x) {sum(1/x)})) 
-conf = exp(cbind(log(x) - y, log(x) + y))
-colnames(conf) = c("2.5%", "97.5%")
+y <- qnorm(0.975) * sqrt(apply(UCBAdmissions, 3, function(x) {
+  sum(1 / x)
+}))
+conf <- exp(cbind(log(x) - y, log(x) + y))
+colnames(conf) <- c("2.5%", "97.5%")
 conf
 ```
 
@@ -656,7 +672,7 @@ conf
 
 ```{r UCB-chisq}
 # 对每个系的录取数据进行卡方检验分别得到P值
-round(apply(UCBAdmissions, 3,function(x) chisq.test(x)$p.value), 3)
+round(apply(UCBAdmissions, 3, function(x) chisq.test(x)$p.value), 3)
 ```
 
 ## 颜色图 {#image}
@@ -665,9 +681,10 @@ round(apply(UCBAdmissions, 3,function(x) chisq.test(x)$p.value), 3)
 
 (ref:fig-mage24) 颜色图中色块与数值的对应关系：矩阵中数值越大，色块越趋近于白色，反之趋近红色。
 
-```{r mage24,fig=TRUE,fig.width=4,fig.height=1.2,fig.cap="(ref:fig-mage24)",fig.scap="(ref:fig-mage24-s)"}
-par(mar = rep(0, 4)); x = matrix(sample(24), 8)
-image(1:8, 1:3, x, col = heat.colors(24),axes = FALSE, ann = FALSE)
+```{r mage24,fig.width=4,fig.height=1.2,fig.cap="(ref:fig-mage24)",fig.scap="(ref:fig-mage24-s)"}
+par(mar = rep(0, 4))
+x <- matrix(sample(24), 8)
+image(1:8, 1:3, x, col = heat.colors(24), axes = FALSE, ann = FALSE)
 text(rep(1:8, 3), rep(1:3, each = 8), as.vector(x))
 ```
 
@@ -688,12 +705,16 @@ usage(image.default)
 
 (ref:fig-image) 新西兰 Maunga Whau 火山高度颜色图：图 \@ref(fig:persp) 提供了真实的火山立体图形；读者可以到作者个人主页下载原图并放大8倍以上查看颜色图和颜色等高图的区别：颜色图是用颜色填充方块，而颜色等高图则是用颜色填充等高线之间的区域。
 
-```{r image,fig.height=6,fig.width=6,keep.source=TRUE,tidy=FALSE,fig.cap="(ref:fig-image)",fig.scap="(ref:fig-image-s)"}
+```{r image,fig.height=6,fig.width=6,fig.cap="(ref:fig-image)",fig.scap="(ref:fig-image-s)"}
 par(mar = rep(0, 4), ann = FALSE)
-x = 10 * (1:nrow(volcano)); y = 10 * (1:ncol(volcano))
+x <- 10 * (1:nrow(volcano))
+y <- 10 * (1:ncol(volcano))
 image(x, y, volcano, col = terrain.colors(100), axes = FALSE)
-contour(x, y, volcano, levels = seq(90, 200, by = 5),
-    add = TRUE, col = "peru"); box()
+contour(x, y, volcano,
+  levels = seq(90, 200, by = 5),
+  add = TRUE, col = "peru"
+)
+box()
 ```
 
 这里我们仍然以新西兰 Maunga Whau 火山高度数据 `volcano` 为例。图  \@ref(fig:image)
@@ -710,10 +731,10 @@ contour(x, y, volcano, levels = seq(90, 200, by = 5),
 
 (ref:fig-matplot) 用矩阵图画出的一系列正弦曲线：每条曲线都有不同的点线样式和颜色。
 
-```{r matplot,fig=TRUE,fig.width=4.8,fig.height=3.5,fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
-sines = outer(1:20, 1:4, function(x, y) sin(x/20 *pi * y))
-par(mar=c(1,4,.1,.1))
-matplot(sines, type = "b", pch = 21:24, col = 2:5,bg = 2:5)
+```{r matplot,fig.width=4.8,fig.height=3.5,fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
+sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
+par(mar = c(1, 4, .1, .1))
+matplot(sines, type = "b", pch = 21:24, col = 2:5, bg = 2:5)
 # 数据矩阵的前6行
 round(head(sines), 5)
 ```
@@ -799,8 +820,8 @@ ftable(Titanic)
 (ref:fig-mosaicplot) 泰坦尼克号乘客生存数据马赛克图：按性别、年龄和船舱等级划分
 
 ```{r mosaicplot,fig=T,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
-par(mar=c(2,3.5,.1,.1))
-mosaicplot(Titanic, shade = TRUE, main='')
+par(mar = c(2, 3.5, .1, .1))
+mosaicplot(Titanic, shade = TRUE, main = "")
 ```
 
 
@@ -828,14 +849,14 @@ usage(graphics:::pairs.formula)
 
 ```{r define-pairs-panel}
 # 观察如何使用hist()做计算并用rect()画图
-panel.hist = function(x, ...) {
-    usr = par("usr")
-    on.exit(par(usr))
-    par(usr = c(usr[1:2], 0, 1.5))
-    h = hist(x, plot = FALSE)
-    nB = length(breaks <- h$breaks)
-    y = h$counts/max(h$counts)
-    rect(breaks[-nB], 0, breaks[-1], y, col = "beige")
+panel.hist <- function(x, ...) {
+  usr <- par("usr")
+  on.exit(par(usr))
+  par(usr = c(usr[1:2], 0, 1.5))
+  h <- hist(x, plot = FALSE)
+  nB <- length(breaks <- h$breaks)
+  y <- h$counts / max(h$counts)
+  rect(breaks[-nB], 0, breaks[-1], y, col = "beige")
 }
 ```
 
@@ -843,12 +864,16 @@ panel.hist = function(x, ...) {
 
 (ref:fig-pairs) 鸢尾花数据的散点图矩阵：上三角区域为不同样式的点，对应着不同种类的鸢尾花，对角线的直方图展示了花瓣花萼长宽的一维分布，下三角区域用平滑曲线显示了变量之间的关系。
 
-```{r pairs,fig=TRUE,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
-idx = as.integer(iris[["Species"]])
-pairs(iris[1:4], upper.panel = function(x, 
-    y, ...) points(x, y, pch = c(17, 16, 6)[idx], col = idx), pch = 20, oma = c(2, 
-        2, 2, 2), 
-    lower.panel = panel.smooth, diag.panel = panel.hist) 
+```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
+idx <- as.integer(iris[["Species"]])
+pairs(iris[1:4],
+  upper.panel = function(x,
+                           y, ...) points(x, y, pch = c(17, 16, 6)[idx], col = idx), pch = 20, oma = c(
+    2,
+    2, 2, 2
+  ),
+  lower.panel = panel.smooth, diag.panel = panel.hist
+)
 ```
 
 
@@ -868,12 +893,16 @@ pairs(iris[1:4], upper.panel = function(x,
 
 (ref:fig-persp) 新西兰 Maunga Whau 火山的三维透视图
 
-```{r persp,fig.height=4,fig.width=7,tidy=FALSE,keep.source=TRUE,echo=FALSE,fig.cap="(ref:fig-persp)",fig.scap="(ref:fig-persp-s)"}
-z = volcano; x = 4*(1:nrow(z)); y = 4*(1:ncol(z))
+```{r persp,fig.height=4,fig.width=7,echo=FALSE,fig.cap="(ref:fig-persp)",fig.scap="(ref:fig-persp-s)"}
+z <- volcano
+x <- 4 * (1:nrow(z))
+y <- 4 * (1:ncol(z))
 par(mar = rep(0, 4))
-persp(x, y, z, theta = 150, phi = 30, col = "green3",
-    scale = FALSE, ltheta = -120, shade = 0.75, border = NA,
-    box = FALSE)
+persp(x, y, z,
+  theta = 150, phi = 30, col = "green3",
+  scale = FALSE, ltheta = -120, shade = 0.75, border = NA,
+  box = FALSE
+)
 ```
 
 相比其二维平面图形来说，三维透视图（Perspective
@@ -900,25 +929,30 @@ Whau 火山的"真面目"，读者不妨将这幅立体图形与前面章节中�
 (ref:fig-persp-add) 向三维透视图中添加图形元素的展示：*trans3d()* 函数的应用。
 
 ```{r persp-add,fig.width=6,fig.height=4,echo=FALSE,fig.cap="(ref:fig-persp-add)",fig.scap="(ref:fig-persp-add-s)"}
-     x <- seq(-10, 10, length= 30)
-     y <- x
-     f <- function(x,y) { r <- sqrt(x^2+y^2); 10 * sin(r)/r }
-     z <- outer(x, y, f)
-     z[is.na(z)] <- 1
-par(mar=c(4,4,0.2,0.2))
-     persp(x, y, z, theta = 30, phi = 30, expand = 0.5, col = "lightblue",
-           ltheta = 120, shade = 0.75, ticktype = "detailed",
-           xlab = "X", ylab = "Y", zlab = "Sinc( r )"
-     ) -> res
-     xE <- c(-10,10); xy <- expand.grid(xE, xE)
-     points(trans3d(xy[,1], xy[,2], 6, pmat = res), col = 2, pch =16)
-     lines (trans3d(x, y=10, z= 6 + sin(x), pmat = res), col = 3)
-     
-     phi <- seq(0, 2*pi, len = 201)
-     r1 <- 7.725 # radius of 2nd maximum
-     xr <- r1 * cos(phi)
-     yr <- r1 * sin(phi)
-     lines(trans3d(xr,yr, f(xr,yr), res), col = "pink", lwd = 2)
+x <- seq(-10, 10, length = 30)
+y <- x
+f <- function(x, y) {
+  r <- sqrt(x^2 + y^2)
+  10 * sin(r) / r
+}
+z <- outer(x, y, f)
+z[is.na(z)] <- 1
+par(mar = c(4, 4, 0.2, 0.2))
+persp(x, y, z,
+  theta = 30, phi = 30, expand = 0.5, col = "lightblue",
+  ltheta = 120, shade = 0.75, ticktype = "detailed",
+  xlab = "X", ylab = "Y", zlab = "Sinc( r )"
+) -> res
+xE <- c(-10, 10)
+xy <- expand.grid(xE, xE)
+points(trans3d(xy[, 1], xy[, 2], 6, pmat = res), col = 2, pch = 16)
+lines(trans3d(x, y = 10, z = 6 + sin(x), pmat = res), col = 3)
+
+phi <- seq(0, 2 * pi, len = 201)
+r1 <- 7.725 # radius of 2nd maximum
+xr <- r1 * cos(phi)
+yr <- r1 * sin(phi)
+lines(trans3d(xr, yr, f(xr, yr), res), col = "pink", lwd = 2)
 ```
 
 
@@ -945,11 +979,11 @@ usage(plot.design)
 
 (ref:fig-plot-design) 经纱断裂数据的因素效应图：每种羊毛（A、B）和拉力强度（L、M、H）下断裂数目的均值（上图）和中位数（下图）。
 
-```{r plot-design,fig=TRUE,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)"}
-par(mfrow=c(2,1))
-par(mar=c(4.5,4,0.2,0.2))
-plot.design(warpbreaks, col = "blue") 
-plot.design(warpbreaks, fun = median, col = "blue") 
+```{r plot-design,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)"}
+par(mfrow = c(2, 1))
+par(mar = c(4.5, 4, 0.2, 0.2))
+plot.design(warpbreaks, col = "blue")
+plot.design(warpbreaks, fun = median, col = "blue")
 ```
 
 
@@ -957,7 +991,7 @@ plot.design(warpbreaks, fun = median, col = "blue")
 。上图中的刻度线展示出了不同羊毛种类和拉力强度下断裂根数的均值，下图展示的是中位数，两幅图有一定差异，说明数据的分布不对称（中位数和均值不相等）。我们也可以通过方差分析模型查看这两种因素的影响：
 
 ```{r warpbreaks-aov}
-summary(aov(breaks~wool + tension, data = warpbreaks))
+summary(aov(breaks ~ wool + tension, data = warpbreaks))
 ```
 
 
@@ -966,8 +1000,8 @@ summary(aov(breaks~wool + tension, data = warpbreaks))
 总的来说，因素效应图是一种非常初级的统计图形，在数据的探索性分析中可能会起到一定作用。有时我们完全可以用一些分类汇总函数去计算各因素的效应（各组均值），例如分别按羊毛种类和拉力强度计算断裂数目的均值：
 
 ```{r warpbreaks-mean}
-with(warpbreaks,tapply(breaks, wool,mean))
-with(warpbreaks,tapply(breaks, tension,mean))
+with(warpbreaks, tapply(breaks, wool, mean))
+with(warpbreaks, tapply(breaks, tension, mean))
 ```
 
 
@@ -980,9 +1014,10 @@ with(warpbreaks,tapply(breaks, tension,mean))
 
 (ref:fig-rug) 带坐标轴须的喷泉间隔时间密度曲线图
 
-```{r rug,fig=TRUE,fig.width=4.8,fig.height=2,keep.source=TRUE,tidy=FALSE,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
+```{r rug,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
 par(mar = c(3, 4, 0.4, 0.1))
-plot(density(faithful$eruptions), main = ""); rug(faithful$eruptions)
+plot(density(faithful$eruptions), main = "")
+rug(faithful$eruptions)
 ```
 
 
@@ -1011,8 +1046,9 @@ usage(rug)
 
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）。
 
-```{r smoothScatter,fig.width=5,fig.height=5,tidy =FALSE,keep.source=TRUE,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
-par(mar = c(4, 4, 0.3, 0.1)); smoothScatter(BinormCircle)
+```{r smoothScatter,fig.width=5,fig.height=5,tidy =FALSE,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
+par(mar = c(4, 4, 0.3, 0.1))
+smoothScatter(BinormCircle)
 ```
 
 从计算的角度来说，我们首先将平面划分为$n\times n$的网格，计算每个网格点上的二维密度值，然后用颜色将密度值大小表达出来。关于这一点，可将图 \@ref(fig:smoothScatter)
@@ -1044,7 +1080,6 @@ R中棘状图的函数为 *spineplot()* ，其用法如下：
 ```{r spineplot-usage}
 usage(graphics:::spineplot.default)
 usage(graphics:::spineplot.formula)
-
 ```
 
 棘状图函数是泛型函数，可以直接接受数据或者公式作为参数。 x 可以是一个分类或数值向量（自变量），也可以直接输入一个列联表，后一种情况下则不需要再输入 y 参数； y 为因变量，是一个分类变量； breaks 在自变量是连续变量时给定自变量的分段区间或者分段方法，这个参数最终被传递给直方图函数 *hist()* （回顾\@ref(hist) 小节）以便计算自变量的密度； off 参数指定矩形竖条之间的间距，对于连续自变量来说， off 默认为0，对于离散自变量， off 默认为 2； col 用来设定不同类别的 y 的颜色。
@@ -1053,10 +1088,10 @@ usage(graphics:::spineplot.formula)
 
 (ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 (60, 75] 区间内。
 
-```{r spineplot,fig=TRUE,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
+```{r spineplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
 # 数据取自条件密度图一节
-par(mar=c(4,4,.5,2))
-t(x <- spineplot(fail~temperature, col = c("lightblue", "red")))
+par(mar = c(4, 4, .5, 2))
+t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
 ```
 
 图 \@ref(fig:spineplot)
@@ -1068,11 +1103,11 @@ t(x <- spineplot(fail~temperature, col = c("lightblue", "red")))
 
 (ref:fig-stars) Motor Trend 杂志 1974 年汽车数据的星状图
 
-```{r stars,fig=TRUE,fig.width=5,fig.height=4.8,fig.cap="(ref:fig-stars)",fig.scap="(ref:fig-stars-s)"}
+```{r stars,fig.width=5,fig.height=4.8,fig.cap="(ref:fig-stars)",fig.scap="(ref:fig-stars-s)"}
 # 预设调色板，stars()默认用整数来表示颜色
 palette(rainbow(12, s = 0.6, v = 0.75))
-stars(mtcars[, 1:7], len = 0.8, key.loc = c(14, 1.5), ncol=7,main = "", draw.segments = TRUE) 
-palette('default')  # 恢复默认调色板
+stars(mtcars[, 1:7], len = 0.8, key.loc = c(14, 1.5), ncol = 7, main = "", draw.segments = TRUE)
+palette("default") # 恢复默认调色板
 ```
 
 
@@ -1092,7 +1127,7 @@ usage(stars)
 
 ```{r mtcars-data}
 # mtcars数据前7列的前6行
-head(mtcars[,1:7])
+head(mtcars[, 1:7])
 ```
 
 ## 带状图 {#stripchart}
@@ -1101,12 +1136,12 @@ head(mtcars[,1:7])
 
 (ref:fig-stripchart) 各种杀虫剂下昆虫数目的带状图：堆砌和随机打乱的带状图。
 
-```{r stripchart,fig=TRUE,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
-layout(matrix(1:2, 2), height = c(1.5,1))
-par(mar=c(4,4,0.2,0.2))
-boxplot(count~spray, data = InsectSprays, horizontal = TRUE,border = "red", col = "lightgreen", at = 1:6 - 0.3)
-stripchart(count~spray, data = InsectSprays, method = "stack",add = TRUE)
-stripchart(count~spray, data = InsectSprays, method = "jitter")
+```{r stripchart,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
+layout(matrix(1:2, 2), height = c(1.5, 1))
+par(mar = c(4, 4, 0.2, 0.2))
+boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, border = "red", col = "lightgreen", at = 1:6 - 0.3)
+stripchart(count ~ spray, data = InsectSprays, method = "stack", add = TRUE)
+stripchart(count ~ spray, data = InsectSprays, method = "jitter")
 ```
 
 
@@ -1135,9 +1170,9 @@ usage(graphics:::stripchart.formula)
 
 (ref:fig-sunflowerplot) 鸢尾花花瓣长和宽的向日葵散点图
 
-```{r sunflowerplot,fig=TRUE,fig.width=4,fig.height=4,fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
-par(mar=c(4,4,0.2,0.2))
-sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold") 
+```{r sunflowerplot,fig.width=4,fig.height=4,fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
+par(mar = c(4, 4, 0.2, 0.2))
+sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 ```
 
 向日葵散点图（Sunflower Scatter
@@ -1196,8 +1231,8 @@ boxplots
 
 (ref:fig-symbols) 符号图提供的六种基本符号
 
-```{r symbols,fig=TRUE,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
-demo('symbols_all', echo=FALSE, package='MSG')
+```{r symbols,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
+demo("symbols_all", echo = FALSE, package = "MSG")
 ```
 
 
@@ -1208,7 +1243,7 @@ demo('symbols_all', echo=FALSE, package='MSG')
 
 
 ```{r ChinaPop-data}
-source(system.file('extdata','ChinaPop.R',package='MSG'))
+source(system.file("extdata", "ChinaPop.R", package = "MSG"), encoding = "UTF-8")
 head(ChinaPop)
 ```
 
@@ -1216,8 +1251,8 @@ head(ChinaPop)
 
 (ref:fig-symbols-pop) 2005 年中国 31 地区五大国民素质特征分布温度计图
 
-```{r symbols-pop,fig=TRUE,fig.width=4.8,fig.height=5,results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
-demo('ChinaPop', package='MSG')
+```{r symbols-pop,fig.width=4.8,fig.height=5,results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
+demo("ChinaPop", package = "MSG")
 ```
 
 
@@ -1229,13 +1264,13 @@ demo('ChinaPop', package='MSG')
 
 (ref:fig-pie-chart) 各类馅饼销售数据的饼图：对比上面的饼图和下面的点图以及条形图，人眼对角度或比例的感知能力是否弱于对长度的感知能力？
 
-```{r pie-chart,fig=TRUE,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)"}
-layout(matrix(c(1, 2, 1, 3), 2))  # 拆分作图区域
-par(mar=c(4,4,0.2,0.2))
-pie.sales = c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
-names(pie.sales) = c("Blueberry", "Cherry", "Apple","Boston Cream", "Other", "Vanilla Cream")
-pie.col = c("purple", "violetred1", "green3", "cornflowerblue","cyan", "white")
-pie.sales = sort(pie.sales,decreasing=TRUE)  # 排序有助于可读性
+```{r pie-chart,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)"}
+layout(matrix(c(1, 2, 1, 3), 2)) # 拆分作图区域
+par(mar = c(4, 4, 0.2, 0.2))
+pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
+names(pie.sales) <- c("Blueberry", "Cherry", "Apple", "Boston Cream", "Other", "Vanilla Cream")
+pie.col <- c("purple", "violetred1", "green3", "cornflowerblue", "cyan", "white")
+pie.sales <- sort(pie.sales, decreasing = TRUE) # 排序有助于可读性
 pie(pie.sales, col = pie.col)
 dotchart(pie.sales, xlim = c(0, 0.3))
 barplot(pie.sales, col = pie.col, horiz = TRUE, names.arg = "", space = 0.5)
@@ -1275,10 +1310,10 @@ usage(heatmap)
 
 (ref:fig-heatmap) Motor Trend 杂志 1974 年汽车数据的热图
 
-```{r heatmap,fig=TRUE,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-heatmap)",fig.scap="(ref:fig-heatmap-s)"}
+```{r heatmap,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-heatmap)",fig.scap="(ref:fig-heatmap-s)"}
 # 用极端化调色板
 library(RColorBrewer)
-heatmap(as.matrix(mtcars), col = brewer.pal(9,'RdYlBu'), scale="column", margins =c(4,8))
+heatmap(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"), scale = "column", margins = c(4, 8))
 ```
 
 图 \@ref(fig:heatmap) 展示了 Motor Trend 杂志1974年汽车数据的热图。在图 \@ref(fig:stars)
@@ -1315,12 +1350,12 @@ usage(interaction.plot)
 
 (ref:fig-interaction-plot) 法国食道癌数据的交互效应图：各饮酒组的折线走势大致一样，说明交互作用很微弱。
 
-```{r interaction-plot,fig=TRUE,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)"}
-par(mar=c(4,4,0.2,0.2))
+```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)"}
+par(mar = c(4, 4, 0.2, 0.2))
 with(esoph, {
-  interaction.plot(agegp, alcgp, ncases/(ncases+ncontrols), trace.label='alcohol',fixed=TRUE,xlab='Age',ylab='Cancer Proportion')
-# 方差分析，交互项系数不显著
-summary(aov(ncases/(ncases+ncontrols)~agegp*alcgp))
+  interaction.plot(agegp, alcgp, ncases / (ncases + ncontrols), trace.label = "alcohol", fixed = TRUE, xlab = "Age", ylab = "Cancer Proportion")
+  # 方差分析，交互项系数不显著
+  summary(aov(ncases / (ncases + ncontrols) ~ agegp * alcgp))
 })
 ```
 
@@ -1336,8 +1371,8 @@ summary(aov(ncases/(ncases+ncontrols)~agegp*alcgp))
 # ddply在plyr包中，cast在reshape包中
 library(plyr)
 library(reshape)
-tbl=ddply(esoph,agegp~alcgp,summarise,mean(ncases/(ncases + ncontrols)))
-cast(tbl,agegp~alcgp)
+tbl <- ddply(esoph, agegp ~ alcgp, summarise, mean(ncases / (ncases + ncontrols)))
+cast(tbl, agegp ~ alcgp)
 ```
 
 ## QQ 图 {#qqplot}
@@ -1348,9 +1383,9 @@ Plots）来检查数据是否服从某种分布。QQ图的原理并不复杂：�
 
 ```{r quantile-sim}
 # 从N(0, 1)中生成1000个随机数的分位数
-quantile(rnorm(1000), probs=seq(.1,.9,.2))
+quantile(rnorm(1000), probs = seq(.1, .9, .2))
 # 真实的分位数
-qnorm(seq(0.1,.9,.2))
+qnorm(seq(0.1, .9, .2))
 ```
 
 以上数据的 5 个分位数和理论分位数都比较接近，读者可以模拟其它分布，例如从卡方分布中生成随机数，看其分位数是多少，与正态分布分位数差异如何。
@@ -1370,10 +1405,12 @@ usage(qqline)
 
 (ref:fig-qqnorm) 喷泉间隔时间的正态分布 QQ 图（左图）及数据密度曲线和实际正态分布密度曲线（右图）。
 
-```{r qqnorm,fig=TRUE,fig.width=4.8,fig.height=2.5,tidy=FALSE,keep.source=TRUE,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
-par(mfrow = c(1, 2)); par(mar=c(4,4,0.2,0.2))
-x = scale(geyser$waiting)
-qqnorm(x, cex = 0.7, asp = 1, main = ""); abline(0, 1)
+```{r qqnorm,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
+par(mfrow = c(1, 2))
+par(mar = c(4, 4, 0.2, 0.2))
+x <- scale(geyser$waiting)
+qqnorm(x, cex = 0.7, asp = 1, main = "")
+abline(0, 1)
 plot(density(x), main = "", xlim = range(x))
 curve(dnorm, from = -3, to = 3, lty = 2, add = TRUE)
 ```
@@ -1395,11 +1432,11 @@ QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它�
 
 (ref:fig-survival) 急性髓细胞白血病病人生存函数图
 
-```{r survival,fig=TRUE,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)"}
+```{r survival,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)"}
 library(survival)
-leukemia.surv = survfit(Surv(time, status)~x, data = aml)
+leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 plot(leukemia.surv, lty = 1:2, xlab = "time")
-legend('topright', c("Maintenance", "No Maintenance"),lty = 1:2,bty='n')
+legend("topright", c("Maintenance", "No Maintenance"), lty = 1:2, bty = "n")
 ```
 
 
@@ -1432,7 +1469,7 @@ usage(survival:::plot.survfit)
 Leukemia）数据`aml`的生存函数图，该数据有一个分组变量`x`表示病人是否接受了化疗，从图中可以看出，接受化疗的病人生存函数的下降速度比没接受化疗的病人要慢，表明化疗还是有一定作用的。进一步我们可以用对数秩检验知道这两组病人的生存时间在10%的显著水平下有显著差异：
 
 ```{r survdiff-test}
-survdiff(Surv(time, status)~x, data = aml)
+survdiff(Surv(time, status) ~ x, data = aml)
 ```
 
 
@@ -1463,10 +1500,11 @@ usage(rpart:::plot.rpart)
 
 (ref:fig-rpart) 脊椎矫正手术结果的分类树图
 
-```{r rpart,fig=TRUE,fig.width=4,fig.height=2.3,keep.source=TRUE,tidy=FALSE,fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
-fit = rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
+```{r rpart,fig.width=4,fig.height=2.3,fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
+fit <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
 par(mar = rep(1, 4), xpd = TRUE)
-plot(fit, branch = 0.7); text(fit, use.n = TRUE, digits = 7)
+plot(fit, branch = 0.7)
+text(fit, use.n = TRUE, digits = 7)
 ```
 
 我们还可以将叶节点的信息进一步扩充展示，例如，对于连续型因变量，我们可以将每个叶节点上的样本因变量分布用箱线图或直方图或任何其它展示密度的工具在另一幅图上对应表达出来，而对于离散型因变量，则可以利用条形图等工具将样本因变量的频数表达出来。图形的布局可以利用 *layout()* 函数（\@ref(multipage) 小节）等一页多图的方法来实现。关于这样的例子，读者可以参考 @Everitt06 或 @Xie07 等。
@@ -1488,12 +1526,16 @@ usage(vioplot)
 
 (ref:fig-vioplot) 三组双峰数据的小提琴图比较
 
-```{r vioplot,fig=TRUE,fig.width=4.8,fig.height=4,keep.source=TRUE,tidy=FALSE,fig.cap="(ref:fig-vioplot)",fig.scap="(ref:fig-vioplot-s)"}
-f = function(mu1, mu2) 
-    c(rnorm(300, mu1, 0.5), rnorm(200,mu2, 0.5))
-x1 = f(0, 2); x2 = f(2, 3.5); x3 = f(0.5, 2)
-vioplot(x1, x2, x3, horizontal = TRUE, col = "bisque",
-    names = c('A','B','C'))
+```{r vioplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-vioplot)",fig.scap="(ref:fig-vioplot-s)"}
+f <- function(mu1, mu2)
+  c(rnorm(300, mu1, 0.5), rnorm(200, mu2, 0.5))
+x1 <- f(0, 2)
+x2 <- f(2, 3.5)
+x3 <- f(0.5, 2)
+vioplot(x1, x2, x3,
+  horizontal = TRUE, col = "bisque",
+  names = c("A", "B", "C")
+)
 ```
 
 
@@ -1525,8 +1567,8 @@ usage(map)
 
 (ref:fig-map) 2005 年各国农业进出口竞争力地图：农业出口强国在南美，弱国在北非。
 
-```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)"}
-demo('AgriComp', package='MSG')
+```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)",error=TRUE}
+demo("AgriComp", package = "MSG")
 ```
 
 图 \@ref(fig:map)
@@ -1626,9 +1668,9 @@ usage(faces2)
 
 (ref:fig-faces2) 部分汽车数据的脸谱图：谁的脸宽？谁的鼻子长？谁的眼睛大？
 
-```{r faces2,fig=TRUE,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
+```{r faces2,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
 library(TeachingDemos)
-faces2(mtcars[,c('hp','disp','mpg','qsec','wt')],which=c(14,9,11,6,5))
+faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5))
 ```
 
 
@@ -1646,37 +1688,37 @@ Continental 等车最重（脸胖）。这里我们尽量将这几个汽车性�
 
 平行坐标 [@Inselberg07] 是对通常的笛卡尔坐标思维的替代，我们知道，笛卡尔坐标系通常情况下最多只能容纳两个变量（横轴 x 纵轴 y），所以在这样的坐标系下无法直接画出多个变量，当然，前面提到了很多变通方法，使得多元数据可以在笛卡尔坐标系下被表达出来，如\@ref(symbols) 小节的符号图。平行坐标系的基本做法是将相互垂直的坐标轴改成平行的坐标轴，由于平面上可以容纳很多平行线，所以平行坐标系中可以放置多个变量。在每根坐标轴上，根据变量数值大小描点，如数值越大则点的位置越高，而对于一行观测数据，由于它有多列，每一列都相应对应着一根平行线上的点，最终我们把这些点用折线连起来，也就形成了构成平行坐标图的基本元素。类似地，多行数据就能描绘出多条折线，平行坐标图就是由这些折线加上相应的平行坐标轴构成的。
 
-在 R 中有很多包都可以画平行坐标图，例如 **ggplot2** 包 [@ggplot2] 中的 *ggpcp()* 函数、**MASS** 包 [@Venables02] 中的 *parcoord()* 函数和 **iplots** 包 [@iplots] 中的 *ipcp()* 函数等。由于后面 \@ref(ggplot2) 小节还会专门介绍 **ggplot2**，这里我们先看看这个包中的平行坐标图。 *ggpcp()* 的用法如下：
+在 R 中有很多包都可以画平行坐标图，例如 **GGally** 包 [@GGally] 中的 *ggparcoord()* 函数、**MASS** 包 [@Venables02] 中的 *parcoord()* 函数和 **iplots** 包 [@iplots] 中的 *ipcp()* 函数等。由于后面 \@ref(ggplot2) 小节还会专门介绍 **ggplot2**，这里我们先看看这个包中的平行坐标图。 *ggparcoord()* 的用法如下：
 
-```{r ggpcp-usage}
-require(GGally)
+```{r ggparcoord-usage}
+library(GGally)
 usage(ggparcoord)
 ```
 
 其中 data 是一个数据框，含有多列变量； vars 是要参与画图的列名，这个列名的顺序也决定了每根平行坐标轴的摆放顺序； scale 指定标准化数据的方法，可以将列标准化到 [0, 1] 区间上（默认），也可以标准化为"均值为 0、方差为 1"的向量，或者不进行标准化。
 
-(ref:fig-ggpcp-s) 鸢尾花数据的平行坐标图
+(ref:fig-ggparcoord-s) 鸢尾花数据的平行坐标图
 
-(ref:fig-ggpcp) 鸢尾花数据的平行坐标图：花萼长宽和花瓣长宽以及花的种类。
+(ref:fig-ggparcoord) 鸢尾花数据的平行坐标图：花萼长宽和花瓣长宽以及花的种类。
 
-```{r ggpcp,fig=TRUE,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggpcp)",fig.scap="(ref:fig-ggpcp-s)"}
-ggparcoord(iris, columns = 1:4, groupColumn = 5, scale = 'uniminmax') + geom_line(size=1.2)
+```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)"}
+ggparcoord(iris, columns = 1:4, groupColumn = 5, scale = "uniminmax") + geom_line(size = 1.2)
 ```
 
 
-图 \@ref(fig:ggpcp) 是鸢尾花数据的平行坐标图，数据经过了默认的标准化，取值都在 [0,
+图 \@ref(fig:ggparcoord) 是鸢尾花数据的平行坐标图，数据经过了默认的标准化，取值都在 [0,
 1] 区间上；其中每条折线代表一朵花。从图中我们可以看出，setosa 这种花的花瓣较小，而另外两种花的花瓣都较大；但 setosa 的花萼特别宽；versicolor 这种花总体来说和 virginica 比较像，只是相对来说尺寸小一些。另外，从图中我们也可以看出相邻变量之间的正向或负向相关关系，例如，由于花萼宽（Sepal.Width）和花瓣长（Petal.Length）两个变量间的线段有很多相交，说明这两个变量有负相关关系，而对于 setosa 这类花来说，由于花萼长和花萼宽这两个变量之间的线段都朝向相同的方向，因此这两个变量在 setosa 这类花中有正向相关关系。这些结论都可以用数值方式验证：
 
 ```{r iris-cor}
 # 第2、3列的相关系数（花萼宽和花瓣长）
-cor(iris[,2:3])
+cor(iris[, 2:3])
 # 第1、2列在setosa下的相关系数（先对数据取子集）
-cor(subset(iris,Species=='setosa',1:2))
+cor(subset(iris, Species == "setosa", 1:2))
 ```
 
 为什么平行坐标图中线段相交则意味着负相关、平行则意味着正相关呢？我们退回到平行坐标图的作法就很容易理解了：如果线段大量相交，那么说明第一个变量的大值对应着第二个变量的小值，反之亦然，此大彼小，此小彼大，当然就是负相关了；正相关同理。
 
-此外，由于平行坐标图画出了多个的变量，有时候我们可以借助图中折线的位置来观察聚类现象。若图 \@ref(fig:ggpcp)
+此外，由于平行坐标图画出了多个的变量，有时候我们可以借助图中折线的位置来观察聚类现象。若图 \@ref(fig:ggparcoord)
 中没有加以颜色标注，读者应该至少能感觉出所有的数据至少可以分为两类（setosa 和其它），因为花瓣形状小的那些话很可能是单独的一类花，对应着图中偏下的那一簇折线。后面调和曲线图（\@ref(andrews-curve) 小节）与平行坐标图有着相似的外观，它更能体现这里的聚类思想。
 
 需要提醒读者注意的是，平行坐标图中的变量顺序非常重要，它直接影响了图的外观，也限制了我们对数据的观察，尤其是相关关系，因为从平行坐标图中我们只可能观察相邻变量之间的关系。有时候将变量顺序交换一下，则也许可以观察到新的信息。
@@ -1708,6 +1750,7 @@ f_{i}(t)=\begin{cases}
 我们尚未发现画调和曲线图的 R 包，因此自行编写了一个函数收录在 **MSG** 包 [@MSG] 中，即 *andrews\_curve()*。它的用法如下：
 
 ```{r andrews-curve-usage}
+library(MSG)
 usage(andrews_curve)
 ```
 
@@ -1718,15 +1761,14 @@ usage(andrews_curve)
 
 (ref:fig-andrews-curve) 鸢尾花数据和黑莓树数据的调和曲线图：左上为原始鸢尾花数据，右上为调整变量顺序的鸢尾花数据，左下为标准化之后的鸢尾花数据，右下为标准化之后的黑莓树数据调和曲线图。
 
-```{r andrews-curve,fig=TRUE,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)"}
-library(MSG)
-iris.col=vec2col(iris$Species)
-par(mfrow=c(2,2))
-par(mar=c(4,4,0.2,0.2))
-andrews_curve(iris[, 1:4], n=50,col = iris.col)
-andrews_curve(iris[, c(3,4,2,1)], n=50,col = iris.col)
-andrews_curve(scale(iris[, 1:4]), n=50,col = iris.col)
-x = andrews_curve(scale(trees),n=50)
+```{r andrews-curve,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)"}
+iris.col <- vec2col(iris$Species)
+par(mfrow = c(2, 2))
+par(mar = c(4, 4, 0.2, 0.2))
+andrews_curve(iris[, 1:4], n = 50, col = iris.col)
+andrews_curve(iris[, c(3, 4, 2, 1)], n = 50, col = iris.col)
+andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col)
+x <- andrews_curve(scale(trees), n = 50)
 # 离群点是哪行数据？即哪行数据对应的f(t)会大于4？
 # which(apply(x>4, 1, any))
 ```
@@ -1738,7 +1780,7 @@ $$f_{i}(t)=\frac{X_{i,1}}{\sqrt{2}}+X_{i,2}\sin(t)+X_{i,3}\cos(t)+X_{i,4}\sin(2t
 我们知道，$\sin(kt)$ 中的 $k$ 越大，则三角函数曲线的频率越高，而每个三角函数前面的系数越大，则振幅越大。鸢尾花数据前四列的简单汇总信息如下：
 
 ```{r iris-summary}
-summary(iris[,1:4])
+summary(iris[, 1:4])
 ```
 
 
@@ -1747,7 +1789,7 @@ summary(iris[,1:4])
 
 ```{r iris-rpart}
 library(rpart)
-print(rpart(Species~.,iris), digits=2)
+print(rpart(Species ~ ., iris), digits = 2)
 ```
 
 
@@ -1775,21 +1817,23 @@ usage(bagplot)
 
 (ref:fig-bagplot) Consumer Reports 中汽车数据的二维箱线图（左）和二维密度等高图（右）。
 
-```{r bagplot,fig=TRUE,fig.width=4.8,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
+```{r bagplot,fig.width=4.8,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
 par(mar = c(4, 4, 0.1, 0.1))
 library(aplpack)
-library(rpart)  # 数据来自rpart包中的car.test.frame
+library(rpart) # 数据来自rpart包中的car.test.frame
 par(mfrow = c(1, 2), bty = "l")
-car.wd = with(car.test.frame, cbind(Weight, Disp.))
+car.wd <- with(car.test.frame, cbind(Weight, Disp.))
 bagplot(car.wd, cex = 0.9)
 box()
-library(KernSmooth)  # 二维核密度估计并画等高线图
-est = bkde2D(car.wd, apply(car.wd, 2, dpik))
+library(KernSmooth) # 二维核密度估计并画等高线图
+est <- bkde2D(car.wd, apply(car.wd, 2, dpik))
 with(est, {
-    contour(x1, x2, fhat, xlab = "Weight", ylab = "Disp.", xlim = range(car.wd[, 
-        1]), ylim = range(car.wd[, 2]))
-    points(car.wd, pch = 16, cex = 0.9)
-}) 
+  contour(x1, x2, fhat, xlab = "Weight", ylab = "Disp.", xlim = range(car.wd[
+    ,
+    1
+  ]), ylim = range(car.wd[, 2]))
+  points(car.wd, pch = 16, cex = 0.9)
+})
 ```
 
 
@@ -1819,13 +1863,19 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 (ref:fig-windrose-s) 展示风力大小和频数的风向图
 
-(ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 %，因此 0 ~ 10 km/h 的东北风的频率大约是 7 %。无风的频率大约是 8 %。
+(ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 \%，因此 0 \~ 10 km/h 的东北风的频率大约是 7 \%。无风的频率大约是 8 \%。
 
-```{r windrose,fig=TRUE,fig.width=5.4,fig.height=4.6,sanitize=TRUE,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)"}
-library(plotrix)  # 直接取自oz.windrose()函数的例子
-windagg=matrix(c(8,0,0,0,0,0,0,0,4,6,2,1,6,3,0,4,2,8,5,3,5,2,1,1,
-  5,5,2,4,1,4,1,2,1,2,4,0,3,1,3,1),nrow=5,byrow=TRUE)
- oz.windrose(windagg)
+```{r windrose,fig.width=5.4,fig.height=4.6,sanitize=TRUE,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)"}
+library(plotrix) # 直接取自oz.windrose()函数的例子
+windagg <- matrix(c(
+  8, 0, 0, 0, 0, 0, 0, 
+  0, 4, 6, 2, 1, 6, 3, 
+  0, 4, 2, 8, 5, 3, 5, 
+  2, 1, 1, 5, 5, 2, 4, 
+  1, 4, 1, 2, 1, 2, 4, 
+  0, 3, 1, 3, 1
+), nrow = 5, byrow = TRUE)
+oz.windrose(windagg)
 ```
 
 
@@ -1841,8 +1891,8 @@ Rose）通常用来展示东南西北甚至更多方向上的风力强度和频�
 
 (ref:fig-floating-pie) 在同一幅图的多个位置放置饼图：这是个人造的“质量测试”，颜色深的成份太大会导致饼图“沉下去”。
 
-```{r floating-pie,fig=TRUE,fig.width=4.8,fig.height=3.6,results="hide",fig.cap="(ref:fig-floating-pie)",fig.scap="(ref:fig-floating-pie-s)"}
-demo('float_pie', package = 'MSG')
+```{r floating-pie,fig.width=4.8,fig.height=3.6,results="hide",fig.cap="(ref:fig-floating-pie)",fig.scap="(ref:fig-floating-pie-s)"}
+demo("float_pie", package = "MSG")
 ```
 
 浮动饼图是 **plotrix** 包对饼图的一个扩展，它可以将饼图作为一个基本的图形元素安排在任意位置，即：一幅图中可以有多幅饼图分散在不同位置。尽管我们一直批评饼图在表达数据上的弱势，但在某些极端情况下，饼图也未必糟糕得无可救药，试想如果一幅饼图只分为两份或三份，也许我们可以准确识别各个角度的大小。另外，有时候我们也许要比较多组比例的分布情况，例如在空间中表示各个地点的某个变量构成（性别比例、年龄结构等），此时在多个位置分别画饼图也许能让我们很容易比较各个位置上的比例构成。图 \@ref(fig:floating-pie)
@@ -1875,13 +1925,12 @@ demo('float_pie', package = 'MSG')
 6.  基于第\@ref(matplot) 小节介绍的矩阵图，编写一个画平行坐标图的函数，参数主要包括一个数据框（可以选择性地包括其它修饰性参数，例如数据标准化的方法等），函数的主体部分只有一行代码，形式如下：
 
 ```{r parcoords-fun-demo,eval=FALSE}
-parcoords = function(x, ...){
-# 如何处理x？
-matplot(..., type='l',lty=1,pch=NA)
+parcoords <- function(x, ...) {
+  # 如何处理x？
+  matplot(..., type = "l", lty = 1, pch = NA)
 }
 # 测试代码
 parcoords(iris)
-@
 ```
 
     提示：可以考虑 *col()* 函数，可能需要转置 *t()* ；想清楚我们是用怎样的两个矩阵去画线。
@@ -1893,8 +1942,8 @@ parcoords(iris)
 
 (ref:fig-disk-usage) 系统中 R 附加包文件大小的树图：在作者的系统中，所有 R 包中最大的是 mapdata，其次为 RGtk2。
 
-```{r disk-usage,fig.cap="(ref:fig-disk-usage)",fig.scap="(ref:fig-disk-usage-s)"}
-knitr::include_graphics('images/disk-usage.png')
+```{r disk-usage,fig.cap="(ref:fig-disk-usage)",fig.scap="(ref:fig-disk-usage-s)",echo=FALSE}
+knitr::include_graphics("images/disk-usage.png")
 ```
 
 标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是作者英文博客（<http://yihui.name/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为作者一直开发 **animation** 包，并研究着 Sweave。
@@ -1903,8 +1952,8 @@ knitr::include_graphics('images/disk-usage.png')
 
 (ref:fig-yihui-name-wordle) 作者英文博客的标签云：animation 和 Sweave 两个词最抢眼。
 
-```{r yihui-name-wordle,fig.cap="(ref:fig-yihui-name-wordle)",fig.scap="(ref:fig-yihui-name-wordle-s)"}
-knitr::include_graphics('images/yihui-name-wordle.png')
+```{r yihui-name-wordle,fig.cap="(ref:fig-yihui-name-wordle)",fig.scap="(ref:fig-yihui-name-wordle-s)",echo=FALSE}
+knitr::include_graphics("images/yihui-name-wordle.png")
 ```
 
 本书大部分内容都是关于数据可视化的，统计学的成分比较大。请结合这里给出的两幅图形思考，信息可视化和数据可视化的区别是什么？它们各有什么优势以及如何结合它们的优势？
