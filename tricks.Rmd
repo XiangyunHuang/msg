@@ -200,7 +200,7 @@ par(mar = c(4, 4, 1, .5), bg = "yellow")
 `oma` 设置外边界（Outer Margin）宽度；类似`mar`，默认为`c(0, 0, 0, 0)`，当一页上只放一张图时，该参数与`mar`不好区分，但在一页多图的情况下就容易可以看出与`mar`的区别
 
 `pch`
-: 点的符号；`pch = 19`$\Rightarrow$实圆点、`pch = 20`$\Rightarrow$小实圆点、pch = $21\Rightarrow$圆圈、`pch = 22`$\Rightarrow$正方形、`pch = 23`$\Rightarrow$菱形、`pch = 24`$\Rightarrow$正三角尖、`pch = 25`$\Rightarrow$倒三角尖，其中，21-25可以填充颜色（用`bg`参数），参见图\@ref(fig:points-type)
+: 点的符号；`pch = 19`$\Rightarrow$实圆点、`pch = 20`$\Rightarrow$小实圆点、pch = $21\Rightarrow$圆圈、`pch = 22`$\Rightarrow$正方形、`pch = 23`$\Rightarrow$菱形、`pch = 24`$\Rightarrow$正三角尖、`pch = 25`$\Rightarrow$倒三角尖，其中，21-25可以填充颜色（用`bg`参数），参见图\@ref(fig:point-type)
 
 `pty`
 : 设置作图区域的形状；默认为`'m'`：尽可能最大化作图区域；另外一种取值`'s'`表示设置作图区域为正方形
