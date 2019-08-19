@@ -109,7 +109,7 @@ p + stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
 
 (ref:quake6-bubbles) 1973年以来全球6级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7月的地震频率相对较低？
 
-```{r diamonds-cut,fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("","")}
+```{r diamonds-cut,fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1}
 p <- qplot(cut, log(price), data = diamonds, geom = "boxplot")
 p
 p + coord_flip()
@@ -117,7 +117,7 @@ p + coord_flip()
 
 (ref:diamonds-cut-s) 钻石雕琢水平和对数价格的关系
 
-(ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 Fair 到 Ideal 雕琢水平逐渐增高，但价格并没有严格上升。
+(ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 `Fair` 到 `Ideal` 雕琢水平逐渐增高，但价格并没有严格上升。
 
 我们平时用到的坐标系大多数都是笛卡尔坐标系，ggplot2 也提供了极坐标系和地图坐标系，并支持笛卡尔坐标系的翻转，即交换x轴和y轴。函数`coord_flip()`可以用来翻转几乎任何图形，而且由于 ggplot2 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上`coord_flip()`再打印即可。图\@ref(fig:diamonds-cut)是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。
 
@@ -558,7 +558,7 @@ usage(plot3d, "default")
 
 图\@ref(fig:rgl-ch4)提供了一个简单的示例，即模拟甲烷分子（$\mathrm{CH_{4}}$）的构造。
 
-```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)"}
+```{r rgl-ch4-html,eval=FALSE}
 x <- c(0, 0, 1, 1, 0.5)
 y <- c(1, 0, 1, 0, 0.5)
 z <- c(1, 0, 0, 1, 0.5)
@@ -570,6 +570,9 @@ plot3d(x, y, z,
 ind <- c(5, 1, 5, 2, 5, 3, 5, 4)
 lines3d(x[ind], y[ind], z[ind], lwd = 2)
 ```
+```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE,out.extra = ifelse(is_latex,'','data-url="/interactives/rgl-ch4.html"')}
+knitr::include_graphics(path = "images/rgl-ch4.png")
+```
 
 (ref:rgl-ch4-s) 用**rgl**包画出来的甲烷分子立体结构
 
@@ -579,18 +582,22 @@ lines3d(x[ind], y[ind], z[ind], lwd = 2)
 
 三维透视图对于探索二元函数的形状非常有帮助。在基础图形系统中，已经有`persp()`函数可以绘制三维透视图，但其视角是固定的，无法进行交互。**rgl** 包中提供了类似的函数`persp3d()`，它支持对图形进行旋转和缩放，因此可以方便地观察图形的每个细节。
 
-```{r rgl-beta,fig.scap="Beta函数的三维透视图",fig.cap="(ref:rgl-beta)"}
+```{r rgl-beta-html,eval=FALSE}
 x <- y <- seq(1, 5, .1)
 m <- outer(x, y, function(a, b) beta(a, b))
 persp3d(x, y, m, col = "green3", zlab = "Beta(x, y)")
+```
+```{r rgl-beta,fig.scap="Beta 函数的三维透视图",fig.cap="(ref:rgl-beta)",out.extra = ifelse(is_latex,'','data-url="/interactives/rgl-beta.html"'),echo=FALSE}
+knitr::include_graphics(path = "images/rgl-beta.png")
 ```
 
 (ref:rgl-beta) Beta函数的三维透视图：$\mathrm{Beta}(x,\,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$
 
 函数中`x`和`y`都是一个向量，`z`是一个矩阵，它第$i$行第$j$列的元素就是函数在`x[i]`和`y[j]`上的取值；`z`矩阵一般可以通过`outer()`函数生成，但其中的`FUN`参数必须是向量化的函数。图\@ref(fig:rgl-beta)展示了二元函数$z=\mathrm{Beta}(x,\,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)=\int_{0}^{1}t^{x-1}(1-t)^{y-1}\,dt$的形状。`persp3d()`还有一些有趣的应用，例如图\@ref(fig:rgl-china-map)绘制出了中国及周边地区的地势图，图中可以很清楚看见青藏高原、塔里木盆地、四川盆地等我们熟悉的地区；为了更好地显示 3D 效果，高度在图中按比例调整过。
 
-```{r rgl-china-map,fig.scap="(ref:rgl-china-map-s)",fig.cap="(ref:rgl-china-map)"}
-mat <- as.matrix(read.csv(system.file("extdata", "ChinaGeoMap.csv", package = "MSG"))) # 读入地势数据
+```{r rgl-china-map-html,eval=FALSE}
+# 读入地势数据
+mat <- as.matrix(read.csv(system.file("extdata", "ChinaGeoMap.csv", package = "MSG"))) 
 x <- 20 * (1:nrow(mat))
 y <- 20 * (1:ncol(mat))
 z <- 0.05 * mat
@@ -598,6 +605,9 @@ persp3d(x, y, z,
   xlab = "", ylab = "", zlab = "",
   col = "green", aspect = "iso", axes = FALSE, box = FALSE
 )
+```
+```{r rgl-china-map,fig.scap="(ref:rgl-china-map-s)",fig.cap="(ref:rgl-china-map)",out.extra = ifelse(is_latex,'','data-url="/interactives/rgl-china-map.html"'),echo=FALSE}
+knitr::include_graphics(path = "images/rgl-china-map.png")
 ```
 
 (ref:rgl-china-map-s) 基于 **rgl** 包绘制的中国地势图
@@ -610,11 +620,11 @@ persp3d(x, y, z,
 
 如果想将 rgl 动画保存下来，则可以使用`movie3d()`函数。下面的命令会将动画逐帧保存为 PNG 图片，存放在当前的工作目录下。
 
-```{r rgl-animation}
+```{r rgl-animation-html,eval=FALSE}
 library(rgl)
 open3d()
 plot3d(cube3d(col = "green"))
-# movie3d(spin3d(), duration = 5, convert = FALSE, dir = ".")
+movie3d(spin3d(), duration = 5, convert = FALSE, dir = ".")
 ```
 
 如果系统中安装了 ImageMagick 软件，则可以在上述命令中指定`convert = TRUE`，这可以使动画保存为单个的 GIF 文件。除此之外，**rgl**包还提供了`snapshot3d()`函数来保存单张的窗口截图。用户只需将三维图形调整到合适的角度，然后调用这个函数即可。\@ref(sec:animation)小节的动画包也可以很方便抓取 rgl 图形直接生成动画。
@@ -671,7 +681,7 @@ ani.pause
 
 这五种导出方式中，`saveHTML()`是最便利的，它不需要借助任何第三方软件，而且通常我们都有网页浏览器（如 Firefox ），这样就足够观看动画了。这些函数的用法都比较类似，一般情况下我们只需要提供一段生成多幅图片的 R 代码，利用默认参数设置就足够导出动画。它们的具体用法如下：
 
-```{r export-animations}
+```{r export-animations,warning=FALSE}
 usage(saveHTML)
 usage(saveLatex)
 usage(saveGIF)

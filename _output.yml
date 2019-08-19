@@ -16,6 +16,9 @@ bookdown::gitbook:
       facebook: no
       twitter: no
       all: []
+  includes:
+    after_body:
+      - includes/data-url.html
 bookdown::pdf_book:
   includes:
     in_header: preamble.tex
