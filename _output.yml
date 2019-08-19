@@ -17,6 +17,7 @@ bookdown::gitbook:
       twitter: no
       all: []
   includes:
+    in_header: includes/header.html
     after_body:
       - includes/data-url.html
 bookdown::pdf_book:
