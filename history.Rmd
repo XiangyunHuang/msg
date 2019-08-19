@@ -12,18 +12,19 @@
 
 饼图和线图都是当今社会中常用的统计图形，它们是由有着“统计图形奠基人”之称的苏格兰工程师兼政治经济学家 William Playfair 发明的。在 “The Commercial and Political Atlas” [@Playfair86] 一书中，他用线图展示了英格兰自1700年至1780年间的进出口数据（如图\@ref(fig:playfair86)），从图中可以很清楚看出对英格兰有利和不利（即顺差、逆差）的年份；而在 “The Statistical Breviary” [@Playfair01] 一书中，他第一次使用了饼图来展示一些欧洲国家的领土比例，图\@ref(fig:playfair01)即为史上第一例饼图。从下方的饼图中我们可以清楚看出当时的土耳其帝国分别在亚洲、欧洲和非洲的领土面积比例。这两幅图在今天看来似乎没有什么惊世骇俗之处，但在当时统计图形种类极为稀少的年代，能以这种方式清晰展示数据结构，也实属难能可贵。除了这两种图形之外，他还发明了条形图和圆环图。
 
-```{r playfair86, fig.scap = "William Playfair 的时序线图",fig.cap="(ref:playfair86)", fig.link="http://en.wikipedia.org/wiki/William_Playfair",echo=FALSE}
+```{r playfair86, fig.scap = "William Playfair 的时序线图",fig.cap="(ref:playfair86)",echo=FALSE}
 knitr::include_graphics(path = "images/Playfair-TimeSeries.png")
 ```
 
-```{r playfair01, fig.scap = "William Playfair 的饼图",fig.subcap=c("",""),fig.cap="(ref:playfair01)", fig.link = c("http://en.wikipedia.org/wiki/William_Playfair", "http://www.math.usu.edu/~symanzik/papers/2009_cost/editorial.html"),echo=FALSE,fig.ncol=1}
+(ref:playfair86) @Playfair86 绘制的线图。 这幅图主要展示了1700年至1780年间英格兰的进出口时序数据，左边表明了对外贸易对英格兰不利，而随着时间发展，大约1752年后，对外贸易逐渐变得有利。图片来源： <http://en.wikipedia.org/wiki/William_Playfair>
+
+```{r playfair01, fig.scap = "William Playfair 的饼图",fig.subcap=c("",""),fig.cap="(ref:playfair01)",echo=FALSE,fig.ncol=1}
 knitr::include_graphics(path = c("images/Playfair-pie1.png", "images/Playfair-pie2.jpg"))
 ```
 
+(ref:playfair01) @Playfair01 绘制的饼图。这是历史上最早出现的饼图，描述了法国大革命前后一些欧洲国家的统计数据。上方的大图展示了各个国家的领土面积（和圆圈成比例）以及人口（左垂线）、税收（右垂线）、国土在各大洲分布比例等数据，两条垂线连线的斜率可表示税负的轻重（这一点颇有争议，因为斜率与圆的半径有关）。下方的饼图展示了土耳其帝国在三大洲的国土面积分布。图片来源：<http://en.wikipedia.org/wiki/William_Playfair>，<http://www.math.usu.edu/~symanzik/papers/2009_cost/editorial.html>
 
-(ref:playfair01) @Playfair01 绘制的饼图。这是历史上最早出现的饼图，描述了法国大革命前后一些欧洲国家的统计数据。上方的大图展示了各个国家的领土面积（和圆圈成比例）以及人口（左垂线）、税收（右垂线）、国土在各大洲分布比例等数据，两条垂线连线的斜率可表示税负的轻重（这一点颇有争议，因为斜率与圆的半径有关）。下方的饼图展示了土耳其帝国在三大洲的国土面积分布。
 
-(ref:playfair86) @Playfair86 绘制的线图。 这幅图主要展示了1700年至1780年间英格兰的进出口时序数据，左边表明了对外贸易对英格兰不利，而随着时间发展，大约1752年后，对外贸易逐渐变得有利。
 
 
 ## 霍乱传染之谜
@@ -42,7 +43,7 @@ knitr::include_graphics(path = "images/Snow-cholera-map.jpg")
 
 南丁格尔（Florence Nightingale）是我们耳熟能详的“提灯女士”，她不仅是现代护理的鼻祖及现代护理专业的创始人，而且是历史上使用极坐标面积图的先驱。这种图形外形如玫瑰，因此后来也称之为玫瑰图，其主要构思是用“花瓣”的面积表示统计数值的大小。图\@ref(fig:nightingale-mortality)反映了克里米亚战争（英国等与俄国争夺巴尔干半岛的战争）中英国军队自 1854 年 4 月至 1856 年 3 月的逐月死亡人数[@Nightingale58]；其中，右图为 1854 年 4 月至 1855 年 3 月的死亡人数，左图为 1855 年 4 月至 1856 年 3 月的死亡人数。玫瑰图不仅清楚展示了这两年军队死亡人数的变化，而且更重要的是，她将每个月中三种死亡情况也分别用不同颜色标记出来：蓝色表示死于可预防的疾病、红色表示死于战争伤害、黑色表示死于其它原因。这样我们可以清楚知道军队伤亡原因的结构，尤其是“绝大多数士兵死于可预防的疾病”（图中最高的花瓣）。凭借这一条重要信息，她让英国政府意识到，真正影响战争伤亡的并非战争本身，而是由于军队缺乏有效的医疗护理！
 
-```{r nightingale-mortality,fig.scap="(ref:nightingale-mortality-s)",fig.cap="(ref:nightingale-mortality)",fig.link="http://en.wikipedia.org/wiki/Florence_Nightingale",echo=FALSE}
+```{r nightingale-mortality,fig.scap="(ref:nightingale-mortality-s)",fig.cap="(ref:nightingale-mortality)",fig.link="<http://en.wikipedia.org/wiki/Florence_Nightingale>",echo=FALSE}
 knitr::include_graphics(path = "images/Nightingale-mortality.jpg")
 ```
 
