@@ -26,7 +26,9 @@ knitr::opts_chunk$set(
   fig.align = "center",
   cache = TRUE,
   small.mar = TRUE,
-  fig.showtext = TRUE
+  fig.showtext = TRUE,
+  tidy = "formatR",
+  tidy.opts = list(blank = FALSE, width.cutoff = 79)  
 )
 
 if (is_latex) {
