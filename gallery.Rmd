@@ -241,7 +241,7 @@ usage(barplot.default)
 VADeaths # 弗吉尼亚州死亡数据
 ```
 
-## 散点图 {#sec:plot}
+## 散点图 {#sec:plot-default}
 
 
 散点图通常用来展示两个变量之间的关系，这种关系可能是线性或非线性的。图中每一个点的横纵坐标都分别对应两个变量各自的观测值，因此散点所反映出来的趋势也就是两个变量之间的关系。
@@ -258,7 +258,7 @@ usage(plot.default)
 
 (ref:fig-scatter-alpha) 半透明散点图中的规律：左图是一幅普通的散点图，图中几乎看不出数据有任何异常特征；右图中对点使用了透明度为 0.01 的红色，图中立即显示出一个深色的圆圈，表明该圆圈上集中了大量数据点。
 
-```{r scatter-alpha, fig.width=4,fig.height=2, fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha)"}
+```{r scatter-alpha, fig.width=4,fig.height=2, dev='png', dev.args=list(type = "cairo"), fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha)",results='hide'}
 demo("alphaDemo", package = "MSG")
 ```
 
@@ -406,7 +406,7 @@ usage(contourLines)
 (ref:fig-contour-pop) 2005 年中国 31 地区国民预期寿命和高学历人数密度等高图
 
 
-```{r contour-pop,fig.width=4,fig.height=3,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)"}
+```{r contour-pop,fig.width=4,fig.height=3,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)",fig.showtext=TRUE}
 par(mar = c(4, 4, 0.2, 0.2))
 demo("contourPop", package = "MSG")
 ```
@@ -867,11 +867,9 @@ panel.hist <- function(x, ...) {
 ```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
 idx <- as.integer(iris[["Species"]])
 pairs(iris[1:4],
-  upper.panel = function(x,
-                           y, ...) points(x, y, pch = c(17, 16, 6)[idx], col = idx), pch = 20, oma = c(
-    2,
-    2, 2, 2
-  ),
+  upper.panel = function(x, y, ...)
+    points(x, y, pch = c(17, 16, 6)[idx], col = idx),
+  pch = 20, oma = c(2, 2, 2, 2),
   lower.panel = panel.smooth, diag.panel = panel.hist
 )
 ```
@@ -1566,7 +1564,7 @@ usage(map)
 
 (ref:fig-map) 2005 年各国农业进出口竞争力地图：农业出口强国在南美，弱国在北非。
 
-```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)",error=TRUE}
+```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)",error=TRUE,results='hide'}
 demo("AgriComp", package = "MSG")
 ```
 
@@ -1690,6 +1688,7 @@ Continental 等车最重（脸胖）。这里我们尽量将这几个汽车性�
 在 R 中有很多包都可以画平行坐标图，例如 **GGally** 包 [@GGally] 中的 *ggparcoord()* 函数、**MASS** 包 [@Venables02] 中的 *parcoord()* 函数和 **iplots** 包 [@iplots] 中的 *ipcp()* 函数等。由于后面 \@ref(sec:ggplot2) 小节还会专门介绍 **ggplot2**，这里我们先看看这个包中的平行坐标图。 *ggparcoord()* 的用法如下：
 
 ```{r ggparcoord-usage}
+library(ggplot2)
 library(GGally)
 usage(ggparcoord)
 ```
@@ -1943,7 +1942,7 @@ parcoords(iris)
 knitr::include_graphics("images/disk-usage.png")
 ```
 
-标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是作者英文博客（<http://yihui.name/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为作者一直开发 **animation** 包，并研究着 Sweave。
+标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是作者英文博客（<https://yihui.name/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为作者一直开发 **animation** 包，并研究着 Sweave。
 
 (ref:fig-yihui-name-wordle-s) 作者英文博客的标签云
 

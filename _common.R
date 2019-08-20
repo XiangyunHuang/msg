@@ -8,16 +8,29 @@ to_png <- function(fig_path) {
 is_latex <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "latex")
 is_html <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "html")
 
+knitr::knit_hooks$set(
+  optipng = knitr::hook_optipng,
+  pdfcrop = knitr::hook_pdfcrop,
+  small.mar = function(before, options, envir) {
+    if (before) par(mar = c(4, 4, .1, .1), cex.lab = .95, cex.axis = .9, mgp = c(2, .7, 0), tcl = -.3) # smaller margin on top and right
+  },
+  font.cn = function(before, options, envir) {
+    if (before) pdf.options(family = "GB1")
+  },
+  font.en = function(before, options, envir) {
+    if (before) pdf.options(family = "Times")
+  }
+)
+
+knitr::opts_chunk$set(
+  fig.align = "center",
+  cache = TRUE,
+  small.mar = TRUE,
+  fig.showtext = TRUE
+)
+
 if (is_latex) {
   knitr::opts_chunk$set(
-    out.width = "90%", 
-    fig.align = "center",
-    fig.width = 8, 
-    fig.asp = 0.618
-  )  
-}
-if (is_html) {
-  knitr::opts_chunk$set(
-    fig.align = "center" 
+    out.width = "70%"
   )
 }
