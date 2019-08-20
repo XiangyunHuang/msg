@@ -80,6 +80,7 @@ RUN wget -q --no-check-certificate http://simonsoftware.se/other/xkcd.ttf -P ~/.
       pgf placeins preview psnfss realscripts relsize rsfs setspace soul \
       standalone subfig symbol tabu tex4ht threeparttable threeparttablex \
       titlesec tocbibind tocloft trimspaces ulem varwidth wrapfig xcolor xltxtra zhnumber \
+      fandol cancel
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
