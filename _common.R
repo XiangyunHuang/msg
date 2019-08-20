@@ -8,7 +8,16 @@ to_png <- function(fig_path) {
 is_latex <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "latex")
 is_html <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "html")
 
-knitr::opts_chunk$set(
-  fig.align = "center",
-  out.width = ifelse(is_latex, "90%", "NULL") 
-)
+if (is_latex) {
+  knitr::opts_chunk$set(
+    out.width = "90%", 
+    fig.align = "center",
+    fig.width = 8, 
+    fig.asp = 0.618
+  )  
+}
+if (is_html) {
+  knitr::opts_chunk$set(
+    fig.align = "center" 
+  )
+}
