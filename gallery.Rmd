@@ -1335,8 +1335,8 @@ $$y=\beta_{0}+\beta_{1}x_{1}+\beta_{2}x_{2}+\beta_{12}x_{1}x_{2}+\epsilon$$
 令$c_{2}\equiv\beta_{2}+\beta_{12}x_{1}$，上式可以改写为：
 
 $$\begin{aligned}
-y & = & \beta_{0}+\beta_{1}x_{1}+(\beta_{2}+\beta_{12}x_{1})x_{2}+\epsilon\\
- & \equiv & \beta_{0}+\beta_{1}x_{1}+c_{2}x_{2}+\epsilon\end{aligned}$$
+y & =  \beta_{0}+\beta_{1}x_{1}+(\beta_{2}+\beta_{12}x_{1})x_{2}+\epsilon\\
+ & \equiv  \beta_{0}+\beta_{1}x_{1}+c_{2}x_{2}+\epsilon\end{aligned}$$
 
 显然，变量 $x_{2}$ 对因变量 $y$ 的影响系数 $c_{2}$ 受 $x_{1}$ 取值水平的控制，同理 $x_{1}$ 对  $y$ 的影响也受 $x_{2}$ 取值水平的影响。若模型中不存在交互项 $x_{1}x_{2}$，那么无论 $x_{1}$ 取值水平如何，$x_{2}$ 每增加 1 单位，$y$ 都会变化 $\beta_{2}$ 单位，对 $x_{2}$ 而言同理。以上数学原理用更直白的话来说就是，若因变量随一个变量的变化幅度与另一个变量的取值水平无关，那么模型中不存在交互效应。这个现象反映到图中，便有了交互效应图，它通常是针对分类变量而言的，看一个分类变量给定分类水平时，因变量在另一个分类变量各水平下的均值如何变化，这种变化趋势如果在前一个分类变量换一个取值水平后仍然保持相同的话，则说明这两个分类变量没有交互效应。
 
@@ -1371,9 +1371,9 @@ with(esoph, {
 我们也可以计算一下每种分组组合下的因变量均值，辅助理解图 \@ref(fig:interaction-plot)：
 
 ```{r esoph-mean}
-# ddply 在 plyr 包中，cast 在 reshape 包中
-tbl <- plyr::ddply(esoph, agegp ~ alcgp, plyr::summarise, mean(ncases / (ncases + ncontrols)))
-reshape::cast(tbl, agegp ~ alcgp)
+tbl <- aggregate(ncases / (ncases + ncontrols) ~ agegp * alcgp, data = esoph, mean)
+colnames(tbl) <- c("agegp", "alcgp", "mean")
+reshape(tbl, timevar = "alcgp", idvar = "agegp", direction = "wide", sep = "_")
 ```
 
 ## QQ 图 {#sec:qqplot}
@@ -1829,10 +1829,11 @@ box()
 library(KernSmooth) # 二维核密度估计并画等高线图
 est <- bkde2D(car.wd, apply(car.wd, 2, dpik))
 with(est, {
-  contour(x1, x2, fhat, xlab = "Weight", ylab = "Disp.", xlim = range(car.wd[
-    ,
-    1
-  ]), ylim = range(car.wd[, 2]))
+  contour(x1, x2, fhat,
+    xlab = "Weight", ylab = "Disp.",
+    xlim = range(car.wd[, 1]),
+    ylim = range(car.wd[, 2])
+  )
   points(car.wd, pch = 16, cex = 0.9)
 })
 ```
