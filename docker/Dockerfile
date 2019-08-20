@@ -65,7 +65,8 @@ RUN xvfb-run install2.r --error \
 RUN install2.r --error \
   igraph \
   fun \
-  latex2exp
+  latex2exp \
+  svglite
 
 RUN wget -q --no-check-certificate http://simonsoftware.se/other/xkcd.ttf -P ~/.fonts/ \
   && Rscript -e "extrafont::font_import(paths = '~/.fonts', pattern = '[X/x]kcd', prompt = FALSE)" \
