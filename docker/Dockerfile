@@ -60,14 +60,12 @@ RUN xvfb-run install2.r --error \
   mvtnorm \
   vioplot \
   TeachingDemos \
-  aplpack
-
-RUN install2.r --error \
+  aplpack \
   igraph \
   fun \
   latex2exp \
   svglite \
-  && installGithub.r --error \
+  && installGithub.r \
   yihui/fun \
   yihui/MSG  
 
