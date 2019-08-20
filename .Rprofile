@@ -6,5 +6,6 @@ options(
   rgl.printRglwidget = TRUE,
   rgl.useNULL = TRUE,
   width = 79,
+  formatR.indent = 2,
   str = utils::strOptions(strict.width = "cut")
 )

@@ -423,7 +423,8 @@ demo("contourPop", package = "MSG")
 
 ```{r contour-persp, fig.height=6,fig.width=7,fig.cap="(ref:fig-contour-persp)",fig.scap="(ref:fig-contour-persp-s)"}
 par(mar = rep(0, 4)) # 继续前面的例子
-persp(est$x1, est$x2, est$fhat, shade = 0.75, border = NA, col = "lightblue", phi = 20, theta = 15, box = FALSE)
+persp(est$x1, est$x2, est$fhat, shade = 0.75, border = NA, 
+      col = "lightblue", phi = 20, theta = 15, box = FALSE)
 ```
 
 在 **graphics** 包中还有一个类似的等高图函数 *filled.contour()*，它的原理完全类似，只是它用颜色来区分高度值的大小并且有颜色图例，看起来可能更美观一些，\@ref(sec:filled-contour) 小节中我们会详细介绍。
@@ -489,7 +490,9 @@ coplot(lat ~ long | depth,
 par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
 chippy <- function(x) sin(cos(x) * exp(-x / 2))
 curve(chippy, -8, 7, n = 2008)
-curve(sin(x) / x, from = -20, to = 20, n = 200, xlab = latex2exp::TeX("$t$"), ylab = latex2exp::TeX("$\varphi_{X}(t)$"))
+curve(sin(x) / x, from = -20, to = 20, n = 200, 
+      xlab = latex2exp::TeX("$t$"), 
+      ylab = latex2exp::TeX("$\varphi_{X}(t)$"))
 ```
 
 函数曲线图没有什么特殊之处，仅仅是一条曲线而已，R 专门提供了一个函数，目的是为了节省我们去使用低层作图函数（如 *lines()*）的精力和时间。利用这个函数，我们可以方便地对任何一元函数作出它在某段定义域上的曲线。
@@ -1044,7 +1047,7 @@ usage(rug)
 
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）。
 
-```{r smoothScatter,fig.width=5,fig.height=5,tidy =FALSE,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
+```{r smoothScatter,fig.width=5,fig.height=5,tidy =FALSE,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)",dev='png', dev.args=list(type = "cairo")}
 par(mar = c(4, 4, 0.3, 0.1))
 smoothScatter(BinormCircle)
 ```
@@ -1137,7 +1140,8 @@ head(mtcars[, 1:7])
 ```{r stripchart,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
 layout(matrix(1:2, 2), height = c(1.5, 1))
 par(mar = c(4, 4, 0.2, 0.2))
-boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, border = "red", col = "lightgreen", at = 1:6 - 0.3)
+boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, 
+        border = "red", col = "lightgreen", at = 1:6 - 0.3)
 stripchart(count ~ spray, data = InsectSprays, method = "stack", add = TRUE)
 stripchart(count ~ spray, data = InsectSprays, method = "jitter")
 ```
@@ -1351,7 +1355,8 @@ usage(interaction.plot)
 ```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)"}
 par(mar = c(4, 4, 0.2, 0.2))
 with(esoph, {
-  interaction.plot(agegp, alcgp, ncases / (ncases + ncontrols), trace.label = "alcohol", fixed = TRUE, xlab = "Age", ylab = "Cancer Proportion")
+  interaction.plot(agegp, alcgp, ncases / (ncases + ncontrols), trace.label = "alcohol",
+                   fixed = TRUE, xlab = "Age", ylab = "Cancer Proportion")
   # 方差分析，交互项系数不显著
   summary(aov(ncases / (ncases + ncontrols) ~ agegp * alcgp))
 })
@@ -1366,11 +1371,9 @@ with(esoph, {
 我们也可以计算一下每种分组组合下的因变量均值，辅助理解图 \@ref(fig:interaction-plot)：
 
 ```{r esoph-mean}
-# ddply在plyr包中，cast在reshape包中
-library(plyr)
-library(reshape)
-tbl <- ddply(esoph, agegp ~ alcgp, summarise, mean(ncases / (ncases + ncontrols)))
-cast(tbl, agegp ~ alcgp)
+# ddply 在 plyr 包中，cast 在 reshape 包中
+tbl <- plyr::ddply(esoph, agegp ~ alcgp, summarise, mean(ncases / (ncases + ncontrols)))
+reshape::cast(tbl, agegp ~ alcgp)
 ```
 
 ## QQ 图 {#sec:qqplot}
@@ -1514,8 +1517,8 @@ Plot）是密度曲线图与箱线图的结合，因为它的外观有时候与�
 
 小提琴图来自于 **vioplot** 包 [@vioplot]，其函数为 *vioplot()* ，用法如下：
 
-```{r }
-library(vioplot)
+```{r message=FALSE}
+library(vioplot, warn.conflicts = FALSE)
 usage(vioplot)
 ```
 
@@ -1804,7 +1807,7 @@ Plot），它由 @Rousseeuw99 提出。二维箱线图的做法是从数据的�
 R 中 **aplpack** 包 [@aplpack] 提供了一个函数 *bagplot()* 可以用来画二维箱线图，其用法如下：
 
 ```{r bagplot-usage}
-library(aplpack)
+library(aplpack, warn.conflicts = FALSE)
 usage(bagplot)
 ```
 
@@ -1920,14 +1923,14 @@ demo("float_pie", package = "MSG")
 
 6.  基于第\@ref(sec:matplot) 小节介绍的矩阵图，编写一个画平行坐标图的函数，参数主要包括一个数据框（可以选择性地包括其它修饰性参数，例如数据标准化的方法等），函数的主体部分只有一行代码，形式如下：
 
-```{r parcoords-fun-demo,eval=FALSE}
-parcoords <- function(x, ...) {
-  # 如何处理x？
-  matplot(..., type = "l", lty = 1, pch = NA)
-}
-# 测试代码
-parcoords(iris)
-```
+    ```{r parcoords-fun-demo,eval=FALSE}
+    parcoords <- function(x, ...) {
+      # 如何处理x？
+      matplot(..., type = "l", lty = 1, pch = NA)
+    }
+    # 测试代码
+    parcoords(iris)
+    ```
 
     提示：可以考虑 *col()* 函数，可能需要转置 *t()* ；想清楚我们是用怎样的两个矩阵去画线。
 
@@ -1938,21 +1941,21 @@ parcoords(iris)
 
 (ref:fig-disk-usage) 系统中 R 附加包文件大小的树图：在作者的系统中，所有 R 包中最大的是 mapdata，其次为 RGtk2。
 
-```{r disk-usage,fig.cap="(ref:fig-disk-usage)",fig.scap="(ref:fig-disk-usage-s)",echo=FALSE}
-knitr::include_graphics("images/disk-usage.png")
-```
+    ```{r disk-usage,fig.cap="(ref:fig-disk-usage)",fig.scap="(ref:fig-disk-usage-s)",echo=FALSE}
+    knitr::include_graphics("images/disk-usage.png")
+    ```
 
-标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是作者英文博客（<https://yihui.name/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为作者一直开发 **animation** 包，并研究着 Sweave。
+    标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是作者英文博客（<https://yihui.name/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为作者一直开发 **animation** 包，并研究着 Sweave。
 
 (ref:fig-yihui-name-wordle-s) 作者英文博客的标签云
 
 (ref:fig-yihui-name-wordle) 作者英文博客的标签云：animation 和 Sweave 两个词最抢眼。
 
-```{r yihui-name-wordle,fig.cap="(ref:fig-yihui-name-wordle)",fig.scap="(ref:fig-yihui-name-wordle-s)",echo=FALSE}
-knitr::include_graphics("images/yihui-name-wordle.png")
-```
+    ```{r yihui-name-wordle,fig.cap="(ref:fig-yihui-name-wordle)",fig.scap="(ref:fig-yihui-name-wordle-s)",echo=FALSE}
+    knitr::include_graphics("images/yihui-name-wordle.png")
+    ```
 
-本书大部分内容都是关于数据可视化的，统计学的成分比较大。请结合这里给出的两幅图形思考，信息可视化和数据可视化的区别是什么？它们各有什么优势以及如何结合它们的优势？
+    本书大部分内容都是关于数据可视化的，统计学的成分比较大。请结合这里给出的两幅图形思考，信息可视化和数据可视化的区别是什么？它们各有什么优势以及如何结合它们的优势？
 
 [^1]: 本书作者在爱荷华州立大学统计系读博士期间，每周统计图形小组有一次讨论，这则消息来自于作者的一位导师 Heike Hofmann 教授
 
