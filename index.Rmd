@@ -13,7 +13,7 @@ description: "现代统计图形书稿"
 geometry: margin=1.18in
 colorlinks: yes
 github-repo: XiangyunHuang/MSG-Book
-url: 'https\://bookdown.org/xiangyun/MSG-Book/'
+url: 'https\://bookdown.org/xiangyun/msg/'
 ---
 
 ```{r setup,include=FALSE}
