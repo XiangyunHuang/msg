@@ -492,7 +492,7 @@ chippy <- function(x) sin(cos(x) * exp(-x / 2))
 curve(chippy, -8, 7, n = 2008)
 curve(sin(x) / x, from = -20, to = 20, n = 200, 
       xlab = latex2exp::TeX("$t$"), 
-      ylab = latex2exp::TeX("$\varphi_{X}(t)$"))
+      ylab = latex2exp::TeX("$\\varphi_{X}(t)$"))
 ```
 
 函数曲线图没有什么特殊之处，仅仅是一条曲线而已，R 专门提供了一个函数，目的是为了节省我们去使用低层作图函数（如 *lines()*）的精力和时间。利用这个函数，我们可以方便地对任何一元函数作出它在某段定义域上的曲线。
