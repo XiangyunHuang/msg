@@ -145,7 +145,7 @@ canabalt_g2 <- qplot(reorder(death, score, median), score,
 ) +
   coord_flip()
 library(cowplot)
-plot_grid(canabalt_gg1, canabalt_g2, ncol = 1)
+plot_grid(canabalt_g1, canabalt_g2, ncol = 1)
 ```
 
 (ref:canabalt-boxplot) 游戏得分在不同游戏平台以及死因下的比较：iPad 玩家的分数平均较高，得分最高的人最终是因为“错过另一扇窗”而死。
