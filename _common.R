@@ -34,3 +34,10 @@ if (is_latex) {
     out.width = "70%"
   )
 }
+
+# https://github.com/XiangyunHuang/MSG-Book/issues/28#issuecomment-522854017
+knitr::knit_hooks$set(dev = function(before, options) {
+  if (options$dev != 'tikz') return()
+  options(device = if (before) tikzDevice::tikz else grDevices::pdf)
+  NULL
+})
