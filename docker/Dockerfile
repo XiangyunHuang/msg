@@ -66,7 +66,10 @@ RUN install2.r --error \
   igraph \
   fun \
   latex2exp \
-  svglite
+  svglite \
+  && installGithub.r --error \
+  yihui/fun \
+  yihui/MSG  
 
 RUN wget -q --no-check-certificate http://simonsoftware.se/other/xkcd.ttf -P ~/.fonts/ \
   && Rscript -e "extrafont::font_import(paths = '~/.fonts', pattern = '[X/x]kcd', prompt = FALSE)" \
