@@ -770,7 +770,7 @@ knitr::include_graphics(path = c(
 
 1. **fun**包[@fun]中有一个3D版本的“我的中国心”，效果如图\@ref(fig:China-Heart-3D)；请对照`demo('ChinaHeart3D', package = 'fun')`以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入rgl三维图形。
 
-    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE}
+    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE,fig.link="https://wp-contents.netlify.com/interactives/rgl-heart.html"}
     knitr::include_graphics(path = "images/China-Heart-3D.png")
     ```
 
