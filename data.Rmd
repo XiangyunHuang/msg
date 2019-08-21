@@ -496,7 +496,7 @@ corrplot(SongCorr, order = "hc", diag = FALSE, addrect = 4, tl.cex = 0.75)
 $$R_{i,j}=\frac{\mbox{同时出现高频词}i\mbox{和}{j}\mbox{的词的数目}}{\mbox{出现高频词}i\mbox{或}j\mbox{的词的数目}}$$
 显然当高频词$i$和$j$总是同时出现时，关系系数为1；当它们从来不同时出现在同一首词时，关系系数为0。据此可以得到一个$100\times100$的矩阵。利用**igraph**包[@igraph]画出这100个词的关系网络图如图\@ref(fig:song-high-freq)。 
 
-```{r song-high-freq,fig.cap="(ref:song-high-freq)",fig.scap="宋词前100高频词的关系网络图",results='hide',eval=FALSE}
+```{r song-high-freq,fig.cap="(ref:song-high-freq)",fig.scap="宋词前100高频词的关系网络图",results='hide'}
 demo("SongWordsNet", package = "MSG")
 ```
 
