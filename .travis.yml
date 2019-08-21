@@ -30,7 +30,7 @@ before_install:
 before_script:
   # packages in docker images
   - docker pull xiangyunhuang/msg-book
-  - docker run --rm -it --name=book xiangyunhuang/msg-book Rscript -e "xfun::session_info(c('rmarkdown','bookdown'))"
+  - docker run --rm -it --name=book xiangyunhuang/msg-book Rscript -e "sessionInfo(.packages(T))"
 
 script:
   - mkdir -p _book/interactives && cp -r interactives/* _book/interactives
