@@ -17,7 +17,7 @@
 | 3        | 元素      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。 |
 | 4        | 图库      | [pzhaonet](https://github.com/pzhaonet)           |完工。  |
 | 5        | 系统      | [XiangyunHuang](https://github.com/XiangyunHuang) |完工。  |
-| 6        | 数据      | [XiangyunHuang](https://github.com/XiangyunHuang) |统计词话演示 |
+| 6        | 数据      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | 7        | 原则      | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | A        | 程序初步  | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
 | B        | 细节技巧  | [XiangyunHuang](https://github.com/XiangyunHuang) |完成。  |
