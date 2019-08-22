@@ -555,7 +555,7 @@ y <- -x + z + rnorm(100, 0, .25)
 coef(summary(lm(y ~ x)))
 coef(summary(lm(y ~ x + z)))
 ```
-```{r multireg-scatter,fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)",fig.width=4.8,fig.height=2.5}
+```{r multireg-scatter,fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)",fig.width=7,fig.height=3.5}
 par(mar = c(4.5, 4.5, .1, 0.5), mfrow = c(1, 2))
 plot(x, y)
 abline(lm(y ~ x), col = "red")
@@ -584,7 +584,7 @@ y	&=	(\beta_{0}+\beta_{1}x_{1})+(\beta_{2}+\beta_{3}x_{1})x_{2}+\epsilon \\
 
 若我们将$x_{1}$固定在特定水平，那么$x_{2}$的回归系数为$\alpha_{2}=\beta_{2}+\beta_{3}x_{1}$，它与$x_{1}$有关；同理，$y$与$x_{1}$的关系也受$x_{2}$的不同水平影响。交互作用的含义在传统的统计学教科书中一般都用折线图表示，而折线图只能表示自变量为分类变量时的交互效应，对于连续自变量情况的交互作用图示，我们则很难找到任何示例。
 
-```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png,fig.width=4.8,fig.height=2.5}
+```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png,fig.width=7,fig.height=3.5}
 par(mar = c(4.5, 4.5, 2, 0.2), mfrow = c(1, 2), cex.main = 1)
 sq <- 1:10
 x <- rep(sq, 10)
@@ -655,7 +655,7 @@ y1 <- c(y, 50)
 x2 <- c(x, jitter(rep(mean(x), 500), 10))
 y2 <- c(y, jitter(rep(mean(y), 500), 10))
 ```
-```{r OLS-LMS,fig.width=4.8,fig.height=2.5,fig.cap="(ref:OLS-LMS)",fig.scap="LMS回归的稳健性及其缺点"}
+```{r OLS-LMS,fig.width=7,fig.height=3.5,fig.cap="(ref:OLS-LMS)",fig.scap="LMS回归的稳健性及其缺点"}
 par(mar = c(4.5, 4.5, 1, 0.2), mfrow = c(1, 2), pch = 20)
 olsLms(x1, y1)
 olsLms(x2, y2, cex = c(rep(1, 50), rep(0.1, 500)))
@@ -691,15 +691,12 @@ for (i in 1:100) {
   betaSim[i] <- coef(update(fit, subset = idx))[2]
 }
 ```
-```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png}
+```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png,fig.width=4.8,fig.height=4.8}
 par(mar = c(4.5, 4.5, 1, 0.5), mfrow = c(2, 2), pch = 20)
 plot(x, y, col = rgb(0, 0, 0, 0.5))
 abline(fit)
 plot(cooks.distance(fit), ylab = "Cook's distance")
-plot(x, y, col = rgb(0, 0, 0, 0.5), pch = rep(
-  20:21,
-  c(60, 42)
-))
+plot(x, y, col = rgb(0, 0, 0, 0.5), pch = rep(20:21, c(60, 42)))
 abline(fit1) # 部分抽样：前60条数据
 plot(betaSim, ylab = "$\\beta_1$")
 ```
