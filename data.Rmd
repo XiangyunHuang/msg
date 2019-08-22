@@ -245,9 +245,13 @@ head(tvearn[order(tvearn$pay, decreasing = TRUE), 1:4], 10)
 对于这样一批数据，我们关心的核心对象当然是薪酬：除了简单排序之外，它与其它变量的关系是怎样的？例如正剧和喜剧是否有差异、评分和薪酬是否有关系、男女演员的薪酬是否有高低，等等。我们可以用数值的方式回答这些问题，也可以作图。如男女演员的平均薪酬：
 
 ```{r tvearn-mean}
-library(plyr)
+# library(plyr)
 # 平均薪酬以及男女演员数量
-ddply(tvearn, .(gender), summarise, mean.pay = mean(pay), number = length(gender))
+# ddply(tvearn, .(gender), summarise, mean.pay = mean(pay), number = length(gender))
+myfun <- function(x) {
+ c(mean = mean(x), number = length(x))
+}
+aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 ```
 ```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="演员的薪酬直方图及薪酬与电视剧评分的散点图",fig.subcap=c("",""),fig.ncol=1}
 qplot(pay, data = tvearn, facets = gender ~ ., binwidth = 20000)
