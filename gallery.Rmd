@@ -1458,7 +1458,6 @@ $$\hat{S}(t)=\left\{ \begin{array}{ll}
 **survival** 包 [@survival] 提供了生存函数的计算和估计方法。具体函数为 *survfit()*，它返回一个 survfit 类的对象，而 **survival** 包扩展了泛型函数 *plot()*，使其拥有子函数 *plot.survfit()*，因此在估计完生存函数之后，我们可以直接调用 *plot()* 生成生存函数图。函数 *plot.survfit()* 的用法如下：
 
 ```{r plot-survfit-usage}
-library(survival)
 usage(survival:::plot.survfit)
 ```
 
@@ -1517,8 +1516,8 @@ Plot）是密度曲线图与箱线图的结合，因为它的外观有时候与�
 
 小提琴图来自于 **vioplot** 包 [@vioplot]，其函数为 *vioplot()* ，用法如下：
 
-```{r message=FALSE}
-library(vioplot, warn.conflicts = FALSE)
+```{r}
+library(vioplot)
 usage(vioplot)
 ```
 
@@ -1583,7 +1582,7 @@ demo("AgriComp", package = "MSG")
 
 **TeachingDemos** 包 [@TeachingDemos] 提供了两个脸谱图函数 *faces()* 和 *faces2()* ，两个函数能反映的面部特征不尽相同，各有所长，例如 *faces()* 可以画头发和耳朵，但 *faces2()* 可以画更多的变量，这里我们只介绍后者，读者可以阅读前者的帮助文档了解更多信息。faces2()的用法如下：
 
-```{r faces2-usage}
+```{r faces2-usage, warning=FALSE}
 library(TeachingDemos)
 usage(faces2)
 ```
@@ -1668,8 +1667,7 @@ usage(faces2)
 
 (ref:fig-faces2) 部分汽车数据的脸谱图：谁的脸宽？谁的鼻子长？谁的眼睛大？
 
-```{r faces2,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
-library(TeachingDemos)
+```{r faces2,fig.width=4.8,fig.height=5.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
 faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5))
 ```
 
@@ -1807,7 +1805,7 @@ Plot），它由 @Rousseeuw99 提出。二维箱线图的做法是从数据的�
 R 中 **aplpack** 包 [@aplpack] 提供了一个函数 *bagplot()* 可以用来画二维箱线图，其用法如下：
 
 ```{r bagplot-usage}
-library(aplpack, warn.conflicts = FALSE)
+library(aplpack)
 usage(bagplot)
 ```
 
@@ -1820,8 +1818,7 @@ usage(bagplot)
 
 ```{r bagplot,fig.width=4.8,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
 par(mar = c(4, 4, 0.1, 0.1))
-library(aplpack)
-library(rpart) # 数据来自rpart包中的car.test.frame
+library(rpart) # 数据来自rpart包中的 car.test.frame
 par(mfrow = c(1, 2), bty = "l")
 car.wd <- with(car.test.frame, cbind(Weight, Disp.))
 bagplot(car.wd, cex = 0.9)
