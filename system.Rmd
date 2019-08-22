@@ -699,7 +699,8 @@ saveHTML({
   par(mar = c(4, 4, .1, 0.1), mgp = c(2, 0.7, 0))
   brownian.motion(pch = 21, cex = 5, col = "red", bg = "yellow")
 },
-img.name = "bm-plot", title = "Demonstration of the Brownian Motion",
+img.name = "bm-plot",
+title = "Demonstration of the Brownian Motion",
 description = c(
   "Random walk", "on the 2D plane: for each point",
   "(x, y), x = x + rnorm(1) and y = y + rnorm(1)."
@@ -770,7 +771,7 @@ knitr::include_graphics(path = c(
 
 1. **fun**包[@fun]中有一个3D版本的“我的中国心”，效果如图\@ref(fig:China-Heart-3D)；请对照`demo('ChinaHeart3D', package = 'fun')`以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入rgl三维图形。
 
-    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE,fig.link="https://wp-contents.netlify.com/interactives/rgl-heart.html"}
+    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE"}
     knitr::include_graphics(path = "images/China-Heart-3D.png")
     ```
 
