@@ -29,7 +29,7 @@ Table: (\#tab:plot-summary) 各种类型的数据对应的统计图形概览
              一维散点图                      星状图、符号图、脸谱图  
  混合数据                     条件密度图           条件分割图        
                                 棘状图                               
----------- --------------- ---------------- ------------------------ --------	
+---------- --------------- ---------------- ------------------------ --------
 
 
 ### 分类数据
@@ -162,7 +162,7 @@ head(music[, 1:5]) # 头6行数据
 summary(music[, 1:5])
 ```
 
-```{r music-andrews,fig.scap="音乐曲目左声道频率的调和曲线图",fig.cap="(ref:music-andrews)"}
+```{r music-andrews,fig.scap="音乐曲目左声道频率的调和曲线图",fig.cap="(ref:music-andrews)",fig.width=4.9,fig.height=2.8}
 par(mfrow = c(1, 2))
 andrews_curve(scale(music[, 4:6]), n = 50, col = 1)
 with(
@@ -207,17 +207,13 @@ ggparcoord(music, columns = c(4, 5, 3), groupColumn = "type")
 data(cn_vs_us)
 cn_vs_us[, 1:3]
 ```
-```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="2010年中美国力对比扇形图",echo=FALSE,fig.link="http://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
+```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="2010年中美国力对比扇形图",echo=FALSE,out.width="70%",fig.link="http://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
 knitr::include_graphics(path = "images/China-v-US-graphic.jpg")
 ```
 
 (ref:cn-us-guardian) 2010年中美国力对比：中国人口多、污染重、GDP 增长快；美国人均 GDP 高、市值高、失业率高。
 
 ```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="2010年中美国力对比条形图"}
-# 不知道怎么用 qplot 画条形图
-# qplot(country, value, data = cn_vs_us, geom = "bar", fill = country) +
-#   facet_wrap(~metric, scales = "free_y", ncol = 3) +
-#   theme(legend.position = "none")
 ggplot(data = cn_vs_us, aes(x = country, y = value, fill = country)) +
   geom_col() +
   facet_wrap(~metric, scales = "free_y", ncol = 3)
@@ -245,9 +241,7 @@ head(tvearn[order(tvearn$pay, decreasing = TRUE), 1:4], 10)
 对于这样一批数据，我们关心的核心对象当然是薪酬：除了简单排序之外，它与其它变量的关系是怎样的？例如正剧和喜剧是否有差异、评分和薪酬是否有关系、男女演员的薪酬是否有高低，等等。我们可以用数值的方式回答这些问题，也可以作图。如男女演员的平均薪酬：
 
 ```{r tvearn-mean}
-# library(plyr)
-# 平均薪酬以及男女演员数量
-# ddply(tvearn, .(gender), summarise, mean.pay = mean(pay), number = length(gender))
+# 平均薪酬 pay.mean 以及男女演员数量 pay.number
 myfun <- function(x) {
  c(mean = mean(x), number = length(x))
 }
@@ -351,7 +345,7 @@ example("gov.cn.pct", package = "MSG")
 
 ### 化点为线 {#subsec:lowess}
 
-```{r PlantCounts,fig.cap="(ref:PlantCounts)",fig.scap="海拔高度与物种数目的LOWESS曲线"}
+```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="海拔高度与物种数目的LOWESS曲线"}
 data(PlantCounts, package = "MSG")
 par(mar = c(4.5, 4.5, .1, 0.2), mfrow = c(1, 2), pch = 20)
 with(PlantCounts, {
@@ -561,7 +555,7 @@ y <- -x + z + rnorm(100, 0, .25)
 coef(summary(lm(y ~ x)))
 coef(summary(lm(y ~ x + z)))
 ```
-```{r multireg-scatter,fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)"}
+```{r multireg-scatter,fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)",fig.width=4.8,fig.height=2.5}
 par(mar = c(4.5, 4.5, .1, 0.5), mfrow = c(1, 2))
 plot(x, y)
 abline(lm(y ~ x), col = "red")
@@ -590,7 +584,7 @@ y	&=	(\beta_{0}+\beta_{1}x_{1})+(\beta_{2}+\beta_{3}x_{1})x_{2}+\epsilon \\
 
 若我们将$x_{1}$固定在特定水平，那么$x_{2}$的回归系数为$\alpha_{2}=\beta_{2}+\beta_{3}x_{1}$，它与$x_{1}$有关；同理，$y$与$x_{1}$的关系也受$x_{2}$的不同水平影响。交互作用的含义在传统的统计学教科书中一般都用折线图表示，而折线图只能表示自变量为分类变量时的交互效应，对于连续自变量情况的交互作用图示，我们则很难找到任何示例。
 
-```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png}
+```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png,fig.width=4.8,fig.height=2.5}
 par(mar = c(4.5, 4.5, 2, 0.2), mfrow = c(1, 2), cex.main = 1)
 sq <- 1:10
 x <- rep(sq, 10)
@@ -661,7 +655,7 @@ y1 <- c(y, 50)
 x2 <- c(x, jitter(rep(mean(x), 500), 10))
 y2 <- c(y, jitter(rep(mean(y), 500), 10))
 ```
-```{r OLS-LMS,fig.cap="(ref:OLS-LMS)",fig.scap="LMS回归的稳健性及其缺点"}
+```{r OLS-LMS,fig.width=4.8,fig.height=2.5,fig.cap="(ref:OLS-LMS)",fig.scap="LMS回归的稳健性及其缺点"}
 par(mar = c(4.5, 4.5, 1, 0.2), mfrow = c(1, 2), pch = 20)
 olsLms(x1, y1)
 olsLms(x2, y2, cex = c(rep(1, 50), rep(0.1, 500)))
