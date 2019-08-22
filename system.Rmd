@@ -572,7 +572,7 @@ plot3d(x, y, z,
 ind <- c(5, 1, 5, 2, 5, 3, 5, 4)
 lines3d(x[ind], y[ind], z[ind], lwd = 2)
 ```
-```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE,out.extra = ifelse(is_latex,'','data-url="/interactives/rgl-ch4.html"')}
+```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE,out.extra = ifelse(is_latex,'','data-url="interactives/rgl-ch4.html"')}
 knitr::include_graphics(path = "images/rgl-ch4.png")
 ```
 
@@ -589,7 +589,7 @@ x <- y <- seq(1, 5, .1)
 m <- outer(x, y, function(a, b) beta(a, b))
 persp3d(x, y, m, col = "green3", zlab = "Beta(x, y)")
 ```
-```{r rgl-beta,fig.scap="Beta 函数的三维透视图",fig.cap="(ref:rgl-beta)",out.extra = ifelse(is_latex,'','data-url="/interactives/rgl-beta.html"'),echo=FALSE}
+```{r rgl-beta,fig.scap="Beta 函数的三维透视图",fig.cap="(ref:rgl-beta)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-beta.html"'),echo=FALSE}
 knitr::include_graphics(path = "images/rgl-beta.png")
 ```
 
@@ -608,7 +608,7 @@ persp3d(x, y, z,
   col = "green", aspect = "iso", axes = FALSE, box = FALSE
 )
 ```
-```{r rgl-china-map,fig.scap="(ref:rgl-china-map-s)",fig.cap="(ref:rgl-china-map)",out.extra = ifelse(is_latex,'','data-url="/interactives/rgl-china-map.html"'),echo=FALSE}
+```{r rgl-china-map,fig.scap="(ref:rgl-china-map-s)",fig.cap="(ref:rgl-china-map)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-china-map.html"'),echo=FALSE}
 knitr::include_graphics(path = "images/rgl-china-map.png")
 ```
 
