@@ -2,8 +2,6 @@ FROM xiangyunhuang/r-devel:latest
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends \
-## install webshot
-  phantomjs \
 ## install magick
   libmagick++-dev \
 ## install sf
@@ -12,7 +10,6 @@ RUN apt-get update \
   libgeos-dev \
   libgdal-dev \
 ## rgl  
-  libcgal-dev \ 
   libglu1-mesa-dev \ 
   libpoppler-cpp-dev \
   graphviz \
@@ -27,11 +24,6 @@ RUN xvfb-run install2.r --error \
   corrplot \
   formatR \
   GGally \
-  ggbeeswarm \
-  ggExtra \
-  ggridges \
-  ggthemes \
-  ggwordcloud \
   gWidgetsRGtk2 \
   pdftools \
   plotrix \
@@ -42,8 +34,6 @@ RUN xvfb-run install2.r --error \
   rgeos \
   rgl \
   RColorBrewer \
-  extrafont \
-  fontcm \
   showtext \
   sna \
   sp \
@@ -51,8 +41,6 @@ RUN xvfb-run install2.r --error \
   mapdata \
   mapproj \
   maptools \
-  sf \
-  raster \
   randomForest \
   rggobi \
   tikzDevice \
@@ -69,13 +57,9 @@ RUN xvfb-run install2.r --error \
   yihui/fun \
   yihui/MSG  
 
-RUN wget -q --no-check-certificate http://simonsoftware.se/other/xkcd.ttf -P ~/.fonts/ \
-  && Rscript -e "extrafont::font_import(paths = '~/.fonts', pattern = '[X/x]kcd', prompt = FALSE)" \
-  && Rscript -e "extrafont::font_import(prompt = FALSE)" \
-  && Rscript -e "extrafont::font_install('fontcm', prompt = FALSE)" \
-  && Rscript -e "library(showtext);font_install(source_han_serif());font_install(source_han_sans())" \
+
 ## Install TinyTeX
-  && tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
+RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
       colortbl dvipng dvisvgm environ fancyhdr jknapltx listings \
       makecell mathdesign metalogo microtype ms multirow parskip pdfcrop \
       pgf placeins preview psnfss realscripts relsize rsfs setspace soul \
