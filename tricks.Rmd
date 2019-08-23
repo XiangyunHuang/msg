@@ -375,14 +375,14 @@ abline(v = qnorm(0.95), lty = 2)
 text(0, dnorm(qnorm(0.95)), expression(integral(phi(x) * dx, -infinity, 1.65) %~~% 0.95))
 ```
 ```{r plotmath,echo=FALSE,fig.cap="正态分布密度函数公式的表示",dev='tikz',fig.process=to_png}
-plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), 
-     type = "l", xlab = "x", ylab = "$\\phi(x)$")
-text(-3, 0.37, adj = c(0, 1), 
-     "$\\phi(x) = \\frac{1}{\\sqrt{2 \\pi}} \\exp(-\\frac{x^2}{2})$", cex = 1.2)
+plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)),
+     type = "l", xlab = "x", ylab = latex2exp::TeX("$\\phi(x)$"))
+text(-3, 0.37, adj = c(0, 1),
+     latex2exp::TeX("$\\phi(x) = \\frac{1}{\\sqrt{2 \\pi}} \\exp(-\\frac{x^2}{2})$"), cex = 1.2)
 arrows(-2, 0.27, -1.3, dnorm(-1.3) + 0.02)
 abline(v = qnorm(0.95), lty = 2)
 text(0, dnorm(qnorm(0.95)),
-     "$\\int_{-\\infty}^{1.65} \\phi(x) dx \\approx 0.95$")
+     latex2exp::TeX("$\\int_{-\\infty}^{1.65} \\phi(x) dx \\approx 0.95$"))
 ```
 
 由于统计理论中经常需要用到数学符号，所以向统计图形中添加一些数学说明不仅会使得图形看起来更专业，对图形背后的理论也是一种重要补充。
