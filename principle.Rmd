@@ -20,11 +20,11 @@ library(MSG)
 
 R基础图形系统中默认的点的样式是空心点，在很多情况下这并不是一个好的选择，因为空心点在图中看起来太不起眼，尤其是数据点较少的时候。我们延续\@ref(subsec:tvearn)小节中的美剧演员收入数据，在这里讨论如何突出主要元素。图\@ref(fig:pay-rating-points)是演员收入与电视剧评分的散点图，左图使用了默认的空心点，右图使用了实心点。这批数据的样本量只有72，左图中的点所用的墨水可能和坐标轴等次要元素差不多，所以数据在图中也显得不够突出，而实心点则很明显占据了一幅图的视觉重心。
 
-```{r pay-rating-points,fig.scap="演员收入与电视剧评分的空心和实心散点图",fig.cap="(ref:pay-rating-points)"}
+```{r pay-rating-points,fig.scap="演员收入与电视剧评分的空心和实心散点图",fig.cap="(ref:pay-rating-points)",fig.width=7,fig.height=3.5}
 par(mfrow = c(1, 2))
 data("tvearn", package = "MSG")
-plot(pay ~ rating, data = tvearn) # 默认为空心点
-plot(pay ~ rating, data = tvearn, pch = 19) # 改为实心点
+plot(pay/10^4 ~ rating, data = tvearn, ylab = "pay (10^4)") # 默认为空心点
+plot(pay/10^4 ~ rating, data = tvearn, pch = 19, ylab = "pay (10^4)") # 改为实心点
 ```
 
 (ref:pay-rating-points) 演员收入与电视剧评分的空心和实心散点图：右图的视觉冲击力更强。
@@ -34,7 +34,7 @@ plot(pay ~ rating, data = tvearn, pch = 19) # 改为实心点
 如果我们关心的对象是收入和评分的关系，那么一幅散点图就足够了；如果我们还想进一步从图中了解每个点代表的演员是谁，那么我们就需要往图中加文本标签。标签是有很强显示力的工具，它能直截了当告诉我们信息，然而由于它的体积相对较大，若处理不当，反而会让图中充满文本信息，从而失去了数据本身的意义。在本例中添加姓名标签不容易做到自动化，即自动安排标签的位置让它们不要重叠，因为本身这幅图中的点就已经有重叠，不过**maptools**包中的`pointLabel()`函数提供了基于模拟退火算法和遗传算法的添加标签方案，它能尽量做到不让标签重叠。事实上即使用这些算法来添加标签，也仍然会出现大量的遮挡现象，如图\@ref(fig:pay-rating-log)下图，这也是受本书版面大小所限，读者可以运行代码在更大的图形窗口中查看结果，重叠程度应该会轻一些。
 
 
-```{r pay-rating-log,fig.cap="(ref:pay-rating-log)",fig.scap="取对数的收入与评分散点图以及演员名称"}
+```{r pay-rating-log,fig.cap="(ref:pay-rating-log)",fig.scap="取对数的收入与评分散点图以及演员名称",fig.width=7,fig.height=3.5}
 par(mfrow = c(1, 2), mar = c(3.2, 3.6, .05, .05))
 plot(log10(pay) ~ rating, data = tvearn, pch = 19)
 plot(log10(pay) ~ rating, data = tvearn, pch = 20, ylab = "", col = "red")
@@ -49,7 +49,7 @@ with(tvearn, pointLabel(rating, log10(pay), labels = actor,
 顺便提一下，关于文本标签的使用，多维标度分析（Multidimensional Scaling，MDS）是一个非常适合以标签展示为主的统计学方法。简言之，MDS的思想是将高维空间中个体之间的距离在低维空间中尽量准确地表达出来，这里的低维空间通常是二维平面。因为我们关心的重点是个体与个体之间的距离，那么最好将个体的某种特征画在图中，最直接的想法当然就是个体的名称，此时图的重点就是这些名称标签，所以尽管标签的背后对应着坐标点，我们也不必把点画出来，甚至坐标轴都可以完全去掉。图\@ref(fig:music-mds)是\@ref(subsec:music)小节提到过的音乐数据的MDS平面图，这幅图没有坐标轴，也没有点，只有曲目名称，这就足够了，因为这些名称之间的距离就是它们在标准化之后的原始数据上的距离（注意原始数据有10个变量，这里降维为2），从图中我们可以很快看出曲目之间的相似性。
 
 
-```{r music-mds,fig.cap="(ref:music-mds)",fig.scap="音乐数据的多维标度分析平面图"}
+```{r music-mds,fig.cap="(ref:music-mds)",fig.scap="音乐数据的多维标度分析平面图",fig.width=4,fig.height=4}
 data("music", package = "MSG")
 par(mar = c(0, 2, 0, 0))
 # 标准化所有频率变量到0-1之间并计算曲目之间欧式距离
@@ -88,7 +88,7 @@ char_gen(c("*", "Q"), n = 320, nrow = 8) # 从Q中找*
 
 图形中的离散化现象很普遍，如\@ref(sec:base-graph-ext)小节的风向图就是一个例子，当然风向图中的离散化也许有一定道理。更多情况下是不必要的离散化，如根据不同年龄组计算身高的均值，这种情况下我们完全可以画身高和年龄（连续变量）的散点图，此时身高和年龄的关系一目了然，而不需要从一组组均值中去看它们的关系。更严重的问题是，离散化的分组往往带有任意性，我们可以按5岁一个区间分组，也可以按10岁一个区间，这种任意性的存在可能会导致结果的截然不同，甚至让我们得出相反的结论。
 
-```{r cut-plot,fig.cap="(ref:cut-plot)",fig.scap="任意离散化连续数据得到的不同结果"}
+```{r cut-plot,fig.cap="(ref:cut-plot)",fig.scap="任意离散化连续数据得到的不同结果",fig.width=6,fig.height=3}
 set.seed(319)
 x <- rnorm(100)
 y <- rnorm(100)
@@ -131,7 +131,7 @@ knitr::include_graphics(path = "images/worst-graph.png")
 
 这里说的布局主要指\@ref(sec:plot)小节提到的纵横比，它是一个对图形解释非常重要的概念，尤其是折线图。简单来说，纵横比影响的是图形元素宽高的比率。“瘦高”的图中，折线的斜率大，给人的感觉是升降趋势非常剧烈，而“矮胖”的图中，趋势变化则看起来平缓一些。
 
-```{r sunspots-asp,fig.cap="(ref:sunspots-asp)",fig.scap="不同纵横比设置下的太阳黑子时序图"}
+```{r sunspots-asp,fig.cap="(ref:sunspots-asp)",fig.scap="不同纵横比设置下的太阳黑子时序图",fig.width=4.8,fig.height=4.8}
 layout(matrix(1:2, 2), heights = c(3, 1))
 par(mar = c(4, 4, 0.1, 0.1))
 plot(sunspots)
@@ -156,7 +156,7 @@ Cleveland 对这个问题的建议是调整纵横比让所有的折线的倾斜�
 
 图形中有许多的心理因素需要考虑，相信读者应该看过一些关于视觉欺骗的图片，图\@ref(fig:optical-illusion)就是一个经典示例，其实红线和黑线一样长，但由于箭头方向内外朝向的问题，使得红线看起来更长。类似的心理因素还包括：
 
-```{r optical-illusion,fig.cap="(ref:optical-illusion)",fig.scap="一个经典的视觉欺骗示例"}
+```{r optical-illusion,fig.cap="(ref:optical-illusion)",fig.scap="一个经典的视觉欺骗示例",fig.width=4.8,fig.height=1.5}
 set.seed(320)
 par(mar = c(1, 0, 1, 0), xpd = TRUE)
 plot.new()
@@ -185,16 +185,16 @@ arrows(v[3:4], h[3:4], v[3:4] + .6, h[3:4], angle = 135, code = 3, col = 2)
 
 以上的研究结论当然很重要，但这里我们还要指出另一种影响心理的做法。\@ref(subsec:data-processing)小节提到了对数据附加标记的做法，这在聚类分析中尤其常见，并且它也对人的心理有很大的影响。例如，从原散点图中我们根本看不出聚类现象，但经过颜色或其它方式标注，我们被无意识引导到了聚类现象上。图\@ref(fig:kmeans-cluster)就是这样的例子：数据完全是没有规律的随机数，如果我们对它做 K-Means 聚类，结果如左图；如果做$\alpha$凸包计算，结果如右图。表面上看来，这些随机数中似乎有规律，但实际上我们看到的都是假象。左图用不同样式的点作了标记，所以看起来上下分别有聚类；右图因为有连线的存在，诱使我们认为图中有个“空心”。$\alpha$凸包由 **alphahull** 包[@alphahull]生成，详细原理我们就不在这里介绍了，大意是从散点图中根据一个参数$\alpha$的取值找出所有的凸包（convex hull，用一个圈包住一些点），$\alpha$越小则找到的凸包越多，反之越少。
 
-```{r kmeans-cluster,fig.cap="(ref:kmeans-cluster)",fig.scap="(ref:kmeans-cluster-s)",message=FALSE,dev='tikz',fig.process=to_png}
+```{r kmeans-cluster,fig.cap="(ref:kmeans-cluster)",fig.scap="(ref:kmeans-cluster-s)",fig.width=7,fig.height=3.5}
 set.seed(320)
 par(mfrow = c(1, 2))
 x <- matrix(rnorm(200), ncol = 2)
 plot(x,
   pch = c(4, 19)[kmeans(x, centers = 2)$cluster],
-  xlab = "$x_1$", ylab = "$x_2$"
+  xlab = expression(x[1]), ylab = expression(x[2])
 )
 library(alphahull)
-plot(ahull(x, alpha = 0.4), xlab = "$x_1$", ylab = "$x_2$")
+plot(ahull(x, alpha = 0.4), xlab = expression(x[1]), ylab = expression(x[2]))
 ```
 
 (ref:kmeans-cluster) 不存在聚类的K-Means聚类散点图（左）和$\alpha$凸包（右）
@@ -214,7 +214,7 @@ plot(ahull(x, alpha = 0.4), xlab = "$x_1$", ylab = "$x_2$")
 
 尽管直方图和误差线图都很流行，但读者也需要慎重考虑其使用。借用统计学家 Frank Harrell Jr 的话，“就像人有人权一样，数据也有数据权，请尊重数据权。”
 
-```{r error-bars,fig.cap="(ref:error-bars)",fig.scap="误差线图的弊端"}
+```{r error-bars,fig.cap="(ref:error-bars)",fig.scap="误差线图的弊端",fig.width=7,fig.height=3.5}
 set.seed(321)
 par(mfrow = c(1, 2), mar = c(4, 4, .5, .1))
 y <- c(runif(20), c(.43, .54), c(.6, runif(9, .3, .4)), 

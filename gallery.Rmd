@@ -4,9 +4,6 @@
 >
 > --- 柯南$\cdot$ 道尔《血字的研究》
 
-```{r, echo=FALSE}
-library("formatR")
-```
 
 本章中，我们结合 R 语言中的相关函数以及数据实例对各种统计图形依次作出介绍。从第 \@ref(sec:hist) 节到 \@ref(sec:pie) 节的所有图形都是基于 **graphics** 包所作，其后的图形均来自于其它函数包。图形的介绍顺序大致按函数的字母序，但直方图、箱线图和散点图等常见图形放在前面，而饼图被有意安排在最后。
 
@@ -491,8 +488,8 @@ par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
 chippy <- function(x) sin(cos(x) * exp(-x / 2))
 curve(chippy, -8, 7, n = 2008)
 curve(sin(x) / x, from = -20, to = 20, n = 200, 
-      xlab = latex2exp::TeX("$t$"), 
-      ylab = latex2exp::TeX("$\\varphi_{X}(t)$"))
+      xlab = expression(t), 
+      ylab = expression(varphi[X](t)))
 ```
 
 函数曲线图没有什么特殊之处，仅仅是一条曲线而已，R 专门提供了一个函数，目的是为了节省我们去使用低层作图函数（如 *lines()*）的精力和时间。利用这个函数，我们可以方便地对任何一元函数作出它在某段定义域上的曲线。
@@ -822,7 +819,7 @@ ftable(Titanic)
 
 (ref:fig-mosaicplot) 泰坦尼克号乘客生存数据马赛克图：按性别、年龄和船舱等级划分
 
-```{r mosaicplot,fig=T,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
+```{r mosaicplot,fig=T,fig.width=5.2,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
 par(mar = c(2, 3.5, .1, .1))
 mosaicplot(Titanic, shade = TRUE, main = "")
 ```
@@ -1117,7 +1114,7 @@ Plot）本质上是一类图形，它们都用线段离中心的长度来表示�
 
 R中星状图的函数为 *stars()* ，其用法如下：
 
-```{r stars-usage}
+```{r stars-usage, warning=FALSE}
 usage(stars)
 ```
 
@@ -1253,7 +1250,7 @@ head(ChinaPop)
 
 (ref:fig-symbols-pop) 2005 年中国 31 地区五大国民素质特征分布温度计图
 
-```{r symbols-pop,fig.width=4.8,fig.height=5,results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
+```{r symbols-pop,fig.width=5.8,fig.height=6,results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
 demo("ChinaPop", package = "MSG")
 ```
 
@@ -1433,7 +1430,7 @@ QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它�
 
 (ref:fig-survival) 急性髓细胞白血病病人生存函数图
 
-```{r survival,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)"}
+```{r survival,fig.width=4.8,fig.height=3.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)"}
 library(survival)
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 plot(leukemia.surv, lty = 1:2, xlab = "time")
@@ -1499,7 +1496,7 @@ usage(rpart:::plot.rpart)
 
 (ref:fig-rpart) 脊椎矫正手术结果的分类树图
 
-```{r rpart,fig.width=4,fig.height=2.3,fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
+```{r rpart,fig.width=4,fig.height=3.5,fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
 fit <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
 par(mar = rep(1, 4), xpd = TRUE)
 plot(fit, branch = 0.7)
@@ -1818,7 +1815,7 @@ usage(bagplot)
 
 ```{r bagplot,fig.width=4.8,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
 par(mar = c(4, 4, 0.1, 0.1))
-library(rpart) # 数据来自rpart包中的 car.test.frame
+# 数据来自 rpart 包中的 car.test.frame
 par(mfrow = c(1, 2), bty = "l")
 car.wd <- with(car.test.frame, cbind(Weight, Disp.))
 bagplot(car.wd, cex = 0.9)
@@ -1853,7 +1850,7 @@ Reports 中汽车数据中车重 `Weight` 和气缸排量 `Disp.` 两个变量�
 > 我怎么知道有哪些作图的包？或者说怎样找到合适我的包呢？
 
 这个问题并不容易回答，它需要结合具体问题来看。从一般原则来说，用户可以浏览一下 CRAN 关于图形的分类列表（Task
-View）：<http://cran.r-project.org/web/views/Graphics.html>，这是一个很好的导航页面，它总结了一些有用的包的功能。对于具体的问题，也可以广泛寻求网络上的帮助和指导（参见\@ref(sec:R-intro) 小节）。
+View）：<https://cran.r-project.org/web/views/Graphics.html>，这是一个很好的导航页面，它总结了一些有用的包的功能。对于具体的问题，也可以广泛寻求网络上的帮助和指导（参见\@ref(sec:R-intro) 小节）。
 
 本小节选取了 **plotrix** 包中的两个作图函数作为代表，让读者了解基于 R 的基础图形系统的扩展可能性。@Lemon06 是在 R
 News 上关于这个包的一篇介绍性文章，文章标题将这个包描述为"（它）位于 R 的红灯区"，原因是它看起来触犯了一些作图的常见规则，比如它扩展了饼图（甚至还有 3D 饼图这种统计学家很不齿的图形！）、介绍了如何将坐标轴截断、可以画像 Excel 那样的渐变色条形图等等，这里本作者也不知该包的作者究竟是开玩笑还是认真的，总之这个包的确显示了 R 基础图形系统的扩展性，但一些扩展的方向需要我们三思，例如截断坐标轴的作法就是 @Cleveland85 所反对的。下面我们分别介绍风向图和浮动饼图。

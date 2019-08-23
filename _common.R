@@ -5,6 +5,8 @@ to_png <- function(fig_path) {
   return(png_path)
 }
 
+library(formatR)
+
 is_latex <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "latex")
 is_html <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "html")
 

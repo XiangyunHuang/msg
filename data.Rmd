@@ -2,7 +2,6 @@
 
 ```{r,include=FALSE}
 library(grid)
-library(formatR)
 library(MSG)
 library(ggplot2)
 ```
