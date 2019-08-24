@@ -191,7 +191,6 @@ p + geom_density2d() # 散点图上加上二维核密度估计层
 ### 视图区
 
 ```{r grid-subplot,fig.scap="(ref:grid-subplot-s)",fig.cap="(ref:grid-subplot)",results='hide',message=FALSE}
-library(grid)
 demo("subplot", package = "MSG")
 ```
 
@@ -208,6 +207,7 @@ demo("subplot", package = "MSG")
 ### 旋转
 
 ```{r grid-rotate,fig.scap="(ref:grid-rotate-s)",fig.cap="(ref:grid-rotate)"}
+library(grid)
 grid.newpage()
 pushViewport(viewport(h = 0.8, w = 0.8, angle = 15))
 grid.multipanel(newpage = FALSE)
