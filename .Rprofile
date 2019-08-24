@@ -6,5 +6,15 @@ options(
   rgl.printRglwidget = TRUE,
   rgl.useNULL = TRUE,
   width = 79,
-  str = utils::strOptions(strict.width = "cut")
+  str = utils::strOptions(strict.width = "cut"),
+  tikzDefaultEngine = "xetex",
+  tikzDocumentDeclaration = "\\documentclass[12pt,UTF8]{ctexart}\n",
+  tikzXelatexPackages = c(
+    "\\usepackage[colorlinks, breaklinks]{hyperref}",
+    "\\usepackage{color}",
+    "\\usepackage{tikz}",
+    "\\usepackage[active,tightpage,xetex]{preview}",
+    "\\PreviewEnvironment{pgfpicture}",
+    "\\usepackage{amsmath,amsfonts,mathrsfs}"
+  )
 )
