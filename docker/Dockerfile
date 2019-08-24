@@ -4,11 +4,8 @@ RUN apt-get update \
   && apt-get install -y --no-install-recommends \
 ## install magick
   libmagick++-dev \
-## install sf
-  libudunits2-dev \
-  libproj-dev \
+## install rgeos
   libgeos-dev \
-  libgdal-dev \
 ## rgl  
   libglu1-mesa-dev \ 
   libpoppler-cpp-dev \
@@ -25,6 +22,7 @@ RUN xvfb-run install2.r --error \
   formatR \
   GGally \
   gWidgetsRGtk2 \
+  hexbin \
   pdftools \
   plotrix \
   plot3D \
@@ -68,9 +66,6 @@ RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
       fandol cancel \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
-
-RUN install2.r --error \
-  hexbin
 
 EXPOSE 8787 8080 8181 8282
 
