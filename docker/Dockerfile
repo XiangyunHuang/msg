@@ -63,7 +63,7 @@ RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
       pgf placeins preview psnfss realscripts relsize rsfs setspace soul \
       standalone subfig symbol tabu tex4ht threeparttable threeparttablex \
       titlesec tocbibind tocloft trimspaces ulem varwidth wrapfig xcolor xltxtra zhnumber \
-      fandol cancel \
+      fandol cancel titlepic \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
