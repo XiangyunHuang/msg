@@ -369,12 +369,13 @@ for (i in c(
 ```{r plotmath1,eval=FALSE}
 # 本代码为“伪代码”，下图由tikzDevice生成
 plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), type = "l", xlab = "x", ylab = expression(phi(x)))
-text(-3, 0.37, adj = c(0, 1), expression(phi(x) == frac(1, sqrt(2 * pi)) ~ e^-frac(x^2, 2)), cex = 1.2)
+text(-3, 0.37, adj = c(0, 1), cex = 1.2, 
+     expression(phi(x) == frac(1, sqrt(2 * pi)) ~ e^-frac(x^2, 2)))
 arrows(-2, 0.27, -1.3, dnorm(-1.3) + 0.02)
 abline(v = qnorm(0.95), lty = 2)
 text(0, dnorm(qnorm(0.95)), expression(integral(phi(x) * dx, -infinity, 1.65) %~~% 0.95))
 ```
-```{r plotmath,echo=FALSE,fig.cap="正态分布密度函数公式的表示",dev='tikz',fig.process=to_png}
+```{r plotmath,echo=FALSE,fig.cap="正态分布密度函数公式的表示",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), 
      type = "l", xlab = "x", ylab = "$\\phi(x)$")
 text(-3, 0.37, adj = c(0, 1), 

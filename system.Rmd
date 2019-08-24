@@ -325,7 +325,7 @@ $$\text{纵座标变量}\sim\text{横座标变量}|\text{条件变量}$$
 
 从上两节的例子来看，lattice 的入门很容易，只要把数据整理成既定格式，用公式一套就能出结果，配色、线型等细节问题统统不用考虑；然而画图的工作往往不能一蹴而就，总会有不满意或者不合适的地方需要改进，默认的配置常常不能满足用户的个性化要求。要想实现这些改进，就需要对 lattice 系统的选项系统有一个比较深入的了解，这样才能对症下药，取得到自己想要的效果。
 
-```{r lattice-vadeaths,fig.scap="弗吉尼亚死亡率数据在lattice中的点图",fig.cap="(ref:lattice-vadeaths)"}
+```{r lattice-vadeaths,fig.scap="弗吉尼亚死亡率数据在lattice中的点图",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8}
 dotplot(VADeaths,
   groups = FALSE, aspect = 0.3, type = c("p", "h"),
   layout = c(2, 2), between = list(x = 0.5)
@@ -376,7 +376,7 @@ str(comp)
 
 我们以图\@ref(fig:lattice-data-par)的上图为例，读者可能会认为图中的蓝色线条过于细，并且颜色也不够醒目，想将线条修改为红色并且加粗，则可以按图\@ref(fig:lattice-data-par)下图中的步骤来完成，其中省略了我们可以随时用`trellis.par.get()`来观察当前的参数取值情况；实际这是一个经验积累的过程，当有一定的作图经验后，就可以大概知道参数中都有什么样的取值。
 
-```{r lattice-data-par,fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1}
+```{r lattice-data-par,fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.2}
 print(bxp0 <- bwplot(which ~ data, data = comp, horizontal = TRUE))
 trellis.par.set(
   plot.symbol = list(pch = 19, col = "black"),

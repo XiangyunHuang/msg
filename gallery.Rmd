@@ -483,13 +483,12 @@ coplot(lat ~ long | depth,
 
 (ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）。
 
-```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)"}
+```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
 chippy <- function(x) sin(cos(x) * exp(-x / 2))
-curve(chippy, -8, 7, n = 2008)
+curve(chippy, -8, 7, n = 2008, xlab = "$x$", ylab = "$\mathrm{chippy}x$")
 curve(sin(x) / x, from = -20, to = 20, n = 200, 
-      xlab = expression(t), 
-      ylab = expression(varphi[X](t)))
+      xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
 ```
 
 函数曲线图没有什么特殊之处，仅仅是一条曲线而已，R 专门提供了一个函数，目的是为了节省我们去使用低层作图函数（如 *lines()*）的精力和时间。利用这个函数，我们可以方便地对任何一元函数作出它在某段定义域上的曲线。
@@ -1513,7 +1512,8 @@ Plot）是密度曲线图与箱线图的结合，因为它的外观有时候与�
 
 小提琴图来自于 **vioplot** 包 [@vioplot]，其函数为 *vioplot()* ，用法如下：
 
-```{r}
+```{r,message=FALSE,warning=FALSE}
+library(sm)
 library(vioplot)
 usage(vioplot)
 ```

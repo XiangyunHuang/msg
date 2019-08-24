@@ -177,7 +177,7 @@ with(
 
 对这样一批数据，我们关心的问题可能是古典乐和摇滚乐在音频变量上是否有差异。由于这里的变量个数是3，所以我们可以考虑三维散点图，并用不同颜色标注曲目类型。在真正使用曲目类型这个变量之前，我们不妨对数据做一个简单的探索：试想如果我们并不知道曲目的分类，我们是否能从某些图中看出数据有聚类现象？考虑到古典乐和摇滚乐的区别，以及艺术家风格的不同，这种聚类现象应该是很自然的。对于三个连续变量，我们的选择余地并不大：\@ref(sec:andrews-curve)小节介绍的调和曲线图可以作为探索聚类的工具。图\@ref(fig:music-andrews)为三个变量的调和曲线图，为了不把预期中的聚类现象强加于我们脑中，首先我们不使用任何方式标注分类信息，统一用黑色，如左图所示，这些曲线的走势是否有扎堆现象？这里我们不想故意引导读者，请读者自行观察。某种程度上，标记和不标记分类变量会对一幅图形产生很大的影响，比如即使一幅图中本来没有聚类现象，但由于我们使用了颜色或其它手段将图形元素分了组，这时我们的眼睛很容易引导我们认为图中存在聚类。看完左图之后再看右图，你的结论有变化吗？右图中虚线表示摇滚，实线表示古典；红色为 Eels，黑色为 Abba，蓝色为维瓦尔第，绿色为莫扎特。从“事后诸葛亮”的角度来说，这些曲目似乎确实存在差异。
 
-```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="音乐曲目左声道频率的三维散点图与平行坐标图",message=FALSE,fig.subcap=c("",""),fig.ncol=1}
+```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="音乐曲目左声道频率的三维散点图与平行坐标图",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8}
 library(scatterplot3d)
 with(
   music,
@@ -494,7 +494,7 @@ $$R_{i,j}=\frac{\mbox{同时出现高频词}i\mbox{和}{j}\mbox{的词的数目}
 显然当高频词$i$和$j$总是同时出现时，关系系数为1；当它们从来不同时出现在同一首词时，关系系数为0。据此可以得到一个$100\times100$的矩阵。利用**igraph**包[@igraph]画出这100个词的关系网络图如图\@ref(fig:song-high-freq)。 
 
 ```{r song-high-freq,fig.cap="(ref:song-high-freq)",fig.scap="宋词前100高频词的关系网络图"}
-library(igraph)
+library(igraph, warn.conflicts = FALSE)
 load(system.file("extdata", "HighFreq100.rda", package = "MSG"))
 g <- graph.adjacency((HighFreq100 > 0.05) * HighFreq100,
   mode = "undirected", weighted = TRUE, diag = FALSE
@@ -608,7 +608,7 @@ y	&=	(\beta_{0}+\beta_{1}x_{1})+(\beta_{2}+\beta_{3}x_{1})x_{2}+\epsilon \\
 
 若我们将$x_{1}$固定在特定水平，那么$x_{2}$的回归系数为$\alpha_{2}=\beta_{2}+\beta_{3}x_{1}$，它与$x_{1}$有关；同理，$y$与$x_{1}$的关系也受$x_{2}$的不同水平影响。交互作用的含义在传统的统计学教科书中一般都用折线图表示，而折线图只能表示自变量为分类变量时的交互效应，对于连续自变量情况的交互作用图示，我们则很难找到任何示例。
 
-```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png,fig.width=7,fig.height=3.5}
+```{r interaction-bubble,fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png,fig.width=7,fig.height=3.5,fig.showtext=FALSE,small.mar=FALSE}
 par(mar = c(4.5, 4.5, 2, 0.2), mfrow = c(1, 2), cex.main = 1)
 sq <- 1:10
 x <- rep(sq, 10)
@@ -715,7 +715,7 @@ for (i in 1:100) {
   betaSim[i] <- coef(update(fit, subset = idx))[2]
 }
 ```
-```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png,fig.width=4.8,fig.height=4.8}
+```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png,fig.width=4.8,fig.height=4.8,fig.showtext=FALSE,small.mar=FALSE}
 par(mar = c(4.5, 4.5, 1, 0.5), mfrow = c(2, 2), pch = 20)
 plot(x, y, col = rgb(0, 0, 0, 0.5))
 abline(fit)

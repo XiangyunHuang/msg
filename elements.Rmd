@@ -541,7 +541,7 @@ optim(c(-.9, .9), f2, method = "L-BFGS-B", lower = c(-1, .5), upper = c(1, 2.2))
 
 图\@ref(fig:gradArrows)同时展示了梯度下降算法的原理以及在应用中可能出现的问题（演示`demo('gradArrows2', package = 'MSG')`可以获得更好的图形质量以及箭头动画效果），它充分显示了R语言的统计图形能力可以紧密结合它的统计计算优势，创造出有意义的统计图形。我们使用的只是简单的图形元素（箭头）和基本的计算（求导），但结果的深刻远大于过程的简单。从某种程度上来说，在R语言中作图缺的不是工具（工具俯拾皆是），而是创意、思考以及对数据的理解。
 
-```{r gradArrows,fig.scap="梯度下降算法的过程演示",fig.cap="(ref:gradArrows)",results='hide',dev='tikz',fig.process=to_png}
+```{r gradArrows,fig.scap="梯度下降算法的过程演示",fig.cap="(ref:gradArrows)",results='hide',dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 demo("gradArrows1", package = "MSG")
 ```
 
