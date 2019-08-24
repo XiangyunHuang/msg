@@ -486,7 +486,7 @@ coplot(lat ~ long | depth,
 ```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
 chippy <- function(x) sin(cos(x) * exp(-x / 2))
-curve(chippy, -8, 7, n = 2008, xlab = "$x$", ylab = "$\mathrm{chippy}x$")
+curve(chippy, -8, 7, n = 2008, xlab = "$x$", ylab = "$\\mathrm{chippy}(x)$")
 curve(sin(x) / x, from = -20, to = 20, n = 200, 
       xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
 ```
@@ -1802,7 +1802,7 @@ Plot），它由 @Rousseeuw99 提出。二维箱线图的做法是从数据的�
 R 中 **aplpack** 包 [@aplpack] 提供了一个函数 *bagplot()* 可以用来画二维箱线图，其用法如下：
 
 ```{r bagplot-usage}
-library(aplpack)
+library(aplpack, warn.conflicts = FALSE)
 usage(bagplot)
 ```
 
