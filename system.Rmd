@@ -208,6 +208,7 @@ demo("subplot", package = "MSG")
 ### 旋转
 
 ```{r grid-rotate,fig.scap="(ref:grid-rotate-s)",fig.cap="(ref:grid-rotate)"}
+grid.newpage()
 pushViewport(viewport(h = 0.8, w = 0.8, angle = 15))
 grid.multipanel(newpage = FALSE)
 popViewport()
