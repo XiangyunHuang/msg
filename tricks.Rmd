@@ -165,7 +165,7 @@ par(mar = c(4, 4, 1, .5), bg = "yellow")
     : 图副标题的字体样式
 
 `lab`
-: 设置坐标轴刻度数目（R会尽量自动“取整”，即尽量向0.5、1或10的幂次靠近）；取值形式`c(x, y, len)`：x和y分别设置两轴的刻度数目，`len`目前在R中尚未生效，因此设置任意值都不会有影响（但用到`lab`参数时必须写上这个参数）
+: 设置坐标轴刻度数目（R会尽量自动“取整”，即尽量向0.5、1或10的幂次靠近）；取值形式`c(x, y, len)`：`x`和`y`分别设置两轴的刻度数目，`len`目前在R中尚未生效，因此设置任意值都不会有影响（但用到`lab`参数时必须写上这个参数）
 
 `las`
 : 坐标轴标签样式；取0、1、2、3四个整数之一，分别表示“总是平行于坐标轴”、“总是水平”、“总是垂直于坐标轴”和“总是竖直”。仔细观察图\@ref(fig:par2)中四幅图的不同坐标轴标签方向
@@ -197,7 +197,8 @@ par(mar = c(4, 4, 1, .5), bg = "yellow")
 `mgp`
 : 设置坐标轴的边界宽度；取值长度为3的数值向量，分别表示坐标轴标题、坐标轴刻度线标签和坐标轴线的边界宽度（受`mex`的影响），默认为`c(3, 1, 0)`，意思是坐标轴标题、坐标轴刻度线标签和坐标轴线离作图区域的距离分别为3、1、0；参见图\@ref(fig:par1)右上方小图
 
-`oma` 设置外边界（Outer Margin）宽度；类似`mar`，默认为`c(0, 0, 0, 0)`，当一页上只放一张图时，该参数与`mar`不好区分，但在一页多图的情况下就容易可以看出与`mar`的区别
+`oma`
+: 设置外边界（Outer Margin）宽度；类似`mar`，默认为`c(0, 0, 0, 0)`，当一页上只放一张图时，该参数与`mar`不好区分，但在一页多图的情况下就容易可以看出与`mar`的区别
 
 `pch`
 : 点的符号；`pch = 19`$\Rightarrow$实圆点、`pch = 20`$\Rightarrow$小实圆点、pch = $21\Rightarrow$圆圈、`pch = 22`$\Rightarrow$正方形、`pch = 23`$\Rightarrow$菱形、`pch = 24`$\Rightarrow$正三角尖、`pch = 25`$\Rightarrow$倒三角尖，其中，21-25可以填充颜色（用`bg`参数），参见图\@ref(fig:point-type)
@@ -305,20 +306,11 @@ R中最普通的作图函数就是`plot()`函数，它是一个泛型函数（�
 `asp`
 : 图形纵横比，即y轴上的1单位长度和x轴上1单位长度的比率；通常情况下这个比率不是1，有些情况下需要设置以显示更好的图形效果，例如需要从角度表现直线的斜率：若`asp`不等于1，那么$45^{\circ}$ 的角可能看起来并不像真实的$45^{\circ}$ 
 
-[^line-type]: 注意是字母`l`（表示“line”）， 不是数字1！同样后面的字母`o`（表示“overplotted”）也不要误认为是数字0
-
 ```{r plot-type,fig.cap="(ref:plot-type)",fig.scap="(ref:plot-type-s)"}
 par(mfrow = c(3, 3), mar = c(2, 2.5, 3, 2))
-for (i in c(
-  "p", "l", "b", "c", "o", "h", "s", "S",
-  "n"
-)) {
-  plot(c(1:5, 5:1),
-    type = i,
-    main = paste("Plot type: \"",
-      i, "\"",
-      sep = ""
-    ), xlab = ""
+for (i in c("p", "l", "b", "c", "o", "h", "s", "S", "n")) {
+  plot(c(1:5, 5:1), xlab = "", type = i,
+    main = paste("Plot type: \"", i, "\"", sep = "")
   )
 }
 ```
@@ -326,6 +318,8 @@ for (i in c(
 (ref:plot-type-s) `plot()`作图的九种样式
 
 (ref:plot-type) `plot()`作图的九种样式类型：点、线、点线（不相接）、擦掉点的线、点线（相接）、垂线、阶梯（水平起步）、阶梯（垂直起步）、无。
+
+[^line-type]: 注意是字母`l`（表示“line”）， 不是数字1！同样后面的字母`o`（表示“overplotted”）也不要误认为是数字0
 
 然后我们看看默认的散点图函数`plot.default()`。对于一般的散点图（两个数值变量之间），我们只需要调用`plot()`即可，如`plot(x, y)`，而不必写明`plot.default(x, y)`，原因就是`plot()`是泛型函数，它会 自动判断传给它的数据类型从而采取不同的作图方式。`plot.default()`的参数当然包含了前面介绍的`plot()`中那些参数，此外还有：
 
@@ -377,7 +371,7 @@ text(0, dnorm(qnorm(0.95)), expression(integral(phi(x) * dx, -infinity, 1.65) %~
 ```
 ```{r plotmath,echo=FALSE,fig.cap="正态分布密度函数公式的表示",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), 
-     type = "l", xlab = "x", ylab = "$\\phi(x)$")
+     type = "l", xlab = "$x$", ylab = "$\\phi(x)$")
 text(-3, 0.37, adj = c(0, 1), 
      "$\\phi(x) = \\frac{1}{\\sqrt{2 \\pi}} \\exp(-\\frac{x^2}{2})$", cex = 1.2)
 arrows(-2, 0.27, -1.3, dnorm(-1.3) + 0.02)
@@ -388,7 +382,7 @@ text(0, dnorm(qnorm(0.95)),
 
 由于统计理论中经常需要用到数学符号，所以向统计图形中添加一些数学说明不仅会使得图形看起来更专业，对图形背后的理论也是一种重要补充。
 
-R 的 **grDevices** 包\index{grDevices包}中提供了一系列数学公式的表达符号，例如运算符（加减乘除乘方开方等）、比较符（等号不等号大于小于号等）、微积分符号、希腊字母（大小写$\alpha$至$\omega$）、上标下标等等。这些数学符号的使用与 LaTeX 数学公式非常类似，因此如果读者对 LaTeX 公式比较熟悉的话，用起R中的数学表达式来也会很顺手。
+R 的 **grDevices** 包\index{grDevices包}中提供了一系列数学公式的表达符号，例如运算符（加、减、乘、除、乘方、开方等）、比较符（等号、不等号、大于、小于号等）、微积分符号、希腊字母（大小写$\alpha$至$\omega$）、上标下标等等。这些数学符号的使用与 LaTeX 数学公式非常类似，因此如果读者对 LaTeX 公式比较熟悉的话，用起R中的数学表达式来也会很顺手。
 
 如果想向图中添加数学表达式的文本标签，只需要将文本设置为表达式（expression）的类型即可。 图\@ref(fig:plotmath)展示了向正态曲线上添加正态分布密度函数表达式的方法，可以看到，表达式中的公式都是 LaTeX \index{LaTeX}与R的混合语法。另外，我们也可以设置符号的外形，如斜体、粗体等。详情参见`?plotmath`或者运行代码`demo(plotmath)`观看R提供的数学公式演示。
 
@@ -420,7 +414,7 @@ usage(layout)
 usage(layout.show)
 ```
 
-其中`mat`参数为一个矩阵，提供了作图的顺序以及图形版面的安排；`widths`和`heights`提供了各个矩形作图区域的长和宽的比例；`respect`控制着各图形内的横纵轴刻度长度的比例尺是否一样；n为欲显示的区域的序号。
+其中`mat`参数为一个矩阵，提供了作图的顺序以及图形版面的安排；`widths`和`heights`提供了各个矩形作图区域的长和宽的比例；`respect`控制着各图形内的横纵轴刻度长度的比例尺是否一样；`n`为欲显示的区域的序号。
 
 `mat`矩阵中的元素为数字1到n，矩阵行列中数字的顺序和图形方格的顺序是一样的。图\@ref(fig:layout)解释了这种顺序，该图的矩阵为：
 
@@ -553,14 +547,14 @@ usage(getGraphicsEvent)
 
 利用**grDevices**包中的若干图形设备，我们可以将R的图形输出为各种格式的文件，包括位图文件（BMP、JPEG、PNG、TIFF）和矢量图文件（PDF、EPS）以及 TeX 或 LaTeX 文件。本书中除了第\@ref(cha:history)章中的历史图形以外，其它大部分图形都是使用 **tikzDevice** 包[@tikzDevice]中的`tikz()`图形设备生成的（其本质是 LaTeX）。
 
-基本的图形设备函数有位图设备`bmp()`、`jpeg()`、`png()`和`tiff()`，以及矢量图设备`postscript()`和`pdf()`，打开图形设备之后，所有的R图形都会被生成在该图形设备中，而不会再在窗口中显示，直到图形设备被关闭。详细信息请读者自行查阅相应的帮助文件。
+基本的图形设备函数有位图设备`bmp()`、`jpeg()`、`png()`和`tiff()`，以及矢量图设备`svg()`、`postscript()`和`pdf()`，打开图形设备之后，所有的R图形都会被生成在该图形设备中，而不会再在窗口中显示，直到图形设备被关闭。详细信息请读者自行查阅相应的帮助文件。
 
 ```{r graphics-device,eval=FALSE}
 ## 图形设备的大致用法
-png('my-plot.png',width=600,height=400)  # 开启
+png("my-plot.png", width = 600, height = 400) # 开启
 plot(rnorm(100))
-dev.off()  # 关闭设备，图形被保存在文件my-plot.png中
-pdf('another-plot.pdf',width=7,height=5) # PDF图形
+dev.off() # 关闭设备，图形被保存在文件my-plot.png中
+pdf("another-plot.pdf", width = 7, height = 5) # PDF图形
 plot(iris)
 dev.off()
 ```
@@ -588,7 +582,7 @@ dev.off()
     pdf("PDF-plot.pdf")
     plot(x)
     dev.off()
-    png("PNG-plot.pdf")
+    png("PNG-plot.png")
     plot(x)
     dev.off()
     ```
