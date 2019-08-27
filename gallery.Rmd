@@ -54,7 +54,7 @@ b_{1}<b_{2}<\cdots<b_{j}<b_{j+1}<\cdots;\;b_{j+1}-b_{j}=h,\,j=1,2,\cdots
 usage(hist.default)
 ```
 
-其中， `x`  为欲估计分布的数值向量；`breaks` 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的； `freq`  和  `probability`  参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）； `labels`  为逻辑值，决定是否将频数的数值添加到矩形条的上方；其它参数诸如  `density` 、 `angle` 、 `border`  均可参见低层作图函数"矩形"（ `rect()` ，\@ref(sec:polygon)节）。
+其中，`x` 为欲估计分布的数值向量；`breaks` 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的； `freq`  和  `probability`  参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）； `labels`  为逻辑值，决定是否将频数的数值添加到矩形条的上方；其它参数诸如  `density` 、 `angle` 、 `border`  均可参见低层作图函数 `rect()` ，详见 \@ref(sec:polygon) 节。
 
 
 (ref:fig-hist-geyser-s) 喷泉间隔时间直方图
@@ -62,13 +62,27 @@ usage(hist.default)
 (ref:fig-hist-geyser) 喷泉间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
 
 
-```{r hist-geyser,fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)'}
+```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE}
 par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
 data(geyser, package = "MASS")
 hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
 hist(geyser$waiting, freq = FALSE, xlab = "waiting", main = "(2) freq = FALSE")
 hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", main = "(3) breaks = 5")
 hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) breaks = 40")
+
+library(ggplot2)
+library(cowplot)
+p <- ggplot(aes(waiting), data = geyser)
+p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
+p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = stat(density)))
+p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
+p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
+plot_grid(p1, p2, p3, p4, labels = c(
+  "(1) freq = TRUE",
+  "(2) freq = FALSE",
+  "(3) breaks = 5",
+  "(4) breaks = 40"
+), ncol = 2)
 ```
 
 我们以黄石国家公园喷泉数据 `geyser` [@Venables02] 为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。另外一点需要提醒的是关于直方图中的密度曲线，SPSS 软件在绘制直方图时会有选项提示是否添加正态分布密度曲线，这也是完全的误导，因为数据不一定来自正态分布，添加正态分布的密度曲线显然是不合理的，相比之下，图 \@ref(fig:hist-density) 的做法才是真正从数据本来的分布出发得到的密度曲线。
@@ -78,8 +92,14 @@ hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) bre
 
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中。
 
-```{r hist-density,fig.width=3.5, fig.height=2, results='hide', tidy=TRUE, fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)'}
+```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.ncol=1}
 demo("hist_geyser", package = "MSG")
+df <- data.frame(x = seq(40, 110, 5), y = 0, 
+                 xend = seq(40, 110, 5), yend = ht)
+p2 + geom_density(fill = "lightgray", color = "black") +
+  geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
+    data = df, lty = 3
+  )
 ```
 
 
@@ -1613,7 +1633,6 @@ faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5
 在 R 中有很多包都可以画平行坐标图，例如 **GGally** 包 [@GGally] 中的 `ggparcoord()` 函数、**MASS** 包 [@Venables02] 中的 `parcoord()` 函数和 **iplots** 包 [@iplots] 中的 `ipcp()` 函数等。由于后面 \@ref(sec:ggplot2) 小节还会专门介绍 **ggplot2**，这里我们先看看这个包中的平行坐标图。 `ggparcoord()` 的用法如下：
 
 ```{r ggparcoord-usage}
-library(ggplot2)
 library(GGally)
 usage(ggparcoord)
 ```
