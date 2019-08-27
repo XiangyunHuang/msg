@@ -1,7 +1,7 @@
 Package: placeholder
 Type: Book
 Title: placeholder.
-Version: 0.0.0.999999
+Version: 1.0.0
 Depends: R (>= 3.6.0)
 Imports: remotes
 BugReports: https://github.com/XiangyunHuang/MSG-Book/issues
