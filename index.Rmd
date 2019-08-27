@@ -43,7 +43,7 @@ lapply(c(
 
 ## 版权声明 {#copyright .unnumbered}
 
-本书电子版采用 Creative Commons（简称CC）许可证“署名 --- 非商业性使用 --- 相同方式共享 2.5 中国大陆”，该许可证的全文可以从<http://creativecommons.org/licenses/by-nc-sa/2.5/cn/>获得；一份普通人可以理解的法律文本概要可以从<http://creativecommons.org/licenses/by-nc-sa/2.5/cn/legalcode>获得。
+本书电子版采用 Creative Commons（简称CC）许可证“署名 --- 非商业性使用 --- 相同方式共享 2.5 中国大陆”，该许可证的全文可以从<https://creativecommons.org/licenses/by-nc-sa/2.5/cn/>获得；一份普通人可以理解的法律文本概要可以从<https://creativecommons.org/licenses/by-nc-sa/2.5/cn/legalcode>获得。
 
 ```{r fig.align='center', echo=FALSE, fig.link='http://creativecommons.org/licenses/by-nc-sa/2.5/cn/', out.width='30%'}
 knitr::include_graphics('images/cc-by-nc-sa.svg')
