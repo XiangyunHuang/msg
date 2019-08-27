@@ -185,8 +185,6 @@ box() # 补齐边框
 关于点的设置，我们既可以在很多作图函数中用`pch`等参数实现，也可以在用低层函数`points()`向已有图形中添加点来实现。后一种方法往往更灵活自由。`points()`用法：
 
 ```{r points-usage}
-# usage()函数在formatR包中
-library(formatR)
 usage(points, "default")
 ```
 
@@ -217,9 +215,9 @@ legend("topleft",
 )
 ```
 
-图\@ref(fig:point-random)为本书的一例“彩蛋”：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果参见：<https://yihui.name/cn/2010/08/art-of-points-in-r/>，或观看演示`demo('pointArts', package = 'MSG')`。若读者感兴趣，甚至可以用R为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。
+图\@ref(fig:point-random)为本书的一例彩蛋：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果参见：<https://yihui.name/cn/2010/08/art-of-points-in-r/>，或观看演示`demo('pointArts', package = 'MSG')`。若读者感兴趣，甚至可以用R为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。
 
-```{r point-random,fig.scap="点的随机“艺术”作品",fig.cap="点的随机“艺术”作品：随机生成点的大小、颜色和位置，分别用空心点和实心点画图。"}
+```{r point-random,fig.scap="(ref:point-random-s)",fig.cap="(ref:point-random)"}
 par(mar = c(0.2, 0.2, 0.2, 0.2), mfrow = c(2, 2))
 for (n in c(63, 60, 76, 74)) {
   set.seed(711)
@@ -227,15 +225,17 @@ for (n in c(63, 60, 76, 74)) {
   box()
   size <- c(replicate(n, 1 / rbeta(2, 1.5, 4)))
   center <- t(replicate(n, runif(2)))[rep(1:n, each = 2), ]
-  color <- paste("#", apply(replicate(2 * n, sample(c(
-    0:9,
-    LETTERS[1:6]
-  ), 8, TRUE)), 2, paste, collapse = ""),
-  sep = ""
-  )
+  color <- paste("#", 
+                 apply(
+                   replicate(2 * n, sample(c(0:9, LETTERS[1:6]), 8, TRUE)), 
+                   2, paste, collapse = ""), sep = "")
   points(center, cex = size, pch = rep(20:21, n), col = color)
 }
 ```
+
+(ref:point-random-s) 点的随机艺术作品
+
+(ref:point-random) 点的随机艺术作品：随机生成点的大小、颜色和位置，分别用空心点和实心点画图。
 
 ## 曲线、直线、线段、箭头、X-样条 {#sec:lines}
 
