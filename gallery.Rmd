@@ -74,7 +74,7 @@ library(ggplot2)
 library(cowplot)
 p <- ggplot(aes(waiting), data = geyser)
 p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
-p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = stat(density)))
+p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
 p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
 p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
 plot_grid(p1, p2, p3, p4, labels = c(
@@ -92,7 +92,7 @@ plot_grid(p1, p2, p3, p4, labels = c(
 
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中。
 
-```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.ncol=1}
+```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hide', fig.ncol=1}
 demo("hist_geyser", package = "MSG")
 df <- data.frame(x = seq(40, 110, 5), y = 0, 
                  xend = seq(40, 110, 5), yend = ht)
