@@ -12,9 +12,9 @@ options(
   tikzDocumentDeclaration = "\\documentclass[12pt,UTF8]{ctexart}\n",
   tikzXelatexPackages = c(
     "\\usepackage[colorlinks, breaklinks]{hyperref}",
-    "\\usepackage{color,tikz}",
+    "\\usepackage{color,times,tikz}",
     "\\usepackage[active,tightpage,xetex]{preview}",
     "\\PreviewEnvironment{pgfpicture}",
-    "\\usepackage{amsmath,amsfonts,mathrsfs}"
+    "\\usepackage{amsmath,amsfonts,mathrsfs,amssymb}"
   )
 )
