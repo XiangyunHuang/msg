@@ -184,9 +184,12 @@ Range，简称 $\text{IQR}\equiv Q_3-Q_1$）的倍数，超过这个范围的数
 
 (ref:fig-insects-boxplot) 昆虫数目箱线图：六种杀虫剂下昆虫的数目分布。
 
-```{r insects-boxplot, fig.width=4.8, fig.height=1.8, tidy=TRUE, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)"}
-par(mar = c(2, 2.5, .2, .1))
-boxplot(count ~ spray, data = InsectSprays, col = "lightgray", horizontal = TRUE, pch = 4)
+```{r insects-boxplot, fig.width=3.6, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1}
+boxplot(count ~ spray, data = InsectSprays,
+        col = "lightgray", horizontal = TRUE, pch = 4)
+ggplot(aes(y = count, x = spray), data = InsectSprays) +
+  geom_boxplot(outlier.shape = 4) +
+  coord_flip()
 ```
 
 
@@ -210,15 +213,24 @@ summary(insects.aov)
 
 (ref:fig-rnorm-boxplot) 箱线图的凹槽与统计推断：从凹槽不交叠的情况来看，两样本中位数有显著差异。
 
-```{r rnorm-boxplot,fig.width=4.8,fig.height=1.2, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)"}
-par(mar = c(2, 2.5, 0.2, 0.1))
+```{r rnorm-boxplot,fig.width=4.8,fig.height=2.4, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)", fig.ncol=1, fig.show='hold'}
 x <- rnorm(150)
 y <- rnorm(50, 0.8)
 boxplot(list(x, y),
   names = c("x", "y"), horizontal = TRUE,
   col = 2:3, notch = TRUE, varwidth = TRUE
 )
-wilcox.test(x, y)$p.value # Wilcoxon检验的P值
+ggplot(
+  data = data.frame(
+    num = c(x, y),
+    idx = c(rep("x", 150), rep("y", 50))
+  ),
+  aes(y = num, fill = idx)
+) +
+  geom_boxplot(notch = TRUE) +
+  coord_flip()
+# Wilcoxon检验的P值
+wilcox.test(x, y)$p.value
 ```
 
 最后我们再以一个模拟数据的例子展示箱线图凹槽的功能。这里我们分别从正态分布 $\mathrm{N}(0,1)$ 和 $\mathrm{N}(0.5,1)$ 中各自产生 150 和 50 个随机数，然后作箱线图比较两组数据中间位置的差异。图 \@ref(fig:rnorm-boxplot) 为一次模拟的结果，图中的凹槽表明了两组数据的中位数有显著差异，Wilcoxon 秩和检验也证实了这一结论。此外，该图还使用了  `varwidth`  参数以表明两组数据样本量的大小不同。
