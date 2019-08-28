@@ -713,12 +713,13 @@ for (i in 1:100) {
   betaSim[i] <- coef(update(fit, subset = idx))[2]
 }
 ```
-```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png,fig.width=4.8,fig.height=4.8,fig.showtext=FALSE,small.mar=FALSE}
+```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png,fig.width=4,fig.height=4,fig.showtext=FALSE,small.mar=FALSE}
 par(mar = c(4.5, 4.5, 1, 0.5), mfrow = c(2, 2), pch = 20)
-plot(x, y, col = rgb(0, 0, 0, 0.5))
+plot(x, y, col = rgb(0, 0, 0, 0.5), xlab = "$x$", ylab = "$y$")
 abline(fit)
 plot(cooks.distance(fit), ylab = "Cook's distance")
-plot(x, y, col = rgb(0, 0, 0, 0.5), pch = rep(20:21, c(60, 42)))
+plot(x, y, col = rgb(0, 0, 0, 0.5), pch = rep(20:21, c(60, 42)),
+     xlab = "$x$", ylab = "$y$")
 abline(fit1) # 部分抽样：前60条数据
 plot(betaSim, ylab = "$\\beta_1$")
 ```
