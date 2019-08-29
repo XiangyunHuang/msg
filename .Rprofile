@@ -9,6 +9,7 @@ options(
   demo.ask = FALSE,
   str = utils::strOptions(strict.width = "cut"),
   tikzDefaultEngine = "xetex",
+  tikzMetricsDictionary = "tikzMetricsCache",
   tikzDocumentDeclaration = "\\documentclass[12pt,UTF8]{ctexart}\n",
   tikzXelatexPackages = c(
     "\\usepackage[colorlinks, breaklinks]{hyperref}",
