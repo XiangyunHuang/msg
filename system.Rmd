@@ -25,14 +25,14 @@ methods("+") # 加号上的 S3 方法
 
 ```{r plus-ggplot2}
 library(ggplot2)
-p <- qplot(hp, mpg, data = mtcars) # 先画一个散点图的图层
+p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
+  geom_point() # 先画一个散点图的图层
 p + geom_smooth(method = 'loess') # 用散点图加上平滑层
 ```
 
-使用 ggplot2 时通常我们不必担心细节问题，例如图形的边距会自动调整，不会留出大片空白，元素颜色会自动根据变量取值从调色板中选取，图例会自动添加，等等。这些自动化的设计可以为我们节省大量的调整细节的时间，相比之下，我们使用基础图形常常需要缩小边距（默认值太大）、手工添加图例，显得非常麻烦。函数 `qplot()` 是 ggplot2 中的核心函数之一，它能让我们快速画出灵活的图形，其用法如下：
+使用 ggplot2 时通常我们不必担心细节问题，例如图形的边距会自动调整，不会留出大片空白，元素颜色会自动根据变量取值从调色板中选取，图例会自动添加，等等。这些自动化的设计可以为我们节省大量的调整细节的时间，相比之下，我们使用基础图形常常需要缩小边距（默认值太大）、手工添加图例，显得非常麻烦。函数 `ggplot()` 是 ggplot2 中的核心函数之一，它能让我们快速画出灵活的图形，其用法如下：
 
 ```{r qplot-usage}
-library(formatR)
 usage(qplot)
 ```
 
@@ -43,7 +43,9 @@ usage(qplot)
 ### 几何形状
 
 ```{r mtcars-smooth,fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)"}
-qplot(hp, mpg, data = mtcars) + geom_smooth(method = 'loess')
+ggplot(aes(x = hp, y = mpg), data = mtcars) +
+  geom_point()  + 
+  geom_smooth(method = 'loess')
 ```
 
 (ref:mtcars-smooth-s) 汽车马力与每加仑汽油行驶里程的关系
@@ -61,7 +63,8 @@ qplot(hp, mpg, data = mtcars) + geom_smooth(method = 'loess')
 统计量指定了对原始数据做何种变换，进而用几何形状表达出来。ggplot2 中除了划分直方图区间求频数、求分位数、计算密度值这些普通的变换功能之外，还有一些新颖的统计量，例如根据二维数据用网格划分区间求每个格子内的数据频数（实际上就是二维直方图），或者用蜂巢形状将平面划分为一系列的六边形区间再求数据频数。
 
 ```{r diamonds-hex,fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)"}
-qplot(carat, price, data = diamonds, geom = "hex")
+ggplot(aes(x = carat, y = price), data = diamonds) +
+  geom_hex()
 ```
 
 (ref:diamonds-hex-s) 钻石重量与价格的蜂巢图
@@ -88,7 +91,8 @@ p + stat_density(aes(ymax = ..density.., ymin = -..density..),
 标度通常指定如何从数据映射到几何形状的颜色、符号和大小等属性，这也是 ggplot2 系统的一个非常吸引人的特征。大多数情况下，我们只需要指定用来做标度的变量即可，剩下的映射工作 ggplot2 会自动完成。例如图 \@ref(fig:iris-ggplot2) 中，我们指定 `color` 和 `shape` 两个参数之后， ggplot2 就能自动用 **RColorBrewer** 包的离散调色板生成颜色并添加图例。图 \@ref(fig:point-iris) 画的是几乎是同样的散点图，但其代码显然相形见绌。
 
 ```{r iris-ggplot2,fig.scap="(ref:iris-ggplot2-s)",fig.cap="(ref:iris-ggplot2)"}
-qplot(Petal.Length, Petal.Width, color = Species, shape = Species, data = iris)
+ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
+  geom_point(aes(color = Species, shape = Species))
 ```
 
 (ref:iris-ggplot2-s) ggplot2 中的鸢尾花花瓣长宽散点图
@@ -110,7 +114,8 @@ p + stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
 (ref:quake6-bubbles) 1973 年以来全球 6 级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7 月的地震频率相对较低？
 
 ```{r diamonds-cut,fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1}
-p <- qplot(cut, log(price), data = diamonds, geom = "boxplot")
+p <- ggplot(aes(x = cut, y = log(price)), data = diamonds) +
+  geom_boxplot()
 p
 p + coord_flip()
 ```
@@ -122,7 +127,7 @@ p + coord_flip()
 我们平时用到的坐标系大多数都是笛卡尔坐标系，ggplot2 也提供了极坐标系和地图坐标系，并支持笛卡尔坐标系的翻转，即交换 x 轴和 y 轴。函数 `coord_flip()` 可以用来翻转几乎任何图形，而且由于 ggplot2 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上 `coord_flip()` 再打印即可。图 \@ref(fig:diamonds-cut) 是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。
 
 ```{r diamonds-polar,fig.scap="(ref:diamonds-polar-s)",fig.cap="(ref:diamonds-polar)"}
-p <- qplot(cut, data = diamonds, fill = cut) + coord_polar()
+p <- ggplot(aes(x = cut, fill = cut), data = diamonds) + coord_polar()
 p + theme(legend.position = "none") + geom_bar(width = 1)
 ```
 
@@ -138,8 +143,10 @@ p + theme(legend.position = "none") + geom_bar(width = 1)
 
 图 \@ref(fig:diamonds-carat) 给出了每一种雕琢水平下的钻石重量密度曲线，整幅图形按照雕琢水平切片，公式为 `cut ~ .`，意思是每一行摆放一种 `cut· 值。五种雕琢水平下，雕琢最好的钻石的重量大多都在 1 克拉以下，密度曲线严重右偏。
 
-```{r diamonds-carat,fig.scap="(re:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)"}
-qplot(carat, data = diamonds, geom = "density", facets = cut ~ .)
+```{r diamonds-carat,fig.scap="(re:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
+ggplot(aes(x = carat), data = diamonds) +
+  geom_density() +
+  facet_grid(cut ~ .)
 ```
 
 (re:diamonds-carat-s) 按雕琢水平切片后的钻石重量密度曲线
@@ -153,19 +160,24 @@ qplot(carat, data = diamonds, geom = "density", facets = cut ~ .)
 位置调整主要针对条形图中的矩形条的位置摆放。在 \@ref(sec:barplot) 小节中我们讲到了基础图形系统中的条形图，里面有个 beside 参数可以指定矩形条是并排排列还是堆砌排列，ggplot2 系统中的位置调整也类似。当然，不仅条形图中有矩形条，直方图中也有，所以我们同样可以画堆砌直方图。另外在散点图中也有一类重要的位置调整，即随机打乱，这一点在 \@ref(sec:stripchart) 小节和图 \@ref(fig:discrete-var) 中都提到过。略微随机打乱散点图中的点的位置，能减轻图的重叠程度，尤其是有很多个点都在同一个位置上时，由于重叠的原因，我们可能会被误导（以为该处只有 1 个点）。随机打乱也可以作为一种几何形状添加到图中，如：
 
 ```{r geom-jitter-demo}
-qplot(Petal.Length, Petal.Width, data = iris, geom = "jitter")
+ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
+  geom_point() +
+  geom_jitter()
 # 对比没有随机打乱的散点图：
-qplot(Petal.Length, Petal.Width, data = iris)
+ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
+  geom_point()
 ```
 
 ### 主题
 
 可能读者已经注意到，ggplot2 图形有一套自己的独特风格，它与别的图形系统在外观上的典型区别就是它通常会画一个灰色的背景，背景中有网格线。首先，网格线是为了辅助阅读图形而画的，这是非常重要的图形组成部分；其次，灰色的背景也尤其原因：因为一篇文章的文字通常是黑色，所以灰底的图形会和黑色文字能融合得更好，这是一点美学上的考虑。有的用户可能喜欢这样的设置，有的用户则可能很不习惯这种默认设置。ggplot2 可以自定义主题，例如 `theme_bw()` 就是黑白主题，但它的黑白主题几乎仅限于设定灰色背景为白色，图中元素的颜色不会受到影响，如：
 
-```{r ggplot2-theme,eval=FALSE}
-qplot(mpg, wt, data = mtcars) # 默认主题下的图
+```{r ggplot2-theme}
+ggplot(aes(x = mpg, y = wt), data = mtcars) +
+  geom_point() # 默认主题下的图
 old <- theme_set(theme_bw()) # 设置黑白主题
-qplot(mpg, wt, data = mtcars) # 黑白主题下的图
+ggplot(aes(x = mpg, y = wt), data = mtcars) +
+  geom_point() # 黑白主题下的图
 theme_set(old) # 恢复原来的主题设定
 ```
 
@@ -174,7 +186,8 @@ theme_set(old) # 恢复原来的主题设定
 经过这些“图层”的分解与抽象，ggplot2 系统中的图形可以像一个魔方一样任意组合，这也是一种重要的编程思想---让对象可重用。例如我们可以创建一个散点图的图层，然后加上平滑层，或者加上切片层，这些“相加”的操作都不需要重新写创建散点图图层的代码，大大减轻了代码量。
 
 ```{r ggplot2-layers}
-p <- qplot(hp, mpg, data = mtcars) # 散点图的图层
+p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
+  geom_point() # 散点图的图层
 p + geom_smooth(method = 'loess') # 用散点图加上平滑层并打印出来
 p + facet_grid(~am) # 用自动档和手动挡将散点图切片并打印
 p + geom_density2d() # 散点图上加上二维核密度估计层
