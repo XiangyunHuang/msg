@@ -139,17 +139,17 @@ p + theme(legend.position = "none") + geom_bar(width = 1)
 
 ### 切片
 
-切片的思想来自于 Trellis 图形：将整批数据按照某一个或两个分类变量切成一个个子集，然后对这些子集画图。在 ggplot2 中实现切片也很简单，使用 `qplot()` 的时候指定 facets 参数通常就可以了，这个参数取值为一个公式，公式左侧决定在行上摆放的子集图形，右侧决定列上的图形。
+切片的思想来自于 Trellis 图形：将整批数据按照某一个或两个分类变量切成一个个子集，然后对这些子集画图。在 ggplot2 中实现切片也很简单，使用 `qplot()` 的时候指定 `facets` 参数通常就可以了，这个参数取值为一个公式，公式左侧决定在行上摆放的子集图形，右侧决定列上的图形。
 
-图 \@ref(fig:diamonds-carat) 给出了每一种雕琢水平下的钻石重量密度曲线，整幅图形按照雕琢水平切片，公式为 `cut ~ .`，意思是每一行摆放一种 `cut· 值。五种雕琢水平下，雕琢最好的钻石的重量大多都在 1 克拉以下，密度曲线严重右偏。
+图 \@ref(fig:diamonds-carat) 给出了每一种雕琢水平下的钻石重量密度曲线，整幅图形按照雕琢水平切片，公式为 `cut ~ .`，意思是每一行摆放一种 cut 值。五种雕琢水平下，雕琢最好的钻石的重量大多都在 1 克拉以下，密度曲线严重右偏。
 
-```{r diamonds-carat,fig.scap="(re:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
+```{r diamonds-carat,fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
 ggplot(aes(x = carat), data = diamonds) +
   geom_density() +
   facet_grid(cut ~ .)
 ```
 
-(re:diamonds-carat-s) 按雕琢水平切片后的钻石重量密度曲线
+(ref:diamonds-carat-s) 按雕琢水平切片后的钻石重量密度曲线
 
 (ref:diamonds-carat) 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻。
 
@@ -327,7 +327,7 @@ grid 和 trellis 是 lattice 的最基础的特点，除此之外它还有两个
 
 相信读者在使用 R 的过程中，或多或少地都已经接触过它的公式系统，基础图形系统中我们也常常遇到使用公式的情况，例如 \@ref(sec:boxplot) 小节的箱线图函数中就可以使用公式参数。在 lattice 系统中，公式系统发挥着至关重要的作用。我们可以把公式简单地概括成下面的形式：
 
-$$\text{纵座标变量}\sim\text{横座标变量}|\text{条件变量}$$
+$$\text{纵坐标变量}\sim\text{横坐标变量}|\text{条件变量}$$
 
 在上节中，我们已经遇到了一个公式，但是由于分析是单变量的性质，因此公式的纵座标变量是缺失的。另一个分析单变量性质的函数 `densityplot()`，它与 `histogram()` 有着相似的特点，因此这两个函数共享一个帮助页面。除此之外，我们还会遇到 `xyplot()`、`dotplot()` 等函数，它们都被用来分析两个变量之间的关系，同样也共享一个帮助页面。这意味着，这些函数的选项和参数几乎相同，读者可以举一反三、触类旁通。
 
@@ -544,7 +544,7 @@ x_{n1} & x_{n2}
 通过对投影矩阵的系数不断改变，我们可以不断得到新的散点图，这就是二维巡游的基本原理。类似的，一维巡游是将高维数据投影到一维直线上。
 
 ```{r GGobi-2d-tour,fig.cap="(ref:GGobi-2d-tour)",fig.scap="GGobi 中的二维巡游模式 ",echo=FALSE}
-knitr::include_graphics(path = "images/GGobi-2d-tour.png")
+knitr::include_graphics(path = "images/GGobi-2d-tour.png", dpi = NA)
 ```
 
 (ref:GGobi-2d-tour) GGobi 中的二维巡游模式：寻找投影将手动档和自动档的车分开。
@@ -587,7 +587,7 @@ ind <- c(5, 1, 5, 2, 5, 3, 5, 4)
 lines3d(x[ind], y[ind], z[ind], lwd = 2)
 ```
 ```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE,out.extra = ifelse(is_latex,'','data-url="interactives/rgl-ch4.html"')}
-knitr::include_graphics(path = "images/rgl-ch4.png")
+knitr::include_graphics(path = "images/rgl-ch4.png", dpi = NA)
 ```
 
 (ref:rgl-ch4-s) 用 **rgl** 包画出来的甲烷分子立体结构
@@ -604,7 +604,7 @@ m <- outer(x, y, function(a, b) beta(a, b))
 persp3d(x, y, m, col = "green3", zlab = "Beta(x, y)")
 ```
 ```{r rgl-beta,fig.scap="Beta 函数的三维透视图 ",fig.cap="(ref:rgl-beta)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-beta.html"'),echo=FALSE}
-knitr::include_graphics(path = "images/rgl-beta.png")
+knitr::include_graphics(path = "images/rgl-beta.png", dpi = NA)
 ```
 
 (ref:rgl-beta) Beta 函数的三维透视图：$\mathrm{Beta}(x,\,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$
@@ -623,7 +623,7 @@ persp3d(x, y, z,
 )
 ```
 ```{r rgl-china-map,fig.scap="(ref:rgl-china-map-s)",fig.cap="(ref:rgl-china-map)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-china-map.html"'),echo=FALSE}
-knitr::include_graphics(path = "images/rgl-china-map.png")
+knitr::include_graphics(path = "images/rgl-china-map.png", dpi = NA)
 ```
 
 (ref:rgl-china-map-s) 基于 **rgl** 包绘制的中国地势图
@@ -722,7 +722,7 @@ description = c(
 )
 ```
 ```{r html-interface,fig.scap="HTML 页面内的动画界面",fig.cap="(ref:html-interface)",echo=FALSE}
-knitr::include_graphics(path = "images/html-interface.png")
+knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 ```
 
 (ref:html-interface) 这一系列动画导出函数默认都用 PNG 图形设备抓取并保存每一帧图片，这是由选项 `ani.options('ani.dev')` 设定的，我们也可以使用别的图形设备来记录 R 图形；**animation** 包中的一个演示 `demo('rgl_animation')` 就展示了这种功能。
@@ -780,13 +780,13 @@ knitr::include_graphics(path = c(
 1. 在介绍 GGobi 时我们提到动态的“条件分割”，请思考当刷子在散点图中从左到右或者从下到上移动时，对数据来说，我们实际上是在选取具有何种特征的子集？如图 \@ref(fig:GGobi-narrow-brush)。
 
     ```{r GGobi-narrow-brush, echo=FALSE,fig.cap="(ref:GGobi-narrow-brush)",fig.scap="GGobi 中用刷子实现动态条件分割"}
-    knitr::include_graphics(path = "images/GGobi-narrow-brush.png")
+    knitr::include_graphics(path = "images/GGobi-narrow-brush.png", dpi = NA)
     ```
 
 1. **fun** 包 [@fun] 中有一个 3D 版本的“我的中国心”，效果如图 \@ref(fig:China-Heart-3D)；请对照 `demo('ChinaHeart3D', package = 'fun')` 以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入 rgl 三维图形。
 
     ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE}
-    knitr::include_graphics(path = "images/China-Heart-3D.png")
+    knitr::include_graphics(path = "images/China-Heart-3D.png", dpi = NA)
     ```
 
 1. 网络上已经有无数的关于中心极限定理（CLT）的动画展示，大意就是随着样本量增加，样本均值 $\bar{X}_{n}$ 的分布密度曲线逐渐变成了“钟形曲线”，而正态分布的密度曲线也是钟形曲线，所以人们就下结论说 CLT 成立。这样的结论是否可靠？**animation** 包中的 `clt.ani()` 函数也可以用来演示 CLT，但角度略有不同，它将每个样本量下的样本均值拿来做了正态性检验，并将相应的 P 值画出来，以刻画当前的这些样本均值和正态分布的拟合好坏，这样做是否让 CLT 的动画演示更加严谨？

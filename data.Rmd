@@ -99,7 +99,7 @@ price <- c(12.11, 18.8, 22.09, 18.39, 19.86, 14.89, 16.68, 18.76, 19.57)
 这是一个一维时间序列数据，对于时间序列，我们通常会采用折线图来表达数据的波动起伏，观察的核心是数据的大小随着时间的变化，但原图使用条形图实际上也有一定道理。这批数据一共只有 9 个数字，如果只是用折线画图，则整幅图形显得单薄，加上该图的装饰物太多，所以更容易埋没数据。相比之下，矩形条的视觉冲击力较强，更能让读者的注意力集中在数据上。本例中，选取折线图或是条形图取决于具体的应用场景。
 
 ```{r pork-price-orig,fig.cap="自 2006 年以来猪肉价格的走势图",echo=FALSE}
-knitr::include_graphics(path = "images/pork-price-orig.png")
+knitr::include_graphics(path = "images/pork-price-orig.png", dpi = NA)
 ```
 
 图 \@ref(fig:pork-price) 同时给出了两种图形。横坐标被调整到正确的位置上之后，我们可以看出 2010 年的价格上涨真的如原图中的小猪一样直飞而上。道理很简单，原本三个月的上涨如果被“稀释”到一年中，那么我们当然不会感觉到强烈的上升趋势。图 \@ref(fig:pork-price) 给我们另外一点启示是，条形图容易观察差异大小（比较条的长短），而折线图更容易观察斜率大小（升降速度）。
@@ -119,7 +119,7 @@ plot(year, price, type = "o")
 ### 末日狂奔 {#subsec:canabalt}
 
 ```{r canabalt-screenshot,echo=FALSE,fig.scap="末日狂奔游戏截图",fig.cap="(ref:canabalt-screenshot)"}
-knitr::include_graphics(path = "images/canabalt-screenshot.png")
+knitr::include_graphics(path = "images/canabalt-screenshot.png", dpi = NA)
 ```
 
 (ref:canabalt-screenshot) 末日狂奔游戏截图：楼顶左侧的小人为游戏主角，任务为尽力向前跑，一路上可能遇到很多障碍和意外；右上角为奔跑的距离（483 米）。
@@ -161,13 +161,14 @@ head(music[, 1:5]) # 头 6 行数据
 summary(music[, 1:5])
 ```
 
-```{r music-andrews,fig.scap="音乐曲目左声道频率的调和曲线图",fig.cap="(ref:music-andrews)",fig.width=4.9,fig.height=2.8}
-par(mfrow = c(1, 2))
-andrews_curve(scale(music[, 4:6]), n = 50, col = 1)
+```{r music-andrews,fig.scap="音乐曲目左声道频率的调和曲线图",fig.cap="(ref:music-andrews)",fig.width=4.9,fig.height=2.8,dev='tikz',fig.process=to_png,fig.showtext=FALSE}
+par(mfrow = c(1, 2), mar = c(4.1, 4.1, 0.5, 0.5))
+andrews_curve(scale(music[, 4:6]), xlab = "$t$", ylab = "$f(t)$",
+              n = 50, col = 1)
 with(
   music,
   andrews_curve(scale(music[, 4:6]),
-    n = 50,
+    n = 50, xlab = "$t$", ylab = "$f(t)$",
     col = artist, lty = as.integer(type)
   )
 )
@@ -247,8 +248,17 @@ myfun <- function(x) {
 aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 ```
 ```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="演员的薪酬直方图及薪酬与电视剧评分的散点图",fig.subcap=c("",""),fig.ncol=1}
-qplot(pay, data = tvearn, facets = gender ~ ., binwidth = 20000)
-qplot(rating, pay, data = tvearn, geom = c("smooth", "jitter"), color = type)
+ggplot(aes(x = pay), data = tvearn) +
+  geom_histogram(binwidth = 20000) +
+  facet_grid(gender ~ .)
+
+ggplot(aes(x = rating, y = pay, color = type), data = tvearn) +
+  geom_jitter() +
+  geom_smooth(method = "loess") +
+  scale_y_continuous(
+    labels = scales::unit_format(unit = "w", scale = 1e-4),
+    breaks = seq(0, 125, 15) * 10^4
+  )
 ```
 
 (ref:tvearn) 最高收入的男女演员的薪酬直方图（上）：薪酬呈右偏，女演员平均薪酬略高。IMDB 评分与薪酬的关系非线性。
@@ -706,20 +716,19 @@ fit1 <- update(fit, subset = 1:60)
 # 对数据抽样 100 次，分别回归并记录斜率
 betaSim <- numeric(100)
 for (i in 1:100) {
-  idx <- sample(c(TRUE, FALSE), length(x), replace = TRUE, prob = c(
-    0.6,
-    0.4
-  ))
+  idx <- sample(c(TRUE, FALSE), length(x), replace = TRUE, 
+                prob = c(0.6, 0.4))
   betaSim[i] <- coef(update(fit, subset = idx))[2]
 }
 ```
 
 ```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png,fig.width=4,fig.height=4,fig.showtext=FALSE,small.mar=FALSE}
-par(mar = c(4.5, 4.5, 1, 0.5), mfrow = c(2, 2), pch = 20)
+par(mar = c(4.1, 4.1, 0.5, 0.5), mfrow = c(2, 2), pch = 20)
 plot(x, y, col = rgb(0, 0, 0, 0.5), xlab = "$x$", ylab = "$y$")
 abline(fit)
 plot(cooks.distance(fit), ylab = "Cook's distance")
-plot(x, y, col = rgb(0, 0, 0, 0.5), pch = rep(20:21, c(60, 42)))
+plot(x, y, xlab = "$x$", ylab = "$y$", 
+     col = rgb(0, 0, 0, 0.5), pch = rep(20:21, c(60, 42)))
 abline(fit1) # 部分抽样：前 60 条数据
 plot(betaSim, ylab = "$\\beta_1$")
 ```
@@ -750,7 +759,7 @@ plot(betaSim, ylab = "$\\beta_1$")
     # 保存截图 ggobi_display_save_picture(path = 'randomForest-music.png')
     ```
     ```{r randomForest-music,fig.cap="(ref:randomForest-music)",fig.scap="音乐数据预测概率的棱锥图",echo=FALSE}
-    knitr::include_graphics(path = "images/randomForest-music.png")
+    knitr::include_graphics(path = "images/randomForest-music.png", dpi = NA)
     ```
 
 1. 自行编写一个画三元图的函数，并体会这种从三维到二维的变换。以下是不完整的代码，核心部分已经完成，需要实现控制边长范围和坐标网格线等功能：
