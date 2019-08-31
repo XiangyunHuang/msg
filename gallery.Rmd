@@ -56,19 +56,32 @@ usage(hist.default)
 
 其中， `x` 为欲估计分布的数值向量；`breaks` 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的； `freq`  和  `probability`  参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）； `labels`  为逻辑值，决定是否将频数的数值添加到矩形条的上方；其它参数诸如  `density` 、 `angle` 、 `border`  均可参见低层作图函数"矩形"（ `rect()` ，\@ref(sec:polygon) 节）。
 
-
 (ref:fig-hist-geyser-s) 喷泉间隔时间直方图
 
 (ref:fig-hist-geyser) 喷泉间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
 
 
-```{r hist-geyser,fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)'}
+```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE}
 par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
 data(geyser, package = "MASS")
 hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
 hist(geyser$waiting, freq = FALSE, xlab = "waiting", main = "(2) freq = FALSE")
 hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", main = "(3) breaks = 5")
 hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) breaks = 40")
+
+library(ggplot2)
+library(cowplot)
+p <- ggplot(aes(waiting), data = geyser)
+p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
+p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
+p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
+p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
+plot_grid(p1, p2, p3, p4, labels = c(
+  "(1) freq = TRUE",
+  "(2) freq = FALSE",
+  "(3) breaks = 5",
+  "(4) breaks = 40"
+), ncol = 2)
 ```
 
 我们以黄石国家公园喷泉数据 `geyser` [@Venables02] 为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。另外一点需要提醒的是关于直方图中的密度曲线，SPSS 软件在绘制直方图时会有选项提示是否添加正态分布密度曲线，这也是完全的误导，因为数据不一定来自正态分布，添加正态分布的密度曲线显然是不合理的，相比之下，图 \@ref(fig:hist-density) 的做法才是真正从数据本来的分布出发得到的密度曲线。
@@ -78,8 +91,14 @@ hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) bre
 
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中。
 
-```{r hist-density,fig.width=3.5, fig.height=2, results='hide', tidy=TRUE, fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)'}
+```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1}
 demo("hist_geyser", package = "MSG")
+df <- data.frame(x = seq(40, 110, 5), y = 0, 
+                 xend = seq(40, 110, 5), yend = ht)
+p2 + geom_density(fill = "lightgray", color = "black") +
+  geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
+    data = df, lty = 3
+  )
 ```
 
 
@@ -164,9 +183,12 @@ Range，简称 $\text{IQR}\equiv Q_3-Q_1$）的倍数，超过这个范围的数
 
 (ref:fig-insects-boxplot) 昆虫数目箱线图：六种杀虫剂下昆虫的数目分布。
 
-```{r insects-boxplot, fig.width=4.8, fig.height=1.8, tidy=TRUE, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)"}
-par(mar = c(2, 2.5, .2, .1))
-boxplot(count ~ spray, data = InsectSprays, col = "lightgray", horizontal = TRUE, pch = 4)
+```{r insects-boxplot, fig.width=3.6, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1}
+boxplot(count ~ spray, data = InsectSprays,
+        col = "lightgray", horizontal = TRUE, pch = 4)
+ggplot(aes(y = count, x = spray), data = InsectSprays) +
+  geom_boxplot(outlier.shape = 4) +
+  coord_flip()
 ```
 
 
@@ -190,15 +212,24 @@ summary(insects.aov)
 
 (ref:fig-rnorm-boxplot) 箱线图的凹槽与统计推断：从凹槽不交叠的情况来看，两样本中位数有显著差异。
 
-```{r rnorm-boxplot,fig.width=4.8,fig.height=1.2, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)"}
-par(mar = c(2, 2.5, 0.2, 0.1))
+```{r rnorm-boxplot,fig.width=4.8,fig.height=2.4, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)", fig.ncol=1, fig.show='hold'}
 x <- rnorm(150)
 y <- rnorm(50, 0.8)
 boxplot(list(x, y),
   names = c("x", "y"), horizontal = TRUE,
   col = 2:3, notch = TRUE, varwidth = TRUE
 )
-wilcox.test(x, y)$p.value # Wilcoxon 检验的 P 值
+ggplot(
+  data = data.frame(
+    num = c(x, y),
+    idx = c(rep("x", 150), rep("y", 50))
+  ),
+  aes(y = num, fill = idx)
+) +
+  geom_boxplot(notch = TRUE) +
+  coord_flip()
+# Wilcoxon检验的P值
+wilcox.test(x, y)$p.value
 ```
 
 最后我们再以一个模拟数据的例子展示箱线图凹槽的功能。这里我们分别从正态分布 $\mathrm{N}(0,1)$ 和 $\mathrm{N}(0.5,1)$ 中各自产生 150 和 50 个随机数，然后作箱线图比较两组数据中间位置的差异。图 \@ref(fig:rnorm-boxplot) 为一次模拟的结果，图中的凹槽表明了两组数据的中位数有显著差异，Wilcoxon 秩和检验也证实了这一结论。此外，该图还使用了  `varwidth`  参数以表明两组数据样本量的大小不同。
@@ -306,10 +337,12 @@ usage(assocplot)
 其中 `x` 为一个列联表数据（或者矩阵）； `col` 为朝上和朝下矩形的颜色； `space` 用来设置矩形之间的间距。
 
 图 \@ref(fig:assocplot)
-是关于 `HairEyeColor` 数据的关联图。原始数据为一个三维数组，首先我们在性别维度上将数据汇总，得到眼睛颜色（棕蓝褐绿）和头发颜色（黑棕红金）人数的列联表。我们关心的问题是头发颜色与眼睛颜色之间是否存在关联，当然我们可以马上用函数 `chisq.test()` 作检验，但是检验的结果非常单一，我们只能知道零假设（独立）可否被拒绝，而图 \@ref(fig:assocplot) 则细致展示了数据的内部信息，例如从图中我们可以清楚看到，并非所有单元格都与期望频数有很大差异，只是少数几个单元格贡献了较大的 $\chi^{2}$ 值，如金发碧眼、金发棕眼等；事实上，这批数据为调查数据，眼睛颜色和头发颜色都为受访者（Delaware 大学的 592 名学生）自己填写，我们观察到金发碧眼单元格的期望频数和实际频数差异甚大，据说这背后有一则有趣的故事：由于“金发碧眼”是大家公认的美的标准，因此有些学生在填问卷时故意偏向于填写“金发碧眼”，导致“金发碧眼”的实际频数严重偏高[^1]。从图 \@ref(fig:assocplot) 的代码输出中我们知道，$\chi^{2}$ 检验可以拒绝零假设，眼睛的颜色与头发的颜色并不独立，二者之间存在某种关联关系，然而这种关联关系是由于生物或遗传原因引起还是受访者有意隐瞒自己的信息，则需要我们进一步斟酌了。
+是关于 `HairEyeColor` 数据的关联图。原始数据为一个三维数组，首先我们在性别维度上将数据汇总，得到眼睛颜色（棕蓝褐绿）和头发颜色（黑棕红金）人数的列联表。我们关心的问题是头发颜色与眼睛颜色之间是否存在关联，当然我们可以马上用函数 `chisq.test()` 作检验，但是检验的结果非常单一，我们只能知道零假设（独立）可否被拒绝，而图 \@ref(fig:assocplot) 则细致展示了数据的内部信息，例如从图中我们可以清楚看到，并非所有单元格都与期望频数有很大差异，只是少数几个单元格贡献了较大的 $\chi^{2}$ 值，如金发碧眼、金发棕眼等；事实上，这批数据为调查数据，眼睛颜色和头发颜色都为受访者（Delaware 大学的 592 名学生）自己填写，我们观察到金发碧眼单元格的期望频数和实际频数差异甚大，据说这背后有一则有趣的故事：由于“金发碧眼”是大家公认的美的标准，因此有些学生在填问卷时故意偏向于填写“金发碧眼”，导致“金发碧眼”的实际频数严重偏高[^assocplot-isu]。从图 \@ref(fig:assocplot) 的代码输出中我们知道，$\chi^{2}$ 检验可以拒绝零假设，眼睛的颜色与头发的颜色并不独立，二者之间存在某种关联关系，然而这种关联关系是由于生物或遗传原因引起还是受访者有意隐瞒自己的信息，则需要我们进一步斟酌了。
 
 在 **vcd** 包 [@vcd] 中有一个类似的关联图函数 `assoc()`，但功能比本节中介绍的函数要更强大，详细介绍参见 @Meyer06
 [@Zeileis07]。
+
+[^assocplot-isu]: 本书作者在爱荷华州立大学统计系读博士期间，每周统计图形小组有一次讨论，这则消息来自于作者的一位导师 Heike Hofmann 教授
 
 ## 条件密度图 {#sec:cdplot}
 
@@ -708,7 +741,7 @@ box()
 
 ```{r matplot,fig.width=4.8,fig.height=3.5,fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
 sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
-par(mar = c(1, 4, .1, .1))
+par(mar = c(2, 4, .1, .1))
 matplot(sines, type = "b", pch = 21:24, col = 2:5, bg = 2:5)
 # 数据矩阵的前 6 行
 round(head(sines), 5)
@@ -974,7 +1007,7 @@ with(warpbreaks, tapply(breaks, tension, mean))
 
 (ref:fig-rug) 带坐标轴须的喷泉间隔时间密度曲线图
 
-```{r rug,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
+```{r rug,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
 par(mar = c(3, 4, 0.4, 0.1))
 plot(density(faithful$eruptions), main = "")
 rug(faithful$eruptions)
@@ -1005,7 +1038,7 @@ usage(rug)
 
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）。
 
-```{r smoothScatter,fig.width=5,fig.height=5,tidy =FALSE,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)",dev='png', dev.args=list(type = "cairo")}
+```{r smoothScatter,fig.width=2.5,fig.height=2.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)", dev='png', dev.args=list(type = "cairo")}
 par(mar = c(4, 4, 0.3, 0.1))
 smoothScatter(BinormCircle)
 ```
@@ -1024,8 +1057,9 @@ usage(smoothScatter)
 
 ## 棘状图 {#sec:spineplot}
 
+[^spineplot-spinogram]: 对于连续的自变量则称为 Spine Plot，离散自变量则为 Spinogram，这个单词是仿照 Histogram 而造。
 
-棘状图（Spine Plot/Spinogram [^2]）可以看作是马赛克图（\@ref(sec:mosaicplot) 小节）的特例，也可以看作是堆砌条形图（\@ref(sec:barplot) 小节）的推广。棘状图的外观看起来像是高低不齐的荆棘丛，因此而得名。
+棘状图（Spine Plot/Spinogram [^spineplot-spinogram]）可以看作是马赛克图（\@ref(sec:mosaicplot) 小节）的特例，也可以看作是堆砌条形图（\@ref(sec:barplot) 小节）的推广。棘状图的外观看起来像是高低不齐的荆棘丛，因此而得名。
 
 棘状图的原理和条件密度图非常类似，都展示了在给定某个自变量的情况下因变量的概率分布，但是棘状图首先对连续型的自变量进行了离散化处理，然后在离散的区间内计算因变量的条件分布。除此之外，棘状图还兼顾了自变量的分布，在横轴方向上以不同宽度的矩形表示自变量的分布密度。因此，从纵轴方向上看，棘状图用堆砌的矩形块表示因变量的分布密度，这使得它看起来像堆砌的条形图，而从横轴方向上看，棘状图用不同的矩形宽度表示自变量的密度分布，这使得它又像是马赛克图（马赛克图中矩形的长宽和频数成比例）。尤其是自变量为分类变量时，棘状图与马赛克图几乎无异。从概念和定义上来讲，棘状图实际上是用 $P(Y|X)$ 对 $P(X)$ 所作的图。
 
@@ -1089,7 +1123,7 @@ head(mtcars[, 1:7])
 (ref:fig-stripchart) 各种杀虫剂下昆虫数目的带状图：堆砌和随机打乱的带状图。
 
 ```{r stripchart,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
-layout(matrix(1:2, 2), height = c(1.5, 1))
+layout(matrix(1:2, 2), height = c(1, 1))
 par(mar = c(4, 4, 0.2, 0.2))
 boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, 
         border = "red", col = "lightgreen", at = 1:6 - 0.3)
@@ -1424,7 +1458,9 @@ usage(rpart:::plot.rpart)
 
  `x` 是一个 rpart 类型的对象，一般由 `rpart()` 函数拟合产生； `uniform` 决定是否在从上至下的枝节点之间使用相等的纵向距离以避免树枝在某些局部区域靠得太近使图形难以辨认，默认情况下每两个枝节点之间的距离与拟合误差成比例； `branch` 设定树枝的形状，0 为 "V" 字型，1 为垂直的形状，该参数可以取 $[0,1]$ 之间的数值以使得数值形状更像 "V" 或更垂直； `compress` 设定是否在横向上压缩树枝的间距使得图形更紧凑。
 
-我们利用 **rpart** 包中的一个脊椎矫正手术数据 `kyphosis` 来作一棵简单的分类树如图 \@ref(fig:rpart)。该数据包含一个因变量 `Kyphosis`（术后是否还存在脊椎畸形）和三个自变量 `Age`（年龄，以月计）、`Number`（畸形脊椎的数目）和 `Start`（从上往下数第一段畸形脊椎的位置）。我们希望知道的是这三个自变量对脊椎矫正手术结果的影响，例如怎样特征的小孩手术容易失败。分类与回归树的读法为：每个节点上的条件若满足则树枝向左生长，否则向右生长，每片叶子（最底端，即不再生长枝节的地方）上标明了该处的因变量的预测结果 [^3]，下方也给出了该叶节点上样本的因变量构成情况。从图 \@ref(fig:rpart) 中可以看出，`Start` 小于 8.5 的小孩的矫正手术容易失败（右边叶节点上有 11 例失败和 8 例成功），而对于 `Start` 大于等于 8.5 的小孩来说，手术结果则需要继续按照自变量拆分：`Start` 大于等于 14.5 的 29 名小孩中，所有小孩的手术均获成功，这表明手术成败的重要因素是小孩的第一段畸形脊椎的位置，这个位置越靠下，则手术越易成功；若前面的条件不满足，则继续向右拆分，下一个拆分变量为年龄，从下面的几个叶节点来看，年龄越大则手术越不容易成功。
+我们利用 **rpart** 包中的一个脊椎矫正手术数据 `kyphosis` 来作一棵简单的分类树如图 \@ref(fig:rpart)。该数据包含一个因变量 `Kyphosis`（术后是否还存在脊椎畸形）和三个自变量 `Age`（年龄，以月计）、`Number`（畸形脊椎的数目）和 `Start`（从上往下数第一段畸形脊椎的位置）。我们希望知道的是这三个自变量对脊椎矫正手术结果的影响，例如怎样特征的小孩手术容易失败。分类与回归树的读法为：每个节点上的条件若满足则树枝向左生长，否则向右生长，每片叶子（最底端，即不再生长枝节的地方）上标明了该处的因变量的预测结果 [^rpart-plot]，下方也给出了该叶节点上样本的因变量构成情况。从图 \@ref(fig:rpart) 中可以看出，`Start` 小于 8.5 的小孩的矫正手术容易失败（右边叶节点上有 11 例失败和 8 例成功），而对于 `Start` 大于等于 8.5 的小孩来说，手术结果则需要继续按照自变量拆分：`Start` 大于等于 14.5 的 29 名小孩中，所有小孩的手术均获成功，这表明手术成败的重要因素是小孩的第一段畸形脊椎的位置，这个位置越靠下，则手术越易成功；若前面的条件不满足，则继续向右拆分，下一个拆分变量为年龄，从下面的几个叶节点来看，年龄越大则手术越不容易成功。
+
+[^rpart-plot]: 若因变量为分类变量，则预测值按照多数投票表决（majority vote）原则计算；若为数值变量，则按照叶节点上的样本均值预测。
 
 (ref:fig-rpart-s) 脊椎矫正手术结果的分类树图
 
@@ -1595,7 +1631,7 @@ usage(faces2)
 
 (ref:fig-faces2) 部分汽车数据的脸谱图：谁的脸宽？谁的鼻子长？谁的眼睛大？
 
-```{r faces2,fig.width=4.8,fig.height=5.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
+```{r faces2,fig.width=5.8,fig.height=6.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
 faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5))
 ```
 
@@ -1613,7 +1649,6 @@ faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5
 在 R 中有很多包都可以画平行坐标图，例如 **GGally** 包 [@GGally] 中的 `ggparcoord()` 函数、**MASS** 包 [@Venables02] 中的 `parcoord()` 函数和 **iplots** 包 [@iplots] 中的 `ipcp()` 函数等。由于后面 \@ref(sec:ggplot2) 小节还会专门介绍 **ggplot2**，这里我们先看看这个包中的平行坐标图。 `ggparcoord()` 的用法如下：
 
 ```{r ggparcoord-usage}
-library(ggplot2)
 library(GGally)
 usage(ggparcoord)
 ```
@@ -1684,16 +1719,20 @@ usage(andrews_curve)
 
 (ref:fig-andrews-curve) 鸢尾花数据和黑莓树数据的调和曲线图：左上为原始鸢尾花数据，右上为调整变量顺序的鸢尾花数据，左下为标准化之后的鸢尾花数据，右下为标准化之后的黑莓树数据调和曲线图。
 
-```{r andrews-curve,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)"}
+```{r andrews-curve,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)",dev='tikz',fig.showtext=FALSE,fig.process=to_png}
 iris.col <- vec2col(iris$Species)
 par(mfrow = c(2, 2))
 par(mar = c(4, 4, 0.2, 0.2))
-andrews_curve(iris[, 1:4], n = 50, col = iris.col)
-andrews_curve(iris[, c(3, 4, 2, 1)], n = 50, col = iris.col)
-andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col)
-x <- andrews_curve(scale(trees), n = 50)
+andrews_curve(iris[, 1:4], n = 50, col = iris.col, 
+              xlab = "$t$", ylab = "$f(t)$")
+andrews_curve(iris[, c(3, 4, 2, 1)], n = 50, col = iris.col,
+              xlab = "$t$", ylab = "$f(t)$")
+andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col,
+              xlab = "$t$", ylab = "$f(t)$")
+x <- andrews_curve(scale(trees), n = 50,
+                   xlab = "$t$", ylab = "$f(t)$")
 # 离群点是哪行数据？即哪行数据对应的 f(t) 会大于 4？
-# which(apply(x>4, 1, any))
+which(apply(x > 4, 1, any))
 ```
 
 图 \@ref(fig:andrews-curve)
@@ -1739,10 +1778,9 @@ usage(bagplot)
 
 (ref:fig-bagplot) Consumer Reports 中汽车数据的二维箱线图（左）和二维密度等高图（右）。
 
-```{r bagplot,fig.width=4.8,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
-par(mar = c(4, 4, 0.1, 0.1))
+```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
 # 数据来自 rpart 包中的 car.test.frame
-par(mfrow = c(1, 2), bty = "l")
+par(mfrow = c(1, 2), mar = c(4, 4, 0.1, 0.1), bty = "l")
 car.wd <- with(car.test.frame, cbind(Weight, Disp.))
 bagplot(car.wd, cex = 0.9)
 box()
@@ -1759,7 +1797,9 @@ with(est, {
 ```
 
 
-图 \@ref(fig:bagplot) 左图展示了 Consumer Reports 中汽车数据中车重 `Weight` 和气缸排量 `Disp.` 两个变量的二维箱线图，图中心有一个米字型的点，代表二维数据的中位数，内层深色袋子包含了一半的数据点（约 30 个），外层袋子本应包含所有数据点，但由于默认设置有 5 个离群点的存在，所以只包含了 55 个数据点，读者可以将 `factor` 参数设置为 6，便可包含所有数据点。作为对比，右图从二维核密度估计的角度画出了密度值的等高图，这两幅图可以看作是相通的，左图里层袋子就是右图中密度曲面 [^4] 从中心向外积分数值到 0.5 时对应的区域。
+图 \@ref(fig:bagplot) 左图展示了 Consumer Reports 中汽车数据中车重 `Weight` 和气缸排量 `Disp.` 两个变量的二维箱线图，图中心有一个米字型的点，代表二维数据的中位数，内层深色袋子包含了一半的数据点（约 30 个），外层袋子本应包含所有数据点，但由于默认设置有 5 个离群点的存在，所以只包含了 55 个数据点，读者可以将 `factor` 参数设置为 6，便可包含所有数据点。作为对比，右图从二维核密度估计的角度画出了密度值的等高图，这两幅图可以看作是相通的，左图里层袋子就是右图中密度曲面 [^bagplot-surf] 从中心向外积分数值到 0.5 时对应的区域。
+
+[^bagplot-surf]: 不要忘记：等高图实际上是三维图形！请想象这个“曲面”的形状。
 
 ## 延伸与小结 {#sec:base-graph-ext}
 
@@ -1783,7 +1823,7 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 (ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 \%，因此 0 \~ 10 km/h 的东北风的频率大约是 7 \%。无风的频率大约是 8 \%。
 
-```{r windrose,fig.width=5.4,fig.height=4.6,sanitize=TRUE,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)"}
+```{r windrose,fig.width=5.4,fig.height=4.6,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",small.mar = FALSE}
 library(plotrix) # 直接取自 oz.windrose() 函数的例子
 windagg <- matrix(c(
   8, 0, 0, 0, 0, 0, 0, 
@@ -1793,6 +1833,7 @@ windagg <- matrix(c(
   1, 4, 1, 2, 1, 2, 4, 
   0, 3, 1, 3, 1
 ), nrow = 5, byrow = TRUE)
+par(mar = c(0.5, 0.5, 4.0, 0.5))
 oz.windrose(windagg)
 ```
 
@@ -1829,7 +1870,7 @@ demo("float_pie", package = "MSG")
 
 ## 思考与练习
 
-1.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性。本题源于 COS 论坛帖子：<http://cos.name/cn/topic/18521>。
+1.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性。本题源于 COS 论坛帖子：<https://d.cosx.org/d/18521>。
 
 2.  用 QQ 图评价数据正态性应该注意什么问题？模拟一些正态分布的数据，画出 QQ 图，看看如果数据真的来自正态分布，QQ 图看起来是什么样的。或者参考 **animation** 包中的 `sim.qqnorm()` 函数。
 
@@ -1855,30 +1896,23 @@ demo("float_pie", package = "MSG")
 7.  在信息可视化（Information
     Visualization）领域，树图和标签云都非常流行，实际上这些图形从统计学角度来说表达的信息非常简单：它们表达的只是数字大小。树图为 Treemap，不是 \@ref(sec:rpart) 小节提到的分类与回归树，但思想类似，也是递归分割，如图 \@ref(fig:disk-usage) 是本作者操作系统中的 R 包文件大小树图。树图主要是用矩形大小代表数字大小，纵横交替分割一个大矩形为小单元。图 \@ref(fig:disk-usage) 中最大的灰色矩形代表所有 R 包的大小，在 \~/R/x86\_64-pc-linux-gnu-library/2.12/ 文件夹下有若干 R 包，每个包都有自己的大小，其中最大的是 **mapdata**，其次是 **RGtk2**，然后是 **Rcpp**，等等。纵向划分的长矩形表示一个个包（面积和包的大小成比例），然后在这些矩形内部再横向划分小矩形分别表示子文件夹的大小，若子文件夹下还有子文件夹，那么继续纵横划分。树图同时表达了嵌套关系和数值大小，看起来一目了然，通常最大的矩形能最先吸引人的注意力。例如，若我们想清理磁盘上的文件，那么就会考虑究竟是哪些文件占用了很大的空间，此时树图就是很好的可视化方法（本作者正是用这样的办法清理自己的磁盘空间的）。图 \@ref(fig:disk-usage) 显示的是 Ubuntu 系统下的 Disk Usage Analyzer，Windows 下也有类似的软件如 WinDirStat。
 
-    (ref:fig-disk-usage-s) 系统中 R 附加包文件大小的树图
-
-    (ref:fig-disk-usage) 系统中 R 附加包文件大小的树图：在作者的系统中，所有 R 包中最大的是 mapdata，其次为 RGtk2。
-
     ```{r disk-usage,fig.cap="(ref:fig-disk-usage)",fig.scap="(ref:fig-disk-usage-s)",echo=FALSE}
-    knitr::include_graphics("images/disk-usage.png")
+    knitr::include_graphics("images/disk-usage.png", dpi = NA)
     ```
 
     标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是作者英文博客（<https://yihui.name/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为作者一直开发 **animation** 包，并研究着 Sweave。
 
-    (ref:fig-yihui-name-wordle-s) 作者英文博客的标签云
-
-    (ref:fig-yihui-name-wordle) 作者英文博客的标签云：animation 和 Sweave 两个词最抢眼。
-
     ```{r yihui-name-wordle,fig.cap="(ref:fig-yihui-name-wordle)",fig.scap="(ref:fig-yihui-name-wordle-s)",echo=FALSE}
-    knitr::include_graphics("images/yihui-name-wordle.png")
+    knitr::include_graphics("images/yihui-name-wordle.png", dpi = NA)
     ```
 
     本书大部分内容都是关于数据可视化的，统计学的成分比较大。请结合这里给出的两幅图形思考，信息可视化和数据可视化的区别是什么？它们各有什么优势以及如何结合它们的优势？
 
-[^1]: 本书作者在爱荷华州立大学统计系读博士期间，每周统计图形小组有一次讨论，这则消息来自于作者的一位导师 Heike Hofmann 教授
 
-[^2]: 对于连续的自变量则称为 Spine Plot，离散自变量则为 Spinogram，这个单词是仿照 Histogram 而造。
+(ref:fig-disk-usage-s) 系统中 R 附加包文件大小的树图
 
-[^3]: 若因变量为分类变量，则预测值按照多数投票表决（majority vote）原则计算；若为数值变量，则按照叶节点上的样本均值预测。
+(ref:fig-disk-usage) 系统中 R 附加包文件大小的树图：在作者的系统中，所有 R 包中最大的是 **mapdata**，其次为 **RGtk2**。
 
-[^4]: 不要忘记：等高图实际上是三维图形！请想象这个“曲面”的形状。
+(ref:fig-yihui-name-wordle-s) 作者英文博客的标签云
+
+(ref:fig-yihui-name-wordle) 作者英文博客的标签云：animation 和 Sweave 两个词最抢眼。
