@@ -216,10 +216,10 @@ head(methods("plot"), 24) # 显示前 24 个
 
 ```{r function-demo4,small.mar=FALSE}
 class(iris)
-par(mar = c(4,4,3,0.5))
 plot(iris) # 调用 plot.data.frame() 作散点图矩阵
 x <- density(faithful$waiting)
 class(x)
+par(mar = c(4, 4, 3, 0.5))
 plot(x) # 调用 plot.density() 作密度曲线
 ```
 
