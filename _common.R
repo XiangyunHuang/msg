@@ -29,7 +29,8 @@ knitr::opts_chunk$set(
   fig.align = "center",
   cache = TRUE,
   small.mar = TRUE,
-  fig.showtext = TRUE
+  fig.showtext = TRUE,
+  dpi = 300
 )
 
 if (is_latex) {
