@@ -1038,7 +1038,7 @@ usage(rug)
 
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）。
 
-```{r smoothScatter,fig.width=5,fig.height=5,tidy =FALSE,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)", dev='png', dev.args=list(type = "cairo", res = 300)}
+```{r smoothScatter,fig.width=5,fig.height=5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)", dev='png', dev.args=list(type = "cairo")}
 par(mar = c(4, 4, 0.3, 0.1))
 smoothScatter(BinormCircle)
 ```
