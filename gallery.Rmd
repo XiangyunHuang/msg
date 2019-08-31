@@ -1007,7 +1007,7 @@ with(warpbreaks, tapply(breaks, tension, mean))
 
 (ref:fig-rug) 带坐标轴须的喷泉间隔时间密度曲线图
 
-```{r rug,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
+```{r rug,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
 par(mar = c(3, 4, 0.4, 0.1))
 plot(density(faithful$eruptions), main = "")
 rug(faithful$eruptions)
@@ -1038,7 +1038,7 @@ usage(rug)
 
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）。
 
-```{r smoothScatter,fig.width=5,fig.height=5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)", dev='png', dev.args=list(type = "cairo")}
+```{r smoothScatter,fig.width=2.5,fig.height=2.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)", dev='png', dev.args=list(type = "cairo")}
 par(mar = c(4, 4, 0.3, 0.1))
 smoothScatter(BinormCircle)
 ```
@@ -1631,7 +1631,7 @@ usage(faces2)
 
 (ref:fig-faces2) 部分汽车数据的脸谱图：谁的脸宽？谁的鼻子长？谁的眼睛大？
 
-```{r faces2,fig.width=4.8,fig.height=5.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
+```{r faces2,fig.width=5.8,fig.height=6.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
 faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5))
 ```
 
@@ -1719,16 +1719,20 @@ usage(andrews_curve)
 
 (ref:fig-andrews-curve) 鸢尾花数据和黑莓树数据的调和曲线图：左上为原始鸢尾花数据，右上为调整变量顺序的鸢尾花数据，左下为标准化之后的鸢尾花数据，右下为标准化之后的黑莓树数据调和曲线图。
 
-```{r andrews-curve,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)"}
+```{r andrews-curve,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)",dev='tikz',fig.showtext=FALSE,fig.process=to_png}
 iris.col <- vec2col(iris$Species)
 par(mfrow = c(2, 2))
 par(mar = c(4, 4, 0.2, 0.2))
-andrews_curve(iris[, 1:4], n = 50, col = iris.col)
-andrews_curve(iris[, c(3, 4, 2, 1)], n = 50, col = iris.col)
-andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col)
-x <- andrews_curve(scale(trees), n = 50)
+andrews_curve(iris[, 1:4], n = 50, col = iris.col, 
+              xlab = "$t$", ylab = "$f(t)$")
+andrews_curve(iris[, c(3, 4, 2, 1)], n = 50, col = iris.col,
+              xlab = "$t$", ylab = "$f(t)$")
+andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col,
+              xlab = "$t$", ylab = "$f(t)$")
+x <- andrews_curve(scale(trees), n = 50,
+                   xlab = "$t$", ylab = "$f(t)$")
 # 离群点是哪行数据？即哪行数据对应的 f(t) 会大于 4？
-# which(apply(x>4, 1, any))
+which(apply(x > 4, 1, any))
 ```
 
 图 \@ref(fig:andrews-curve)
@@ -1774,10 +1778,9 @@ usage(bagplot)
 
 (ref:fig-bagplot) Consumer Reports 中汽车数据的二维箱线图（左）和二维密度等高图（右）。
 
-```{r bagplot,fig.width=4.8,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
-par(mar = c(4, 4, 0.1, 0.1))
+```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
 # 数据来自 rpart 包中的 car.test.frame
-par(mfrow = c(1, 2), bty = "l")
+par(mfrow = c(1, 2), mar = c(4, 4, 0.1, 0.1), bty = "l")
 car.wd <- with(car.test.frame, cbind(Weight, Disp.))
 bagplot(car.wd, cex = 0.9)
 box()
@@ -1820,7 +1823,7 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 (ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 \%，因此 0 \~ 10 km/h 的东北风的频率大约是 7 \%。无风的频率大约是 8 \%。
 
-```{r windrose,fig.width=5.4,fig.height=4.6,sanitize=TRUE,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)"}
+```{r windrose,fig.width=5.4,fig.height=4.6,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",small.mar = FALSE}
 library(plotrix) # 直接取自 oz.windrose() 函数的例子
 windagg <- matrix(c(
   8, 0, 0, 0, 0, 0, 0, 
@@ -1830,6 +1833,7 @@ windagg <- matrix(c(
   1, 4, 1, 2, 1, 2, 4, 
   0, 3, 1, 3, 1
 ), nrow = 5, byrow = TRUE)
+par(mar = c(0.5, 0.5, 4.0, 0.5))
 oz.windrose(windagg)
 ```
 
