@@ -55,6 +55,29 @@ RUN xvfb-run install2.r --error \
   yihui/fun \
   yihui/MSG  
 
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+## install sf
+  libudunits2-dev \
+  libproj-dev \
+  libgdal-dev \
+  libavfilter-dev \
+  libfftw3-dev \
+  cargo
+
+RUN xvfb-run install2.r --error \
+  av \
+  gifski \
+  gganimate \
+  ggmap \
+  ggraph \
+  ggfortify \
+  leaflet \
+  plotly \
+  raster \
+  rayshader \
+  RgoogleMaps \
+  sf
 
 ## Install TinyTeX
 RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
@@ -62,8 +85,8 @@ RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
       makecell mathdesign metalogo microtype ms multirow parskip pdfcrop \
       pgf placeins preview psnfss realscripts relsize rsfs setspace soul \
       standalone subfig symbol tabu tex4ht threeparttable threeparttablex \
-      titlesec tocbibind tocloft trimspaces ulem varwidth wrapfig xcolor xltxtra zhnumber \
-      fandol cancel titlepic \
+      titlesec tocbibind tocloft trimspaces ulem varwidth wrapfig xcolor \
+      xltxtra zhnumber fandol cancel titlepic \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
