@@ -161,8 +161,7 @@ ggplot(aes(x = carat), data = diamonds) +
 
 ```{r geom-jitter-demo}
 ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
-  geom_point() +
-  geom_jitter()
+  geom_point(position = "jitter")  # 或者直接 geom_jitter()
 # 对比没有随机打乱的散点图：
 ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
   geom_point()
