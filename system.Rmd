@@ -78,10 +78,10 @@ ggplot(aes(x = carat, y = price), data = diamonds) +
 统计量相关函数通常会生成一些新的变量，这些变量可以用来手工构造图形。例如计算密度的 `stat_density()` 函数会生成一个 density 变量，即密度值，回忆 \@ref(sec:vioplot) 小节介绍的小提琴图，它就是基于密度值围成的多边形区域，在 ggplot2 中，我们同样可以构造小提琴图，以下是一个根据钻石数据价格变量生成的小提琴图：
 
 ```{r ggplot2-violin}
-p <- ggplot(diamonds, aes(x = price))
-p + stat_density(aes(ymax = ..density.., ymin = -..density..),
-  geom = "ribbon", position = "identity"
-)
+ggplot(diamonds, aes(x = price)) +
+  stat_density(aes(ymax = ..density.., ymin = -..density..),
+    geom = "ribbon", position = "identity"
+  )
 ```
 
 注意其中 density 变量的两边都需要用 `..` 围起来，这是 ggplot2 的语法规定，这种写法表示变量从统计量函数中计算而来，并非原始数据自带的。 ribbon 是带状的几何形状，本质上是多边形，通常带有填充色。
@@ -101,12 +101,17 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
 
 标度除了用在颜色和符号上之外，还可以用在大小上，例如用图中圆圈的大小表示第三维变量的大小，这与 \@ref(sec:symbols) 小节的符号图很相似。ggplot2 中可以用 size 参数还设置和元素大小对应的变量，并可以用 `scale_size()` 函数来调整映射的端点（最小值和最大值）。图 \@ref(fig:quake6-bubbles) 就是这样的一个示例。**MSG** 包中的 `quake6` 数据记录了 1973 年到 2010 年每个月发生的 6 级以上的地震信息，我们可以按照年份和月份汇总地震发生的频数，然后画年份和月份的散点图，并将频数信息附着在点上。从图中可以看到，地震发生的频数似乎随着年份在增加，尤其是 2007 年 4 月和 2009 年 10 月地震活动非常频繁。另外，7 月似乎是地震低发期。注意这批数据来自美国地震局（USGS），这让我们考虑到地震频数逐年增加可能是个假象，很可能是因为近年来地震记录设备越来越先进，更多地震活动被探测到并记录了下来。
 
+### 刻度 {#subsec:scale}
+
+替换合适的刻度/尺度有利于显示数据
+
+
 ### 坐标系
 
 ```{r quake6-bubbles,fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
 data(quake6, package = "MSG")
-p <- ggplot(quake6, aes(x = year, y = month))
-p + stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
+ggplot(quake6, aes(x = year, y = month)) + 
+  stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
 ```
 
 (ref:quake6-bubbles-s) 1973 年以来全球 6 级以上地震的时间频数图
@@ -127,8 +132,9 @@ p + coord_flip()
 我们平时用到的坐标系大多数都是笛卡尔坐标系，ggplot2 也提供了极坐标系和地图坐标系，并支持笛卡尔坐标系的翻转，即交换 x 轴和 y 轴。函数 `coord_flip()` 可以用来翻转几乎任何图形，而且由于 ggplot2 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上 `coord_flip()` 再打印即可。图 \@ref(fig:diamonds-cut) 是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。
 
 ```{r diamonds-polar,fig.scap="(ref:diamonds-polar-s)",fig.cap="(ref:diamonds-polar)"}
-p <- ggplot(aes(x = cut, fill = cut), data = diamonds) + coord_polar()
-p + theme(legend.position = "none") + geom_bar(width = 1)
+ggplot(aes(x = cut, fill = cut), data = diamonds) +
+  coord_polar() + 
+  geom_bar(width = 1, show.legend = FALSE)
 ```
 
 (ref:diamonds-polar-s) 钻石雕琢水平的极坐标条形图
@@ -137,7 +143,7 @@ p + theme(legend.position = "none") + geom_bar(width = 1)
 
 图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，这一点在 \@ref(subsec:china-vs-us) 小节中我们还会再举例说明，请读者慎用。
 
-### 切片
+### 切片 {#subsec:facet}
 
 切片的思想来自于 Trellis 图形：将整批数据按照某一个或两个分类变量切成一个个子集，然后对这些子集画图。在 ggplot2 中实现切片也很简单，使用 `qplot()` 的时候指定 `facets` 参数通常就可以了，这个参数取值为一个公式，公式左侧决定在行上摆放的子集图形，右侧决定列上的图形。
 
@@ -155,6 +161,12 @@ ggplot(aes(x = carat), data = diamonds) +
 
 切片的版面设置除了上面介绍的行列排列之外，还有一种从左到右、从上到下的排列方式，有时候切片生成的子集数目如果太多的话，无论按行或按列摆放可能都摆不下，这时候可以考虑这种顺序排列的方式，参见 `facet_wrap()` 的帮助文档（前一种排列叫 `facet_grid()`）。
 
+### 分组 {#subsec:group}
+
+[介绍 group 参数和切片/分面的区别]{.todo}
+
+
+
 ### 位置调整
 
 位置调整主要针对条形图中的矩形条的位置摆放。在 \@ref(sec:barplot) 小节中我们讲到了基础图形系统中的条形图，里面有个 beside 参数可以指定矩形条是并排排列还是堆砌排列，ggplot2 系统中的位置调整也类似。当然，不仅条形图中有矩形条，直方图中也有，所以我们同样可以画堆砌直方图。另外在散点图中也有一类重要的位置调整，即随机打乱，这一点在 \@ref(sec:stripchart) 小节和图 \@ref(fig:discrete-var) 中都提到过。略微随机打乱散点图中的点的位置，能减轻图的重叠程度，尤其是有很多个点都在同一个位置上时，由于重叠的原因，我们可能会被误导（以为该处只有 1 个点）。随机打乱也可以作为一种几何形状添加到图中，如：
@@ -165,7 +177,21 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
   geom_jitter(color = "red") # 对比随机打乱的散点
 ```
 
-### 主题
+[介绍 ggrepel <https://github.com/slowkow/ggrepel> 和 ggbeeswarm <https://github.com/eclarke/ggbeeswarm>]{.todo}
+
+### 图例 {#subsec:legend}
+
+添加、取消、修改图例
+
+二维的图例 [biscale](https://github.com/slu-openGIS/biscale) 和 [multiscales](https://github.com/clauswilke/multiscales) 和 [ggnewscale](https://github.com/eliocamp/ggnewscale)
+
+### 注释 {#subsec:annotation}
+
+### 配色 {#subsec:color}
+
+RColorBrewer 和 colorspace
+
+### 主题 {#subsec:theme}
 
 可能读者已经注意到，ggplot2 图形有一套自己的独特风格，它与别的图形系统在外观上的典型区别就是它通常会画一个灰色的背景，背景中有网格线。首先，网格线是为了辅助阅读图形而画的，这是非常重要的图形组成部分；其次，灰色的背景也尤其原因：因为一篇文章的文字通常是黑色，所以灰底的图形会和黑色文字能融合得更好，这是一点美学上的考虑。有的用户可能喜欢这样的设置，有的用户则可能很不习惯这种默认设置。ggplot2 可以自定义主题，例如 `theme_bw()` 就是黑白主题，但它的黑白主题几乎仅限于设定灰色背景为白色，图中元素的颜色不会受到影响，如：
 
@@ -445,7 +471,7 @@ histogram(~ Sepal.Length | Species,
 
 这只是面板函数的一个最简单的应用，相信读者在熟悉了更多的面板函数之后，一定能够作出更加有说服力的、简洁而美观的统计图形。
 
-## 动态图形与交互式图形 {#sec:dynamic-graphics}
+## 动态图形 {#sec:dynamic-graphics}
 
 动态图形指的是可以动态变化的图形，例如三维散点图的自动旋转；交互式图形指的是在图形窗口中，我们可以用鼠标或键盘和图形进行交互，例如用鼠标选取图中的点并高亮之（加深颜色或放大选中的元素）。R 本身并不擅长交互式图形，它的基础图形系统中有非常简单的交互函数，参见附录 \@ref(sec:interaction)，但是我们可以利用一些 R 包和第三方软件来克服这个缺陷，一个典型的软件就是 GGobi [@Cook07]，在 R 中我们也可以用 **rggobi** 包 [@rggobi] 来调用 GGobi。GGobi 是开源软件，可以从 <http://www.ggobi.org> 免费下载安装。装好 GGobi 之后我们可以打开 R 安装 **rggobi** 包并开始使用它：
 
@@ -556,6 +582,12 @@ knitr::include_graphics(path = "images/GGobi-2d-tour.png", dpi = NA)
 GGobi 擅长的是连续数据的动态和交互式图形，关于离散数据的交互式图形系统，Mondrian [@Theus02] 可能是更好的选择，参见 <http://rosuda.org/mondrian/>；另外还有一个基于 Java 的 R 包 **iplots** [@iplots] 也可以是一种选择。
 
 本作者也一直在参与开发 GGobi 的下一代（GGobi 本身已经几乎停止开发），我们的工作基于诺基亚的 Qt，它的交互性能更好，而且 GGobi 的原开发人员也提供了从 Qt 到 R 的 API 接口，这使得我们的新软件可以利用 R 自身强大的统计计算功能，功能上可能超越现有的任何动态与交互式图形系统，关于这些开发工作，感兴趣的读者可以访问 <https://github.com/ggobi>。
+
+## 交互式图形 {#sec:interactive-graphics}
+
+自 htmlwidgets 出世以来，涌现出越来越多的 R 包具备绘制交互式图形的能力
+
+
 
 ## rgl 三维图形 {#sec:rgl}
 
