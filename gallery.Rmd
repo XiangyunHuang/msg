@@ -61,7 +61,7 @@ usage(hist.default)
 (ref:fig-hist-geyser) 喷泉间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
 
 
-```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE}
+```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE,out.width="70%"}
 par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
 data(geyser, package = "MASS")
 hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
@@ -91,10 +91,12 @@ plot_grid(p1, p2, p3, p4, labels = c(
 
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中。
 
-```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1}
+```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="35%"}
 demo("hist_geyser", package = "MSG")
-df <- data.frame(x = seq(40, 110, 5), y = 0, 
-                 xend = seq(40, 110, 5), yend = ht)
+df <- data.frame(
+  x = seq(40, 110, 5), y = 0,
+  xend = seq(40, 110, 5), yend = ht
+)
 p2 + geom_density(fill = "lightgray", color = "black") +
   geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
     data = df, lty = 3
@@ -1038,9 +1040,14 @@ usage(rug)
 
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）。
 
-```{r smoothScatter,fig.width=2.5,fig.height=2.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)", dev='png', dev.args=list(type = "cairo")}
+```{r smoothScatter,fig.width=4.5,fig.height=4.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
 par(mar = c(4, 4, 0.3, 0.1))
 smoothScatter(BinormCircle)
+```
+```{r smoothScatter-ggplot,fig.width=5,fig.height=4}
+library(ggpointdensity)
+ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
+  geom_pointdensity(adjust = 0.1)
 ```
 
 从计算的角度来说，我们首先将平面划分为 $n\times n$ 的网格，计算每个网格点上的二维密度值，然后用颜色将密度值大小表达出来。关于这一点，可将图 \@ref(fig:smoothScatter) 放大 8 倍，就立刻理解"网格"的意思了。
