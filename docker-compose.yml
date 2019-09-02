@@ -14,5 +14,6 @@ services:
        - TRAVIS
        - PWD
        - MAKEFLAGS
+       - DISPLAY
      volumes:
        - ${PWD}:/home/docker/workspace

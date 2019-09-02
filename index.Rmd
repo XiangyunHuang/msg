@@ -74,7 +74,8 @@ knitr::include_graphics('images/cc-by-nc-sa.svg')
 
 ```{r}
 xfun::session_info(packages = c(
-  "alphahull", "animation", "aplpack", "bookdown",
+  "alphahull", "animation", "aplpack", 
+  "knitr", "rmarkdown", "bookdown",
   "corrplot", "cowplot", "formatR", "fun",
   "GGally", "ggplot2", "igraph", "latex2exp",
   "magick", "maps", "maptools", "MSG", "mvtnorm",
