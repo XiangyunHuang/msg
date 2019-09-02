@@ -585,8 +585,39 @@ GGobi 擅长的是连续数据的动态和交互式图形，关于离散数据�
 
 ## 交互式图形 {#sec:interactive-graphics}
 
-自 htmlwidgets 出世以来，涌现出越来越多的 R 包具备绘制交互式图形的能力
+自 htmlwidgets [@htmlwidgets] 出世以来，涌现出越来越多的 R 包具备绘制交互式图形的能力，比如 plotly [@plotly]
 
+```{r}
+library(plotly, warn.conflicts = FALSE)
+```
+
+可以直接将 ggplot2 对象转化为 plotly 对象
+
+```{r,eval=FALSE}
+g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon") + 
+  xlim(1, 6) + ylim(40, 100)
+g
+gg <- ggplotly(g)
+```
+```{r faithful,fig.cap="交互式图形",out.extra = ifelse(is_latex,'','data-url="interactives/faithful.html"'),echo=FALSE}
+knitr::include_graphics(path = "interactives/faithful.svg")
+```
+
+### 导出图形
+
+Orca (Open-source Report Creator App) 软件针对 plotly.js 库渲染的图形具有很强的导出功能， [安装 Orca](https://github.com/plotly/orca#installation) 后，`plotly::orca` 函数可以将 plotly 图形对象导出为高质量静态图片，支持导出 png、pdf 和 svg 等格式。
+
+```{r,eval=FALSE}
+plotly::orca(gg, file = "faithful.svg")
+plotly::orca(gg, file = "faithful.pdf")
+htmlwidgets::saveWidget(gg, "faithful.html",
+  title = "faithful",
+  selfcontained = F, libdir = "lib"
+)
+```
+
+将文件 faithful.html 随同目录 `lib/` 一起移动到文件夹 `interactives/` 下
 
 
 ## rgl 三维图形 {#sec:rgl}
