@@ -2,6 +2,7 @@ language: r
 dist: xenial
 services:
   - docker
+  - xvfb
 cache:
   packages: true
   directories:
@@ -15,7 +16,6 @@ env:
   global:
     - MAKEFLAGS="-j 2"
     - R_VERSION=3.6.1
-    - DISPLAY=:99.0
 
 before_install:
   # install stable node
@@ -31,6 +31,8 @@ before_script:
   # packages in docker images
   - docker pull xiangyunhuang/msg-book
   - docker run --rm -it --name=book xiangyunhuang/msg-book Rscript -e "sessionInfo(.packages(T))"
+  - export DOCKER_HOST_IP=$(ip route|awk '/docker0/ { print $9 }')
+  - export DISPLAY=${DOCKER_HOST_IP}:99.0
 
 script:
   - mkdir -p _book/interactives && cp -r interactives/* _book/interactives

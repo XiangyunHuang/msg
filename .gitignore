@@ -6,6 +6,7 @@ _main.rds
 *.log
 rsconnect
 packages.bib
+MSG-packages.bib
 .project
 _book/
 _bookdown_files/
