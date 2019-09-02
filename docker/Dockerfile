@@ -90,6 +90,11 @@ RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
+RUN install2.r --error \
+  ggbeeswarm \
+  ggpointdensity
+
+
 EXPOSE 8787 8080 8181 8282
 
 WORKDIR /home/docker/workspace
