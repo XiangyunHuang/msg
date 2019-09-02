@@ -98,11 +98,11 @@ xfun::session_info(packages = c(
 ```{r bib,include=FALSE,cache=FALSE}
 knitr::write_bib(
   x = c(
-    "iplots", "rggobi", "fun", "corrplot",
+    "rggobi", "fun", "corrplot",
     "formatR", "alphahull", "hexbin", "maps",
     "rgl", "vcd", "KernSmooth", "vioplot", "sm",
     "rpart", "GGally", "survival", "TeachingDemos", "Matrix",
-    "tikzDevice", "MSG", "aplpack", "RColorBrewer", "tuneR"
+    "tikzDevice", "MSG", "aplpack", "RColorBrewer"
   ),
   file = "MSG-packages.bib", prefix = ""
 )
