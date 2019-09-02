@@ -72,18 +72,19 @@ knitr::include_graphics('images/cc-by-nc-sa.svg')
 
 本书是在 RStudio 里用 R Markdown [@xie2018] 编辑的，bookdown [@xie2016] 组织各个章节的 Rmd 文件，knitr [@xie2015] 运行 Rmd 文件中的 R 代码块，并将 Rmd 文件转化为 md 文件，借助 [Pandoc](https://pandoc.org/) 将 md 文件转化为 html 和 tex 文件，在 [TinyTeX](https://yihui.name/tinytex/) 的作用下，同时输出 pdf 格式的书籍。
 
-```{r}
-xfun::session_info(packages = c(
+```{r sessioninfo}
+sessionInfo(package = c(
   "alphahull", "animation", "aplpack", 
   "knitr", "rmarkdown", "bookdown",
   "corrplot", "cowplot", "formatR", "fun",
-  "GGally", "ggplot2", "igraph", "latex2exp",
+  "GGally", "ggplot2", "ggpointdensity", "igraph", 
+  "latex2exp", "lattice", "grid", "KernSmooth", "MASS",
   "magick", "maps", "maptools", "MSG", "mvtnorm",
   "pdftools", "plot3D", "plotrix",
-  "randomForest", "rgeos", "rggobi", "rgl",
+  "randomForest", "rgeos", "rggobi", "rgl", "RgoogleMaps",
   "scatterplot3d", "showtext", "sna", "sp", "svglite",
   "TeachingDemos", "tikzDevice", "vcd", "vioplot"
-), dependencies = FALSE)
+))
 ```
 
 
@@ -100,7 +101,7 @@ xfun::session_info(packages = c(
 knitr::write_bib(
   x = c(
     "rggobi", "fun", "corrplot",
-    "formatR", "alphahull", "hexbin", "maps",
+    "formatR", "alphahull", "hexbin", "htmlwidgets", "maps",
     "rgl", "vcd", "KernSmooth", "vioplot", "sm",
     "rpart", "GGally", "survival", "TeachingDemos", "Matrix",
     "tikzDevice", "MSG", "aplpack", "RColorBrewer"
