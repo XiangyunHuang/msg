@@ -68,6 +68,23 @@ knitr::include_graphics('images/cc-by-nc-sa.svg')
 
 如果本书对您有任何帮助，您不妨考虑为“统计之都”网站（自愿）捐赠：<https://cosx.org/donate/>，捐赠所得将用于推广统计学和自由统计软件。捐赠之后请及时告知网站管理人员：[admin@cos.name](mailto:admin@cos.name)。
 
+## 软件信息 {#rsession .unnumbered}
+
+本书是在 RStudio 里用 R Markdown [@xie2018] 编辑的，bookdown [@xie2016] 组织各个章节的 Rmd 文件，knitr [@xie2015] 运行 Rmd 文件中的 R 代码块，并将 Rmd 文件转化为 md 文件，借助 [Pandoc](https://pandoc.org/) 将 md 文件转化为 html 和 tex 文件，在 [TinyTeX](https://yihui.name/tinytex/) 的作用下，同时输出 pdf 格式的书籍。
+
+```{r}
+xfun::session_info(packages = c(
+  "alphahull", "animation", "aplpack", "bookdown",
+  "corrplot", "cowplot", "formatR", "fun",
+  "GGally", "ggplot2", "igraph", "latex2exp",
+  "magick", "maps", "maptools", "MSG", "mvtnorm",
+  "pdftools", "plot3D", "plotrix",
+  "randomForest", "rgeos", "rggobi", "rgl",
+  "scatterplot3d", "showtext", "sna", "sp", "svglite",
+  "TeachingDemos", "tikzDevice", "vcd", "vioplot"
+), dependencies = FALSE)
+```
+
 
 ## 致谢 {#acknowledgement .unnumbered}
 
@@ -75,6 +92,8 @@ knitr::include_graphics('images/cc-by-nc-sa.svg')
 
 最后，我要感谢我的父母和亲人们在 2008 年以来每个长假给我提供绝佳的写作环境，让我心无旁骛地写书；感谢吴喜之老师将 R 这套工具引入中国人民大学统计学院的课堂，以及王星老师在统计计算和非参数统计课堂上对 R 的介绍，没有他们的努力，我也许不会踏进 R 的大门；感谢我的硕士导师赵彦云老师在我的本硕学习期间给我的各种指导；感谢“统计之都”网站的会员们在 [COS 论坛](https://d.cosx.org/) 上 S-Plus
 \& R 版块和我的交流，他们的问题也使我意识到了图形知识的需求；感谢周筠老师和卢鸫翔编辑以及出版团队；感谢本书写作期间所有给我提供过帮助的人们。
+
+`r if (knitr::is_latex_output()) '-->'`
 
 ```{r bib,include=FALSE,cache=FALSE}
 knitr::write_bib(
@@ -88,6 +107,3 @@ knitr::write_bib(
   file = "MSG-packages.bib", prefix = ""
 )
 ```
-
-
-`r if (knitr::is_latex_output()) '-->'`
