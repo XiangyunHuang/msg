@@ -100,11 +100,14 @@ sessionInfo(package = c(
 ```{r bib,include=FALSE,cache=FALSE}
 knitr::write_bib(
   x = c(
-    "rggobi", "fun", "corrplot",
-    "formatR", "alphahull", "hexbin", "htmlwidgets", "maps",
-    "rgl", "vcd", "KernSmooth", "vioplot", "sm",
-    "rpart", "GGally", "survival", "TeachingDemos", "Matrix",
-    "tikzDevice", "MSG", "aplpack", "RColorBrewer"
+    "alphahull", "aplpack", "corrplot",
+    "formatR", "fun", "KernSmooth",
+    "GGally", "ggpointdensity",
+    "hexbin", "htmlwidgets", "heatmaply",
+    "MSG", "maps", "Matrix",
+    "rggobi", "rgl", "rpart", "RColorBrewer",
+    "sm", "survival", "TeachingDemos", "tikzDevice",
+    "vcd", "vioplot"
   ),
   file = "MSG-packages.bib", prefix = ""
 )

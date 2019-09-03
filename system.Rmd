@@ -27,7 +27,7 @@ methods("+") # 加号上的 S3 方法
 library(ggplot2)
 p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
   geom_point() # 先画一个散点图的图层
-p + geom_smooth(method = 'loess') # 用散点图加上平滑层
+p + geom_smooth(method = "loess") # 用散点图加上平滑层
 ```
 
 使用 ggplot2 时通常我们不必担心细节问题，例如图形的边距会自动调整，不会留出大片空白，元素颜色会自动根据变量取值从调色板中选取，图例会自动添加，等等。这些自动化的设计可以为我们节省大量的调整细节的时间，相比之下，我们使用基础图形常常需要缩小边距（默认值太大）、手工添加图例，显得非常麻烦。函数 `ggplot()` 是 ggplot2 中的核心函数之一，它能让我们快速画出灵活的图形，其用法如下：
@@ -44,8 +44,8 @@ usage(qplot)
 
 ```{r mtcars-smooth,fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)"}
 ggplot(aes(x = hp, y = mpg), data = mtcars) +
-  geom_point()  + 
-  geom_smooth(method = 'loess')
+  geom_point() +
+  geom_smooth(method = "loess")
 ```
 
 (ref:mtcars-smooth-s) 汽车马力与每加仑汽油行驶里程的关系
@@ -110,7 +110,7 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
 
 ```{r quake6-bubbles,fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
 data(quake6, package = "MSG")
-ggplot(quake6, aes(x = year, y = month)) + 
+ggplot(quake6, aes(x = year, y = month)) +
   stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
 ```
 
@@ -133,7 +133,7 @@ p + coord_flip()
 
 ```{r diamonds-polar,fig.scap="(ref:diamonds-polar-s)",fig.cap="(ref:diamonds-polar)"}
 ggplot(aes(x = cut, fill = cut), data = diamonds) +
-  coord_polar() + 
+  coord_polar() +
   geom_bar(width = 1, show.legend = FALSE)
 ```
 
@@ -211,7 +211,7 @@ theme_set(old) # 恢复原来的主题设定
 ```{r ggplot2-layers}
 p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
   geom_point() # 散点图的图层
-p + geom_smooth(method = 'loess') # 用散点图加上平滑层并打印出来
+p + geom_smooth(method = "loess") # 用散点图加上平滑层并打印出来
 p + facet_grid(~am) # 用自动档和手动挡将散点图切片并打印
 p + geom_density2d() # 散点图上加上二维核密度估计层
 ```
@@ -591,17 +591,67 @@ GGobi 擅长的是连续数据的动态和交互式图形，关于离散数据�
 library(plotly, warn.conflicts = FALSE)
 ```
 
-可以直接将 ggplot2 对象转化为 plotly 对象
+[类似 ggplot2 介绍 plotly 的基本绘图操作，以常见的散点图，折线图，箱线图为例]{.todo}
+
+### 密度图
+
+函数 ggplotly 可以直接将 ggplot2 对象转化为 plotly 对象
 
 ```{r,eval=FALSE}
 g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon") + 
+  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
   xlim(1, 6) + ylim(40, 100)
 g
 gg <- ggplotly(g)
 ```
 ```{r faithful,fig.cap="交互式图形",out.extra = ifelse(is_latex,'','data-url="interactives/faithful.html"'),echo=FALSE}
 knitr::include_graphics(path = "interactives/faithful.svg")
+```
+
+### 热图 {#subsec:heatmap}
+
+heatmaply [@heatmaply] 可以将聚类结果基于 plotly 包绘制出来，实现交互效果
+
+```{r,eval=FALSE}
+library(heatmaply)
+heatmaply(mtcars, k_row = 3, k_col = 2)
+```
+```{r heatmaply,fig.cap="交互式热图",out.extra = ifelse(is_latex,'','data-url="interactives/heatmaply.html"'),echo=FALSE}
+knitr::include_graphics(path = "interactives/heatmaply.svg")
+```
+
+函数 heatmaply 支持保存为 html pdf png 和 jpeg 格式
+
+```{r,eval=FALSE}
+heatmaply(mtcars,
+  k_row = 3, k_col = 2,
+  file = "interactives/heatmaply.html"
+)
+heatmaply(mtcars,
+  k_row = 3, k_col = 2,
+  file = "interactives/heatmaply.pdf"
+)
+```
+
+这种方式保存的 png 图片不清晰，无法指定分辨率
+
+```{r,eval=FALSE}
+heatmaply(mtcars,
+  k_row = 3, k_col = 2,
+  width = 1000, height = 800,
+  file = "interactives/heatmaply.png"
+)
+```
+
+heatmaply 是基于 plotly 的，所以可以用同样的方式导出 svg 格式图片，即先将 heatmaply 绘制的图形保存为 plotly 对象，然后调用 orca 工具导出
+
+```{r,eval=FALSE}
+h <- heatmaply(mtcars, k_row = 3, k_col = 2)
+htmlwidgets::saveWidget(h, "heatmaply.html",
+  title = "heatmaply",
+  selfcontained = F, libdir = "lib"
+)
+plotly::orca(h, file = "heatmaply.svg")
 ```
 
 ### 导出图形
@@ -674,7 +724,7 @@ knitr::include_graphics(path = "images/rgl-beta.png", dpi = NA)
 
 ```{r rgl-china-map-html,eval=FALSE}
 # 读入地势数据
-mat <- as.matrix(read.csv(system.file("extdata", "ChinaGeoMap.csv", package = "MSG"))) 
+mat <- as.matrix(read.csv(system.file("extdata", "ChinaGeoMap.csv", package = "MSG")))
 x <- 20 * (1:nrow(mat))
 y <- 20 * (1:ncol(mat))
 z <- 0.05 * mat
