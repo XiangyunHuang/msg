@@ -93,7 +93,10 @@ RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
 RUN install2.r --error \
   ggbeeswarm \
   ggpointdensity \
-  heatmaply
+  heatmaply \
+  quantreg \
+  iplots \
+  tuneR
 
 
 EXPOSE 8787 8080 8181 8282
