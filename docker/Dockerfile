@@ -72,12 +72,19 @@ RUN xvfb-run install2.r --error \
   ggmap \
   ggraph \
   ggfortify \
+  ggridges \
   leaflet \
   plotly \
   raster \
   rayshader \
   RgoogleMaps \
-  sf
+  sf \
+  ggbeeswarm \
+  ggpointdensity \
+  heatmaply \
+  quantreg \
+  iplots \
+  tuneR
 
 ## Install TinyTeX
 RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
@@ -89,15 +96,6 @@ RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
       xltxtra zhnumber fandol cancel titlepic \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
-
-RUN install2.r --error \
-  ggbeeswarm \
-  ggpointdensity \
-  heatmaply \
-  quantreg \
-  iplots \
-  tuneR
-
 
 EXPOSE 8787 8080 8181 8282
 
