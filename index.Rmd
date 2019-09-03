@@ -104,9 +104,12 @@ knitr::write_bib(
     "formatR", "fun", "KernSmooth",
     "GGally", "ggpointdensity",
     "hexbin", "htmlwidgets", "heatmaply",
+    "iplots",
     "MSG", "maps", "Matrix",
+    "quantreg",
     "rggobi", "rgl", "rpart", "RColorBrewer",
-    "sm", "survival", "TeachingDemos", "tikzDevice",
+    "sm", "survival", 
+    "TeachingDemos", "tikzDevice", "tuneR",
     "vcd", "vioplot"
   ),
   file = "MSG-packages.bib", prefix = ""
