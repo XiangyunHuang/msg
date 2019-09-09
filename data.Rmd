@@ -207,7 +207,7 @@ ggparcoord(music, columns = c(4, 5, 3), groupColumn = "type")
 data(cn_vs_us)
 cn_vs_us[, 1:3]
 ```
-```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="2010 年中美国力对比扇形图 ",echo=FALSE,out.width="70%",fig.link="http://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
+```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="2010 年中美国力对比扇形图 ",echo=FALSE,out.width="70%",fig.link="https://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
 knitr::include_graphics(path = "images/China-v-US-graphic.jpg")
 ```
 
@@ -345,8 +345,8 @@ example("gov.cn.pct", package = "MSG")
 
 (ref:gov-cn-pct) 中国政府网站中的百分比数据 LOWESS 图：首先我们画出每个百分比数据的频数（左上），然后放大 $[10\%,\,11\%]$ 区间上的频数图（右上），继而猜测数据有四舍五入的特征，所以分别对整数位和非整数位的百分比画 LOWESS 曲线（左下），最后分别对保留一位和两位小数的百分比画 LOWESS 曲线（右下）。
 
-[^news-sina]: <http://news.sina.com.cn/c/2009-12-12/034016758777 s.shtml>
-[^chem-hack]: <http://chemhack.com/cn/2009/12/87-53-stat/>
+[^news-sina]: <https://news.sina.com.cn/c/2009-12-12/034016758777s.shtml>
+[^chem-hack]: 原网页 http://chemhack.com/cn/2009/12/87-53-stat/ 已失效，[快照](https://web.archive.org/web/20120115032226/http://chemhack.com/cn/2009/12/87-53-stat/)
 
 图 \@ref(fig:gov-cn-pct) 中左上图用垂线表示了每个百分比的搜索频数大小，从中我们可以发现垂线在某些区间上显得异常得高，为了更清楚查看这些大频数的位置，我们可以把图形放大，如右上图显示了 $[10\%,\,11\%]$ 区间上的频数，这里我们可以清楚看到取整的百分比的频数明显比其它百分比的频数大，其它区间上有类似的特征（GIF 动画 <https://yihui.name/cn/2009/12/statistics-in-their-eyes/> 展示了所有长度为 1 的区间上的频数，使这个特征更容易观察到）。为了进一步验证“取整”的猜测，我们可以分别将取整和不取整的百分比以不同样式的点表示出来，并且加上 LOWESS 曲线（见 \@ref(subsec:lowess) 小节），从图中可以看到，无论是取整到整数还是取整到 1 位小数，搜索频数都明显更高。注意左下图和右下图的 y 轴是取过对数的，因此取整和不取整的实际差异比图中看到的更大。
 
@@ -435,12 +435,12 @@ knitr::include_graphics(path = c(
 
 图 \@ref(fig:RgoogleMaps) 显示了地震震源位置分布情况，背景采用了 Google Maps 提供的卫星地图数据。左图仅仅体现了震源位置的分布情况，不妨考虑将震级的大小映射为圆的半径大小，但图中存在着部分地震多发地带，如果使用圆来呈现震源的位置，这些区域的圆将出现严重的叠加现象，此处可以尝试使用 \@ref(sec:plot) 节中的透明度叠加来克服这类重叠问题，如右图所示，然而这里由于数据量不够大，这种透明度叠加的效果并不是非常明显。
 
-**RgoogleMaps** 包的潜力仍尚待挖掘。在 2010 年的 ggplot2 案例分析竞赛中，David Kahle 利用 **RgoogleMaps** 包和公开的犯罪信息数据，展示了休斯顿地区暴力犯罪的分布情况 ^[<http://1 t.click/Ksb>]。另一方面，如果数据包含时间属性，那么我们可以固定住抓取图片的边界，并保证叠加元素的坐标对应正确，便能制作出有用的动画。读者可以发挥想象力，拓展更多的应用情境。 
+**RgoogleMaps** 包的潜力仍尚待挖掘。在 2010 年的 ggplot2 案例分析竞赛中，David Kahle 利用 **RgoogleMaps** 包和公开的犯罪信息数据，展示了休斯顿地区暴力犯罪的分布情况 ^[<http://1t.click/Ksb>]。另一方面，如果数据包含时间属性，那么我们可以固定住抓取图片的边界，并保证叠加元素的坐标对应正确，便能制作出有用的动画。读者可以发挥想象力，拓展更多的应用情境。 
 
 本节只是介绍了一个非常简单的应用，但也引出了一个重要话题：统计图形如何与它要表达的问题的背景相融合？用通俗的话讲，就是要找“应景”的背景。在这方面，图 \@ref(fig:pork-price-orig) 实际上做得很好，很有吸引眼球的效果，让人一看就明白要表达的主题。当然，背景元素也不能喧宾夺主，这一点在 \@ref(subsec:element-priority) 小节中有详细论述。
 
 
-[^china-earthquake]: <http://www.bjt.name/2011/03/china-earthquake-map/>
+[^china-earthquake]: 原网页现仅有文字存档 <http://bjt.name/2011/03/13/china-earthquake-map.html>
 
 
 ### 统计词话 {#subsec:cluster}
