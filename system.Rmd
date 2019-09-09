@@ -298,7 +298,7 @@ for (i in 1:100) {
 
 lattice [@Sarkar08] 是基于 **grid** 包的一套统计图形系统，它的图形设计理念来自于 @Cleveland93 的 Trellis 图形 [^trellis]，其主要特征是根据特定变量（往往是分类变量）将数据分解为若干子集，并对每个子集画图。就像数理统计中的条件期望、条件概率一样，lattice 的图形也是一种“条件作图”。
 
-[^trellis]: 原网页 http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/ 已失效，[快照](https://web.archive.org/web/20081019072358/http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/)，原始网页已无法访问。
+[^trellis]: 原网页 http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/ 已失效，[快照](https://web.archive.org/web/20081019072358/http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/)
 
 ### 简介 {#subsec:lattice-intro}
 
