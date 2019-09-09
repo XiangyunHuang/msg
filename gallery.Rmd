@@ -289,7 +289,7 @@ usage(plot.default)
 
 (ref:fig-scatter-alpha) 半透明散点图中的规律：左图是一幅普通的散点图，图中几乎看不出数据有任何异常特征；右图中对点使用了透明度为 0.01 的红色，图中立即显示出一个深色的圆圈，表明该圆圈上集中了大量数据点。
 
-```{r scatter-alpha, fig.width=4,fig.height=2, dev='png', dev.args=list(type = "cairo"), fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha)",results='hide'}
+```{r scatter-alpha, fig.width=4,fig.height=2, dev='png', dev.args=list(type = "cairo"), fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha-s)",results='hide'}
 demo("alphaDemo", package = "MSG")
 ```
 
