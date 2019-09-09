@@ -298,7 +298,7 @@ for (i in 1:100) {
 
 lattice [@Sarkar08] 是基于 **grid** 包的一套统计图形系统，它的图形设计理念来自于 @Cleveland93 的 Trellis 图形 [^trellis]，其主要特征是根据特定变量（往往是分类变量）将数据分解为若干子集，并对每个子集画图。就像数理统计中的条件期望、条件概率一样，lattice 的图形也是一种“条件作图”。
 
-[^trellis]: <http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/>
+[^trellis]: 原网页 http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/ 已失效，[快照](https://web.archive.org/web/20081019072358/http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/)，原始网页已无法访问。
 
 ### 简介 {#subsec:lattice-intro}
 
@@ -579,7 +579,7 @@ knitr::include_graphics(path = "images/GGobi-2d-tour.png", dpi = NA)
 
 本节仅仅对 GGobi 做了初步介绍，关于它的更多功能，读者可以通过配套书籍 @Cook07 了解，该书中有大量的实际案例，充分展现了 GGobi 在数据可视化和模型可视化方面的探索功能。
 
-GGobi 擅长的是连续数据的动态和交互式图形，关于离散数据的交互式图形系统，Mondrian [@Theus02] 可能是更好的选择，参见 <http://rosuda.org/mondrian/>；另外还有一个基于 Java 的 R 包 **iplots** [@iplots] 也可以是一种选择。
+GGobi 擅长的是连续数据的动态和交互式图形，关于离散数据的交互式图形系统，Mondrian [@Theus02] 可能是更好的选择，参见 <http://www.theusrus.de/Mondrian/>；另外还有一个基于 Java 的 R 包 **iplots** [@iplots] 也可以是一种选择。
 
 本作者也一直在参与开发 GGobi 的下一代（GGobi 本身已经几乎停止开发），我们的工作基于诺基亚的 Qt，它的交互性能更好，而且 GGobi 的原开发人员也提供了从 Qt 到 R 的 API 接口，这使得我们的新软件可以利用 R 自身强大的统计计算功能，功能上可能超越现有的任何动态与交互式图形系统，关于这些开发工作，感兴趣的读者可以访问 <https://github.com/ggobi>。
 

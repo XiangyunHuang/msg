@@ -36,7 +36,7 @@
 
 ## 线性混合效应模型 {#sec:lme}
 
-Gelman 讲“为啥不关心多重比较的问题”：<http://www.stat.columbia.edu/~gelman/presentations/multiple_minitalk2.pdf>（随机效应模型究竟做了什么？）
+Gelman 讲“为啥不关心多重比较的问题”：<https://stat.columbia.edu/~gelman/presentations/multiple_minitalk2.pdf>（随机效应模型究竟做了什么？）
 
 ## 主成分分析和因子分析
 
