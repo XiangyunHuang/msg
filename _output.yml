@@ -26,9 +26,13 @@ bookdown::pdf_book:
     in_header: preamble.tex
   latex_engine: xelatex
   citation_package: natbib
-  pandoc_args: ["--top-level-division=chapter", "--lua-filter=sidebar.lua"]
-  quote_footer: ["\\hspace*{\\fill} ", ""]
-  toc_depth: 3
+  template: null
+  dev: "cairo_pdf"
   keep_tex: yes
   keep_md: yes
-  dev: "cairo_pdf"
+  extra_dependencies:
+    ctex: 
+     - heading
+     - fontset=fandol
+  pandoc_args: ["--top-level-division=chapter", "--lua-filter=sidebar.lua"]
+  quote_footer: ["\\hspace*{\\fill} ", ""]

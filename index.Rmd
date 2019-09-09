@@ -8,13 +8,25 @@ author:
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
-bibliography: [book.bib, MSG-packages.bib, Modern-Stat-Graphics.bib]
+bibliography:
+  - book.bib
+  - MSG-packages.bib
+  - Modern-Stat-Graphics.bib
 biblio-style: apalike
 link-citations: yes
-classoption: "UTF8,oneside"
-description: "现代统计图形书稿"
-geometry: margin=1.18in
+graphics: yes
+mathspec: yes
+lot: yes
+lof: yes
+classoption: "UTF8,twoside"
+papersize: b5
 colorlinks: yes
+geometry:
+  - tmargin=2.5cm
+  - bmargin=2.5cm
+  - lmargin=3.5cm
+  - rmargin=2.5cm
+description: "现代统计图形书稿"
 github-repo: XiangyunHuang/MSG-Book
 url: 'https\://bookdown.org/xiangyun/msg/'
 ---
