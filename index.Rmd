@@ -113,20 +113,24 @@ sessionInfo(package = c(
 `r if (knitr::is_latex_output()) '-->'`
 
 ```{r bib,include=FALSE,cache=FALSE}
-knitr::write_bib(
+# automatically create a bib database for R packages
+bib <- knitr::write_bib(
   x = c(
     "alphahull", "aplpack", "corrplot",
     "formatR", "fun", "KernSmooth",
     "GGally", "ggpointdensity",
     "hexbin", "htmlwidgets", "heatmaply",
-    "iplots",
+    "iplots", "leaflet",
     "MSG", "maps", "Matrix",
     "quantreg",
     "rggobi", "rgl", "rpart", "RColorBrewer",
-    "sm", "survival", 
+    "sm", "survival",
     "TeachingDemos", "tikzDevice", "tuneR",
     "vcd", "vioplot"
-  ),
-  file = "MSG-packages.bib", prefix = ""
+  ), file = NULL, prefix = ""
 )
+bib <- unlist(bib)
+# remove the ugly single quotes required by CRAN policy
+bib <- gsub("'(Htmlwidgets|iframes|TeX Live|LaTeX)'", "\1", bib)
+xfun::write_utf8(bib, "MSG-packages.bib")
 ```
