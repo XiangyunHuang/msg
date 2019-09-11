@@ -374,19 +374,19 @@ dotplot(VADeaths,
 
 下面我们以图 \@ref(fig:lattice-vadeaths) 为例，介绍一些常用的选项。首先从全图来看，整个图被分割成了四部分，每一部分被称为一个面板，每个面板的顶部被称为分类条（strip），里面显示了分类的名称。以下是各个选项的说明：
 
-layout
+`layout`
 : 控制面板的格局，这里取 `c(2, 2)` 表示两列两行的分布格局
 
-aspect
+`aspect`
 : 控制每个面板的纵横比（参见 \@ref(sec:plot) 小节）
 
-type
+`type`
 : 用于设定所有面板中的线型
 
-between
+`between`
 : 设定面板之间的距离，默认值都是 0，表示各个面板间紧紧相连，如同图 \@ref(fig:lattice-iris-hist) 中那样
 
-groups
+`groups`
 : 取值为逻辑型，本例中取值 `FALSE`，于是四类数据被分别画在了四个小面板中。如果它的取值是 `TRUE`，那么四类数据将会画在同一个大面板中，并使用不同的颜色标注出来，这时我们需要使用另一个选项 `auto.key`，来将图例添加进去
 
 最后要说明的是，lattice 的每个选项取值有类型限制，常见的有数值和列表等，在图 \@ref(fig:lattice-vadeaths) 中，`between` 选项的取值就是列表型。有的时候还会碰到列表的嵌套形式，第一眼看上去显得很复杂。其实只要弄清里面的层次结构，它们未必像看上去的那么复杂。
@@ -471,7 +471,7 @@ histogram(~ Sepal.Length | Species,
 
 这只是面板函数的一个最简单的应用，相信读者在熟悉了更多的面板函数之后，一定能够作出更加有说服力的、简洁而美观的统计图形。
 
-## 动态图形 {#sec:dynamic-graphics}
+## rggobi 动态图形 {#sec:dynamic-graphics}
 
 动态图形指的是可以动态变化的图形，例如三维散点图的自动旋转；交互式图形指的是在图形窗口中，我们可以用鼠标或键盘和图形进行交互，例如用鼠标选取图中的点并高亮之（加深颜色或放大选中的元素）。R 本身并不擅长交互式图形，它的基础图形系统中有非常简单的交互函数，参见附录 \@ref(sec:interaction)，但是我们可以利用一些 R 包和第三方软件来克服这个缺陷，一个典型的软件就是 GGobi [@Cook07]，在 R 中我们也可以用 **rggobi** 包 [@rggobi] 来调用 GGobi。GGobi 是开源软件，可以从 <http://www.ggobi.org> 免费下载安装。装好 GGobi 之后我们可以打开 R 安装 **rggobi** 包并开始使用它：
 
@@ -528,7 +528,7 @@ knitr::include_graphics(path = c(
 
 交互操作在若干图形系统中都存在，且逻辑都差不多，而巡游则几乎是 GGobi 的独特特征，它让我们能够观察高维情况下数据的“形状”。在介绍巡游之前，我们必须了解一项基础知识，即投影。投影的理论很简单，它只是将高维空间映射到低维空间，这种映射通常是通过一个投影矩阵来实现的。最简单的投影例子就是影子：物体本身是三维的，但被光照投射到地面上时我们得到的是二维的形状（影子）。从数学上而言，高维的原始数据可以用矩阵表达：
 
-$$X_{n\times p}=\left[\begin{array}{cccc}
+$$X_{n\times p} = \left[\begin{array}{cccc}
 x_{11} & x_{12} & \cdots & x_{1p}\\
 x_{21} & x_{22} & \cdots & x_{2p}\\
 \vdots & \vdots & \ddots & \vdots\\
@@ -537,7 +537,7 @@ x_{n1} & x_{n2} & \cdots & x_{np}
 
 其中 $x_{ij}$ 表示第 $i$ 行、第 $j$ 列的数据。这是一个 $p$ 维矩阵，如果我们要将它投影到二维平面上，则需要右乘一个 $p\times2$ 的投影矩阵：
 
-$$A_{p\times2}=\left[\begin{array}{cc}
+$$A_{p\times2} = \left[\begin{array}{cc}
 a_{11} & a_{12}\\
 a_{21} & a_{22}\\
 \vdots & \vdots\\
@@ -546,7 +546,7 @@ a_{p1} & a_{p2}
 
 这样我们就可以得到一个 $n\times2$ 的矩阵，从而可以画散点图，因为新的数据只有两列。举个最简单的例子，假设投影矩阵如下：
 
-$$A=\left[\begin{array}{cc}
+$$A = \left[\begin{array}{cc}
 1 & 0\\
 0 & 1\\
 0 & 0\\
@@ -556,7 +556,7 @@ $$A=\left[\begin{array}{cc}
 
 那么根据矩阵乘法：
 
-$$XA=\left[\begin{array}{cc}
+$$XA = \left[\begin{array}{cc}
 x_{11} & x_{12}\\
 x_{21} & x_{22}\\
 \vdots & \vdots\\
@@ -583,9 +583,9 @@ GGobi 擅长的是连续数据的动态和交互式图形，关于离散数据�
 
 本作者也一直在参与开发 GGobi 的下一代（GGobi 本身已经几乎停止开发），我们的工作基于诺基亚的 Qt，它的交互性能更好，而且 GGobi 的原开发人员也提供了从 Qt 到 R 的 API 接口，这使得我们的新软件可以利用 R 自身强大的统计计算功能，功能上可能超越现有的任何动态与交互式图形系统，关于这些开发工作，感兴趣的读者可以访问 <https://github.com/ggobi>。
 
-## 交互式图形 {#sec:interactive-graphics}
+## plotly 交互图形 {#sec:interactive-graphics}
 
-自 htmlwidgets [@htmlwidgets] 出世以来，涌现出越来越多的 R 包具备绘制交互式图形的能力，比如 plotly [@plotly]
+自 htmlwidgets [@htmlwidgets] 出世以来，涌现出越来越多的 R 包具备绘制交互式图形的能力，比如 leaflet [@leaflet] 和 plotly [@plotly]，其它见网站 <https://gallery.htmlwidgets.org/>
 
 ```{r}
 library(plotly, warn.conflicts = FALSE)
@@ -593,24 +593,72 @@ library(plotly, warn.conflicts = FALSE)
 
 [类似 ggplot2 介绍 plotly 的基本绘图操作，以常见的散点图，折线图，箱线图为例]{.todo}
 
-### 密度图
+[plotly](https://plotly-r.com) 类似 ggplot2 提供了各种交互图形的绘制函数，其中 `plot_ly` 函数提供了两种风格的绘图方式，一种是 Base R， 另一种是 ggplot2，我们主要考虑使用 ggplot2 这种风格的，基于图层的方式
 
-函数 ggplotly 可以直接将 ggplot2 对象转化为 plotly 对象
+### 直方图 {#subsec:plotly-histogram}
 
 ```{r,eval=FALSE}
-g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
-  xlim(1, 6) + ylim(40, 100)
-g
-gg <- ggplotly(g)
+# 生成一些随机数
+days <- abs(rnorm(1000, 80, 125))
+p1 <- plot_ly(as.data.frame(days), x = ~days) %>% 
+  add_histogram(name = "plotly.js")
+# hist 的默认方法是 Sturges
+price_hist <- function(method = "FD") {
+  h <- hist(diamonds$price, breaks = method, plot = FALSE)
+  plot_ly(x = h$mids, y = h$counts) %>%
+    add_bars(name = method)
+}
+s <- subplot(
+  p1, price_hist(), price_hist("Sturges"),  
+  price_hist("Scott"),
+  nrows = 4, shareX = TRUE
+)
 ```
-```{r faithful,fig.cap="交互式图形",out.extra = ifelse(is_latex,'','data-url="interactives/faithful.html"'),echo=FALSE}
-knitr::include_graphics(path = "interactives/faithful.svg")
+```{r plotly-histogram,echo=FALSE,fig.cap="直方图",out.extra = ifelse(is_latex,'','data-url="interactives/plotly-histogram.html"')}
+# htmlwidgets::saveWidget(s, "plotly-histogram.html",
+#   title = "histogram with plotly",
+#   selfcontained = F, libdir = "lib"
+# )
+# plotly::orca(s, file = "plotly-histogram.svg")
+# plotly::orca(s, file = "plotly-histogram.pdf")
+knitr::include_graphics(path = "interactives/plotly-histogram.svg")
 ```
 
-### 热图 {#subsec:heatmap}
 
-heatmaply [@heatmaply] 可以将聚类结果基于 plotly 包绘制出来，实现交互效果
+
+### 密度图 {#subsec:plotly-density}
+
+geyser 数据集来自 **MASS** 包 [@Venables02]，描述的是美国黄石国家公园老忠实泉喷发的时间间隔的规律
+
+plotly 同时提供了自己的一套图层语法，其实是管道操作
+
+```{r,eval=FALSE}
+data(geyser, package = "MASS")
+den <- MASS::kde2d(geyser$waiting, geyser$duration)
+# 热力图
+d1 <- plot_ly(x = den$x, y = den$y, z = den$z) %>%
+  add_heatmap()
+# 等高线图
+d2 <-  plot_ly(x = den$x, y = den$y, z = den$z) %>%
+  add_contour()
+d3 <- subplot(
+  d1, d2,
+  nrows = 1, shareY = TRUE
+)
+```
+```{r plotly-heatmap-contour,fig.cap="交互式密度图",out.extra = ifelse(is_latex,'','data-url="interactives/plotly-heatmap-contour.html"'),echo=FALSE}
+# htmlwidgets::saveWidget(d3, "plotly-heatmap-contour.html",
+#   title = "heatmap and contour Based on plotly",
+#   selfcontained = F, libdir = "lib"
+# )
+# plotly::orca(d3, file = "plotly-heatmap-contour.svg")
+# plotly::orca(d3, file = "plotly-heatmap-contour.pdf", width = 800, height = 400)
+knitr::include_graphics(path = "interactives/plotly-heatmap-contour.svg")
+```
+
+### 热图 {#subsec:plotly-heatmap}
+
+**heatmaply** [@heatmaply] 可以将聚类结果基于 **plotly** 包绘制出来，实现交互效果
 
 ```{r,eval=FALSE}
 library(heatmaply)
@@ -620,7 +668,7 @@ heatmaply(mtcars, k_row = 3, k_col = 2)
 knitr::include_graphics(path = "interactives/heatmaply.svg")
 ```
 
-函数 heatmaply 支持保存为 html pdf png 和 jpeg 格式
+函数 heatmaply 支持保存为 HTML、PDF、PNG 和 JPEG 格式
 
 ```{r,eval=FALSE}
 heatmaply(mtcars,
@@ -633,7 +681,7 @@ heatmaply(mtcars,
 )
 ```
 
-这种方式保存的 png 图片不清晰，无法指定分辨率
+这种方式保存的 PNG 图片不清晰，无法指定分辨率
 
 ```{r,eval=FALSE}
 heatmaply(mtcars,
@@ -643,7 +691,7 @@ heatmaply(mtcars,
 )
 ```
 
-heatmaply 是基于 plotly 的，所以可以用同样的方式导出 svg 格式图片，即先将 heatmaply 绘制的图形保存为 plotly 对象，然后调用 orca 工具导出
+heatmaply 是基于 plotly 的，所以可以用同样的方式导出 SVG 格式图片，即先将 heatmaply 绘制的图形保存为 plotly 对象，然后调用 orca 工具导出
 
 ```{r,eval=FALSE}
 h <- heatmaply(mtcars, k_row = 3, k_col = 2)
@@ -654,9 +702,45 @@ htmlwidgets::saveWidget(h, "heatmaply.html",
 plotly::orca(h, file = "heatmaply.svg")
 ```
 
-### 导出图形
+### 地图 {#subsec:plotly-map}
 
-Orca (Open-source Report Creator App) 软件针对 plotly.js 库渲染的图形具有很强的导出功能， [安装 Orca](https://github.com/plotly/orca#installation) 后，`plotly::orca` 函数可以将 plotly 图形对象导出为高质量静态图片，支持导出 png、pdf 和 svg 等格式。
+
+
+```{r,eval=FALSE}
+library(maps)
+map_data("world", "china") %>%
+  group_by(group) %>%
+  plot_geo(x = ~long, y = ~lat) %>%
+  add_markers(size = I(1))
+```
+```{r plotly-china-map,fig.cap="交互式地图",out.extra = ifelse(is_latex,'','data-url="interactives/plotly-china-map.html"'),echo=FALSE}
+# htmlwidgets::saveWidget(m, "plotly-china-map.html",
+#   title = "China map Based on plotly",
+#   selfcontained = F, libdir = "lib"
+# )
+# plotly::orca(m, file = "plotly-china-map.svg")
+# plotly::orca(m, file = "plotly-china-map.pdf")
+knitr::include_graphics(path = "interactives/plotly-china-map.svg")
+```
+
+### ggplotly {#subsec:plotly-ggplotly}
+
+函数 `ggplotly` 可以直接将 ggplot2 对象转化为 plotly 对象
+
+```{r,eval=FALSE}
+g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
+  xlim(1, 6) + ylim(40, 100)
+g
+gg <- ggplotly(g)
+```
+```{r faithful,fig.cap="交互式图形",out.extra = ifelse(is_latex,'','data-url="interactives/faithful.html"'),echo=FALSE}
+knitr::include_graphics(path = "interactives/faithful.svg")
+```
+
+### 导出图形 {#subsec:plotly-output}
+
+[Orca](https://github.com/plotly/orca#installation) (Open-source Report Creator App) 软件针对 plotly.js 库渲染的图形具有很强的导出功能，安装 Orca 后，`plotly::orca` 函数可以将 plotly 图形对象导出为高质量静态图片，支持导出 PNG、PDF 和 SVG 等格式。
 
 ```{r,eval=FALSE}
 plotly::orca(gg, file = "faithful.svg")
@@ -667,12 +751,12 @@ htmlwidgets::saveWidget(gg, "faithful.html",
 )
 ```
 
-将文件 faithful.html 随同目录 `lib/` 一起移动到文件夹 `interactives/` 下
+将文件 `faithful.html` 随同目录 `lib/` 一起移动到文件夹 `interactives/` 下
 
 
 ## rgl 三维图形 {#sec:rgl}
 
-**rgl** 是 R 的一个附加包（名字来自 R 和 OpenGL），利用它可以在 R 中绘制可交互的三维图形，用户通过鼠标的点击拖拽和滚轮滚动可以对图形进行旋转和缩放等操作。**rgl** 包提供了一系列的函数来绘制三维图形，这些函数分为两类，一类是 `xxx3d()`，如 `plot3d()`、`points3d()`、`lines3d()`、`persp3d()` 等，另一类是 `rgl.xxx()`，如 `rgl.lines()` 和 `rgl.points()`。这两类函数通常不建议混用，本节只介绍前一类。不难看出，这些函数的名字是与基础图形系统中的 `plot()`、`points()` 等函数相对应的，它们的用法也有很多相似的地方，因此只要我们掌握了基础图形的绘制，**rgl** 包也会变得很容易学习。
+**rgl** 是 R 的一个附加包（名字来自 R 和 [OpenGL](https://www.opengl.org/)），利用它可以在 R 中绘制可交互的三维图形，用户通过鼠标的点击拖拽和滚轮滚动可以对图形进行旋转和缩放等操作。**rgl** 包提供了一系列的函数来绘制三维图形，这些函数分为两类，一类是 `xxx3d()`，如 `plot3d()`、`points3d()`、`lines3d()`、`persp3d()` 等，另一类是 `rgl.xxx()`，如 `rgl.lines()` 和 `rgl.points()`。这两类函数通常不建议混用，本节只介绍前一类。不难看出，这些函数的名字是与基础图形系统中的 `plot()`、`points()` 等函数相对应的，它们的用法也有很多相似的地方，因此只要我们掌握了基础图形的绘制，**rgl** 包也会变得很容易学习。
 
 ### 三维点线图
 
@@ -714,13 +798,15 @@ x <- y <- seq(1, 5, .1)
 m <- outer(x, y, function(a, b) beta(a, b))
 persp3d(x, y, m, col = "green3", zlab = "Beta(x, y)")
 ```
-```{r rgl-beta,fig.scap="Beta 函数的三维透视图 ",fig.cap="(ref:rgl-beta)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-beta.html"'),echo=FALSE}
+```{r rgl-beta,fig.scap="(ref:rgl-beta-s)",fig.cap="(ref:rgl-beta)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-beta.html"'),echo=FALSE}
 knitr::include_graphics(path = "images/rgl-beta.png", dpi = NA)
 ```
 
-(ref:rgl-beta) Beta 函数的三维透视图：$\mathrm{Beta}(x,\,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)$
+(ref:rgl-beta-s) Beta 函数的三维透视图
 
-函数中 `x` 和 `y` 都是一个向量，`z` 是一个矩阵，它第 $i$ 行第 $j$ 列的元素就是函数在 `x[i]` 和 `y[j]` 上的取值；`z` 矩阵一般可以通过 `outer()` 函数生成，但其中的 `FUN` 参数必须是向量化的函数。图 \@ref(fig:rgl-beta) 展示了二元函数 $z=\mathrm{Beta}(x,\,y)=\Gamma(x)\Gamma(y)/\Gamma(x+y)=\int_{0}^{1}t^{x-1}(1-t)^{y-1}\,\mathrm{dt}$ 的形状。`persp3d()` 还有一些有趣的应用，例如图 \@ref(fig:rgl-china-map) 绘制出了中国及周边地区的地势图，图中可以很清楚看见青藏高原、塔里木盆地、四川盆地等我们熟悉的地区；为了更好地显示 3D 效果，高度在图中按比例调整过。
+(ref:rgl-beta) Beta 函数的三维透视图：$\mathrm{Beta}(x,\,y) = \Gamma(x)\Gamma(y)/\Gamma(x+y)$
+
+函数中 `x` 和 `y` 都是一个向量，`z` 是一个矩阵，它第 $i$ 行第 $j$ 列的元素就是函数在 `x[i]` 和 `y[j]` 上的取值；`z` 矩阵一般可以通过 `outer()` 函数生成，但其中的 `FUN` 参数必须是向量化的函数。图 \@ref(fig:rgl-beta) 展示了二元函数 $z = \mathrm{Beta}(x,\,y) = \Gamma(x)\Gamma(y)/\Gamma(x+y) = \int_{0}^{1}t^{x-1}(1-t)^{y-1}\,\mathrm{dt}$ 的形状。`persp3d()` 还有一些有趣的应用，例如图 \@ref(fig:rgl-china-map) 绘制出了中国及周边地区的地势图，图中可以很清楚看见青藏高原、塔里木盆地、四川盆地等我们熟悉的地区；为了更好地显示 3D 效果，高度在图中按比例调整过。
 
 ```{r rgl-china-map-html,eval=FALSE}
 # 读入地势数据
@@ -756,7 +842,7 @@ movie3d(spin3d(), duration = 5, convert = FALSE, dir = ".")
 
 如果系统中安装了 ImageMagick 软件，则可以在上述命令中指定 `convert = TRUE`，这可以使动画保存为单个的 GIF 文件。除此之外，**rgl** 包还提供了 `snapshot3d()` 函数来保存单张的窗口截图。用户只需将三维图形调整到合适的角度，然后调用这个函数即可。\@ref(sec:animation) 小节的动画包也可以很方便抓取 rgl 图形直接生成动画。
 
-## 动画 {#sec:animation}
+## 动画视频 {#sec:animation}
 
 作者的个人兴趣之一是统计学动画，这里也简要介绍一下动画的基本原理以及它与统计学理论的内在联系。**animation** 包 [@animation] 利用 R 基础图形系统生成了一系列统计学动画；从这个附加包的展示中，读者可以更加深刻认识到对图形元素的控制是一门具有广泛意义的艺术。 
 
@@ -798,13 +884,13 @@ ani.pause
 : PDF 格式：同样用图形设备记录所有帧并写入一个 LaTeX 文件，然后基于 LaTeX 宏包 animate 将这些帧编译为 PDF 文件中的动画，可以用 Adobe Reader 在页面内直接观看动画（其它 PDF 阅读器无法观看），实际上这里的动画也是用 JavaScript 驱动的；注意 `saveLatex()` 函数可以结合 Sweave 实时生成动画，这样我们可以将动画动态嵌入 LaTeX 文档
 
 `saveGIF()`
-: GIF 动画格式：GIF 是一种最常见的动画图片格式，这里我们调用的是第三方软件 ImageMagick 或者 GraphicsMagick 将 R 的图片转化为 GIF 动画，因此用户必须安装这两个软件中的一种（都是免费开源软件）
+: GIF 动画格式：GIF 是一种最常见的动画图片格式，这里我们调用的是第三方软件 [ImageMagick](https://imagemagick.org/) 或者 [GraphicsMagick](http://www.graphicsmagick.org) 将 R 的图片转化为 GIF 动画，因此用户必须安装这两个软件中的一种（都是免费开源软件）
 
 `saveSWF()`
-: Flash 格式：这也是网络上最常见的动画格式，这个函数可以调用第三方软件 SWF Tools 将 R 图片转化为 Flash 动画
+: Flash 格式：这也是网络上最常见的动画格式，这个函数可以调用第三方软件 [SWFTools](http://swftools.org) 将 R 图片转化为 Flash 动画
 
 `saveVideo()`
-: 影音格式：调用第三方软件 FFmpeg 将图片转化为常见的影音格式，如 AVI 和 MP4 等
+: 影音格式：调用第三方软件 [FFmpeg](https://ffmpeg.org/) 将图片转化为常见的影音格式，如 AVI 和 MP4 等
 
 这五种导出方式中，`saveHTML()` 是最便利的，它不需要借助任何第三方软件，而且通常我们都有网页浏览器（如 Firefox ），这样就足够观看动画了。这些函数的用法都比较类似，一般情况下我们只需要提供一段生成多幅图片的 R 代码，利用默认参数设置就足够导出动画。它们的具体用法如下：
 
@@ -854,19 +940,21 @@ knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 动态趋势
 : 动画最直观的应用可能就是动态趋势，这也最符合人们通常概念上的“动画”，如卡通动画片就是人物的运动，在统计学中（尤其是数据分析中）我们也经常需要展示某个统计量随着时间的变化或随着另一个变量的变化，例如时序图本身是静态图形，但如果我们不断取一个时间区间上的数据并画图，那么随着这个区间的推进，这些静态图形也可以构成动画
 
-从版本 2.6 开始，**animation** 包已经收录了大约 30 个统计学主题相关的函数，函数主题包括布朗运动、布丰投针、大数定律、中心极限定理、牛顿法求根、二分法求根、梯度下降法、抛硬币、置信区间、交叉验证、K-Means 聚类、k 近邻方法、最小二乘法、蒙特卡罗、豌豆机和抽样方法等。感兴趣的读者可以访问网站 <https://animation.yihui.name> 看在线演示。
+从版本 2.6 开始，**animation** 包已经收录了大约 30 个统计学主题相关的函数，函数主题包括布朗运动、布丰投针、大数定律、中心极限定理、牛顿法求根、二分法求根、梯度下降法、抛硬币、置信区间、交叉验证、K-Means 聚类、k 近邻方法、最小二乘法、蒙特卡罗、豌豆机和抽样方法等。感兴趣的读者可以访问网站 <https://yihui.name/animation/examples/> 看在线演示。
 
 此外 **animation** 包还带有大量的演示（demo），这些演示展示了一些另类功能，如 `demo('rgl_animation')` 展示了如何捕捉 rgl 生成的 3D 动画并转化为动画如图 \@ref(fig:animation-pollen)，`demo('game_of_life')` 展示了经典游戏 Game of Life，`demo('hanoi')` 展示了我们熟知的汉诺塔游戏（演示递归），`demo('fire')` 展示了跳动火焰的模拟，`demo('flowers')` 展示了从网络上下载图片并转化为动画，`demo('CLEvsLAL')` 则是一场 NBA 球赛的“回放”，等等。
 
 ```{r,eval=FALSE}
 demo("rgl_animation", package = "animation")
 ```
-```{r animation-pollen,fig.scap="pollen 数据中暗藏的特征",fig.cap="(ref:animation-pollen)",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
+```{r animation-pollen,fig.scap="(ref:animation-pollen-s)",fig.cap="(ref:animation-pollen)",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
 knitr::include_graphics(path = c(
   "images/rgl-animation4.png",
   "images/rgl-animation19.png"
 ))
 ```
+
+(ref:animation-pollen-s) pollen 数据中暗藏的特征
 
 (ref:animation-pollen) pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧。
 

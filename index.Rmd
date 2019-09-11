@@ -116,6 +116,7 @@ sessionInfo(package = c(
 # automatically create a bib database for R packages
 bib <- knitr::write_bib(
   x = c(
+    .packages(),
     "alphahull", "aplpack", "corrplot",
     "formatR", "fun", "KernSmooth",
     "GGally", "ggpointdensity",
