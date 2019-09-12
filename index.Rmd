@@ -132,6 +132,7 @@ bib <- knitr::write_bib(
 )
 bib <- unlist(bib)
 # remove the ugly single quotes required by CRAN policy
-bib <- gsub("'(Htmlwidgets|iframes|TeX Live|LaTeX|ggplot2|plotly|Leaflet|GGobi)'", "\1", bib)
+bib <- gsub("(\\\n)", " ", bib)
+bib <- gsub("'(Htmlwidgets|iframes|TeX Live|LaTeX|ggplot2|plotly|Leaflet|GGobi)'", "\\1", bib)
 xfun::write_utf8(bib, "MSG-packages.bib")
 ```
