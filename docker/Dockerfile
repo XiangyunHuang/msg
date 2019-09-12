@@ -87,7 +87,7 @@ RUN xvfb-run install2.r --error \
   tuneR
 
 ## Install Adobe fonts
-RUN apt-get install -y unzip \
+RUN apt-get install -y zip \
   && curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip \
   && mkdir -p ~/.fonts \
   && unzip Adobe-Fonts.zip -d ~/.fonts/adobe \
