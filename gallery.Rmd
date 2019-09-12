@@ -1045,10 +1045,13 @@ usage(rug)
 par(mar = c(4, 4, 0.3, 0.1))
 smoothScatter(BinormCircle)
 ```
-```{r smoothScatter-ggplot,fig.width=5,fig.height=4}
+```{r smoothScatter-ggplot1,fig.width=5,fig.height=4,eval=FALSE}
 library(ggpointdensity)
 ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
   geom_pointdensity(adjust = 0.1)
+```
+```{r smoothScatter-ggplot2,echo=FALSE}
+knitr::include_graphics(path = "images/smoothScatter-ggplot.png")
 ```
 
 从计算的角度来说，我们首先将平面划分为 $n\times n$ 的网格，计算每个网格点上的二维密度值，然后用颜色将密度值大小表达出来。关于这一点，可将图 \@ref(fig:smoothScatter) 放大 8 倍，就立刻理解"网格"的意思了。
