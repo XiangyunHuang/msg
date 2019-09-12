@@ -10,7 +10,7 @@ options(
   str = utils::strOptions(strict.width = "cut"),
   tikzDefaultEngine = "xetex",
   tikzMetricsDictionary = "tikzMetricsCache",
-  tikzDocumentDeclaration = "\\documentclass[12pt,UTF8]{ctexart}\n",
+  tikzDocumentDeclaration = "\\documentclass[12pt,UTF8,fontset=adobe]{ctexart}\n",
   tikzXelatexPackages = c(
     "\\usepackage[colorlinks, breaklinks]{hyperref}",
     "\\usepackage{color,times,tikz}",

@@ -46,4 +46,3 @@ deploy:
   on:
     branch: 
       - master
-      - first-edition-update
