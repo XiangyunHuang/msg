@@ -87,14 +87,13 @@ RUN xvfb-run install2.r --error \
   tuneR
 
 ## Install Adobe fonts
-RUN apt-get install -y zip \
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends unzip zip curl \
   && curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip \
   && mkdir -p ~/.fonts \
   && unzip Adobe-Fonts.zip -d ~/.fonts/adobe \
-  && fc-cache -fsv
-
-## Install TinyTeX
-RUN tlmgr install ctex xecjk courier courier-scaled savesym \
+  && fc-cache -fsv \
+  && tlmgr install ctex xecjk courier courier-scaled savesym \
       colortbl dvipng dvisvgm environ fancyhdr jknapltx listings \
       makecell mathdesign metalogo microtype ms multirow parskip pdfcrop \
       pgf placeins preview psnfss realscripts relsize rsfs setspace soul \
