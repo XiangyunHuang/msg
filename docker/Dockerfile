@@ -86,14 +86,21 @@ RUN xvfb-run install2.r --error \
   iplots \
   tuneR
 
+## Install Adobe fonts
+RUN apt-get install -y unzip \
+  && curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip \
+  && mkdir -p ~/.fonts \
+  && unzip Adobe-Fonts.zip -d ~/.fonts/adobe \
+  && fc-cache -fsv
+
 ## Install TinyTeX
-RUN tlmgr install ctex xecjk courier courier-scaled tocbibind subfig savesym \
+RUN tlmgr install ctex xecjk courier courier-scaled savesym \
       colortbl dvipng dvisvgm environ fancyhdr jknapltx listings \
       makecell mathdesign metalogo microtype ms multirow parskip pdfcrop \
       pgf placeins preview psnfss realscripts relsize rsfs setspace soul \
       standalone subfig symbol tabu tex4ht threeparttable threeparttablex \
       titlesec tocbibind tocloft trimspaces ulem varwidth wrapfig xcolor \
-      xltxtra zhnumber fandol cancel titlepic mdwtools \
+      xltxtra zhnumber cancel titlepic mdwtools \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
