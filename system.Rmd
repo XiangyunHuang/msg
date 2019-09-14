@@ -191,7 +191,7 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
 
 相比于 Base R 绘图系统，ggplot2 系统可以更加精细地设置各处字体
 
-```{r font-in-ggplot,fig.cap="(ref:font-in-ggplot)",fig.scap="(ref:font-in-ggplot-s)",message=FALSE}
+```{r font-in-ggplot,fig.cap="(ref:font-in-ggplot)",fig.scap="(ref:font-in-ggplot-s)",message=FALSE,fig.showtext=FALSE}
 p1 <- ggplot(pressure, aes(x = temperature, y = pressure)) +
   geom_point()
 p2 <- p1 + theme(
