@@ -187,6 +187,52 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
 
 ### 注释 {#subsec:annotation}
 
+### 字体 {#subsec:font}
+
+相比于 Base R 绘图系统，ggplot2 系统可以更加精细地设置各处字体
+
+```{r font-in-ggplot,fig.cap="(ref:font-in-ggplot)",fig.scap="(ref:font-in-ggplot-s)",message=FALSE}
+p1 <- ggplot(pressure, aes(x = temperature, y = pressure)) +
+  geom_point()
+p2 <- p1 + theme(
+  axis.title = element_text(family = "sans"),
+  axis.text = element_text(family = "serif")
+)
+p3 <- p1 + labs(x = "温度", y = "压力") +
+  theme(
+    axis.title = element_text(family = "GB1"),
+    axis.text = element_text(family = "serif")
+  )
+p4 <- p1 + labs(
+  x = "温度", y = "压力", title = "散点图",
+  subtitle = "Vapor Pressure of Mercury as a Function of Temperature",
+  caption = paste("Data on the relation between temperature in degrees Celsius and",
+    "vapor pressure of mercury in millimeters (of mercury).",
+    sep = "\n"
+  )
+) +
+  theme(
+    axis.title = element_text(family = "GB1"),
+    axis.text.x = element_text(family = "serif"),
+    axis.text.y = element_text(family = "sans"),
+    title = element_text(family = "GB1"),
+    plot.subtitle = element_text(family = "sans", size = rel(0.7)),
+    plot.caption = element_text(family = "sans", size = rel(0.6))
+  )
+library(cowplot)
+plot_grid(p1, p2, p3, p4,
+  labels = c(
+    "默认字体设置", "英文字体设置",
+    "中文字体设置", "任意字体设置"
+  ), label_fontfamily = "GB1", ncol = 2,
+  label_x = 0.1, label_y = 0.6
+)
+```
+
+(ref:font-in-ggplot-s) 在 ggplot2 绘图系统中设置中英文字体
+
+(ref:font-in-ggplot) 在 ggplot2 绘图系统中，字体可以非常容易地做到精细的设置，轴的标题、标签和图的主、副标题等都可以设置不同的字体、字号和字样
+
 ### 配色 {#subsec:color}
 
 RColorBrewer 和 colorspace
