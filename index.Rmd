@@ -12,7 +12,8 @@ bibliography:
   - book.bib
   - MSG-packages.bib
   - Modern-Stat-Graphics.bib
-biblio-style: apalike
+biblio-style: plainnat
+natbiboptions: "authoryear,square"
 link-citations: yes
 graphics: yes
 mathspec: yes
@@ -27,6 +28,15 @@ geometry:
   - lmargin=3.5cm
   - rmargin=2.5cm
 description: "现代统计图形书稿"
+subject: "统计图形, 数据可视化"
+keywords: 
+- R 语言
+- 统计图形
+- 统计学
+- 图形元素
+- 图形系统
+- 统计图形软件
+- 数据可视化
 github-repo: XiangyunHuang/MSG-Book
 url: 'https\://bookdown.org/xiangyun/msg/'
 ---
