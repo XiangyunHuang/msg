@@ -56,6 +56,8 @@ before_script:
   - curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
   - unzip Adobe-Fonts.zip -d ~/.fonts/adobe
   - fc-cache -fsv
+  - Rscript -e "sessionInfo(.packages(T));capabilities()"
+  - Rscript -e 'update.packages(lib.loc = .libPaths()[1], ask = FALSE)'
   - Rscript -e 'library(tikzDevice);tikzTest();tikzTest("$\\sin(x^2/2 - y^2/4 + 3) \\cos(2 x + 1 - \\exp(y))$")'
 
 script:
