@@ -17,6 +17,10 @@ env:
   global:
     - MAKEFLAGS="-j 2"
 
+repos:
+  CRAN: https://cloud.r-project.org
+  RForge: https://r-forge.r-project.org
+
 addons:
   apt:
     packages:
@@ -47,10 +51,12 @@ before_script:
   - export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH
   - tlmgr install ctex xecjk mdwtools zhnumber ulem ms xcolor unicode-math filehook lm-math
       subfig sourcecodepro sourceserifpro sourcesanspro cancel titlepic pgf preview psnfss
-      jknapltx
+      jknapltx titlesec tocbibind tocloft trimspaces savesym environ fancyhdr listings
+      psnfss realscripts relsize rsfs setspace soul xltxtra mathdesign
   - curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
   - unzip Adobe-Fonts.zip -d ~/.fonts/adobe
   - fc-cache -fsv
+  - Rscript -e 'library(tikzDevice);tikzTest();tikzTest("$\\sin(x^2/2 - y^2/4 + 3) \\cos(2 x + 1 - \\exp(y))$")'
 
 script:
   - mkdir -p _book/interactives && cp -r interactives/* _book/interactives
