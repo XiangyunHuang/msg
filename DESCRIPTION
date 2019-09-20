@@ -18,7 +18,9 @@ Imports:
     gWidgetsRGtk2,
     heatmaply,
     igraph,
+    iplots,
     latex2exp,
+    leaflet,
     magick,
     maps,
     maptools,
@@ -28,6 +30,7 @@ Imports:
     plot3D,
     plotly,
     plotrix,
+    quantreg,
     randomForest,
     raster,
     rgeos,
@@ -42,6 +45,7 @@ Imports:
     svglite,
     TeachingDemos,
     tikzDevice,
+    tuneR,
     vcd,
     vioplot
 Remotes: yihui/fun
