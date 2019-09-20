@@ -1,7 +1,8 @@
 language: r
+r: 
+ - 3.6.1
 dist: xenial
 services:
-  - docker
   - xvfb
 cache:
   packages: true
@@ -10,34 +11,46 @@ cache:
     - $HOME/.npm
     
 latex: false
-pandoc: false
+pandoc_version: 2.7.2
 
 env:
   global:
     - MAKEFLAGS="-j 2"
-    - R_VERSION=3.6.1
 
-before_install:
-  # install stable node
-  - nvm install stable  
+addons:
+  apt:
+    packages:
+      - ghostscript
+      - imagemagick
+      - optipng
+      - graphviz
+      # magick
+      - libmagick++-dev
+      # pdftools
+      - libpoppler-cpp-dev
+      # rgl
+      - libglu1-mesa-dev
+      - libnlopt-dev
+      - graphviz
+      # sf
+      - libudunits2-dev	
+      - libproj-dev 	
+      - libgeos-dev 	
+      - libgdal-dev
+      - ggobi
+      - libgtk2.0-dev
+
+script:
+  - mkdir -p _book/interactives && cp -r interactives/* _book/interactives
+  - Rscript -e 'bookdown::render_book("index.Rmd")'
+
+after_success:
   - npm install netlify-cli -g
   # deploy with messages 
   - export COMMIT_MSG=$(git log -1 --format='%h %<(50,trunc)%s')
   - echo $COMMIT_MSG
   - export DEPLOY_MSG=${COMMIT_MSG//[\'\"\`]/}
   - echo $DEPLOY_MSG
-
-before_script:
-  # packages in docker images
-  - docker pull xiangyunhuang/msg-book
-  - docker run --rm -it --name=book xiangyunhuang/msg-book Rscript -e "sessionInfo(.packages(T))"
-  - export DOCKER_HOST_IP=$(ip route|awk '/docker0/ { print $9 }')
-  - export DISPLAY=${DOCKER_HOST_IP}:99.0
-
-script:
-  - mkdir -p _book/interactives && cp -r interactives/* _book/interactives
-  - docker-compose run book bash -c "sh ./_build.sh"
-  - docker-compose down
 
 deploy:
   provider: script
@@ -46,3 +59,4 @@ deploy:
   on:
     branch: 
       - master
+      - second-edition
