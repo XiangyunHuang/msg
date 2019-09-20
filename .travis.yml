@@ -46,7 +46,8 @@ before_script:
   - tar -xzf /tmp/tinytex.tar.gz -C $HOME
   - export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH
   - tlmgr install ctex xecjk mdwtools zhnumber ulem ms xcolor unicode-math filehook lm-math
-      subfig sourcecodepro sourceserifpro sourcesanspro cancel titlepic pgf preview
+      subfig sourcecodepro sourceserifpro sourcesanspro cancel titlepic pgf preview psnfss
+      jknapltx
   - curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
   - unzip Adobe-Fonts.zip -d ~/.fonts/adobe
   - fc-cache -fsv
