@@ -1,3 +1,5 @@
+if (file.exists('~/.Rprofile')) sys.source('~/.Rprofile', envir = environment())
+
 options(
   citation.bibtex.max = 999,
   bitmapType = "cairo",
@@ -7,6 +9,7 @@ options(
   rgl.useNULL = TRUE,
   width = 79,
   demo.ask = FALSE,
+  formatR.indent = 2,
   str = utils::strOptions(strict.width = "cut"),
   tikzDefaultEngine = "xetex",
   tikzMetricsDictionary = "tikzMetricsCache",
