@@ -23,12 +23,16 @@ repos:
 
 addons:
   apt:
+    update: true
+    sources:
+      - sourceline: 'ppa:cran/ffmpeg-4'
     packages:
       - ghostscript
       - imagemagick
       - optipng
       - graphviz
       - cargo
+      - libavdevice-dev
       - libavfilter-dev
       # magick
       - libmagick++-dev
