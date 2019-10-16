@@ -28,6 +28,7 @@ addons:
       - imagemagick
       - optipng
       - graphviz
+      - cargo
       # magick
       - libmagick++-dev
       # pdftools
