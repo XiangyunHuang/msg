@@ -79,6 +79,7 @@ RUN xvfb-run install2.r --error \
   rayshader \
   RgoogleMaps \
   sf \
+  transformr \
   ggbeeswarm \
   ggpointdensity \
   heatmaply \
