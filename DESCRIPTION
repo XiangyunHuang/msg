@@ -47,6 +47,7 @@ Imports:
     svglite,
     TeachingDemos,
     tikzDevice,
+    transformr,
     tuneR,
     vcd,
     vioplot
