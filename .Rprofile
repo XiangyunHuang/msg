@@ -9,6 +9,7 @@ options(
   rgl.useNULL = TRUE,
   width = 79,
   demo.ask = FALSE,
+  formatR.indent = 2,
   str = utils::strOptions(strict.width = "cut"),
   tikzDefaultEngine = "xetex",
   tikzMetricsDictionary = "tikzMetricsCache",

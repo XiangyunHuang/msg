@@ -7,6 +7,7 @@ Imports:
     alphahull,
     animation,
     aplpack,
+    av,
     bookdown,
     corrplot,
     cowplot,
@@ -51,5 +52,5 @@ Imports:
     tuneR,
     vcd,
     vioplot
-Remotes: yihui/fun
+Remotes: yihui/fun, thomasp85/gganimate
 BugReports: https://github.com/XiangyunHuang/MSG-Book/issues
