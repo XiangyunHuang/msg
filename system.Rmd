@@ -971,7 +971,7 @@ ggplot(data = dat2, aes(x, y, color = I(cols))) +
 
 GIF 动画
 
-```{r,fig.showtext=FALSE,cache=FALSE,dev='png'}
+```{r,fig.showtext=FALSE}
 # 动画效果
 library(gganimate)
 ggplot(data = dat2, aes(x, y, color = I(cols))) +
@@ -996,7 +996,7 @@ ggplot(mtcars, aes(disp, mpg)) +
 
 用来分面的变量 cyl 作为转场的帧
 
-```{r,fig.showtext=FALSE,cache=FALSE,dev='png'}
+```{r,fig.showtext=FALSE}
 p <- ggplot(mtcars, aes(disp, mpg)) +
   geom_point(colour = "purple", size = 3) +
   facet_wrap(~cyl) +

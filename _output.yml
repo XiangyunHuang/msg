@@ -1,7 +1,7 @@
 bookdown::gitbook:
   css: style.css
   split_by: rmd
-  dev: "svglite"
+#  dev: "svglite"
   config:
     toc:
       before: |
