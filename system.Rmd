@@ -918,92 +918,13 @@ ani.pause
 
 **animation** 包主要有两方面的贡献，一方面是它有一套完善的动画导出工具，另一方面是它收录了大量的统计学主题相关的动画函数。下面我们分别介绍包中的导出工具和统计学主题。
 
-[gganimate 动画制作，介绍 tweenr 通过插值生成中间过渡帧]{.todo}
 
-这个例子源于余光创的博客<https://guangchuangyu.github.io/cn/2017/09/3d-breast/>。
-
-$$f(x;\theta,\phi) = \theta x\log(x)-\frac{1}{\phi}\mathit{e}^{-\phi^4(x-\frac{1}{\mathit{e}})^4}$$
-
-其中 $\theta \in (2,3), \phi \in (30,50), x \in (0,1)$
-
-```{r}
-# 准备数据
-breast_curve <- function(y, theta, phi) {
-  theta * y * log(y, base = 10) - 1 / phi * exp(-(phi * y - phi / exp(1))^4)
+```{r, animation.hook="gifski", dev='png'}
+for (i in 1:2) {
+  pie(c(i %% 2, 6), col = c('red', 'yellow'), labels = NA)
 }
-
-tmp <- sapply(0:100 / 101, breast_curve,
-  theta = c(3, 2.8, 2.5, 2.2, 2),
-  phi = c(30, 33, 36, 40, 50)
-)
-
-dat <- data.frame(
-  x = c(t(tmp)), y = rep(0:100 / 101, 5),
-  cols = rep(hcl.colors(5), each = 101)
-)
-
-dat1 <- split(dat, dat$cols)
 ```
 
-```{r}
-# 中间过程
-library(tweenr)
-dat2 <- tween_states(dat1,
-  tweenlength = 2, statelength = 1,
-  ease = rep("cubic-in-out", 5), nframes = 101
-)
-```
-
-`cubic-in-out` 的插值
-
-```{r}
-tweenr::display_ease('cubic-in-out')
-```
-
-```{r,fig.cap="静态展示过渡"}
-library(ggplot2)
-ggplot(data = dat2, aes(x, y, color = I(cols))) +
-  geom_path(na.rm = TRUE) +
-  coord_flip() +
-  theme_minimal() +
-  labs(x = NULL, y = NULL)
-```
-
-GIF 动画
-
-```{r,fig.showtext=FALSE}
-# 动画效果
-library(gganimate)
-ggplot(data = dat2, aes(x, y, color = I(cols))) +
-  geom_path(na.rm = TRUE) +
-  coord_flip() +
-  theme_minimal() +
-  labs(x = NULL, y = NULL, title = 'Frame {frame} of {nframes}') +
-  # 转场特效
-  transition_time(.frame) +
-  ease_aes('cubic-in-out')
-```
-
-[以 mtcars 为例，另一个例子]{.todo}
-
-生成静态图片
-
-```{r}
-ggplot(mtcars, aes(disp, mpg)) +
-  geom_point(colour = "purple", size = 3) +
-  facet_wrap(~cyl)
-```
-
-用来分面的变量 cyl 作为转场的帧
-
-```{r,fig.showtext=FALSE}
-p <- ggplot(mtcars, aes(disp, mpg)) +
-  geom_point(colour = "purple", size = 3) +
-  facet_wrap(~cyl) +
-  transition_manual(cyl) +
-  labs(title = "{current_frame}")
-animate(p, nframes = 100, fps = 50, renderer = gifski_renderer())
-```
 
 ### 动画导出工具
 
