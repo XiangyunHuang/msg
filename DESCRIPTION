@@ -7,13 +7,17 @@ Imports:
     alphahull,
     animation,
     aplpack,
+    av,
     bookdown,
     corrplot,
     cowplot,
     formatR,
     fun,
     GGally,
+    gganimate,
+    ggplot2,
     ggpointdensity,
+    gifski,
     gWidgetsRGtk2,
     heatmaply,
     igraph,
@@ -45,8 +49,9 @@ Imports:
     TeachingDemos,
     tidyverse,
     tikzDevice,
+    transformr,
     tuneR,
     vcd,
     vioplot
-Remotes: yihui/fun
+Remotes: yihui/fun, thomasp85/gganimate
 BugReports: https://github.com/XiangyunHuang/MSG-Book/issues
