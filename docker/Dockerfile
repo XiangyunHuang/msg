@@ -11,7 +11,14 @@ RUN apt-get update \
   libpoppler-cpp-dev \
   graphviz \
   ggobi \
-  libgtk2.0-dev
+  libgtk2.0-dev \
+## install sf
+  libudunits2-dev \
+  libproj-dev \
+  libgdal-dev \
+  libavfilter-dev \
+  libfftw3-dev \
+  cargo
 
 RUN xvfb-run install2.r --error \
   animation \
@@ -51,21 +58,6 @@ RUN xvfb-run install2.r --error \
   fun \
   latex2exp \
   svglite \
-  && installGithub.r \
-  yihui/fun \
-  yihui/MSG  
-
-RUN apt-get update \
-  && apt-get install -y --no-install-recommends \
-## install sf
-  libudunits2-dev \
-  libproj-dev \
-  libgdal-dev \
-  libavfilter-dev \
-  libfftw3-dev \
-  cargo
-
-RUN xvfb-run install2.r --error \
   av \
   gifski \
   gganimate \
@@ -85,7 +77,10 @@ RUN xvfb-run install2.r --error \
   heatmaply \
   quantreg \
   iplots \
-  tuneR
+  tuneR \
+  && installGithub.r \
+  yihui/fun
+
 
 ## Install Adobe fonts
 RUN apt-get update \
@@ -104,6 +99,6 @@ RUN apt-get update \
   && apt-get clean all \
   && rm -rf /var/lib/apt/lists/*
 
-EXPOSE 8787 8080 8181 8282
+EXPOSE 8787
 
 WORKDIR /home/docker/workspace
