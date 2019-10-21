@@ -79,10 +79,14 @@ after_success:
   - echo $DEPLOY_MSG
 
 deploy:
-  provider: script
-  script: netlify deploy --prod --dir _book --message "$DEPLOY_MSG"
-  skip_cleanup: true
-  on:
-    branch: 
-      - master
-      - second-edition
+  - provider: script
+    script: netlify deploy --dir _book --prod --message "$DEPLOY_MSG"    
+    skip_cleanup: true
+    on:
+      branch: master
+  - provider: script
+    script: netlify deploy --dir _book --message "$DEPLOY_MSG"    
+    skip_cleanup: true
+    on:
+      all_branches: true
+      condition: $TRAVIS_BRANCH != "master"
