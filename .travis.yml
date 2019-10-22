@@ -55,6 +55,7 @@ before_script:
   - curl -fLo /tmp/tinytex.tar.gz https://travis-bin.yihui.name/tinytex.tar.gz
   - tar -xzf /tmp/tinytex.tar.gz -C $HOME
   - export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH
+  - tlmgr update --self --all  
   - tlmgr install ctex xecjk mdwtools zhnumber ulem ms xcolor unicode-math filehook lm-math
       subfig sourcecodepro sourceserifpro sourcesanspro cancel titlepic pgf preview psnfss
       jknapltx titlesec tocbibind tocloft trimspaces savesym environ fancyhdr listings
