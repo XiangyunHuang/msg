@@ -424,7 +424,7 @@ Line）表面上看起来是二维形式，但实际上展示的是三维数据�
 (ref:fig-contour-grid) 网格数据的示意图：体会 x、y 与 z 的对应关系
 
 
-```{r contour-grid,fig.width=4.8,fig.height=2.5,echo=FALSE,fig.cap="(ref:fig-contour-grid)",fig.scap="(ref:fig-contour-grid-s)"}
+```{r contour-grid,fig.width=4.8,fig.height=2.5,echo=FALSE,fig.cap="(ref:fig-contour-grid)",fig.scap="(ref:fig-contour-grid-s)",fig.show="hold"}
 par(mar = c(2.5, 3, 0.1, 0.1), mgp = c(1.5, .5, 0))
 x <- 1:4
 y <- 1:3
@@ -442,6 +442,21 @@ segments(2, 2, 3, 2)
 text(rep(x, 3), rep(y, each = 4), paste("z =", z), cex = 1.5)
 axis(1, 1:4, paste("x =", x))
 axis(2, 1:3, paste("y =", y))
+
+contour_grid_tidy <- expand.grid(x = x, y = y) %>% 
+  mutate(z = z)
+contour_grid_polygon <- data.frame(
+  x = c(1, 2, 3, 4, 3, 2), 
+  y = c(2, 1, 1, 2, 3, 3)
+)
+ggplot(contour_grid_tidy, aes(x, y)) +
+  geom_text(aes(label = paste("z =", z))) +
+  scale_x_continuous(limits = c(0.5, 4.5), labels = function(x) paste("x =", x)) +
+  scale_y_continuous(limits = c(0.5, 3.5), labels = function(x) paste("x =", x)) +
+  geom_polygon(data = contour_grid_polygon, fill = NA, color = "black", lty = 2) +
+  geom_segment(aes(x = 2, y = 2, xend = 3, yend = 2)) +
+  theme_bw()
+  
 ```
 
 
