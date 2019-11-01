@@ -404,8 +404,33 @@ usage(graphics:::cdplot.formula)
 
 (ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效。
 
-```{r cdplot,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)"}
+```{r cdplot,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
 demo("cdplotDemo", package = "MSG")
+
+fail <-  factor(
+  c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1,
+    2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1),
+  levels = 2:1, 
+  labels = c("yes", "no")
+)
+temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
+  70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81
+)
+fail_temperature <- data.frame(fail = fail, temperature = temperature)
+ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
+  geom_density(position = "fill") +
+  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)]),
+    shape = 21, colour = "blue", fill = "yellow") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous("fail", expand = c(0, 0), breaks = c(0.25, 0.75), 
+    labels = c("no", "yes"),
+    sec.axis = dup_axis(name = NULL, 
+      breaks = seq(0, 1, 0.2), 
+      labels = c(0, "", 0.4, "", 0.8, ""))
+  ) +
+  scale_fill_manual(values = c("red", "lightblue")) +
+  theme_classic() +
+  theme(legend.position = "none")
 ```
 
 
