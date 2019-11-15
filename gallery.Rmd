@@ -69,7 +69,7 @@ hist(geyser$waiting, freq = FALSE, xlab = "waiting", main = "(2) freq = FALSE")
 hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", main = "(3) breaks = 5")
 hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) breaks = 40")
 
-library(tidyverse)
+library(ggplot2)
 library(cowplot)
 p <- ggplot(aes(waiting), data = geyser)
 p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
@@ -252,7 +252,7 @@ barplot(death,
   col = brewer.pal(4, "Set1"), beside = TRUE,
   legend.text = TRUE
 )
-
+library(tidyverse)
 death_tidy <- death %>% 
   as.data.frame() %>% 
   rownames_to_column(var = "population_group") %>% 
@@ -273,7 +273,7 @@ p1 <- p +
 p2 <- p + 
   geom_bar(stat = "identity", position = "dodge", color = "black") +
   theme(legend.position = c(1,1), legend.justification = c(1, 1))
-cowplot::plot_grid(p1, p2, ncol = 1)
+plot_grid(p1, p2, ncol = 1)
 ```
 
 如同前面 \@ref(sec:begin) 节中曾经提到的，条形图目前是各种统计图形中应用最广泛的，但条形图所能展示的统计量比较贫乏：它只能以矩形条的长度展示原始数值，对数据没有任何概括或推断。
@@ -1137,6 +1137,7 @@ library(ggpointdensity)
 ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
   geom_pointdensity(adjust = 0.1)
 ```
+
 ```{r smoothScatter-ggplot2,echo=FALSE}
 knitr::include_graphics(path = "images/smoothScatter-ggplot.png")
 ```
@@ -1191,7 +1192,8 @@ t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
 ```{r stars,fig.width=5,fig.height=4.8,fig.cap="(ref:fig-stars)",fig.scap="(ref:fig-stars-s)"}
 # 预设调色板，stars() 默认用整数来表示颜色
 palette(rainbow(12, s = 0.6, v = 0.75))
-stars(mtcars[, 1:7], len = 0.8, key.loc = c(14, 1.5), ncol = 7, main = "", draw.segments = TRUE)
+stars(mtcars[, 1:7], len = 0.8, key.loc = c(14, 1.5), ncol = 7, 
+      main = "", draw.segments = TRUE)
 palette("default") # 恢复默认调色板
 ```
 
@@ -1349,7 +1351,8 @@ demo("ChinaPop", package = "MSG")
 layout(matrix(c(1, 2, 1, 3), 2)) # 拆分作图区域
 par(mar = c(4, 4, 0.2, 0.2))
 pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
-names(pie.sales) <- c("Blueberry", "Cherry", "Apple", "Boston Cream", "Other", "Vanilla Cream")
+names(pie.sales) <- c("Blueberry", "Cherry", "Apple",
+                      "Boston Cream", "Other", "Vanilla Cream")
 pie.col <- c("purple", "violetred1", "green3", "cornflowerblue", "cyan", "white")
 pie.sales <- sort(pie.sales, decreasing = TRUE) # 排序有助于可读性
 pie(pie.sales, col = pie.col)
@@ -1391,7 +1394,8 @@ usage(heatmap)
 ```{r heatmap,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-heatmap)",fig.scap="(ref:fig-heatmap-s)"}
 # 用极端化调色板
 library(RColorBrewer)
-heatmap(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"), scale = "column", margins = c(4, 8))
+heatmap(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"), 
+        scale = "column", margins = c(4, 8))
 ```
 
 图 \@ref(fig:heatmap) 展示了 Motor Trend 杂志 1974 年汽车数据的热图。在图 \@ref(fig:stars) 中我们曾经部分使用过这批数据并说明了变量的含义，读者可以对比该图，看用颜色和用星形哪种方式表达数值大小更易感知。在汽车数据热图 \@ref(fig:heatmap) 中，我们使用了极端化调色板，用以强调极端值（回顾 \@ref(sec:palette) 小节），所以很容易观察到各项较大或较小的汽车性能指标，如马力最大的是 Maserati Bora。从行的聚类来说，可以看到同一品牌的不同型号容易聚在一起，如 Mazda 的两款车，通过颜色的比较，我们又可以看出聚在一类的车中，差异在哪个或哪些指标上；从列的聚类来说，马力 `hp` 和气缸排量 `disp` 两个变量比较相似，聚为了一类，而且它们最后才和其它指标聚成一类，说明这两个指标和其它指标的差异较大，可以想象，如果做主成分分析，这两个指标也许可以提取一个成分。注意图中的数据是对列进行过标准化的，如果不做标准化，那么聚类结果就容易被数量级大的变量主导，导致产生一些误解。
