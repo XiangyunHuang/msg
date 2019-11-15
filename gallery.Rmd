@@ -511,19 +511,19 @@ usage(contourLines)
 par(mar = c(4, 4, 0.2, 0.2))
 demo("contourPop", package = "MSG")
 
-est_tidy <- data.frame(
-  life = rep(est$x1, length(est$x2)),
-  edu = rep(est$x2, each = length(est$x1)),
-  z = as.vector(est$fhat)
-)
-levels <- pretty(range(est_tidy$z, finite = TRUE), 15)
-ggplot(est_tidy, aes(life, edu)) +
-  geom_contour(aes(z = z), breaks = levels, colour = "darkgreen") +
-  geom_point(aes(Life.Expectancy, High.Edu.NO), data = x) +
-  scale_y_continuous(labels = c("", 0, 2000, "", 6000, "")) +
-  scale_x_continuous(breaks = seq(65, 80, 5)) +
-  labs(x ="\u9884\u671F\u5BFF\u547D", y = "\u9AD8\u5B66\u5386\u4EBA\u6570") +
-  theme_bw()
+# est_tidy <- data.frame(
+#   life = rep(est$x1, length(est$x2)),
+#   edu = rep(est$x2, each = length(est$x1)),
+#   z = as.vector(est$fhat)
+# )
+# levels <- pretty(range(est_tidy$z, finite = TRUE), 15)
+# ggplot(est_tidy, aes(life, edu)) +
+#   geom_contour(aes(z = z), breaks = levels, colour = "darkgreen") +
+#   geom_point(aes(Life.Expectancy, High.Edu.NO), data = x) +
+#   scale_y_continuous(labels = c("", 0, 2000, "", 6000, "")) +
+#   scale_x_continuous(breaks = seq(65, 80, 5)) +
+#   labs(x ="预期寿命", y = "高学历人数") +
+#   theme_bw()
 ```
 
 图 \@ref(fig:contour-pop)
