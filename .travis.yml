@@ -52,7 +52,7 @@ addons:
 
 before_script:
   - mkdir -p ~/.R ~/.fonts
-  - curl -fLo /tmp/tinytex.tar.gz https://travis-bin.yihui.name/tinytex.tar.gz
+  - curl -fLo /tmp/tinytex.tar.gz https://travis-bin.yihui.org/tinytex.tar.gz
   - tar -xzf /tmp/tinytex.tar.gz -C $HOME
   - export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH
   - tlmgr update --self --all  
