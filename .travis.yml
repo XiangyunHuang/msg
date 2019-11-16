@@ -1,6 +1,6 @@
 language: r
 r: 
- - 3.6.1
+# - 3.6.1
  - devel
 dist: xenial
 services:
