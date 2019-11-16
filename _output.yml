@@ -16,6 +16,7 @@ bookdown::gitbook:
       facebook: no
       twitter: no
       all: []
+  md_extensions: "+ascii_identifiers"
   includes:
     in_header: includes/header.html
     after_body:
