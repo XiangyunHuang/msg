@@ -46,7 +46,7 @@ url: 'https\://bookdown.org/xiangyun/msg/'
 lapply(c(
   "alphahull", "animation", "aplpack", "bookdown",
   "corrplot", "cowplot", "formatR", "fun",
-  "GGally", "ggplot2", "igraph", "latex2exp",
+  "GGally", "ggplot2", "igraph", 
   "magick", "maps", "maptools", "MSG", "mvtnorm",
   "pdftools", "plot3D", "plotrix",
   "randomForest", "rgeos", "rggobi", "rgl",
