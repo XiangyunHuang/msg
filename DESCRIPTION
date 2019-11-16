@@ -22,7 +22,6 @@ Imports:
     heatmaply,
     igraph,
     iplots,
-    latex2exp,
     leaflet,
     magick,
     maps,
@@ -52,5 +51,5 @@ Imports:
     tuneR,
     vcd,
     vioplot
-Remotes: yihui/fun, thomasp85/gganimate
+Remotes: yihui/fun, thomasp85/gganimate, yihui/MSG
 BugReports: https://github.com/XiangyunHuang/MSG-Book/issues
