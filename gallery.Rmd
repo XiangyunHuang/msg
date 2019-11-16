@@ -252,28 +252,28 @@ barplot(death,
   col = brewer.pal(4, "Set1"), beside = TRUE,
   legend.text = TRUE
 )
-library(tidyverse)
-death_tidy <- death %>% 
-  as.data.frame() %>% 
-  rownames_to_column(var = "population_group") %>% 
-  pivot_longer(cols = -population_group, names_to = "age", values_to = "count") %>% 
-  mutate(
-    age = fct_inorder(factor(age)),
-    population_group = factor(
-      population_group, 
-      levels = c("Rural Male", "Rural Female", "Urban Male", "Urban Female")
-    )
-  )
-p <- ggplot(death_tidy, aes(age, count, fill = population_group)) +
-  scale_fill_brewer(palette = "Set1") +
-  labs(x = NULL, y = NULL, fill = NULL)
-p1 <- p + 
-  geom_bar(stat = "identity", position = position_stack(reverse = TRUE), color = "black") +
-  theme(legend.position = "none")
-p2 <- p + 
-  geom_bar(stat = "identity", position = "dodge", color = "black") +
-  theme(legend.position = c(1,1), legend.justification = c(1, 1))
-plot_grid(p1, p2, ncol = 1)
+# library(tidyverse)
+# death_tidy <- death %>% 
+#   as.data.frame() %>% 
+#   rownames_to_column(var = "population_group") %>% 
+#   pivot_longer(cols = -population_group, names_to = "age", values_to = "count") %>% 
+#   mutate(
+#     age = fct_inorder(factor(age)),
+#     population_group = factor(
+#       population_group, 
+#       levels = c("Rural Male", "Rural Female", "Urban Male", "Urban Female")
+#     )
+#   )
+# p <- ggplot(death_tidy, aes(age, count, fill = population_group)) +
+#   scale_fill_brewer(palette = "Set1") +
+#   labs(x = NULL, y = NULL, fill = NULL)
+# p1 <- p + 
+#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE), color = "black") +
+#   theme(legend.position = "none")
+# p2 <- p + 
+#   geom_bar(stat = "identity", position = "dodge", color = "black") +
+#   theme(legend.position = c(1,1), legend.justification = c(1, 1))
+# plot_grid(p1, p2, ncol = 1)
 ```
 
 如同前面 \@ref(sec:begin) 节中曾经提到的，条形图目前是各种统计图形中应用最广泛的，但条形图所能展示的统计量比较贫乏：它只能以矩形条的长度展示原始数值，对数据没有任何概括或推断。
@@ -322,8 +322,8 @@ p <- ggplot(BinormCircle, aes(V1, V2)) +
     plot.background = element_rect(linetype = "solid",color = "black")
   )
 p1 <- p + geom_point(color = rgb(1, 0, 0))
-p2 <- p +  geom_point(color = rgb(1, 0, 0), alpha = 0.01)
-cowplot::plot_grid(p1, p2, ncol = 2)
+p2 <- p + geom_point(color = rgb(1, 0, 0), alpha = 0.01)
+plot_grid(p1, p2, ncol = 2)
 ```
 
 图 \@ref(fig:scatter-alpha)
@@ -468,10 +468,9 @@ text(rep(x, 3), rep(y, each = 4), paste("z =", z), cex = 1.5)
 axis(1, 1:4, paste("x =", x))
 axis(2, 1:3, paste("y =", y))
 
-contour_grid_tidy <- expand.grid(x = x, y = y) %>% 
-  mutate(z = z)
+contour_grid_tidy <- transform(expand.grid(x = x, y = y), z = z)
 contour_grid_polygon <- data.frame(
-  x = c(1, 2, 3, 4, 3, 2), 
+  x = c(1, 2, 3, 4, 3, 2),
   y = c(2, 1, 1, 2, 3, 3)
 )
 ggplot(contour_grid_tidy, aes(x, y)) +
@@ -481,7 +480,6 @@ ggplot(contour_grid_tidy, aes(x, y)) +
   geom_polygon(data = contour_grid_polygon, fill = NA, color = "black", lty = 2) +
   geom_segment(aes(x = 2, y = 2, xend = 3, yend = 2)) +
   theme_bw()
-  
 ```
 
 
@@ -509,21 +507,32 @@ usage(contourLines)
 
 ```{r contour-pop,fig.width=4,fig.height=3,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)",fig.showtext=TRUE,fig.show="hold"}
 par(mar = c(4, 4, 0.2, 0.2))
-demo("contourPop", package = "MSG")
+library(MSG)
+data(ChinaLifeEdu)
+x <- ChinaLifeEdu
+library(KernSmooth)
+est <- bkde2D(x, apply(x, 2, dpik))
+contour(est$x1, est$x2, est$fhat,
+  nlevels = 15, col = "darkgreen",
+  vfont = c("sans serif", "plain"),
+  xlab = "预期寿命",
+  ylab = "高学历人数"
+)
+points(x, pch = 20)
 
-# est_tidy <- data.frame(
-#   life = rep(est$x1, length(est$x2)),
-#   edu = rep(est$x2, each = length(est$x1)),
-#   z = as.vector(est$fhat)
-# )
-# levels <- pretty(range(est_tidy$z, finite = TRUE), 15)
-# ggplot(est_tidy, aes(life, edu)) +
-#   geom_contour(aes(z = z), breaks = levels, colour = "darkgreen") +
-#   geom_point(aes(Life.Expectancy, High.Edu.NO), data = x) +
-#   scale_y_continuous(labels = c("", 0, 2000, "", 6000, "")) +
-#   scale_x_continuous(breaks = seq(65, 80, 5)) +
-#   labs(x ="预期寿命", y = "高学历人数") +
-#   theme_bw()
+
+est_tidy <- data.frame(
+  life = rep(est$x1, length(est$x2)),
+  edu = rep(est$x2, each = length(est$x1)),
+  z = as.vector(est$fhat)
+)
+levels <- pretty(range(est_tidy$z, finite = TRUE), 15)
+
+ggplot(est_tidy, aes(life, edu)) +
+  geom_contour(aes(z = z), breaks = levels, colour = "darkgreen") +
+  geom_point(aes(Life.Expectancy, High.Edu.NO), data = x) +
+  labs(x ="预期寿命", y = "高学历人数") +
+  theme_bw()
 ```
 
 图 \@ref(fig:contour-pop)
@@ -569,7 +578,7 @@ co.intervals(1:10, number = 5, overlap = 0.5)
 
 (ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近。
 
-```{r coplot,fig.width=4.8,fig.height=4, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
+```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
 par(mar = rep(0, 4), mgp = c(2, .5, 0))
 library(maps)
 coplot(lat ~ long | depth,
