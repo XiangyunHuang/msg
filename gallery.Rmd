@@ -252,28 +252,18 @@ barplot(death,
   col = brewer.pal(4, "Set1"), beside = TRUE,
   legend.text = TRUE
 )
-# library(tidyverse)
-# death_tidy <- death %>% 
-#   as.data.frame() %>% 
-#   rownames_to_column(var = "population_group") %>% 
-#   pivot_longer(cols = -population_group, names_to = "age", values_to = "count") %>% 
-#   mutate(
-#     age = fct_inorder(factor(age)),
-#     population_group = factor(
-#       population_group, 
-#       levels = c("Rural Male", "Rural Female", "Urban Male", "Urban Female")
-#     )
-#   )
-# p <- ggplot(death_tidy, aes(age, count, fill = population_group)) +
-#   scale_fill_brewer(palette = "Set1") +
-#   labs(x = NULL, y = NULL, fill = NULL)
-# p1 <- p + 
-#   geom_bar(stat = "identity", position = position_stack(reverse = TRUE), color = "black") +
-#   theme(legend.position = "none")
-# p2 <- p + 
-#   geom_bar(stat = "identity", position = "dodge", color = "black") +
-#   theme(legend.position = c(1,1), legend.justification = c(1, 1))
-# plot_grid(p1, p2, ncol = 1)
+# ggplot2
+reshape_VADeaths <- transform(
+  expand.grid(
+    sex = colnames(VADeaths),
+    age = rownames(VADeaths)
+  ),
+  rates = as.vector(t(VADeaths))
+)
+p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
+p1 <- p + geom_col(position = "stack")
+p2 <- p + geom_col(position = "dodge")
+plot_grid(p1, p2, ncol = 1)
 ```
 
 如同前面 \@ref(sec:begin) 节中曾经提到的，条形图目前是各种统计图形中应用最广泛的，但条形图所能展示的统计量比较贫乏：它只能以矩形条的长度展示原始数值，对数据没有任何概括或推断。
