@@ -47,7 +47,6 @@ Imports:
     sp,
     svglite,
     TeachingDemos,
-    tidyverse,
     tikzDevice,
     transformr,
     tuneR,
