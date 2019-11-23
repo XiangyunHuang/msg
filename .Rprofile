@@ -10,6 +10,7 @@ options(
   width = 79,
   demo.ask = FALSE,
   formatR.indent = 2,
+  gganimate.nframes = 100,
   str = utils::strOptions(strict.width = "cut"),
   tikzDefaultEngine = "xetex",
   tikzMetricsDictionary = "tikzMetricsCache",
