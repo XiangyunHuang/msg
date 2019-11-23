@@ -928,7 +928,7 @@ for (i in 1:2) {
 
 上面那个例子是用 Base R 生成基本图形，下面这个例子将使用 ggplot2 生成的图形，并结合 gganimate 制作动画 <https://github.com/thomasp85/gganimate>
 
-```{r, animation.hook="gifski", dev='png', message=FALSE}
+```{r, fig.show='animate', message=FALSE, interval=1/10,eval=is_latex}
 library(ggplot2)
 library(gganimate)
 ggplot(mtcars, aes(factor(cyl), mpg)) + 
