@@ -943,7 +943,7 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
   exit_shrink() +
   ease_aes('sine-in-out')
 ```
-```{r, dev='png',eval=is_html, ref.label="mtcars-animate"}
+```{r, dev='png',eval=is_html, ref.label="mtcars-animate",echo=FALSE}
 ```
 
 ### 动画导出工具
