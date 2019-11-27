@@ -1506,7 +1506,7 @@ QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它�
 
 (ref:fig-survival) 急性髓细胞白血病病人生存函数图
 
-```{r survival,fig.width=4.8,fig.height=3.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)"}
+```{r survival,fig.width=4.8,fig.height=3.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
 library(survival)
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 plot(leukemia.surv, lty = 1:2, xlab = "time")
