@@ -18,7 +18,6 @@ Imports:
     ggplot2,
     ggpointdensity,
     gifski,
-    gWidgetsRGtk2,
     heatmaply,
     igraph,
     iplots,
