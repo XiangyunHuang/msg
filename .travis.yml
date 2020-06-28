@@ -11,7 +11,7 @@ cache:
     - $HOME/.npm
     
 latex: false
-pandoc_version: 2.7.2
+pandoc_version: 2.7.3
 
 env:
   global:
@@ -52,9 +52,8 @@ addons:
 
 before_script:
   - mkdir -p ~/.R ~/.fonts
-  - curl -fLo /tmp/tinytex.tar.gz https://travis-bin.yihui.org/tinytex.tar.gz
-  - tar -xzf /tmp/tinytex.tar.gz -C $HOME
-  - export PATH=$HOME/.TinyTeX/bin/x86_64-linux:$PATH
+  - Rscript -e 'install.packages("tinytex"); tinytex:::install_prebuilt(); tinytex::tinytex_root()'
+  - export PATH=$HOME/bin:$PATH
   - tlmgr update --self --all  
   - tlmgr install ctex xecjk mdwtools zhnumber ulem ms xcolor unicode-math filehook lm-math
       subfig sourcecodepro sourceserifpro sourcesanspro cancel titlepic pgf preview psnfss
