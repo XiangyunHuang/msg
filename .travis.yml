@@ -1,7 +1,6 @@
 language: r
 r: 
-# - 3.6.1
- - devel
+ - 4.0.0
 dist: xenial
 services:
   - xvfb
