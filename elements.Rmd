@@ -215,7 +215,7 @@ legend("topleft",
 )
 ```
 
-图 \@ref(fig:point-random) 为本书的一例“彩蛋”：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果参见：<https://yihui.name/cn/2010/08/art-of-points-in-r/>，或观看演示 `demo('pointArts', package = 'MSG')`。若读者感兴趣，甚至可以用 R 为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。
+图 \@ref(fig:point-random) 为本书的一例“彩蛋”：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果参见：<https://yihui.org/cn/2010/08/art-of-points-in-r/>，或观看演示 `demo('pointArts', package = 'MSG')`。若读者感兴趣，甚至可以用 R 为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。
 
 ```{r point-random,fig.scap="(ref:point-random-s)",fig.cap="(ref:point-random)"}
 par(mar = c(0.2, 0.2, 0.2, 0.2), mfrow = c(2, 2))
