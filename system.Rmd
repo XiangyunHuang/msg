@@ -641,6 +641,21 @@ library(plotly, warn.conflicts = FALSE)
 
 [plotly](https://plotly-r.com) 类似 ggplot2 提供了各种交互图形的绘制函数，其中 `plot_ly` 函数提供了两种风格的绘图方式，一种是 Base R， 另一种是 ggplot2，我们主要考虑使用 ggplot2 这种风格的，基于图层的方式
 
+### plotly with ggplot {#subsec:plotly-ggplotly}
+
+如果你对plotly不熟悉，但是你对ggplot2比较熟悉，那么恭喜你：plotly包中，函数 `ggplotly` 可以直接将 ggplot2 对象转化为 plotly 对象。这意味着你不需要学习plotly相关的技能，即可通过简单的一个函数，基于ggplot2制作交互图形。
+
+```{r,eval=FALSE}
+g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
+  xlim(1, 6) + ylim(40, 100)
+g
+gg <- ggplotly(g)
+```
+```{r faithful,fig.cap="交互式图形",out.extra = ifelse(is_latex,'','data-url="interactives/faithful.html"'),echo=FALSE}
+knitr::include_graphics(path = "interactives/faithful.svg")
+```
+
 ### 直方图 {#subsec:plotly-histogram}
 
 ```{r,eval=FALSE}
@@ -767,21 +782,6 @@ map_data("world", "china") %>%
 # plotly::orca(m, file = "plotly-china-map.svg")
 # plotly::orca(m, file = "plotly-china-map.pdf")
 knitr::include_graphics(path = "interactives/plotly-china-map.svg")
-```
-
-### ggplotly {#subsec:plotly-ggplotly}
-
-函数 `ggplotly` 可以直接将 ggplot2 对象转化为 plotly 对象
-
-```{r,eval=FALSE}
-g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
-  xlim(1, 6) + ylim(40, 100)
-g
-gg <- ggplotly(g)
-```
-```{r faithful,fig.cap="交互式图形",out.extra = ifelse(is_latex,'','data-url="interactives/faithful.html"'),echo=FALSE}
-knitr::include_graphics(path = "interactives/faithful.svg")
 ```
 
 ### 导出图形 {#subsec:plotly-output}
