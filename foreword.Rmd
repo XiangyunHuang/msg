@@ -1,12 +1,6 @@
 \mainmatter
 
-# 序言 {#forword .unnumbered}
-
-## 代序一 {#forword-one .unnumbered}
-
-## 代序二 {#forword-two .unnumbered}
-
-## 作者导读 {#audience-guide .unnumbered}
+# 自序 {#forword .unnumbered}
 
 我们常说一图胜千言，然而现实情况是我们了解的图形种类太少、使用的作图工具缺乏灵活性，这在很大程度上制约了统计图形的发展，使得统计图形在数据分析中应有的潜力没有被充分挖掘出来，正是这样的背景催生了本书的写作。
 
@@ -54,6 +48,16 @@ summary(fit <- lm(counts ~ altitude, data = PlantCounts))
 正文中的代码以等宽正体表示，如 `inline R code`，函数名称以斜体表示，如 `function()`，对象类名称和参数名称用无衬线字体表示，如 `class using sans serif`，R 程序包用粗体表示，如 **package**。
 
 本书以 LaTeX 结合 R （Sweave，参见 @Leisch02 ）写成，所有图形均为 R 代码动态生成，因此整本书稿具有可重复性（reproducible），读者可从网上下载书稿源代码并配合适当的工具编译生成本书稿。本书的大部分图形都直接附带有源代码，少数图形的源代码被放在 **MSG** 包的演示中，当代码为 `demo('topic', package = 'MSG')` 形式时，读者在 R 中运行这句代码就可以看到源代码和相应的图形输出。当我们介绍一个函数的用法时，通常会使用一个 `usage()` 函数，它在 R 包 **formatR** 中。
+
+`r if (!knitr::is_latex_output()) '<!--'` 
+
+本书写作过程中收到了不少读者反馈，在此一并致谢。感谢魏太云、Dazhi Jiang 和郑冰对本书文字的校对和建议；感谢赵彦云老师对本书书名和写作风格的建议；感谢李皞对写 lattice 系统和 **rgl** 包的提议；感谢李丰的彩蛋建议；感谢王晓伟、李承文、FreemanZY、agri521、annidy、Zhanwu Dai 耗费眼神帮我挑选了本书第一例彩蛋（图 \@ref(fig:point-random)）；感谢殷腾飞增加动态图形系统 GGobi 的建议；感谢方莹提供第 \@ref(chap:data) 章的一些数据指引；本书部分小节的初稿内容来自一些朋友：王晓伟提供了 lattice 一节的初稿，邱怡轩提供 grid 和 rgl 两节的初稿，魏太云提供了《统计词话》的初稿，肖楠提供了 RgoogleMaps 一节的初稿。本书在修订过程中收到来自[张列弛](https://www.liechi.org)、[Song Li](https://github.com/boltomli)、 [JackieMe](https://github.com/JackieMium) 、 [yang](https://github.com/yiluheihei) 的贡献，在此表示感谢，我们欢迎更多的人参与到本书未来的修订工作中来。
+
+最后，我要感谢我的父母和亲人们在 2008 年以来每个长假给我提供绝佳的写作环境，让我心无旁骛地写书；感谢吴喜之老师将 R 这套工具引入中国人民大学统计学院的课堂，以及王星老师在统计计算和非参数统计课堂上对 R 的介绍，没有他们的努力，我也许不会踏进 R 的大门；感谢我的硕士导师赵彦云老师在我的本硕学习期间给我的各种指导；感谢“统计之都”网站的会员们在 [COS 论坛](https://d.cosx.org/) 上 S-Plus
+\& R 版块和我的交流，他们的问题也使我意识到了图形知识的需求；感谢周筠老师和卢鸫翔编辑以及出版团队；感谢本书写作期间所有给我提供过帮助的人们。
+
+`r if (!knitr::is_latex_output()) '-->'`
+
 
 顾炎武在《日知录》中引用过《易经》中的一句话：“形而上者谓之道，形而下者谓之器。”对本书来讲，统计作图的（计算机）技术本身即为“器”，而数据处理以及统计图形的灵活应用则为“道”。本书的写作目的正是希望能够基于“器”的练习和启发，让读者在统计数据处理和分析中真正得“道”，使统计图形在数据的探索分析中发挥福尔摩斯探案般的功效。
 
