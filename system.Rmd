@@ -660,14 +660,16 @@ s <- subplot(
   nrows = 4, shareX = TRUE
 )
 ```
-```{r plotly-histogram,echo=FALSE,fig.cap="直方图",out.extra = ifelse(is_latex,'','data-url="interactives/plotly-histogram.html"')}
+
+
+```{r plotly-histogram,echo=FALSE,fig.cap="直方图"}
 # htmlwidgets::saveWidget(s, "plotly-histogram.html",
 #   title = "histogram with plotly",
 #   selfcontained = F, libdir = "lib"
 # )
 # plotly::orca(s, file = "plotly-histogram.svg")
 # plotly::orca(s, file = "plotly-histogram.pdf")
-knitr::include_graphics(path = "interactives/plotly-histogram.svg")
+knitr::include_graphics(path = "interactives/plotly-histogram.pdf")
 ```
 
 
@@ -692,14 +694,14 @@ d3 <- subplot(
   nrows = 1, shareY = TRUE
 )
 ```
-```{r plotly-heatmap-contour,fig.cap="交互式密度图",out.extra = ifelse(is_latex,'','data-url="interactives/plotly-heatmap-contour.html"'),echo=FALSE}
+```{r plotly-heatmap-contour,fig.cap="交互式密度图",echo=FALSE}
 # htmlwidgets::saveWidget(d3, "plotly-heatmap-contour.html",
 #   title = "heatmap and contour Based on plotly",
 #   selfcontained = F, libdir = "lib"
 # )
 # plotly::orca(d3, file = "plotly-heatmap-contour.svg")
 # plotly::orca(d3, file = "plotly-heatmap-contour.pdf", width = 800, height = 400)
-knitr::include_graphics(path = "interactives/plotly-heatmap-contour.svg")
+knitr::include_graphics(path = "interactives/plotly-heatmap-contour.pdf")
 ```
 
 ### 热图 {#subsec:plotly-heatmap}
@@ -710,8 +712,9 @@ knitr::include_graphics(path = "interactives/plotly-heatmap-contour.svg")
 library(heatmaply)
 heatmaply(mtcars, k_row = 3, k_col = 2)
 ```
-```{r heatmaply,fig.cap="交互式热图",out.extra = ifelse(is_latex,'','data-url="interactives/heatmaply.html"'),echo=FALSE}
-knitr::include_graphics(path = "interactives/heatmaply.svg")
+
+```{r heatmaply,fig.cap="交互式热图", echo=FALSE}
+knitr::include_graphics(path = "interactives/heatmaply.pdf")
 ```
 
 函数 heatmaply 支持保存为 HTML、PDF、PNG 和 JPEG 格式
@@ -759,14 +762,14 @@ map_data("world", "china") %>%
   plot_geo(x = ~long, y = ~lat) %>%
   add_markers(size = I(1))
 ```
-```{r plotly-china-map,fig.cap="交互式地图",out.extra = ifelse(is_latex,'','data-url="interactives/plotly-china-map.html"'),echo=FALSE}
+```{r plotly-china-map,fig.cap="交互式地图"}
 # htmlwidgets::saveWidget(m, "plotly-china-map.html",
 #   title = "China map Based on plotly",
 #   selfcontained = F, libdir = "lib"
 # )
 # plotly::orca(m, file = "plotly-china-map.svg")
 # plotly::orca(m, file = "plotly-china-map.pdf")
-knitr::include_graphics(path = "interactives/plotly-china-map.svg")
+knitr::include_graphics(path = "interactives/plotly-china-map.pdf")
 ```
 
 ### ggplotly {#subsec:plotly-ggplotly}
@@ -780,8 +783,8 @@ g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
 g
 gg <- ggplotly(g)
 ```
-```{r faithful,fig.cap="交互式图形",out.extra = ifelse(is_latex,'','data-url="interactives/faithful.html"'),echo=FALSE}
-knitr::include_graphics(path = "interactives/faithful.svg")
+```{r faithful,fig.cap="交互式图形",echo=FALSE}
+knitr::include_graphics(path = "interactives/faithful.pdf")
 ```
 
 ### 导出图形 {#subsec:plotly-output}
@@ -827,7 +830,8 @@ plot3d(x, y, z,
 ind <- c(5, 1, 5, 2, 5, 3, 5, 4)
 lines3d(x[ind], y[ind], z[ind], lwd = 2)
 ```
-```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE,out.extra = ifelse(is_latex,'','data-url="interactives/rgl-ch4.html"')}
+
+```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE}
 knitr::include_graphics(path = "images/rgl-ch4.png", dpi = NA)
 ```
 
@@ -844,7 +848,7 @@ x <- y <- seq(1, 5, .1)
 m <- outer(x, y, function(a, b) beta(a, b))
 persp3d(x, y, m, col = "green3", zlab = "Beta(x, y)")
 ```
-```{r rgl-beta,fig.scap="(ref:rgl-beta-s)",fig.cap="(ref:rgl-beta)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-beta.html"'),echo=FALSE}
+```{r rgl-beta,fig.scap="(ref:rgl-beta-s)",fig.cap="(ref:rgl-beta)",echo=FALSE}
 knitr::include_graphics(path = "images/rgl-beta.png", dpi = NA)
 ```
 
@@ -865,7 +869,7 @@ persp3d(x, y, z,
   col = "green", aspect = "iso", axes = FALSE, box = FALSE
 )
 ```
-```{r rgl-china-map,fig.scap="(ref:rgl-china-map-s)",fig.cap="(ref:rgl-china-map)",out.extra = ifelse(is_latex,'','data-url="interactives/rgl-china-map.html"'),echo=FALSE}
+```{r rgl-china-map,fig.scap="(ref:rgl-china-map-s)",fig.cap="(ref:rgl-china-map)",echo=FALSE}
 knitr::include_graphics(path = "images/rgl-china-map.png", dpi = NA)
 ```
 
@@ -1057,7 +1061,7 @@ knitr::include_graphics(path = c(
 
 1. **fun** 包 [@fun] 中有一个 3D 版本的“我的中国心”，效果如图 \@ref(fig:China-Heart-3D)；请对照 `demo('ChinaHeart3D', package = 'fun')` 以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入 rgl 三维图形。
 
-    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE,out.extra = ifelse(is_latex,'','data-url="interactives/rgl-china-heart.html"')}
+    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE}
     knitr::include_graphics(path = "images/China-Heart-3D.png", dpi = NA)
     ```
 
