@@ -21,7 +21,7 @@
 1. 数学只是研究统计学的一种角度，它奠定了统计学的理论基础，但这不是统计学的终点或全部；
 
 
-本书的所有图形文件和程序代码可以从 Github 仓库下载（<https://github.com/XiangyunHuang/MSG-Book>），另外本书也配有相应的 R 包 **MSG** [@MSG]， 使用说明参见附录 \@ref(cha:MSG)。阅读本书过程中若有任何疑问请 Email 联系作者：<xie@yihui.name>。
+本书的所有图形文件和程序代码可以从 Github 仓库下载（<https://github.com/XiangyunHuang/MSG-Book>），另外本书也配有相应的 R 包 **MSG** [@MSG]， 使用说明参见附录 \@ref(cha:MSG)。阅读本书过程中若有任何疑问请 Email 联系笔者：<xie@yihui.name>。
 
 关于本书中 R 程序代码，记号说明如下：
 

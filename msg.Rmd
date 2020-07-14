@@ -5,13 +5,13 @@ library(MSG)
 library(RColorBrewer)
 ```
 
-为了配合本书的写作，作者特意编写了一个 R 包名为 **MSG**（Modern Statistical Graphics 的缩写），该包目前已经发布到 CRAN，所以读者可以用以下方式直接安装：
+为了配合本书的写作，笔者特意编写了一个 R 包名为 **MSG**（Modern Statistical Graphics 的缩写），该包目前已经发布到 CRAN，所以读者可以用以下方式直接安装：
 
 ```{r install-MSG,eval=FALSE}
 install.packages('MSG')
 ```
 
-也可以从作者开发页面下载（<https://github.com/yihui/MSG>）并自行编译安装。这里简要介绍一下它包含的函数和数据。
+也可以从笔者开发页面下载（<https://github.com/yihui/MSG>）并自行编译安装。这里简要介绍一下它包含的函数和数据。
 
 ## 函数说明 {#sec:MSG-fun}
 
