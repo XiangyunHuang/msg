@@ -34,7 +34,7 @@ set.seed(714)
 sample(colors(), 20)
 ```
 
-有兴趣观看所有 657 种颜色的读者可以试着运行下面的语句，其中 `pdf()` 函数的作用是打开一个作图设备，详情参见附录 \@ref(sec:device) 节，可以把参数 `'colors-bar.pdf'` 替换为任意一个可以读写的路径 [^windows-path]，条形图 `barplot()` 的说明参见 \@ref(sec:barplot) 小节。最后结果是在设定文件路径上获得一个 PDF 文件，展示所有颜色名称及其对应的颜色。
+有兴趣观看所有 657 种颜色的读者可以试着运行下面的语句，其中 `pdf()` 函数的作用是打开一个作图设备，详情参见附录 \@ref(sec:device) 节，可以把参数 `'colors-bar.pdf'` 替换为任意一个可以读写的路径[^windows-path]，条形图 `barplot()` 的说明参见 \@ref(sec:barplot) 小节。最后结果是在设定文件路径上获得一个 PDF 文件，展示所有颜色名称及其对应的颜色。
 
 [^windows-path]: Windows 用户注意路径的写法，不能用通常的单反斜杠 \\，而应该把路径中的单反斜杠换成双反斜杠 \\\\ 或者用单斜杠 \/；如 `D:/colors.pdf` 或 `D:\\colors.pdf`
 

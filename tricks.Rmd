@@ -291,7 +291,7 @@ R 中最普通的作图函数就是 `plot()` 函数。它是一个泛型函数�
 先介绍 `plot()` 的通用参数：
 
 `type`
-: 图形样式类型，有九种可能的取值，分别代表不同的样式：`'p'`$\Rightarrow$ 画点；`'l'`$\Rightarrow$ 画线 [^line-type]；`'b'`$\Rightarrow$ 同时画点和线，但点线不相交；`'c'`$\Rightarrow$ 将 `type = 'b'` 中的点去掉，只剩下相应的线条部分；`'o'`$\Rightarrow$ 同时画点和线， 且相互重叠，这是它与 `type = 'b'` 的区别；`'h'`$\Rightarrow$ 画铅垂线；`'s'`$\Rightarrow$ 画阶梯线，从一点到下一点时，先画水平线，再画垂直线；`'S'`$\Rightarrow$ 也是画阶梯线，但从一点到下一点是先画垂直线，再画水平线；`'n'`$\Rightarrow$ 作一幅空图，没有任何内容，但坐标轴、标题等其它元素都照样显示（除非用别的设置特意隐藏了）。图 \@ref(fig:plot-type) 的九幅图清楚说明了这九种类型
+: 图形样式类型，有九种可能的取值，分别代表不同的样式：`'p'`$\Rightarrow$ 画点；`'l'`$\Rightarrow$ 画线[^line-type]；`'b'`$\Rightarrow$ 同时画点和线，但点线不相交；`'c'`$\Rightarrow$ 将 `type = 'b'` 中的点去掉，只剩下相应的线条部分；`'o'`$\Rightarrow$ 同时画点和线， 且相互重叠，这是它与 `type = 'b'` 的区别；`'h'`$\Rightarrow$ 画铅垂线；`'s'`$\Rightarrow$ 画阶梯线，从一点到下一点时，先画水平线，再画垂直线；`'S'`$\Rightarrow$ 也是画阶梯线，但从一点到下一点是先画垂直线，再画水平线；`'n'`$\Rightarrow$ 作一幅空图，没有任何内容，但坐标轴、标题等其它元素都照样显示（除非用别的设置特意隐藏了）。图 \@ref(fig:plot-type) 的九幅图清楚说明了这九种类型
 
 `main`
 : 主标题；也可以在作图之后用数 `title()` 添加上，参见 \@ref(sec:text) 节 
