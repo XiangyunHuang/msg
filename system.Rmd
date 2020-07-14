@@ -993,7 +993,7 @@ usage(saveSWF)
 usage(saveVideo)
 ```
 
-所有函数的第一个参数都是 `expr`，它通常是一段用大括号括起来的 R 代码。下面的代码是一个导出布朗运动动画为 HTML 页面的例子，其中 `img.name` 设定了图片的基础文件名，即所有图片将以 bm-plot1、bm-plot2、……、bm-plot50 依次命名（扩展名默认为 `.png`），`title` 指定了 HTML 页面的标题，`description` 是对动画的一个描述，将会被以 R 注释的形式写入 HTML 页面，`ani.height` 和 `ani.width` 分别设定动画的高度和宽度，单位默认为像素。这段代码生成的结果如图 \@ref(fig:html-interface) 所示。
+所有函数的第一个参数都是 `expr`，它通常是一段用花括号括起来的 R 代码。下面的代码是一个导出布朗运动动画为 HTML 页面的例子，其中 `img.name` 设定了图片的基础文件名，即所有图片将以 bm-plot1、bm-plot2、……、bm-plot50 依次命名（扩展名默认为 `.png`），`title` 指定了 HTML 页面的标题，`description` 是对动画的一个描述，将会被以 R 注释的形式写入 HTML 页面，`ani.height` 和 `ani.width` 分别设定动画的高度和宽度，单位默认为像素。这段代码生成的结果如图 \@ref(fig:html-interface) 所示。
 
 ```{r,eval=FALSE}
 saveHTML({
