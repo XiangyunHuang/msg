@@ -556,7 +556,7 @@ usage(getGraphicsEvent)
 
 ## 图形设备 {#sec:device}
 
-利用 **grDevices** 包中的若干图形设备，我们可以将 R 的图形输出为各种格式的文件，包括位图文件（BMP、JPEG、PNG、TIFF）和矢量图文件（PDF、EPS）以及 TeX 或 LaTeX 文件。本书中除了第 \@ref(cha:history) 章中的历史图形以外，其它大部分图形都是使用 **tikzDevice** 包 [@tikzDevice] 中的 `tikz()` 图形设备生成的（其本质是 LaTeX）。
+利用 **grDevices** 包中的若干图形设备，我们可以将 R 的图形输出为各种格式的文件，包括位图文件（BMP、JPEG、PNG、TIFF）和矢量图文件（PDF、EPS）以及 TeX 或 LaTeX 文件。本书中除了第\@ref(cha:history)章中的历史图形以外，其它大部分图形都是使用 **tikzDevice** 包 [@tikzDevice] 中的 `tikz()` 图形设备生成的（其本质是 LaTeX）。
 
 基本的图形设备函数有位图设备 `bmp()`、`jpeg()`、`png()` 和 `tiff()`，以及矢量图设备 `svg()`、`postscript()` 和 `pdf()`。打开图形设备之后，所有的 R 图形都会被生成在该图形设备中，而不会再在窗口中显示，直到图形设备被关闭。详细信息请读者自行查阅相应的帮助文件。
 
