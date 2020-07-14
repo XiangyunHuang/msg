@@ -89,7 +89,7 @@ plot_grid(p1, p2, p3, p4, labels = c(
 
 (ref:fig-hist-density-s) 直方图与密度曲线的结合
 
-(ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中。
+(ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中
 
 ```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="35%"}
 demo("hist_geyser", package = "MSG")
@@ -133,6 +133,9 @@ head(islands, 10)
 
 可以看出，以上数据中最大的数量级为 $10^{4}$，而大部分数据的数量级集中在 $10^{1}$，因此茎上的数量级取作 $10^{3}$ 相对比较合适---更大的数量级会导致茎的节数非常少，对分布的刻画过于粗略；而更小的数量级会导致节数过多，使得茎叶图几乎退化为数据的原始表示，这样也难以看出数据的集中趋势。下图展示了 48 块大陆块面积的分布，该茎叶图窗宽为 $2\times10^{3}$，图中注明了原始数据小数点位置在 `|` 后面三位数处，因此我们从图中“还原”原始数据时，需要用（“茎的区间‘+’叶”）$\times10^{3}$。
 
+(ref:fig-stem-islands) 本图展示了世界上主要的 48 块大陆面积的分布状况，可以明显看出，这些面积数据是严重右偏的，意即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小
+
+(ref:fig-stem-islands-s) 世界各地大陆块面积茎叶图 
 
 ```{r stem-islands, fig.cap="(ref:fig-stem-islands)", fig.scap="(ref:fig-stem-islands-s)"}
 stem(islands)
@@ -153,6 +156,11 @@ unname(sort(round(islands / 1000, 1)))
 
 
 下图是利用泊松分布（$\lambda=10$）随机数生成的茎叶图，可以看出数据密度在 10 附近最高，这与理论相符。由于窗宽为 1，不存在舍入问题，所以图形可以还原到原始数据，请读者自行对应数据观察茎叶图。
+
+(ref:fig-stem-poisson) $\lambda = 10$ 的泊松分布随机数茎叶图：可以看出数据密度在 10 附近最高，这与
+理论相符。注意这幅图可以完全还原到原始数据
+
+(ref:fig-stem-poisson-s) 泊松分布随机数茎叶图
 
 ```{r stem-poisson, fig.cap="(ref:fig-stem-poisson)", fig.scap="(ref:fig-stem-poisson-s)"}
 # 均值 lambda 为 10 的泊松分布随机数
@@ -184,7 +192,7 @@ Range，简称 $\text{IQR}\equiv Q_3-Q_1$）的倍数，超过这个范围的数
 
 (ref:fig-insects-boxplot-s) 各种杀虫剂下昆虫数目的箱线图
 
-(ref:fig-insects-boxplot) 昆虫数目箱线图：六种杀虫剂下昆虫的数目分布。
+(ref:fig-insects-boxplot) 昆虫数目箱线图：六种杀虫剂下昆虫的数目分布
 
 ```{r insects-boxplot, fig.width=3.6, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1}
 boxplot(count ~ spray, data = InsectSprays,
@@ -213,7 +221,7 @@ summary(insects.aov)
 
 (ref:fig-rnorm-boxplot-s) 箱线图的凹槽与统计推断
 
-(ref:fig-rnorm-boxplot) 箱线图的凹槽与统计推断：从凹槽不交叠的情况来看，两样本中位数有显著差异。
+(ref:fig-rnorm-boxplot) 箱线图的凹槽与统计推断：从凹槽不交叠的情况来看，两样本中位数有显著差异
 
 ```{r rnorm-boxplot,fig.width=4.8,fig.height=2.4, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)", fig.ncol=1, fig.show='hold'}
 x <- rnorm(150)
@@ -299,7 +307,7 @@ usage(plot.default)
 
 (ref:fig-scatter-alpha-s) 半透明散点图中的规律
 
-(ref:fig-scatter-alpha) 半透明散点图中的规律：左图是一幅普通的散点图，图中几乎看不出数据有任何异常特征；右图中对点使用了透明度为 0.01 的红色，图中立即显示出一个深色的圆圈，表明该圆圈上集中了大量数据点。
+(ref:fig-scatter-alpha) 半透明散点图中的规律：左图是一幅普通的散点图，图中几乎看不出数据有任何异常特征；右图中对点使用了透明度为 0.01 的红色，图中立即显示出一个深色的圆圈，表明该圆圈上集中了大量数据点
 
 ```{r scatter-alpha, fig.width=4,fig.height=2, dev='png', dev.args=list(type = "cairo"), fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha-s)",results='hide', fig.show="hold"}
 demo("alphaDemo", package = "MSG")
@@ -392,7 +400,7 @@ usage(graphics:::cdplot.formula)
 
 (ref:fig-cdplot-s) 航天飞机 O 型环在不同温度下失效的条件密度图
 
-(ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效。
+(ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效
 
 ```{r cdplot,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
 demo("cdplotDemo", package = "MSG")
@@ -494,7 +502,6 @@ usage(contourLines)
 
 (ref:fig-contour-pop) 2005 年中国 31 地区国民预期寿命和高学历人数密度等高图
 
-
 ```{r contour-pop,fig.width=4,fig.height=3,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)",fig.showtext=TRUE,fig.show="hold"}
 par(mar = c(4, 4, 0.2, 0.2))
 library(MSG)
@@ -530,8 +537,7 @@ ggplot(est_tidy, aes(life, edu)) +
 
 (ref:fig-contour-persp-s) 与等高图对应的三维透视图
 
-(ref:fig-contour-persp) 与等高图对应的三维透视图：从右至左依次有三个山峰，尤其是中部山峰最为突出，对照后面 \@ref(sec:symbols) 小节中图 \@ref(fig:symbols-pop) 可知，这三个山峰分别代表东中西的省份。
-
+(ref:fig-contour-persp) 与等高图对应的三维透视图：从右至左依次有三个山峰，尤其是中部山峰最为突出，对照后面 \@ref(sec:symbols) 小节中图 \@ref(fig:symbols-pop) 可知，这三个山峰分别代表东中西的省份
 
 ```{r contour-persp, fig.height=6,fig.width=7,fig.cap="(ref:fig-contour-persp)",fig.scap="(ref:fig-contour-persp-s)"}
 par(mar = rep(0, 4)) # 继续前面的例子
@@ -566,7 +572,7 @@ co.intervals(1:10, number = 5, overlap = 0.5)
 
 (ref:fig-coplot-s) 给定震源深图的地震经纬度条件分割图
 
-(ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近。
+(ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近
 
 ```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
 par(mar = rep(0, 4), mgp = c(2, .5, 0))
@@ -594,7 +600,7 @@ coplot(lat ~ long | depth,
 
 (ref:fig-curve-s) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图
 
-(ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）。
+(ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）
 
 ```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
@@ -778,7 +784,7 @@ round(apply(UCBAdmissions, 3, function(x) chisq.test(x)$p.value), 3)
 
 (ref:fig-mage24-s) 颜色图中色块与数值的对应关系
 
-(ref:fig-mage24) 颜色图中色块与数值的对应关系：矩阵中数值越大，色块越趋近于白色，反之趋近红色。
+(ref:fig-mage24) 颜色图中色块与数值的对应关系：矩阵中数值越大，色块越趋近于白色，反之趋近红色
 
 ```{r image24,fig.width=4,fig.height=1.2,fig.cap="(ref:fig-mage24)",fig.scap="(ref:fig-mage24-s)"}
 par(mar = rep(0, 4))
@@ -801,7 +807,7 @@ usage(image.default)
 
 (ref:fig-image-s) 新西兰 Maunga Whau 火山高度数据颜色图
 
-(ref:fig-image) 新西兰 Maunga Whau 火山高度颜色图：图 \@ref(fig:persp) 提供了真实的火山立体图形；读者可以到作者个人主页下载原图并放大 8 倍以上查看颜色图和颜色等高图的区别：颜色图是用颜色填充方块，而颜色等高图则是用颜色填充等高线之间的区域。
+(ref:fig-image) 新西兰 Maunga Whau 火山高度颜色图：图 \@ref(fig:persp) 提供了真实的火山立体图形；读者可以到作者个人主页下载原图并放大 8 倍以上查看颜色图和颜色等高图的区别：颜色图是用颜色填充方块，而颜色等高图则是用颜色填充等高线之间的区域
 
 ```{r image,fig.height=6,fig.width=6,fig.cap="(ref:fig-image)",fig.scap="(ref:fig-image-s)"}
 par(mar = rep(0, 4), ann = FALSE)
@@ -826,7 +832,7 @@ box()
 
 (ref:fig-matplot-s) 用矩阵图画出的一系列正弦曲线
 
-(ref:fig-matplot) 用矩阵图画出的一系列正弦曲线：每条曲线都有不同的点线样式和颜色。
+(ref:fig-matplot) 用矩阵图画出的一系列正弦曲线：每条曲线都有不同的点线样式和颜色
 
 ```{r matplot,fig.width=4.8,fig.height=3.5,fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
 sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
@@ -951,7 +957,7 @@ panel.hist <- function(x, ...) {
 
 (ref:fig-pairs-s) 鸢尾花数据的散点图矩阵
 
-(ref:fig-pairs) 鸢尾花数据的散点图矩阵：上三角区域为不同样式的点，对应着不同种类的鸢尾花，对角线的直方图展示了花瓣花萼长宽的一维分布，下三角区域用平滑曲线显示了变量之间的关系。
+(ref:fig-pairs) 鸢尾花数据的散点图矩阵：上三角区域为不同样式的点，对应着不同种类的鸢尾花，对角线的直方图展示了花瓣花萼长宽的一维分布，下三角区域用平滑曲线显示了变量之间的关系
 
 ```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
 idx <- as.integer(iris[["Species"]])
@@ -1008,7 +1014,7 @@ usage(graphics:::persp.default)
 
 (ref:fig-persp-add-s) 向三维透视图中添加图形元素的展示
 
-(ref:fig-persp-add) 向三维透视图中添加图形元素的展示：`trans3d()` 函数的应用。
+(ref:fig-persp-add) 向三维透视图中添加图形元素的展示：`trans3d()` 函数的应用
 
 ```{r persp-pop,fig.width=6,fig.height=4,echo=FALSE,fig.cap="(ref:fig-persp-add)",fig.scap="(ref:fig-persp-add-s)"}
 x <- seq(-10, 10, length = 30)
@@ -1059,7 +1065,7 @@ usage(plot.design)
 
 (ref:fig-plot-design-s) 经纱断裂数据的因素效应图
 
-(ref:fig-plot-design) 经纱断裂数据的因素效应图：每种羊毛（A、B）和拉力强度（L、M、H）下断裂数目的均值（上图）和中位数（下图）。
+(ref:fig-plot-design) 经纱断裂数据的因素效应图：每种羊毛（A、B）和拉力强度（L、M、H）下断裂数目的均值（上图）和中位数（下图）
 
 ```{r plot-design,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)"}
 par(mfrow = c(2, 1))
@@ -1125,7 +1131,7 @@ usage(rug)
 
 (ref:fig-smoothScatter-s) BinormCircle 数据的平滑散点图
 
-(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）。
+(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）
 
 ```{r smoothScatter,fig.width=4.5,fig.height=4.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
 par(mar = c(4, 4, 0.3, 0.1))
@@ -1172,7 +1178,7 @@ usage(graphics:::spineplot.formula)
 
 (ref:fig-spineplot-s) 航天飞机 O 型环在不同温度下失效的棘状图
 
-(ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 $(60, 75]$ 区间内。
+(ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 $(60, 75]$ 区间内
 
 ```{r spineplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
 # 数据取自条件密度图一节
@@ -1219,7 +1225,7 @@ head(mtcars[, 1:7])
 
 (ref:fig-stripchart-s) 各种杀虫剂下昆虫数目的带状图
 
-(ref:fig-stripchart) 各种杀虫剂下昆虫数目的带状图：堆砌和随机打乱的带状图。
+(ref:fig-stripchart) 各种杀虫剂下昆虫数目的带状图：堆砌和随机打乱的带状图
 
 ```{r stripchart,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
 layout(matrix(1:2, 2), height = c(1, 1))
@@ -1425,7 +1431,7 @@ usage(interaction.plot)
 
 (ref:fig-interaction-plot-s) 法国食道癌数据的交互效应图
 
-(ref:fig-interaction-plot) 法国食道癌数据的交互效应图：各饮酒组的折线走势大致一样，说明交互作用很微弱。
+(ref:fig-interaction-plot) 法国食道癌数据的交互效应图：各饮酒组的折线走势大致一样，说明交互作用很微弱
 
 ```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)"}
 par(mar = c(4, 4, 0.2, 0.2))
@@ -1479,7 +1485,7 @@ usage(qqline)
 
 (ref:fig-qqnorm-s) 喷泉间隔时间的正态分布 QQ 图
 
-(ref:fig-qqnorm) 喷泉间隔时间的正态分布 QQ 图（左图）及数据密度曲线和实际正态分布密度曲线（右图）。
+(ref:fig-qqnorm) 喷泉间隔时间的正态分布 QQ 图（左图）及数据密度曲线和实际正态分布密度曲线（右图）
 
 ```{r qqnorm,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
 par(mfrow = c(1, 2))
@@ -1631,7 +1637,7 @@ usage(map)
 
 (ref:fig-map-s) 2005 年世界各国农业进出口竞争力地图
 
-(ref:fig-map) 2005 年各国农业进出口竞争力地图：农业出口强国在南美，弱国在北非。
+(ref:fig-map) 2005 年各国农业进出口竞争力地图：农业出口强国在南美，弱国在北非
 
 ```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)",error=TRUE,results='hide'}
 demo("AgriComp", package = "MSG")
@@ -1759,7 +1765,7 @@ usage(ggparcoord)
 
 (ref:fig-ggparcoord-s) 鸢尾花数据的平行坐标图
 
-(ref:fig-ggparcoord) 鸢尾花数据的平行坐标图：花萼长宽和花瓣长宽以及花的种类。
+(ref:fig-ggparcoord) 鸢尾花数据的平行坐标图：花萼长宽和花瓣长宽以及花的种类
 
 ```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)"}
 ggparcoord(iris, columns = 1:4, groupColumn = 5, scale = "uniminmax") + 
@@ -1819,7 +1825,7 @@ usage(andrews_curve)
 
 (ref:fig-andrews-curve-s) 鸢尾花数据和黑莓树数据的调和曲线图
 
-(ref:fig-andrews-curve) 鸢尾花数据和黑莓树数据的调和曲线图：左上为原始鸢尾花数据，右上为调整变量顺序的鸢尾花数据，左下为标准化之后的鸢尾花数据，右下为标准化之后的黑莓树数据调和曲线图。
+(ref:fig-andrews-curve) 鸢尾花数据和黑莓树数据的调和曲线图：左上为原始鸢尾花数据，右上为调整变量顺序的鸢尾花数据，左下为标准化之后的鸢尾花数据，右下为标准化之后的黑莓树数据调和曲线图
 
 ```{r andrews-curve,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)",dev='tikz',fig.showtext=FALSE,fig.process=to_png}
 iris.col <- vec2col(iris$Species)
@@ -1878,7 +1884,7 @@ usage(bagplot)
 
 (ref:fig-bagplot-s) Consumer Reports 中汽车数据的二维箱线图和密度等高图
 
-(ref:fig-bagplot) Consumer Reports 中汽车数据的二维箱线图（左）和二维密度等高图（右）。
+(ref:fig-bagplot) Consumer Reports 中汽车数据的二维箱线图（左）和二维密度等高图（右）
 
 ```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
 # 数据来自 rpart 包中的 car.test.frame
@@ -1925,7 +1931,7 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 (ref:fig-windrose-s) 展示风力大小和频数的风向图
 
-(ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 \%，因此 0 \~ 10 km/h 的东北风的频率大约是 7 \%。无风的频率大约是 8 \%。
+(ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 \%，因此 0 \~ 10 km/h 的东北风的频率大约是 7 \%。无风的频率大约是 8 \%
 
 ```{r windrose,fig.width=5.4,fig.height=4.6,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",small.mar = FALSE}
 library(plotrix) # 直接取自 oz.windrose() 函数的例子
@@ -1951,7 +1957,7 @@ oz.windrose(windagg)
 
 (ref:fig-floating-pie-s) 在同一幅图的多个位置放置饼图
 
-(ref:fig-floating-pie) 在同一幅图的多个位置放置饼图：这是个人造的“质量测试”，颜色深的成份太大会导致饼图“沉下去”。
+(ref:fig-floating-pie) 在同一幅图的多个位置放置饼图：这是个人造的“质量测试”，颜色深的成份太大会导致饼图“沉下去”
 
 ```{r floating-pie,fig.width=4.8,fig.height=3.6,results="hide",fig.cap="(ref:fig-floating-pie)",fig.scap="(ref:fig-floating-pie-s)"}
 demo("float_pie", package = "MSG")
@@ -2015,8 +2021,8 @@ demo("float_pie", package = "MSG")
 
 (ref:fig-disk-usage-s) 系统中 R 附加包文件大小的树图
 
-(ref:fig-disk-usage) 系统中 R 附加包文件大小的树图：在作者的系统中，所有 R 包中最大的是 **mapdata**，其次为 **RGtk2**。
+(ref:fig-disk-usage) 系统中 R 附加包文件大小的树图：在作者的系统中，所有 R 包中最大的是 **mapdata**，其次为 **RGtk2**
 
 (ref:fig-yihui-name-wordle-s) 作者英文博客的标签云
 
-(ref:fig-yihui-name-wordle) 作者英文博客的标签云：animation 和 Sweave 两个词最抢眼。
+(ref:fig-yihui-name-wordle) 作者英文博客的标签云：animation 和 Sweave 两个词最抢眼

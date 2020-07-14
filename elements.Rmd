@@ -2,7 +2,7 @@
 
 > 他从信封里拿出一页四折叠的半张 $13\times17$ 英寸的信纸。他把信纸打开铺在桌上，中间有一行铅字拼贴成的句子： 
 >
-> 若你看重自己生命的价值或还有理性，那就远离沼地。
+>     若你看重自己生命的价值或还有理性，那就远离沼地。
 > 
 > 只有“沼地”两个字是用墨水写的。
 >
@@ -142,7 +142,7 @@ brewer.pal(9, "Blues")
 
 所有调色板名称及其展示参见图 \@ref(fig:ColorBrewer-all)。这些调色板并非一些简单的颜色组合，而是有一定科学根据的。例如离散型调色板下的颜色对大多数人来说都有较好的区分度，甚至色盲也可以辨认其中不同类的颜色。如果用户对颜色选取拿捏不准，不妨用这个包来生成颜色。实际上这个 R 包是一款叫 ColorBrewer 的产品的重新实现，更多信息可以访问网站 <http://colorbrewer2.org/>。
 
-```{r ColorBrewer-all,fig.scap="RColorBrewer 包中所有调色板颜色的演示 ",fig.cap="(ref:ColorBrewer-all)"}
+```{r ColorBrewer-all,fig.scap="(ref:ColorBrewer-all-s)",fig.cap="(ref:ColorBrewer-all)"}
 layout(matrix(1:3, 3), heights = c(2, 1, 1))
 par(mar = c(0, 4, 0, 0))
 display.brewer.all(type = "seq") # 连续型：18 种
@@ -150,12 +150,14 @@ display.brewer.all(type = "div") # 极端化：9 种
 display.brewer.all(type = "qual") # 离散型：8 种
 ```
 
-(ref:ColorBrewer-all) RColorBrewer 包中所有调色板颜色的演示：从上至下依次是连续型、极端化和离散型调色板。
+(ref:ColorBrewer-all) RColorBrewer 包中所有调色板颜色的演示：从上至下依次是连续型、极端化和离散型调色板
+
+(ref:ColorBrewer-all-s) RColorBrewer 包中所有调色板颜色的演示
 
 ### 渐变色的简单原理及应用
 
 
-```{r grad-color,fig.scap="New Haven 地区的年均气温（1912~1971 年）",fig.cap="(ref:grad-color)"}
+```{r grad-color,fig.scap="(ref:grad-color-s)",fig.cap="(ref:grad-color)"}
 xx <- c(1912, 1912:1971, 1971)
 yy <- c(min(nhtemp), nhtemp, min(nhtemp))
 plot(xx, yy, type = "n", xlab = "Year", ylab = "Temperatures")
@@ -167,7 +169,9 @@ for (i in seq(255, 0, -3)) {
 box() # 补齐边框
 ```
 
-(ref:grad-color) New Haven 地区的年均气温（1912~1971 年）：统计图形的应用应该根据数据和事实的环境灵活选取图形的样式。本图的数据为 1912 年至 1971 年 New Haven 地区的年均气温。数据来源：**datasets** 包中的 nhtemp。
+(ref:grad-color) New Haven 地区的年均气温（1912~1971 年）：统计图形的应用应该根据数据和事实的环境灵活选取图形的样式。本图的数据为 1912 年至 1971 年 New Haven 地区的年均气温。数据来源：**datasets** 包中的 nhtemp
+
+(ref:grad-color-s) New Haven 地区的年均气温（1912~1971 年）
 
 在此我们特别用一节来讲述“渐变色”，原因在于在图形中应用渐变色往往能让图形看起来更美观、避免单调的颜色在图形中显得突兀。不难想象，所谓“渐变”，也就是逐渐变化的意思，这种变化必然对应着某种单调或非单调的（可导）函数，这些函数用来控制颜色值逐步变化。最简单的例子莫过于线性函数：从一种颜色值到另一种颜色值线性变化。比如我们在 `rgb()` 函数中用一元线性函数控制绿色在 $[0, 1]$ 上的取值，同时将红色和蓝色分别控制为 1 和 0， 那么我们将得到从纯红色到黄色的一个颜色渐变。如：
 
@@ -196,13 +200,18 @@ demo("pointTypes", package = "MSG")
 
 (ref:point-type-s) 点的类型：`pch` 参数取值从 0 到 25 及其它符号
 
-(ref:point-type) 点的类型：`pch` 参数取值从 1 到 25 及其它符号。注意：21\~25 的点可以填充背景颜色。
+(ref:point-type) 点的类型：`pch` 参数取值从 1 到 25 及其它符号。注意：21\~25 的点可以填充背景颜色
 
 本节不再赘述参数的意思（读者可以自行查阅帮助），但有三点仍需特别说明一下。首先是 `lwd` 参数，我们知道这是设定线条宽度的，对于点来说，这个参数同样可以设置点的边缘“线条”宽度；其次，`pch` 参数同样可以接受字符作为参数值，而不仅仅是数字；最后，参数 `pch` 取值从 21\~25 的点可以填充背景颜色。注意观察，图 \@ref(fig:point-type) 中 21\~25 的点边缘线颜色和背景色是不同的，而在 25 之后的点则采用了文本符号作为参数 `pch` 的值。图 \@ref(fig:point-type) 中也有几对形状一样的点，但是它们实质上是不一样的，例如 0、15 和 22 对应的点都是正方形，但前二者分别是空心正方形和实心正方形，且都不可填充背景，而 22 对应的点是空心正方形，可以填充背景。
 
 一次性作出不同样式的点对于图形阅读和统计分析来说是很有利的，比如有时候我们可以把样本根据某一特征分为几组，对每一组子样本都采用不同的样式作点图，那么我们或许可以从图中点的散布情况发现组间的差异特征。图 \@ref(fig:point-iris) 给出了一个鸢尾花散点图的示例（注意向量的使用），很明显，setosa 这一类花的型号较小，因为它们都处于散点图的左下角。 
 
-```{r point-iris,fig.scap="鸢尾花的花瓣长宽散点图 ",fig.cap="鸢尾花的花瓣长宽散点图：我们可以给每一种鸢尾花标记不同类型的点和颜色，这样可以帮助我们更清楚地区分鸢尾花类型。"}
+
+(ref:point-iris) 鸢尾花的花瓣长宽散点图：我们可以给每一种鸢尾花标记不同类型的点和颜色，这样可以帮助我们更清楚地区分鸢尾花类型
+
+(ref:point-iris-s) 鸢尾花的花瓣长宽散点图
+
+```{r point-iris,fig.scap="(ref:point-iris-s)",fig.cap="(ref:point-iris)"}
 # 先将鸢尾花的类型转化为整数 1、2、3，便于使用向量
 idx <- as.integer(iris[["Species"]])
 plot(iris[, 3:4],
@@ -235,7 +244,7 @@ for (n in c(63, 60, 76, 74)) {
 
 (ref:point-random-s) 点的随机艺术作品
 
-(ref:point-random) 点的随机艺术作品：随机生成点的大小、颜色和位置，分别用空心点和实心点画图。
+(ref:point-random) 点的随机艺术作品：随机生成点的大小、颜色和位置，分别用空心点和实心点画图
 
 ## 曲线、直线、线段、箭头、X-样条 {#sec:lines}
 
@@ -245,7 +254,9 @@ R 中可以实现几乎无数种线条样式，因为它的 `lty` 参数相当�
 
 当设定 `type = 'h'` 时，`col` 参数可以使用向量，此时各条竖线都将使用不同的颜色；除此情况之外，若其它参数使用了向量，那么只有向量的第一个元素会被使用，其它元素都将被忽略掉。
 
-```{r lines-demo,fig.cap=" 曲线、直线、直线段、箭头的展示说明 "}
+(ref:lines-demo) 曲线、直线、直线段、箭头的展示说明
+
+```{r lines-demo,fig.cap="(ref:lines-demo)"}
 # 不作图，只画出框架，且指定坐标轴范围
 plot(1:10, type = "n", xlim = c(0, 10), ylim = c(0, 10))
 lines(1:10, abs(rnorm(10))) # 10 个正态随机数绝对值的波动线
@@ -286,7 +297,7 @@ demo("xsplineDemo", package = "MSG")
 
 (ref:xspline-demo-s) X-样条各种形状的展示
 
-(ref:xspline-demo) X-样条各种形状的展示：观察 `shape` 参数的取值（图中标注的数字）与样条形状的对应关系。
+(ref:xspline-demo) X-样条各种形状的展示：观察 `shape` 参数的取值（图中标注的数字）与样条形状的对应关系
 
 下面我们再介绍一下一种特殊的曲线 --- X-样条（X-spline），样条是用光滑曲线连接若干数据点的曲线，注意它与前面提到的曲线 `lines()` 的区别在于数据点之间的连接线。样条函数用法如下：
 
@@ -323,17 +334,19 @@ abline(h = 0, col = "lightgray") # 添加水平线
 
 (ref:polygon-demo-s) 多边形和矩形结合使用的一个巧妙图示
 
-(ref:polygon-demo) 多边形和矩形结合使用的一个巧妙图示：将 0 上下的数值分别用不同颜色填充。本图也可以利用 `clip()` 函数更方便地完成，请读者自行查阅帮助。
+(ref:polygon-demo) 多边形和矩形结合使用的一个巧妙图示：将 0 上下的数值分别用不同颜色填充。本图也可以利用 `clip()` 函数更方便地完成，请读者自行查阅帮助
 
 最后要说明，其实还有一个特殊的“矩形”，那就是整幅图形的边框，它可以用 `box()` 函数来完成。我们可以不使用任何参数以添加默认的边框，也可以调整一些参数画出不同样式的方框（如虚线框等），具体参见 `?box`。
 
 关于多边形和矩形，我们用一个比较巧妙的例子来说明具体用法，代码和效果参见图 \@ref(fig:polygon-demo)。这幅图的目的在于只填充 y 值在 0 以上的部分，0 以下的部分留空。采取的手段是：先用多边形整体填充颜色，然后根据当前图形的坐标范围（用 `par('usr')` 获得（或者等价使用 `par()$usr`），参见 \@ref(sec:par) 小节）画一个白色的矩形覆盖 0 以下的图形部分，此时下面部分的线条也被覆盖了，因此接着我们必须再次画线，将所有线条补充完整，最后，添加一条高度为 0 的水平线，即完成本图。 
 
-```{r polygon-kaleidoscope,fig.scap=" 用多边形生成的“万花筒”",fig.cap="(ref:polygon-kaleidoscope)",results='hide'}
+```{r polygon-kaleidoscope,fig.scap="(ref:polygon-kaleidoscope-s)",fig.cap="(ref:polygon-kaleidoscope)",results='hide'}
 demo("kaleidoscope", package = "MSG")
 ```
 
 (ref:polygon-kaleidoscope) 用多边形生成的“万花筒”：若干彩色三角形（或者称之为“千纸鹤图”？）
+
+(ref:polygon-kaleidoscope-s) 用多边形生成的“万花筒”
 
 图 \@ref(fig:polygon-kaleidoscope) 是利用含有缺失值的数据画出来的多边形，它看起来与万花筒图案有些相似（本例为“彩蛋”）。这幅图的生成过程是：随机生成 3 个标准正态分布随机数，然后插入一个缺失值 NA，下一次再以上一批随机数的最后一个为均值生成 3 个随机数，依此类推生成若干组“三个随机数加上一个 NA”这样的数据，这样最后画多边形的时候，得到的就是若干个独立的三角形。我们将这一组三角形分别向右、向上和向下平移，得到四组三角形，也就是不太精确地模仿了万花筒的原理。该演示收录在 **MSG** 包中，读者可用 `demo('kaleidoscope', package = 'MSG')` 查看源代码。
 
@@ -370,7 +383,9 @@ usage(mtext)
 
 ## 图例 {#sec:legend}
 
-```{r text,fig.cap="添加标题、任意文本和周边文本的一个演示"}
+(ref:text) 添加标题、任意文本和周边文本的一个演示
+
+```{r text,fig.cap="(ref:text)"}
 par(mar = c(4, 4, 4, 3))
 plot(0:10, type = "n", xlab = "", ylab = "", xlim = c(0, 12))
 grid(col = "gray")
@@ -414,7 +429,7 @@ usage(legend)
 ```{r axis-usage}
 usage(axis)
 ```
-```{r axis-demo,fig.scap="中美出口额双坐标轴图示",fig.cap="(ref:axis-demo)",dev='tikz',fig.process=to_png}
+```{r axis-demo,fig.scap="(ref:axis-demo-s)",fig.cap="(ref:axis-demo)",dev='tikz',fig.process=to_png}
 data(Export.USCN, package = "MSG")
 par(mar = c(4, 4.5, .1, 4.5))
 # 看似条形图，实为粗线条，宽度 lwd = 10
@@ -437,7 +452,9 @@ mtext("Chinese RMB ($10^{16}$)", side = 4, line = 2)
 box()
 ```
 
-(ref:axis-demo) 双坐标轴图示：中美两国 1999\~2004 年出口额，分别以美元和人民币表示。注意图中 x 轴标签文本是如何换行的。
+(ref:axis-demo) 双坐标轴图示：中美两国 1999\~2004 年出口额，分别以美元和人民币表示。注意图中 x 轴标签文本是如何换行的
+
+(ref:axis-demo-s) 中美出口额双坐标轴图示
 
 其中，`side` 参数与 `mtext()` 函数中的参数意思相类似，表示将坐标轴画在哪条边上，事实上通过前面一些图形元素参数的讲解，读者应该能意识到，R 中上下左右方向的顺序一般都是“下、左、上、右”，分别用 1、2、3、4 表示；`at` 参数表示在什么位置画坐标轴标记线；`labels` 参数指定坐标轴刻度标记的字符。
 
@@ -539,18 +556,21 @@ optim(c(-.9, .9), f2, method = "L-BFGS-B", lower = c(-1, .5), upper = c(1, 2.2))
 
 图 \@ref(fig:gradArrows) 同时展示了梯度下降算法的原理以及在应用中可能出现的问题（演示 `demo('gradArrows2', package = 'MSG')` 可以获得更好的图形质量以及箭头动画效果），它充分显示了 R 语言的统计图形能力可以紧密结合它的统计计算优势，创造出有意义的统计图形。我们使用的只是简单的图形元素（箭头）和基本的计算（求导），但结果的深刻远大于过程的简单。从某种程度上来说，在 R 语言中作图缺的不是工具（工具俯拾皆是），而是创意、思考以及对数据的理解。
 
-```{r gradArrows,fig.scap=" 梯度下降算法的过程演示 ",fig.cap="(ref:gradArrows)",results='hide',dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
+```{r gradArrows,fig.scap="(ref:gradArrows-s)",fig.cap="(ref:gradArrows)",results='hide',dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 demo("gradArrows1", package = "MSG")
 ```
 
-(ref:gradArrows) 梯度下降算法的过程演示：对于同一个函数，我们选取 20 个迭代起点（外围大实心点），分别用不同的步长和迭代次数来进行迭代（里围相应颜色的小实心点为迭代终止位置）。从每一个起始点开始的迭代过程都由一系列箭头表示，最终这些箭头都大致指向同一个区域。本图是 2008 年作者为中国人民大学统计学院学生刊物《统计功课》设计的封面图形，底部一行附注“一沙一世界，一花一天堂”，取自英国诗人布莱克的诗《天真的预言》，意即仔细观察统计计算过程，会看到一个我们没注意过的微观世界。
+(ref:gradArrows) 梯度下降算法的过程演示：对于同一个函数，我们选取 20 个迭代起点（外围大实心点），分别用不同的步长和迭代次数来进行迭代（里围相应颜色的小实心点为迭代终止位置）。从每一个起始点开始的迭代过程都由一系列箭头表示，最终这些箭头都大致指向同一个区域。本图是 2008 年作者为中国人民大学统计学院学生刊物《统计功课》设计的封面图形，底部一行附注“一沙一世界，一花一天堂”，取自英国诗人布莱克的诗《天真的预言》，意即仔细观察统计计算过程，会看到一个我们没注意过的微观世界
 
+(ref:gradArrows-s) 梯度下降算法的过程演示
 
-```{r sign-stat,fig.scap=" 在统计学的轨道中（彩蛋）",fig.cap="(ref:sign-stat)", results='hide'}
+```{r sign-stat,fig.scap="(ref:sign-stat-s)",fig.cap="(ref:sign-stat)", results='hide'}
 demo("signSTAT", package = "MSG")
 ```
 
-(ref:sign-stat) 在统计学的轨道中（彩蛋）：本图综合运用了折线、多边形、箭头、文本和圆圈等元素，它原本是作者于 2007 年为中国人民大学统计学院 06 级硕士班设计的一件班徽作品，但后来很多同学认为该图应重命名为“美人鱼图”。作者初衷是将“STAT”四个字母抽象表达为一些图形元素，例如图中一系列圆圈代表“S”，两端的箭头代表“T”，中间的正态分布曲线以及阴影部分代表“A”。
+(ref:sign-stat) 在统计学的轨道中（彩蛋）：本图综合运用了折线、多边形、箭头、文本和圆圈等元素，它原本是作者于 2007 年为中国人民大学统计学院 06 级硕士班设计的一件班徽作品，但后来很多同学认为该图应重命名为“美人鱼图”。作者初衷是将“STAT”四个字母抽象表达为一些图形元素，例如图中一系列圆圈代表“S”，两端的箭头代表“T”，中间的正态分布曲线以及阴影部分代表“A”
+
+(ref:sign-stat-s) 在统计学的轨道中（彩蛋）
 
 ## 小结
 

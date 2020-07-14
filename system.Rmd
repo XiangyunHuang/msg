@@ -50,7 +50,7 @@ ggplot(aes(x = hp, y = mpg), data = mtcars) +
 
 (ref:mtcars-smooth-s) 汽车马力与每加仑汽油行驶里程的关系
 
-(ref:mtcars-smooth) 汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的。
+(ref:mtcars-smooth) 汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的
 
 在 ggplot2 中几何形状简称 geom （Geometric objects），这些形状包括：点、条、线、箱线图和文本等。实际上它们就是第 \@ref(cha:elements) 章介绍的图形元素，但是 ggplot2 在这些元素上做了更多工作，例如箱线图并非基础图形元素，但它在 ggplot2 中的地位也是基础形状，还有平滑曲线和平滑带，背后都涉及到大量的统计计算，而 ggplot2 对它打包之后，用户用起来就简单多了，否则我们需要手工建立平滑模型（可能是线性回归，可能是 LOWESS，或是分位数回归等），然后取一系列 x 值并拟合 y 值。
 
@@ -69,7 +69,7 @@ ggplot(aes(x = carat, y = price), data = diamonds) +
 
 (ref:diamonds-hex-s) 钻石重量与价格的蜂巢图
 
-(ref:diamonds-hex) 钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小。
+(ref:diamonds-hex) 钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小
 
 图 \@ref(fig:diamonds-hex) 是 **ggplot2** 包中 diamonds 数据的一幅蜂巢图，它展示了在每个蜂巢格子里的数据频数大小，这种图形和平滑散点图的思想类似，都是要展示二维数据的密度，只不过实现方法不同而已。蜂巢图的背后是散点图，但具体的点都没有显示出来，我们看到的只有蜂巢及其颜色，从图例中可以看出，红色表示该单元格内的数据频数为 7000 左右，蓝色表示 1000。该数据内大多数钻石的价格（纵轴）和重量（横轴为克拉数）都偏小。另外，我们也很容易看出，随着克拉数增大，价格也相应升高，这也是符合常识的，但有些 3 克拉的钻石价格和 0.5 克拉的一样，这可能是因为打磨质量的问题。
 
@@ -97,7 +97,7 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
 
 (ref:iris-ggplot2-s) ggplot2 中的鸢尾花花瓣长宽散点图
 
-(ref:iris-ggplot2) ggplot2 中的鸢尾花花瓣长宽散点图：对比图 \@ref(fig:point-iris) 看看 ggplot2 中语法之简洁，颜色、形状、图例一气呵成。
+(ref:iris-ggplot2) ggplot2 中的鸢尾花花瓣长宽散点图：对比图 \@ref(fig:point-iris) 看看 ggplot2 中语法之简洁，颜色、形状、图例一气呵成
 
 标度除了用在颜色和符号上之外，还可以用在大小上，例如用图中圆圈的大小表示第三维变量的大小，这与 \@ref(sec:symbols) 小节的符号图很相似。ggplot2 中可以用 size 参数还设置和元素大小对应的变量，并可以用 `scale_size()` 函数来调整映射的端点（最小值和最大值）。图 \@ref(fig:quake6-bubbles) 就是这样的一个示例。**MSG** 包中的 `quake6` 数据记录了 1973 年到 2010 年每个月发生的 6 级以上的地震信息，我们可以按照年份和月份汇总地震发生的频数，然后画年份和月份的散点图，并将频数信息附着在点上。从图中可以看到，地震发生的频数似乎随着年份在增加，尤其是 2007 年 4 月和 2009 年 10 月地震活动非常频繁。另外，7 月似乎是地震低发期。注意这批数据来自美国地震局（USGS），这让我们考虑到地震频数逐年增加可能是个假象，很可能是因为近年来地震记录设备越来越先进，更多地震活动被探测到并记录了下来。
 
@@ -127,7 +127,7 @@ p + coord_flip()
 
 (ref:diamonds-cut-s) 钻石雕琢水平和对数价格的关系
 
-(ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 `Fair` 到 `Ideal` 雕琢水平逐渐增高，但价格并没有严格上升。
+(ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 `Fair` 到 `Ideal` 雕琢水平逐渐增高，但价格并没有严格上升
 
 我们平时用到的坐标系大多数都是笛卡尔坐标系，ggplot2 也提供了极坐标系和地图坐标系，并支持笛卡尔坐标系的翻转，即交换 x 轴和 y 轴。函数 `coord_flip()` 可以用来翻转几乎任何图形，而且由于 ggplot2 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上 `coord_flip()` 再打印即可。图 \@ref(fig:diamonds-cut) 是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。
 
@@ -139,7 +139,7 @@ ggplot(aes(x = cut, fill = cut), data = diamonds) +
 
 (ref:diamonds-polar-s) 钻石雕琢水平的极坐标条形图
 
-(ref:diamonds-polar) 钻石雕琢水平的极坐标条形图：各种雕琢水平下的钻石数量差别很大。
+(ref:diamonds-polar) 钻石雕琢水平的极坐标条形图：各种雕琢水平下的钻石数量差别很大
 
 图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，这一点在 \@ref(subsec:china-vs-us) 小节中我们还会再举例说明，请读者慎用。
 
@@ -157,7 +157,7 @@ ggplot(aes(x = carat), data = diamonds) +
 
 (ref:diamonds-carat-s) 按雕琢水平切片后的钻石重量密度曲线
 
-(ref:diamonds-carat) 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻。
+(ref:diamonds-carat) 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻
 
 切片的版面设置除了上面介绍的行列排列之外，还有一种从左到右、从上到下的排列方式，有时候切片生成的子集数目如果太多的话，无论按行或按列摆放可能都摆不下，这时候可以考虑这种顺序排列的方式，参见 `facet_wrap()` 的帮助文档（前一种排列叫 `facet_grid()`）。
 
@@ -278,7 +278,7 @@ demo("subplot", package = "MSG")
 
 (ref:grid-subplot-s) 用 **grid** 包实现的图形局部放大效果
 
-(ref:grid-subplot) 用 **grid** 包实现的图形局部放大效果：将大图的局部区域放大显示在空白处。
+(ref:grid-subplot) 用 **grid** 包实现的图形局部放大效果：将大图的局部区域放大显示在空白处
 
 在网格图形系统中，最为重要的一个概念即是所谓的“视图区”（Viewport），一个视图区也就是一个绘图区域。在网格图形中，可以创建任意多个视图区，每个视图区都可以有自己的一套坐标体系和绘图参数，这是与基础图形系统最大的不同。打个比方来说，基础图形系统就是在一张桌子上放置了一张白纸，然后在这唯一的一张白纸上绘图；而在网格图形系统中，你可以拥有任意数量的白纸并在每一张上进行绘图，然后将图纸按一定的层次堆叠好，作为最终的图形展现。
 
@@ -308,11 +308,13 @@ popViewport()
 
 ### 图形对象
 
-```{r grid-princomp,results='hide',fig.scap="基于旋转坐标系的主成分分析示意图",fig.cap="(ref:grid-princomp)"}
+```{r grid-princomp,results='hide',fig.scap="(ref:grid-princomp-s)",fig.cap="(ref:grid-princomp)"}
 demo("princomp", package = "MSG")
 ```
 
-(ref:grid-princomp) 基于旋转坐标系的主成分分析示意图：红色坐标系为主成分方向。
+(ref:grid-princomp) 基于旋转坐标系的主成分分析示意图：红色坐标系为主成分方向
+
+(ref:grid-princomp-s) 基于旋转坐标系的主成分分析示意图
 
 图形对象的动态编辑是网格图形系统的另一大优势。在基础图形系统中，图形元素一旦被绘制到设备上，就无法再对其进行编辑，除非采取覆盖的办法将图形重新绘制一遍。而在网格图形系统中，图形元素会以对象的形式保存在内存中，在需要的时候可以对其进行更改，例如修改颜色、大小等。下面的例子展示了编辑图形对象的方法：
 
@@ -385,11 +387,13 @@ grid 和 trellis 是 lattice 的最基础的特点，除此之外它还有两个
 
 我们先看一个条件作图的例子：`iris` 数据中有五个变量，四个数值变量分别代表了花的四个部位的属性，一个分类变量表示花的种类。假设现在我们想观察一下三种花的花萼长度的分布情况，并且把它们作一个对比。如果只使用基础图形的方法，无外乎有两种方案。一是分别对每类花的花萼长度画一张直方图，前后总共画三张图。这个方法显得冗繁，而且不易于图形间的对比观察。二是在同一画布上划分出三个区域，把三张图画到同一画布上。这个方法虽然易于图形间的对比，但是仍然显得有些复杂。那么有没有更为简单的方法呢？当然有，在 lattice 中往往只需一条简单的语句就能解决这个问题:
 
-```{r lattice-iris-hist,fig.cap="(ref:lattice-iris-hist)",fig.scap="三种鸢尾花各自的花萼长度直方图"}
+```{r lattice-iris-hist,fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)"}
 histogram(~ Sepal.Length | Species, layout = c(3, 1), data = iris)
 ```
 
-(ref:lattice-iris-hist) 三种鸢尾花各自的花萼长度直方图：作图区域被拆分为三个面板分别放置各类的直方图。
+(ref:lattice-iris-hist) 三种鸢尾花各自的花萼长度直方图：作图区域被拆分为三个面板分别放置各类的直方图
+
+(ref:lattice-iris-hist-s) 三种鸢尾花各自的花萼长度直方图
 
 图 \@ref(fig:lattice-iris-hist) 就是由 **lattice** 包中的 `histogram()` 函数生成的分类直方图。观察作图语句，两个逗号把括号里的内容分为了三部分，第一部分是公式，第二部分是选项，第三部分是数据。实际上，还有隐藏的第四部分 --- 面板函数。本节的内容也将按照公式、选项、数据的顺序来对 lattice 系统做介绍。
 
@@ -409,14 +413,16 @@ $$\text{纵坐标变量}\sim\text{横坐标变量}|\text{条件变量}$$
 
 从上两节的例子来看，lattice 的入门很容易，只要把数据整理成既定格式，用公式一套就能出结果，配色、线型等细节问题统统不用考虑；然而画图的工作往往不能一蹴而就，总会有不满意或者不合适的地方需要改进，默认的配置常常不能满足用户的个性化要求。要想实现这些改进，就需要对 lattice 系统的选项系统有一个比较深入的了解，这样才能对症下药，取得到自己想要的效果。
 
-```{r lattice-vadeaths,fig.scap="弗吉尼亚死亡率数据在 lattice 中的点图",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8}
+```{r lattice-vadeaths,fig.scap="(ref:lattice-vadeaths-s)",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8}
 dotplot(VADeaths,
   groups = FALSE, aspect = 0.3, type = c("p", "h"),
   layout = c(2, 2), between = list(x = 0.5)
 )
 ```
 
-(ref:lattice-vadeaths) 弗吉尼亚死亡率数据在 lattice 中的点图：四种人群组合各自的死亡率。
+(ref:lattice-vadeaths) 弗吉尼亚死亡率数据在 lattice 中的点图：四种人群组合各自的死亡率
+
+(ref:lattice-vadeaths-s) 弗吉尼亚死亡率数据在 lattice 中的点图
 
 下面我们以图 \@ref(fig:lattice-vadeaths) 为例，介绍一些常用的选项。首先从全图来看，整个图被分割成了四部分，每一部分被称为一个面板，每个面板的顶部被称为分类条（strip），里面显示了分类的名称。以下是各个选项的说明：
 
@@ -472,9 +478,9 @@ print(bxp0) # 这里的 bxp0 对象来自前一幅图，可重用
 
 (ref:lattice-data-par-s) 制作 lattice 需要的数据框以及修改 lattice 的图形参数
 
-(ref:lattice-data-par) 制作 lattice 需要的数据框以及修改 lattice 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点。
+(ref:lattice-data-par) 制作 lattice 需要的数据框以及修改 lattice 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点
 
-```{r lattice-panel-function,fig.scap="lattice 中添加了密度曲线的直方图",fig.cap="(ref:lattice-panel-function)"}
+```{r lattice-panel-function,fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-panel-function)"}
 iris.panel <- histogram(~ Sepal.Length | Species,
   layout = c(3, 1), data = iris, type = "density",
   panel = function(x, ...) {
@@ -529,14 +535,16 @@ ggobi(mtcars)
 
 注意由于 **rggobi** 依赖于 **RGtk2** 包 [@RGtk2]，所以安装的时候也会一并安装 **RGtk2**，而 **RGtk2** 又依赖于 GTK+ 软件，进而也会自动安装 GTK+。读者不必了解这些包或软件之间的依赖关系，只需要按照提示一步步安装即可。从 R 中启动 GGobi 可以对一个数据框使用 `ggobi()` 函数， 这样我们就会得到如图 \@ref(fig:GGobi-main-window) 的窗口。
 
-```{r GGobi-main-window,echo=FALSE,fig.cap="(ref:GGobi-main-window)",fig.scap="GGobi 软件的主窗口和图形窗口 ",fig.subcap=c("",""),out.width="45%"}
+```{r GGobi-main-window,echo=FALSE,fig.cap="(ref:GGobi-main-window)",fig.scap="(ref:GGobi-main-window-s)",fig.subcap=c("",""),out.width="45%"}
 knitr::include_graphics(path = c(
   "images/GGobi-main-window.png",
   "images/GGobi-scatterplot.png"
 ))
 ```
 
-(ref:GGobi-main-window) GGobi 软件的主窗口（左）和图形窗口（右）：我们可以在主窗口中选择要画散点图的两个变量。
+(ref:GGobi-main-window) GGobi 软件的主窗口（左）和图形窗口（右）：我们可以在主窗口中选择要画散点图的两个变量
+
+(ref:GGobi-main-window-s) GGobi 软件的主窗口和图形窗口
 
 主窗口中有一套菜单系统，左侧是一些图形控制选项，右侧是当前画图所用的变量。下面我们简单介绍一下菜单：
 
@@ -560,7 +568,7 @@ Tools
 
 1. 让“条件分割”操作变为动态操作：我们已经不止一次提到图形中的“条件分割”，如 \@ref(fig:coplot) 小节的条件分割图、 lattice 系统和 ggplot2 系统的切片功能，所有的这些分割都是对数据的静态、固定分割，例如根据一个分类变量把数据分成子集；当我们使用刷子的时候，实际上也是一种条件分割：我们可以观察随着刷子位置的有序移动（如从左到右），其它图中的图形元素的位置变化，尤其是我们用鼠标右键拖动改变刷子形状为一个狭长的矩形条时，这种条件分割的意味就更加清楚，这一点可能不太好理解，参见后面思考与练习 \@ref(fig:GGobi-narrow-brush)
 
-```{r GGobi-brush,fig.scap="GGobi 中选取一个观测对应所有图形窗口的更新 ",fig.cap="(ref:GGobi-brush)",fig.subcap=c("","",""),out.width="45%",echo=FALSE,fig.ncol=2}
+```{r GGobi-brush,fig.scap="(ref:GGobi-brush-s)",fig.cap="(ref:GGobi-brush)",fig.subcap=c("","",""),out.width="45%",echo=FALSE,fig.ncol=2}
 knitr::include_graphics(path = c(
   "images/GGobi-hp-mpg.png",
   "images/GGobi-qsec-wt.png",
@@ -568,7 +576,9 @@ knitr::include_graphics(path = c(
 ))
 ```
 
-(ref:GGobi-brush) GGobi 中选取一个观测对应所有图形窗口的更新：我们在左上角的散点图中选取一个点，右上角的散点图也相应选取了一个点，而底部的平行坐标图则选取了一条线。所有的这些选取都代表了同一行数据。
+(ref:GGobi-brush) GGobi 中选取一个观测对应所有图形窗口的更新：我们在左上角的散点图中选取一个点，右上角的散点图也相应选取了一个点，而底部的平行坐标图则选取了一条线。所有的这些选取都代表了同一行数据
+
+(ref:GGobi-brush-s) GGobi 中选取一个观测对应所有图形窗口的更新
 
 图 \@ref(fig:GGobi-brush) 显示了一个 GGobi 刷子选取的场景，我们首先基于 `mtcars` 数据画了三幅图形，分别为 `hp` 和 `mpg` 的散点图、`qsec` 和 `wt` 的散点图以及其它七个变量的平行坐标图，其次用自动配色功能根据汽缸数量 `cyl` 将数据展示为三种颜色，分别对应着 4 （紫）、6 （绿）、8 （黄）个汽缸，然后我们发现第一幅散点图中似乎有个离群点 --- 有一款车的马力 `hp` 超大且比较费油（每加仑汽油行驶英里数比较小），这款车在其它变量上有什么特征呢？通过使用刷子选取这个点（刷子颜色设置为橙色），我们观察到第二幅散点图中底部也有一个点被刷中了，这款车的重量 `wt` 一般，但速度超快（行驶 1/4 英里所需时间 `qsec` 很短），类似地，我们还可以看平行坐标图中其它指标的取值，例如它是手动档的车（`am` 为 1）。
 
@@ -613,11 +623,13 @@ x_{n1} & x_{n2}
 
 通过对投影矩阵的系数不断改变，我们可以不断得到新的散点图，这就是二维巡游的基本原理。类似的，一维巡游是将高维数据投影到一维直线上。
 
-```{r GGobi-2d-tour,fig.cap="(ref:GGobi-2d-tour)",fig.scap="GGobi 中的二维巡游模式 ",echo=FALSE}
+```{r GGobi-2d-tour,fig.cap="(ref:GGobi-2d-tour)",fig.scap="(ref:GGobi-2d-tour-s)",echo=FALSE}
 knitr::include_graphics(path = "images/GGobi-2d-tour.png", dpi = NA)
 ```
 
-(ref:GGobi-2d-tour) GGobi 中的二维巡游模式：寻找投影将手动档和自动档的车分开。
+(ref:GGobi-2d-tour) GGobi 中的二维巡游模式：寻找投影将手动档和自动档的车分开
+
+(ref:GGobi-2d-tour-s) GGobi 中的二维巡游模式
 
 图 \@ref(fig:GGobi-2d-tour) 是 `mtcars` 数据的一幅二维巡游截图，图中不同颜色的点分别表示自动档（紫色）和手动档（黄色）的车。我们一共选取了 5 个变量进入巡游，如图左下角的“坐标轴”所示。这里的坐标轴显示的是一个单位圆，半径为 1，其中每个小短轴代表了各个变量的投影系数：轴的长短代表了系数的大小，方向表示投影系数的正负，每根轴都可以分解到水平方向和垂直方向上，水平方向表示对第一维的投影（即散点图的横轴），垂直方向上表示对第二维的投影（即散点图纵轴）。从图中可以看出，如果我们想把手动档和自动档的车分开，那么 `mpg` 这个变量不太重要，因为它的投影系数几乎为 0，`wt` 和 `hp` 对水平方向上的分离有较大贡献，`qsec` 对垂直方向上的分离有贡献，而 `drat` 变量对两个方向上都有贡献（分解到两个方向上后系数都会相对较大）。这些投影系数都可以通过菜单 Tour2D->Show Projection Vals 显示出来。
 
@@ -837,7 +849,7 @@ knitr::include_graphics(path = "images/rgl-ch4.png", dpi = NA)
 
 (ref:rgl-ch4-s) 用 **rgl** 包画出来的甲烷分子立体结构
 
-(ref:rgl-ch4) 用 **rgl** 包画出来的甲烷分子立体结构：四个氢原子和一个碳原子。
+(ref:rgl-ch4) 用 **rgl** 包画出来的甲烷分子立体结构：四个氢原子和一个碳原子
 
 ### 三维透视图
 
@@ -995,11 +1007,13 @@ description = c(
 ), ani.height = 300, ani.width = 550
 )
 ```
-```{r html-interface,fig.scap="HTML 页面内的动画界面",fig.cap="(ref:html-interface)",echo=FALSE}
+```{r html-interface,fig.scap="(ref:html-interface-s)",fig.cap="(ref:html-interface)",echo=FALSE}
 knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 ```
 
-(ref:html-interface) 这一系列动画导出函数默认都用 PNG 图形设备抓取并保存每一帧图片，这是由选项 `ani.options('ani.dev')` 设定的，我们也可以使用别的图形设备来记录 R 图形；**animation** 包中的一个演示 `demo('rgl_animation')` 就展示了这种功能。
+(ref:html-interface) 这一系列动画导出函数默认都用 PNG 图形设备抓取并保存每一帧图片，这是由选项 `ani.options('ani.dev')` 设定的，我们也可以使用别的图形设备来记录 R 图形；**animation** 包中的一个演示 `demo('rgl_animation')` 就展示了这种功能
+
+(ref:html-interface-s) HTML 页面内的动画界面
 
 ### 统计学动画
 
@@ -1033,7 +1047,7 @@ knitr::include_graphics(path = c(
 
 (ref:animation-pollen-s) pollen 数据中暗藏的特征
 
-(ref:animation-pollen) pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧。
+(ref:animation-pollen) pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧
 
 ## 思考与练习
 
@@ -1055,22 +1069,25 @@ knitr::include_graphics(path = c(
 
 1. 在介绍 GGobi 时我们提到动态的“条件分割”，请思考当刷子在散点图中从左到右或者从下到上移动时，对数据来说，我们实际上是在选取具有何种特征的子集？如图 \@ref(fig:GGobi-narrow-brush)。
 
-    ```{r GGobi-narrow-brush, echo=FALSE,fig.cap="(ref:GGobi-narrow-brush)",fig.scap="GGobi 中用刷子实现动态条件分割"}
-    knitr::include_graphics(path = "images/GGobi-narrow-brush.png", dpi = NA)
-    ```
+```{r GGobi-narrow-brush, echo=FALSE,fig.cap="(ref:GGobi-narrow-brush)",fig.scap="(ref:GGobi-narrow-brush-s)"}
+knitr::include_graphics(path = "images/GGobi-narrow-brush.png", dpi = NA)
+```
 
 1. **fun** 包 [@fun] 中有一个 3D 版本的“我的中国心”，效果如图 \@ref(fig:China-Heart-3D)；请对照 `demo('ChinaHeart3D', package = 'fun')` 以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入 rgl 三维图形。
 
-    ```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)",echo=FALSE}
-    knitr::include_graphics(path = "images/China-Heart-3D.png", dpi = NA)
-    ```
+```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)", fig.scap="(ref:China-Heart-3D-s)", echo=FALSE}
+knitr::include_graphics(path = "images/China-Heart-3D.png", dpi = NA)
+```
 
 1. 网络上已经有无数的关于中心极限定理（CLT）的动画展示，大意就是随着样本量增加，样本均值 $\bar{X}_{n}$ 的分布密度曲线逐渐变成了“钟形曲线”，而正态分布的密度曲线也是钟形曲线，所以人们就下结论说 CLT 成立。这样的结论是否可靠？**animation** 包中的 `clt.ani()` 函数也可以用来演示 CLT，但角度略有不同，它将每个样本量下的样本均值拿来做了正态性检验，并将相应的 P 值画出来，以刻画当前的这些样本均值和正态分布的拟合好坏，这样做是否让 CLT 的动画演示更加严谨？
 
 1. 比较 **animation** 包中的五种导出格式：HTML、PDF、GIF、Flash 和视频，它们各自有什么优势劣势？（如：HTML 页面适合网络发布而且对播放器的要求非常低，但它包含了太多文件，不方便复制传播）
 
 
-(ref:GGobi-narrow-brush) GGobi 中用刷子实现动态条件分割：这把狭长的刷子可以从下到上移动。
+(ref:GGobi-narrow-brush) GGobi 中用刷子实现动态条件分割：这把狭长的刷子可以从下到上移动
 
-(ref:China-Heart-3D) 3D 版本的“中国心”：基于 **rgl** 包和求根函数制成。
+(ref:GGobi-narrow-brush-s) GGobi 中用刷子实现动态条件分割
 
+(ref:China-Heart-3D) 3D 版本的“中国心”：基于 **rgl** 包和求根函数制成
+
+(ref:China-Heart-3D-s) 3D 版本的“中国心”

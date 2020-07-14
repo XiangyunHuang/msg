@@ -51,7 +51,7 @@ plot(1:10, xlab = "X title", ylab = "Y title",
 
 (ref:par1-s) 参数 `adj`、`mgp`、`tcl` 和 `ljoin` 设置演示
 
-(ref:par1) 左上：`adj` 用于字符相对位置的调整，“+”表示真实坐标点的位置，通过一个长度为 2 的向量 `c(x, y)` 可以分别调整字符在横纵坐标上相对平移的位置；右上：坐标轴元素的边界距离，参数 `mgp` 的三个数值分别控制了坐标轴标题、坐标轴刻度数字以及坐标轴线到图形的距离；左下：`tcl` 控制了坐标轴刻度线的方向和长度，`srt` 控制了字符串的旋转角度；右下：线条相交处的样式。
+(ref:par1) 左上：`adj` 用于字符相对位置的调整，“+”表示真实坐标点的位置，通过一个长度为 2 的向量 `c(x, y)` 可以分别调整字符在横纵坐标上相对平移的位置；右上：坐标轴元素的边界距离，参数 `mgp` 的三个数值分别控制了坐标轴标题、坐标轴刻度数字以及坐标轴线到图形的距离；左下：`tcl` 控制了坐标轴刻度线的方向和长度，`srt` 控制了字符串的旋转角度；右下：线条相交处的样式
 
 ```{r par2,fig.cap="(ref:par2)",fig.scap="(ref:par2-s)",echo=FALSE}
 par(mfrow = c(2, 2), mar = c(3, 3, 3, 2))
@@ -88,7 +88,7 @@ for (i in 0:3) {
 
 (ref:par2-s) 其它主要参数的效果演示：`bty`，`font`，`las`，`family` 等
 
-(ref:par2) 四幅图形演示了不同的图形边框（上右开、上右闭、右开和上开）、字体样式（正常、粗体、斜体和粗斜体）、字体族（衬线、无衬线、等宽、符号）、坐标轴标签样式、点样式（圆圈、方框、菱形、三角）、线末端样式和线样式（实线、虚线、点线、点划线）。
+(ref:par2) 四幅图形演示了不同的图形边框（上右开、上右闭、右开和上开）、字体样式（正常、粗体、斜体和粗斜体）、字体族（衬线、无衬线、等宽、符号）、坐标轴标签样式、点样式（圆圈、方框、菱形、三角）、线末端样式和线样式（实线、虚线、点线、点划线）
 
 R 的图形参数既可以通过函数 `par()` 预先全局设置，也可以在具体作图函数（如 `plot()`、`lines()` 等）中设置临时参数值；二者的区别在于前者的设置会一直在当前图形设备中起作用，除非将图形设备（参见 \@ref(sec:device) 小节）关闭，而后者的设置只是临时性的，不会影响后面其它作图函数的图形效果。函数 `par()` 中涵盖了大部分图形参数，因此专用一节讲述。
 
@@ -264,7 +264,7 @@ text(.5, .05, "oma[1]", cex = .7)
 
 (ref:plot-region-s) 图形的各种区域说明
 
-(ref:plot-region) 图形的各种区域和边界说明：作图区域（当前作图区域）、图形区域和设备区域；图形边界和外边界。
+(ref:plot-region) 图形的各种区域和边界说明：作图区域（当前作图区域）、图形区域和设备区域；图形边界和外边界
 
 整个作图设备实际上可以分为三个区域，分别是：“作图区域（Plot Region）”、“图形区域（Figure Margin）”和 “设备区域（Device Region）”，这三个区域也对应着两种边界：“图形边界（Figure Margin）”和 “外边界（Outer Margin）”，这些概念对于初学者来说可能会感到迷惑，然而图 \@ref(fig:plot-region) 是一个很好的说明。R 中的图形都是作在一个图形设备中，最常见的图形设备就是一个图形窗口，也可以在其它设备中（参见附录 \@ref(sec:device)）；整个设备内的区域就称为设备区域，也就是图 \@ref(fig:plot-region) 中最大的灰色区域，图形区域是设备区域内的白色实框方形区域，最里面的灰色虚框区域就是作图区域，我们的图形实体部分就作在这个区域；从设备区域的边界向内，到图形区域之间这一段称为外边界（用 `oma` 参数设定），图形区域边界再向内到作图区域的边界称为图形边界（用 `mar` 参数设定）。图 \@ref(fig:plot-region) 的左图是一页一图的展示，右图则是一页多图的展示，该展示更清楚地说明了 `oma` 与 `mar` 参数的区别，因为一页一图的情况下，外边界和图形边界完全融合在一起，很难分辨。
 
@@ -319,7 +319,7 @@ for (i in c("p", "l", "b", "c", "o", "h", "s", "S", "n")) {
 
 (ref:plot-type-s) `plot()` 作图的九种样式
 
-(ref:plot-type) `plot()` 作图的九种样式类型：点、线、点线（不相接）、擦掉点的线、点线（相接）、垂线、阶梯（水平起步）、阶梯（垂直起步）、无。
+(ref:plot-type) `plot()` 作图的九种样式类型：点、线、点线（不相接）、擦掉点的线、点线（相接）、垂线、阶梯（水平起步）、阶梯（垂直起步）、无
 
 [^line-type]: 注意是字母 `l`（表示“line”）， 不是数字 1！同样后面的字母 `o`（表示“overplotted”）也不要误认为是数字 0
 
@@ -371,7 +371,10 @@ arrows(-2, 0.27, -1.3, dnorm(-1.3) + 0.02)
 abline(v = qnorm(0.95), lty = 2)
 text(0, dnorm(qnorm(0.95)), expression(integral(phi(x) * dx, -infinity, 1.65) %~~% 0.95))
 ```
-```{r plotmath,echo=FALSE,fig.cap="正态分布密度函数公式的表示",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
+
+(ref:plotmath) 正态分布密度函数公式的表示
+
+```{r plotmath,echo=FALSE,fig.cap="(ref:plotmath)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), 
      type = "l", xlab = "$x$", ylab = "$\\phi(x)$")
 text(-3, 0.37, adj = c(0, 1), 
@@ -428,11 +431,13 @@ matrix(c(1, 2, 1, 3), 2)
 
 前面图 \@ref(sec:pie) 和 \@ref(sec:stripchart) 曾经使用该函数设置了图形版面，使得不同方格中的图形长宽不一样。图 \@ref(fig:layout-margin) 用 `layout()` 安排展示了二元变量的边际分布以及回归直线。
 
-```{r layout-margin,fig.cap="(ref:layout-margin)",fig.scap=" 回归模型中边际分布的展示 ",results='hide'}
+```{r layout-margin,fig.cap="(ref:layout-margin)",fig.scap="(ref:layout-margin-s)",results='hide'}
 demo("layout_margin", package = "MSG")
 ```
 
-(ref:layout-margin) 回归模型中边际分布的展示：左下方图中展示了散点图和回归直线，上方和右方的直方图分别展示 了自变量和因变量的密度分布。
+(ref:layout-margin) 回归模型中边际分布的展示：左下方图中展示了散点图和回归直线，上方和右方的直方图分别展示 了自变量和因变量的密度分布
+
+(ref:layout-margin-s) 回归模型中边际分布的展示
 
 ### 拆分设备屏幕
 
@@ -469,7 +474,7 @@ matrix(
 ## this is to get rid of a weird error
 assign("par.list", setdiff(get("par.list", graphics:::.SSenv), "mfg"), graphics:::.SSenv)
 ```
-```{r split-screen,fig.cap="(ref:split-screen)",fig.scap="拆分作图设备屏幕区域的示例",results='hide'}
+```{r split-screen,fig.cap="(ref:split-screen)",fig.scap="(ref:split-screen-s)",results='hide'}
 split.screen(matrix(c(
   0, 0.1, 0.4, 0.3, 0.5, 0.8,
   0.9, 1, 0, 0.2, 0.3, 0.5, 0.4, 0.7, 0.8, 1
@@ -486,6 +491,8 @@ for (i in 1:4) {
 ```
 
 (ref:split-screen) 拆分作图设备屏幕区域的示例：本图展示了如何用一个矩阵参数控制作图区域在屏幕上的的位置。
+
+(ref:split-screen-s) 拆分作图设备屏幕区域的示例
 
 ## 交互操作 {#sec:interaction}
 
@@ -530,7 +537,9 @@ usage(identify, "default")
 
 ### 响应鼠标键盘的动作
 
-```{r graphicsEvent,fig.cap="鼠标在图形窗口中移动的效果图",results='hide'}
+(ref:graphicsEvent) 鼠标在图形窗口中移动的效果图
+
+```{r graphicsEvent,fig.cap="(ref:graphicsEvent)",results='hide'}
 demo('mouse_move', package='MSG')
 ```
 

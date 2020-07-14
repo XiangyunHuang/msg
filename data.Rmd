@@ -53,7 +53,7 @@ Table: (\#tab:plot-summary) 各种类型的数据对应的统计图形概览
 
 ### 混合数据
 
-```{r discrete-var,fig.cap="(ref:categorical-display)",fig.scap="分类变量的散点图示方法示例"}
+```{r discrete-var,fig.cap="(ref:categorical-display)",fig.scap="(ref:categorical-display-s)"}
 par(
   mfrow = c(2, 2), mar = c(2.5, 3, 2, 0.1), pch = 20,
   mgp = c(1.5, 0.5, 0), cex.main = 1
@@ -73,7 +73,9 @@ sunflowerplot(x, y,
 mosaicplot(table(x, y), main = "(4) 马塞克图")
 ```
 
-(ref:categorical-display) 分类变量的散点图示方法示例：原始散点图、打散方法、向日葵散点图和马赛克图。
+(ref:categorical-display) 分类变量的散点图示方法示例：原始散点图、打散方法、向日葵散点图和马赛克图
+
+(ref:categorical-display-s) 分类变量的散点图示方法示例
 
 专门针对混合数据的图形并不多，前面介绍过的条件密度图（\@ref(sec:cdplot) 小节）和棘状图（\@ref(sec:spineplot) 小节）是两个少见的例子。在绝大多数情况下，我们都推荐使用“条件分割”的办法，利用分类变量的各个取值水平分别画二维图形，这样让我们很容易比较分类变量不同取值水平下的二维变量之间关系的差别。基础图形系统中的条件分割图（\@ref(sec:coplot) 小节）只是一个引子，**ggplot2** 包中的切片功能更灵活易用，后面图 \@ref(fig:cn-us-redraw) 便是一例。
 
@@ -98,7 +100,9 @@ price <- c(12.11, 18.8, 22.09, 18.39, 19.86, 14.89, 16.68, 18.76, 19.57)
 
 这是一个一维时间序列数据，对于时间序列，我们通常会采用折线图来表达数据的波动起伏，观察的核心是数据的大小随着时间的变化，但原图使用条形图实际上也有一定道理。这批数据一共只有 9 个数字，如果只是用折线画图，则整幅图形显得单薄，加上该图的装饰物太多，所以更容易埋没数据。相比之下，矩形条的视觉冲击力较强，更能让读者的注意力集中在数据上。本例中，选取折线图或是条形图取决于具体的应用场景。
 
-```{r pork-price-orig,fig.cap="自 2006 年以来猪肉价格的走势图",echo=FALSE}
+(ref:pork-price-orig) 自 2006 年以来猪肉价格的走势图
+
+```{r pork-price-orig,fig.cap="(ref:pork-price-orig)",echo=FALSE}
 knitr::include_graphics(path = "images/pork-price-orig.png", dpi = NA)
 ```
 
@@ -106,7 +110,7 @@ knitr::include_graphics(path = "images/pork-price-orig.png", dpi = NA)
 
 当我们用 R 重画出图形的时候，我们意识到纵坐标可能也存在问题：原图的纵坐标的零点对应的价格是多少？可以肯定并不是 0，这一点通过简单地选取参照物就能判断出来，例如 06 和 07 年的差价大约是 6.7，两年价格条高度之差和 2010 年 4 月的价格条高度差不多，这说明零点可能在 8 元/千克左右。这个零点选择似乎非常随意，通常我们画图会以真实的 0 为零点，或者以数据的最小值为零点，很少选取其它位置为零点。关于零点的选取，我们在 \@ref(subsec:data-processing) 小节中会继续解释。这里我们简要说明一下：如果将零点选在真实的 0 上，那么我们更容易计算真实的比率（高度之比）；若选在最小值上，那么更容易看出绝对变化值（因为差异被“放大”了）。
 
-```{r pork-price,fig.scap=" 更新后的猪肉价格走势图 ",fig.cap="(ref:pork-price)"}
+```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)"}
 par(mfrow = c(2, 2), mar = c(4, 4, 0.5, 0.5))
 plot(year, price, type = "h", lwd = 5, lend = 1, ylim = c(0, max(price) + 1), yaxs = "i")
 plot(year, price, type = "h", lwd = 5, lend = 1)
@@ -114,15 +118,19 @@ plot(year, price, type = "o", ylim = c(0, max(price) + 1), yaxs = "i")
 plot(year, price, type = "o")
 ```
 
-(ref:pork-price) 更新后的猪肉价格走势图：上方为条形图，下方为折线图，左侧图形的 y 轴从 0 开始，右侧图形的 y 轴从数据的最小值开始。
+(ref:pork-price) 更新后的猪肉价格走势图：上方为条形图，下方为折线图，左侧图形的 y 轴从 0 开始，右侧图形的 y 轴从数据的最小值开始
+
+(ref:pork-price-s) 更新后的猪肉价格走势图
 
 ### 末日狂奔 {#subsec:canabalt}
 
-```{r canabalt-screenshot,echo=FALSE,fig.scap="末日狂奔游戏截图",fig.cap="(ref:canabalt-screenshot)"}
+```{r canabalt-screenshot,echo=FALSE,fig.scap="(ref:canabalt-screenshot-s)",fig.cap="(ref:canabalt-screenshot)"}
 knitr::include_graphics(path = "images/canabalt-screenshot.png", dpi = NA)
 ```
 
-(ref:canabalt-screenshot) 末日狂奔游戏截图：楼顶左侧的小人为游戏主角，任务为尽力向前跑，一路上可能遇到很多障碍和意外；右上角为奔跑的距离（483 米）。
+(ref:canabalt-screenshot) 末日狂奔游戏截图：楼顶左侧的小人为游戏主角，任务为尽力向前跑，一路上可能遇到很多障碍和意外；右上角为奔跑的距离（483 米）
+
+(ref:canabalt-screenshot-s) 末日狂奔游戏截图
 
 末日狂奔（Canabalt）是一款速度躲避游戏，操控很简单，点击屏幕控制主角跳起，控制好跳跃力度尽量避开一路上的障碍，不要掉下楼，看最后能跑多远。这款游戏的简单与刺激吸引了很多玩家；此外游戏中还有一定的随机成分，玩家无法预测下一步的场景是什么。由于游戏结束时画面上会提示是否把奔跑的距离发到 Twitter 上，所以 Twitter 上有不少关于这个游戏的得分消息，我们可以抓取这些消息来看各位玩家跑了多远以及玩游戏的平台信息。
 
@@ -135,7 +143,7 @@ summary(canabalt)
 
 我们关心的重点当然是得分，因此拿到这批数据我们可以先看一下得分的分布，例如用直方图；其次我们会考虑游戏得分和平台是否有关，高分玩家会因为什么原因死亡，等等，这都是基于离散变量的连续变量比较，一个自然而然的选择就是对离散变量的每一分类分别画图。图 \@ref(fig:canabalt-boxplot) 是基于离散变量的不同分类的箱线图，从图中可以看出，iPad 玩家的平均得分较高，这可能是因为 iPad 相比起 iPhone 或者 iPod touch 来说屏幕较大，玩家易于控制，也可能是因为 iPad 需要专门开机，不像另外两个平台随时都能打开玩，因此 iPad 玩家玩起来会更集中精力。至于死因，由于作者对这款游戏并不在行，玩了几次，得到的结果都是因为跳得不够高而撞墙坠落摔死，最多能跑几百米，因此不了解其它死因的场景。因为撞墙摔死的玩家中有很多人得分超高，看来这种障碍的难度并不小。注意我们画箱线图时，对死因做了重新排序 — 按照得分的中位数排序，这样能方便读者阅读这幅图，否则，读者需要额外花费功夫用眼睛对箱线图排序，对读者来说是不必要的阅读负担。按照原始数据的顺序画图尤其是条形图和饼图中常见的问题，其实排序对于制图者只是举手之劳，对读者却能带来很大的方便。
 
-```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="游戏得分在不同游戏平台以及死因下的比较",message=FALSE}
+```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)",message=FALSE}
 canabalt_g1 <- qplot(device, score, data = canabalt, geom = "boxplot") +
   coord_flip()
 canabalt_g2 <- qplot(reorder(death, score, median), score,
@@ -147,7 +155,9 @@ library(cowplot)
 plot_grid(canabalt_g1, canabalt_g2, ncol = 1)
 ```
 
-(ref:canabalt-boxplot) 游戏得分在不同游戏平台以及死因下的比较：iPad 玩家的分数平均较高，得分最高的人最终是因为“错过另一扇窗”而死。
+(ref:canabalt-boxplot) 游戏得分在不同游戏平台以及死因下的比较：iPad 玩家的分数平均较高，得分最高的人最终是因为“错过另一扇窗”而死
+
+(ref:canabalt-boxplot-s) 游戏得分在不同游戏平台以及死因下的比较
 
 在 `canabalt` 数据的帮助文档中有这批数据的来源以及收集方式，对抓取网络数据感兴趣的读者不妨看看原作者是如何用 Python 等工具获得数据的。
 
@@ -161,7 +171,7 @@ head(music[, 1:5]) # 头 6 行数据
 summary(music[, 1:5])
 ```
 
-```{r music-andrews,fig.scap="音乐曲目左声道频率的调和曲线图",fig.cap="(ref:music-andrews)",fig.width=4.9,fig.height=2.8,dev='tikz',fig.process=to_png,fig.showtext=FALSE}
+```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=4.9,fig.height=2.8,dev='tikz',fig.process=to_png,fig.showtext=FALSE}
 par(mfrow = c(1, 2), mar = c(4.1, 4.1, 0.5, 0.5))
 andrews_curve(scale(music[, 4:6]), xlab = "$t$", ylab = "$f(t)$",
               n = 50, col = 1)
@@ -176,9 +186,11 @@ with(
 
 (ref:music-andrews) 音乐曲目左声道频率的调和曲线图：左图中曲线是否有“拧成股”的现象？右图是否是你真实感受到的聚类？
 
+(ref:music-andrews-s) 音乐曲目左声道频率的调和曲线图
+
 对这样一批数据，我们关心的问题可能是古典乐和摇滚乐在音频变量上是否有差异。由于这里的变量个数是 3，所以我们可以考虑三维散点图，并用不同颜色标注曲目类型。在真正使用曲目类型这个变量之前，我们不妨对数据做一个简单的探索：试想如果我们并不知道曲目的分类，我们是否能从某些图中看出数据有聚类现象？考虑到古典乐和摇滚乐的区别，以及艺术家风格的不同，这种聚类现象应该是很自然的。对于三个连续变量，我们的选择余地并不大：\@ref(sec:andrews-curve) 小节介绍的调和曲线图可以作为探索聚类的工具。图 \@ref(fig:music-andrews) 为三个变量的调和曲线图，为了不把预期中的聚类现象强加于我们脑中，首先我们不使用任何方式标注分类信息，统一用黑色，如左图所示，这些曲线的走势是否有扎堆现象？这里我们不想故意引导读者，请读者自行观察。某种程度上，标记和不标记分类变量会对一幅图形产生很大的影响，比如即使一幅图中本来没有聚类现象，但由于我们使用了颜色或其它手段将图形元素分了组，这时我们的眼睛很容易引导我们认为图中存在聚类。看完左图之后再看右图，你的结论有变化吗？右图中虚线表示摇滚，实线表示古典；红色为 Eels，黑色为 Abba，蓝色为维瓦尔第，绿色为莫扎特。从“事后诸葛亮”的角度来说，这些曲目似乎确实存在差异。
 
-```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap=" 音乐曲目左声道频率的三维散点图与平行坐标图 ",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8}
+```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8}
 library(scatterplot3d)
 with(
   music,
@@ -191,7 +203,9 @@ library(GGally)
 ggparcoord(music, columns = c(4, 5, 3), groupColumn = "type")
 ```
 
-(ref:music-3d-pcp) 音乐曲目左声道频率的三维散点图（上）与平行坐标图（下）：三维散点图中我们难以感知点的位置，平行坐标图则更易读。
+(ref:music-3d-pcp) 音乐曲目左声道频率的三维散点图（上）与平行坐标图（下）：三维散点图中我们难以感知点的位置，平行坐标图则更易读
+
+(ref:music-3d-pcp-s) 音乐曲目左声道频率的三维散点图与平行坐标图
 
 调和曲线图展示的并非原始数据，所以即使我们知道有差异，也无法知道差异具体是什么样的。图 \@ref(fig:music-3d-pcp) 上图为三维散点图，用颜色区分了古典乐和摇滚乐；下图为三个变量的平行坐标图。三维散点图往往被人们视为很能吸引眼球的图形，但本作者倾向于反对使用它，原因是多数情况下我们看到的三维图形都是静态的，不可旋转，而三维图形的外观非常依赖于我们观察它的视角，正所谓“横看成岭侧成峰，远近高低各不同”，这给读图带来了视觉上的限制，此外，三维图形也需要空间想象力，例如我们是否能看清图中每个点在纵轴上的高度？观察三维图形中的数值需要用眼睛对三个垂直的平面做投影，这是一件非常费力的工作。这里顺便提一下，Excel 中可以画三维条形图 / 柱形图甚至饼图，这些图形通常都是非常糟糕的选择。@Krause09 是一篇关于三维条形图的短小评论，感兴趣的读者不妨一读。
 
@@ -207,19 +221,23 @@ ggparcoord(music, columns = c(4, 5, 3), groupColumn = "type")
 data(cn_vs_us)
 cn_vs_us[, 1:3]
 ```
-```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="2010 年中美国力对比扇形图 ",echo=FALSE,out.width="70%",fig.link="https://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
+```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="(ref:cn-us-guardian-s)",echo=FALSE,out.width="70%",fig.link="https://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
 knitr::include_graphics(path = "images/China-v-US-graphic.jpg")
 ```
 
-(ref:cn-us-guardian) 2010 年中美国力对比：中国人口多、污染重、GDP 增长快；美国人均 GDP 高、市值高、失业率高。
+(ref:cn-us-guardian) 2010 年中美国力对比：中国人口多、污染重、GDP 增长快；美国人均 GDP 高、市值高、失业率高
 
-```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="2010 年中美国力对比条形图"}
+(ref:cn-us-guardian-s) 2010 年中美国力对比扇形图
+
+```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)"}
 ggplot(data = cn_vs_us, aes(x = country, y = value, fill = country)) +
   geom_col() +
   facet_wrap(~metric, scales = "free_y", ncol = 3)
 ```
 
-(ref:cn-us-redraw) 重新调整后的 2010 年中美国力对比图：条形图的高度表达数值大小更清楚（图中红色代表中国）。
+(ref:cn-us-redraw) 重新调整后的 2010 年中美国力对比图：条形图的高度表达数值大小更清楚（图中红色代表中国）
+
+(ref:cn-us-redraw-s) 2010 年中美国力对比条形图
 
 由于我们的主要目的是比较两国的指标，因此简单的条形图足以完成这个任务，如图 \@ref(fig:cn-us-redraw) 所示。我们大致上按中国指标与美国指标的比率大小排列这些条形图，这幅图看起来比《卫报》的图形逊色许多，但不会造成任何误解，也能更客观反映两国差异。当然，更好的解决方案可能是保持原有的“放射性”设计，但把扇形替换为矩形条。
 
@@ -247,7 +265,7 @@ myfun <- function(x) {
 }
 aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 ```
-```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="演员的薪酬直方图及薪酬与电视剧评分的散点图",fig.subcap=c("",""),fig.ncol=1}
+```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1}
 ggplot(aes(x = pay), data = tvearn) +
   geom_histogram(binwidth = 20000) +
   facet_grid(gender ~ .)
@@ -261,7 +279,9 @@ ggplot(aes(x = rating, y = pay, color = type), data = tvearn) +
   )
 ```
 
-(ref:tvearn) 最高收入的男女演员的薪酬直方图（上）：薪酬呈右偏，女演员平均薪酬略高。IMDB 评分与薪酬的关系非线性。
+(ref:tvearn) 最高收入的男女演员的薪酬直方图（上）：薪酬呈右偏，女演员平均薪酬略高。IMDB 评分与薪酬的关系非线性
+
+(ref:tvearn-s) 演员的薪酬直方图及薪酬与电视剧评分的散点图
 
 可以看出女演员平均薪酬比男演员略高。图 \@ref(fig:tvearn) 上图为男女演员各自薪酬的直方图，可以看出直方图呈右偏趋势，这是由少数演员的薪酬极高造成的；下图为 IMDB 评分与薪酬的关系，我们将电视剧类别用不同颜色标注出来，发现不同类别之间的电视剧薪酬随着评分的变化关系并不相同。图中曲线为 LOWESS 曲线（\@ref(subsec:lowess) 小节），对正剧而言， IMDB 评分与演员薪酬似乎没有关系，曲线几乎为一条水平线；对喜剧而言，这个关系并非直线关系，评分在 7.9 附近的薪酬最高，此前的薪酬随着评分上升而增加，此后的薪酬则大多回落到 20 万美元以下并再次呈上升趋势。为了理解这些现象背后的原因，我们有必要研究一下 IMDB 的评分机制。据作者的初步了解，IMDB 网站并非简单将用户的打分平均，而是综合考虑诸多用户背景信息而加权得到的评分。为何评分高的喜剧不如评分低的喜剧中的演员薪酬高？是制片公司的问题还是 IMDB 评分的问题？作者并非美剧迷，对这个问题的探索就到此为止，感兴趣的读者可以继续利用数据中的其它变量进一步分析。
 
@@ -278,7 +298,7 @@ head(CLELAL09, 10) # 前 10 行数据
 
 这里我们需要解释一下，NBA 比赛场地尺寸为 $94\times50$ 英寸，而数据中的 `realx` 和 `realy` 变量是转换过的坐标：假设左半场为骑士（向右半场进攻），右半场为湖人（向左半场进攻），那么 `realx` 和 `realy` 分别指的是球员位置离左侧底线和下边边线的距离（单位为英寸）。简单推理可知，对于骑士来说，`realx` 一定大于 47，湖人则小于 47，例如上面数据中湖人队的加索尔（Gasol）在第 1 节于坐标 $(14,31)$ 处投篮命中。图 \@ref(fig:CLEvsLAL09) 是一幅球场示意图，读者可以对照理解这里的坐标，甚至可以找出图中代表加索尔的点。
 
-```{r assists-sna,fig.cap="(ref:assists-sna)",fig.scap=" 骑士与湖人比赛的助攻网络图 ",message=FALSE}
+```{r assists-sna,fig.cap="(ref:assists-sna)",fig.scap=" (ref:assists-sna-s)",message=FALSE}
 library(sna, warn.conflicts = FALSE)
 par(xpd = TRUE, mar = c(0, 2.4, 0, 3.2))
 set.seed(2011) # 元素位置是随机安排的，设定种子固定它们
@@ -286,7 +306,9 @@ data(assists, package = "MSG")
 gplot(assists, displaylabels = TRUE, label.cex = .7)
 ```
 
-(ref:assists-sna) 骑士与湖人比赛的助攻网络图：詹姆斯曾为 5 位队友助攻，而奥尼尔不为任何人助攻。
+(ref:assists-sna) 骑士与湖人比赛的助攻网络图：詹姆斯曾为 5 位队友助攻，而奥尼尔不为任何人助攻
+
+(ref:assists-sna-s) 骑士与湖人比赛的助攻网络图
 
 在我们分析坐标与投篮结果之前，我们先看一下这场比赛中的助攻情况如图 \@ref(fig:assists-sna)；**sna** 包中的 `gplot()` 函数可以基于给定的相互关系矩阵很方便作出网络图，如图 \@ref(fig:assists-sna) 的数据矩阵形式如下：
 
@@ -297,11 +319,13 @@ assists[1:5, 1:5]
 West 为 Varejao、Hickson 和 James 各助攻 1 次，James 为 Parker 和 West 各助攻一次。数据中一共有 22 位球员，因此完整数据矩阵维数为 $22\times22$。网络图能让我们很快看出比赛中的助攻关系，图中两个“聚类”显然分别是骑士和湖人的队员。总体来看，骑士队内部助攻次数较多，助攻网比较大，但也有些特立独行的球员如“大鲨鱼”奥尼尔（中锋），他在这场比赛里没有为任何人助攻。湖人队依然是以科比为中心，这一点想必没有读者会觉得惊讶。据说因为莫 $\cdot$ 威廉姆斯在雄鹿队的时候不爱给易建联传球，所以中国球迷给他取名“莫不传”，实际上这场比赛中他也是有助攻的。
 
 
-```{r CLEvsLAL09,results='hide',fig.cap="(ref:CLEvsLAL09)",fig.scap=" 投篮坐标与结果的平滑散点图 ",message=FALSE}
+```{r CLEvsLAL09,results='hide',fig.cap="(ref:CLEvsLAL09)",fig.scap="(ref:CLEvsLAL09-s)",message=FALSE}
 demo("basketball", package = "MSG")
 ```
 
-(ref:CLEvsLAL09) 投篮坐标与结果的平滑散点图：绝大多数投篮的位置都在篮筐下，湖人投篮次数多但命中率低。
+(ref:CLEvsLAL09) 投篮坐标与结果的平滑散点图：绝大多数投篮的位置都在篮筐下，湖人投篮次数多但命中率低
+
+(ref:CLEvsLAL09-s) 投篮坐标与结果的平滑散点图
 
 也许是这场比赛骑士队的协作比较好，最终赢了湖人，不过这都是事后分析。我们可以再看看正常比赛中所有投篮的地点如图 \@ref(fig:CLEvsLAL09)，显然这是一幅平滑散点图，颜色越深的区域说明在该地点进行的投篮尝试最多。毫无疑问，几乎所有的篮球比赛都有一个共同特点，那就是大多数投篮都是在篮筐下进行的。湖人进攻时的投篮地点分布相对比较均匀，而骑士的进攻地点则似乎有两处“空白区域”，这很容易让我们考虑，投篮地点和进球结果之间有什么关系？
 
@@ -309,7 +333,7 @@ demo("basketball", package = "MSG")
 
 本例的数据比前面的例子都大，所以不适合把每一条数据的细节都展示出来，我们需要想办法尽量展示数据的某种概要信息。助攻网络图让我们一眼就能看清球员之间的助攻关系，每个人的贡献都在网络图中显示了出来。篮球场平滑散点图实际上是用低层作图函数和三角函数按照尺寸一点一点勾画出来，在上面叠上一层平滑散点图，让这幅图既能紧扣故事主题，又能展示数据中的信息。四瓣图是对列联表的一种代替，它同时显示了列联表数据和相应的统计推断，避免只是基于数据草率得出结论。
 
-```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap=" 球场左右侧投篮命中的四瓣图 "}
+```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)"}
 fourfoldplot(
   with(
     subset(CLELAL09, realy != 25),
@@ -327,8 +351,9 @@ fourfoldplot(
 
 (ref:basketball-fourfold) 球场左右侧投篮命中的四瓣图：两队从球场两侧投篮命中率是否有差别？
 
-在 **animation** 包中有一个动画展示了这场比赛按时间顺序的所有投篮信息（队员、位置、结果和时间等），参见 `demo('CLEvsLAL', package = 'animation')`。专业球迷可以去前面提到的网站下载数据进一步分析。
+(ref:basketball-fourfold-s) 球场左右侧投篮命中的四瓣图
 
+在 **animation** 包中有一个动画展示了这场比赛按时间顺序的所有投篮信息（队员、位置、结果和时间等），参见 `demo('CLEvsLAL', package = 'animation')`。专业球迷可以去前面提到的网站下载数据进一步分析。
 
 ### 神奇数字 {#subsec:percentage}
 
@@ -339,11 +364,13 @@ data(gov.cn.pct, package = "MSG")
 # 如 0.01% 在所有网站中出现的频数是 171000 次
 head(gov.cn.pct)
 ```
-```{r gov-cn-pct,fig.cap="(ref:gov-cn-pct)",fig.scap="中国政府网站中的百分比数据 LOWESS 图",results='hide',fig.keep="first"}
+```{r gov-cn-pct,fig.cap="(ref:gov-cn-pct)",fig.scap="(ref:gov-cn-pct-s)",results='hide',fig.keep="first"}
 example("gov.cn.pct", package = "MSG")
 ```
 
-(ref:gov-cn-pct) 中国政府网站中的百分比数据 LOWESS 图：首先我们画出每个百分比数据的频数（左上），然后放大 $[10\%,\,11\%]$ 区间上的频数图（右上），继而猜测数据有四舍五入的特征，所以分别对整数位和非整数位的百分比画 LOWESS 曲线（左下），最后分别对保留一位和两位小数的百分比画 LOWESS 曲线（右下）。
+(ref:gov-cn-pct) 中国政府网站中的百分比数据 LOWESS 图：首先我们画出每个百分比数据的频数（左上），然后放大 $[10\%,\,11\%]$ 区间上的频数图（右上），继而猜测数据有四舍五入的特征，所以分别对整数位和非整数位的百分比画 LOWESS 曲线（左下），最后分别对保留一位和两位小数的百分比画 LOWESS 曲线（右下）
+
+(ref:gov-cn-pct-s) 中国政府网站中的百分比数据 LOWESS 图
 
 [^news-sina]: <https://news.sina.com.cn/c/2009-12-12/034016758777s.shtml>
 [^chem-hack]: 原网页 http://chemhack.com/cn/2009/12/87-53-stat/ 已失效，[快照](https://web.archive.org/web/20120115032226/http://chemhack.com/cn/2009/12/87-53-stat/)
@@ -354,7 +381,7 @@ example("gov.cn.pct", package = "MSG")
 
 ### 化点为线 {#subsec:lowess}
 
-```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="海拔高度与物种数目的 LOWESS 曲线"}
+```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)"}
 data(PlantCounts, package = "MSG")
 par(mar = c(4.5, 4.5, .1, 0.2), mfrow = c(1, 2), pch = 20)
 with(PlantCounts, {
@@ -377,7 +404,9 @@ with(PlantCounts, {
 })
 ```
 
-(ref:PlantCounts) 海拔高度与物种数目的 LOWESS 曲线：左图为范围参数从 1\% 到 100\% 的 LOWESS 曲线（深色表示范围参数小），右图为 200 次 Bootstrap 重抽样之后的数据分别建立的 LOWESS 曲线。
+(ref:PlantCounts) 海拔高度与物种数目的 LOWESS 曲线：左图为范围参数从 1\% 到 100\% 的 LOWESS 曲线（深色表示范围参数小），右图为 200 次 Bootstrap 重抽样之后的数据分别建立的 LOWESS 曲线
+
+(ref:PlantCounts-s) 海拔高度与物种数目的 LOWESS 曲线
 
 我们知道线性模型只是非线性模型的特例，尤其对于二元变量，我们不应仅仅以线性模型的简便性而直接假设线性关系。局部加权回归散点平滑法（Locally Weighted Scatterplot Smoother，LOWESS）提供了一种非常方便的探索二元变量之间关系的图示方法 [@Cleveland79]。LOWESS 主要思想是取一定比例的局部数据，在这部分子集中拟合多项式回归曲线，这样我们便可以观察到数据在局部展现出来的规律和趋势；而通常的回归分析往往是根据全体数据建模，这样可以描述整体趋势，但现实生活中规律不总是（或者很少是）教科书上告诉我们的一条直线。我们将局部范围从左往右依次推进，最终一条连续的曲线就被计算出来了。显然，曲线的光滑程度与我们选取数据比例有关：比例越少，拟合越不光滑（因为过于看重局部性质），反之越光滑（捕捉全局性质）。普通的线性回归可以看作 LOWESS 的特例：数据选取范围为全部数据，局部回归模型用一阶线性回归。
 
@@ -390,13 +419,15 @@ with(PlantCounts, {
 
 三元图（Ternary diagram）是用来展示一类特殊数据的图形：数据只有三列，每一行之和为 1 或 100，这类数据通常是成分数据，在化学中比较常见，比如某混合物中各种成分的百分比。又如，我们知道土壤可以分为沙土（`sand`）、壤土（`clay`）和黏土（`silt`）三种成分或类别，从不同地点采集的土壤样本在这三种成分上的分布可能不一样。
 
-```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="西班牙 Murcia 省的土壤样本三元图"}
+```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="(ref:murcia-ternary-s)"}
 data(murcia, package = "MSG")
 library(vcd)
 ternaryplot(murcia[, 2:4], main = "", col = vec2col(murcia$site), cex = .5)
 ```
 
-(ref:murcia-ternary) 西班牙 Murcia 省的土壤样本三元图：三角形的三个顶点分别代表沙土、壤土和黏土。图中的点越靠近某个顶点则说明该成分越大。
+(ref:murcia-ternary) 西班牙 Murcia 省的土壤样本三元图：三角形的三个顶点分别代表沙土、壤土和黏土。图中的点越靠近某个顶点则说明该成分越大
+
+(ref:murcia-ternary-s) 西班牙 Murcia 省的土壤样本三元图
 
 **MSG** 包中的 `murcia` 数据包含了西班牙 Murcia 省的 88 个土壤样本的成分，这些样本取自 8 个样地，每个样地随机取 11 处样本。我们关心的问题是，用这些成分数据能否区分出不同的样地？
 
@@ -424,14 +455,16 @@ head(murcia) # 数据前 6 行
 ```{r eqMaps-demo,eval=FALSE}
 demo("eqMaps", package = "MSG")
 ```
-```{r RgoogleMaps,fig.cap="(ref:RgoogleMaps)",fig.scap=" 在卫星地图上标记地震发生的地点和震级 ",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
+```{r RgoogleMaps,fig.cap="(ref:RgoogleMaps)",fig.scap="(ref:RgoogleMaps-s)",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
 knitr::include_graphics(path = c(
   "images/RgoogleMaps-1.png",
   "images/RgoogleMaps-2.png"
 ))
 ```
 
-(ref:RgoogleMaps) 在卫星地图上标记地震发生的地点和震级：左图仅标记地点，右图用圆圈大小代表震级大小。
+(ref:RgoogleMaps) 在卫星地图上标记地震发生的地点和震级：左图仅标记地点，右图用圆圈大小代表震级大小
+
+(ref:RgoogleMaps-s) 在卫星地图上标记地震发生的地点和震级
 
 图 \@ref(fig:RgoogleMaps) 显示了地震震源位置分布情况，背景采用了 Google Maps 提供的卫星地图数据。左图仅仅体现了震源位置的分布情况，不妨考虑将震级的大小映射为圆的半径大小，但图中存在着部分地震多发地带，如果使用圆来呈现震源的位置，这些区域的圆将出现严重的叠加现象，此处可以尝试使用 \@ref(sec:plot) 节中的透明度叠加来克服这类重叠问题，如右图所示，然而这里由于数据量不够大，这种透明度叠加的效果并不是非常明显。
 
@@ -465,7 +498,7 @@ SongWords[sample(nrow(SongWords), 10), ]
 ```{r hclust-usage}
 usage(hclust)
 ```
-```{r song-words-hclust, fig.cap="(ref:song-words-hclust)",fig.scap="宋词作者层次聚类谱系图"}
+```{r song-words-hclust, fig.cap="(ref:song-words-hclust)",fig.scap="(ref:song-words-hclust-s)"}
 SongCorr <- cor(SongWords) # 词风相关矩阵
 song.hc <- hclust(as.dist(1 - SongCorr))
 par(mar = c(0.5, 4, .2, 0.1))
@@ -473,19 +506,23 @@ plot(song.hc, main = "", cex = .8)
 rect.hclust(song.hc, k = 4, border = "red")
 ```
 
-(ref:song-words-hclust) 宋词作者层次聚类谱系图：从下到上，16 位作者逐渐“合并”，最终聚为 1 类。作者在纵轴上的位置高低标明了他们进入类的先后顺序。
+(ref:song-words-hclust) 宋词作者层次聚类谱系图：从下到上，16 位作者逐渐“合并”，最终聚为 1 类。作者在纵轴上的位置高低标明了他们进入类的先后顺序
+
+(ref:song-words-hclust-s) 宋词作者层次聚类谱系图
 
 图 \@ref(fig:song-words-hclust) 背后的距离矩阵是“$1-\text{相关系数矩阵}$”，意即：若两位词人之间的相关系数为 1 （完全正相关），那么他们的距离为 $1-1=0$；若相关系数为-1 （完全负相关），那么他们之间的距离为 $1-(-1)=2$。我们知道相关系数取值在-1 到 1 之间，所以这里的距离矩阵确实能体现作者之间的“距离” — 距离越大，则相关系数越低。图中我们可以看到，所有作者中，马钰和谭处端最先聚为一类，这是因为他们之间的距离最小，接下来苏轼和黄庭坚聚为一类，他们的距离次之，后面不断有新的作者聚为一类，如晏几道和欧阳修，也有一些作者直接加入现有的类，如王处一加入马钰和谭处端。我们可以根据这幅谱系图将作者划分为任意数量的类，只需在图的纵轴上以一条横线将这棵倒挂的“树”切割为“树枝”即可（读者若愿意，将它想象成吊着的葡萄枝也未尝不可）。图 \@ref(fig:song-words-hclust) 中的红色矩形框是将作者分为 4 类的结果，我们也可以将他们分为 2 类（结果将是道家作者和其他作者）或者更多类。
 
 实际上我们也可以直接画出相关系数矩阵： **corrplot** 包 [@corrplot] 提供了若干可视化相关系数的方法，图 \@ref(fig:song-words-corr) 就是对宋词作者相关系数矩阵可视化的一种结果，由于这里我们使用了同样的聚类方法，因此这幅图中得到的最终结果和图 \@ref(fig:song-words-hclust) 是一样的。
 
-```{r song-words-corr,fig.cap="(ref:song-words-corr)",fig.scap=" 宋词作者词风相关矩阵图 ",message=FALSE}
+```{r song-words-corr,fig.cap="(ref:song-words-corr)",fig.scap="(ref:song-words-corr-s)",message=FALSE}
 # 做系统聚类并根据聚类结果将作者分为 4 类
 library(corrplot)
 corrplot(SongCorr, order = "hc", diag = FALSE, addrect = 4, tl.cex = 0.75)
 ```
 
-(ref:song-words-corr) 宋词作者词风相关矩阵图：主对角线上是对应作者的名字，圆圈大小、颜色深浅和相关系数的绝对值正相关，蓝色、红色分别表示系数的正负，如图右侧颜色图例所示。
+(ref:song-words-corr) 宋词作者词风相关矩阵图：主对角线上是对应作者的名字，圆圈大小、颜色深浅和相关系数的绝对值正相关，蓝色、红色分别表示系数的正负，如图右侧颜色图例所示
+
+(ref:song-words-corr-s) 宋词作者词风相关矩阵图
 
 观察图 \@ref(fig:song-words-corr) 可以一目了然地看到词人之间风格的相似程度。词人被划分为 4 类，如图中方框所示。可以看出，全真四子的词风非常接近，和其他词人风格差别较大； 而全真四子中，只有丘处机和苏轼、辛弃疾、黄庭坚等人的词呈正相关，而其他三子和另外 12 位作者相关系数都为负数。金庸武侠小说中写到，丘处机侠骨热肠，多行走江湖，而他的师兄弟们则执着于道；从这里词风分析来看，亦有相似的结果。李煜、晏殊、姜夔、辛弃疾、黄庭坚、苏轼、秦观、周邦彦、欧阳修、晏几道属于第二类，该类中李煜和其他作者的关系系数较小，其他 9 位之间的相关系数都较大，尤其是辛弃疾、黄庭坚、苏轼之间，苏辛都是豪放派词人的代表，而黄庭坚是苏轼的第一弟子。第三类只包含了李清照一人，她和其他 15 位词人的关系都很弱，从图中看她是最为独特的词人。 实际上，李清照词的与众不同是广为人知的。她的名作《词论》中，就对很多词人进行了评价：
 
@@ -503,7 +540,7 @@ corrplot(SongCorr, order = "hc", diag = FALSE, addrect = 4, tl.cex = 0.75)
 $$R_{i,j}=\frac{\mbox{同时出现高频词}i\mbox{和}{j}\mbox{的词的数目}}{\mbox{出现高频词}i\mbox{或}j\mbox{的词的数目}}$$
 显然当高频词 $i$ 和 $j$ 总是同时出现时，关系系数为 1；当它们从来不同时出现在同一首词时，关系系数为 0。据此可以得到一个 $100\times100$ 的矩阵。利用 **igraph** 包 [@igraph] 画出这 100 个词的关系网络图如图 \@ref(fig:song-high-freq)。 
 
-```{r song-high-freq,fig.cap="(ref:song-high-freq)",fig.scap=" 宋词前 100 高频词的关系网络图 "}
+```{r song-high-freq,fig.cap="(ref:song-high-freq)",fig.scap="(ref:song-high-freq-s)"}
 library(igraph, warn.conflicts = FALSE)
 load(system.file("extdata", "HighFreq100.rda", package = "MSG"))
 g <- graph.adjacency((HighFreq100 > 0.05) * HighFreq100,
@@ -532,7 +569,9 @@ legend(0.7, -0.8, c("[0.05,0.10)", "[0.10,0.20)", "[0.20,0.30)", "[0.30,0.40)"),
 )
 ```
 
-(ref:song-high-freq) 宋词前 100 高频词的关系网络图：节点越多的类中圆圈颜色越深，节点间连线的粗细颜色对应不同的关系系数，如逍遥和自在之间的连线最粗。
+(ref:song-high-freq) 宋词前 100 高频词的关系网络图：节点越多的类中圆圈颜色越深，节点间连线的粗细颜色对应不同的关系系数，如逍遥和自在之间的连线最粗
+
+(ref:song-high-freq-s) 宋词前 100 高频词的关系网络图
 
 观察图 \@ref(fig:song-high-freq)，可以发现这一百个高频词被划分为多个类，有些类包含多个节点，是个大家族；而有些类仅有一个节点。将包含两个节点以上的类整理如下：
 
@@ -598,7 +637,7 @@ plot(x, y, pch = z, col = rainbow(5)[z + 1])
 for (i in z) abline(lm(y ~ x, subset = z == i), col = "darkgray")
 ```
 
-(ref:multireg-scatter) 控制变量 $z$ 之后 $y$ 与 $x$ 的关系：左图看似 $x$ 和 $y$ 正向关系，而右图中控制了 $z$ 取值水平之后 $x$ 和 $y$ 就变成了负向关系。
+(ref:multireg-scatter) 控制变量 $z$ 之后 $y$ 与 $x$ 的关系：左图看似 $x$ 和 $y$ 正向关系，而右图中控制了 $z$ 取值水平之后 $x$ 和 $y$ 就变成了负向关系
 
 (ref:multireg-scatter-s) 控制变量 $z$ 之后 $y$ 与 $x$ 的关系
 
@@ -637,7 +676,7 @@ symbols(x, z, y,
 
 (ref:interaction-bubble-s) 连续型自变量的交互作用气泡图
 
-(ref:interaction-bubble) 连续型自变量的交互作用气泡图：左图中 $x$ 与 $z$ 有交互效应，右图无交互效应。气泡图中，气泡的大小与真实的 $y$ 值大小成正比，所以如果我们要查看自变量对 $y$ 的影响，只需要看自变量对气泡大小的影响即可。以左图为例：例如分别给定 $x=1$ 和 $x=10$，随着 $z$ 的增大（从下向上看），$y$ 值在增大，但 $x=1$ 和 $x=10$ 处的增大速度明显不一样（后者快），也就是说，$z$ 对 $y$ 的影响大小受 $x$ 的取值水平影响。同理可以看右图，任意给定 $x$ 值，$y$ 随着 $z$ 的增大速度都一样，说明 $x$ 与 $z$ 之间没有交互效应。
+(ref:interaction-bubble) 连续型自变量的交互作用气泡图：左图中 $x$ 与 $z$ 有交互效应，右图无交互效应。气泡图中，气泡的大小与真实的 $y$ 值大小成正比，所以如果我们要查看自变量对 $y$ 的影响，只需要看自变量对气泡大小的影响即可。以左图为例：例如分别给定 $x=1$ 和 $x=10$，随着 $z$ 的增大（从下向上看），$y$ 值在增大，但 $x=1$ 和 $x=10$ 处的增大速度明显不一样（后者快），也就是说，$z$ 对 $y$ 的影响大小受 $x$ 的取值水平影响。同理可以看右图，任意给定 $x$ 值，$y$ 随着 $z$ 的增大速度都一样，说明 $x$ 与 $z$ 之间没有交互效应
 
 这里我们提出用气泡图的方式来展示连续变量的交互效应。模拟场景如下：
 
@@ -687,13 +726,15 @@ y1 <- c(y, 50)
 x2 <- c(x, jitter(rep(mean(x), 500), 10))
 y2 <- c(y, jitter(rep(mean(y), 500), 10))
 ```
-```{r OLS-LMS,fig.width=7,fig.height=3.5,fig.cap="(ref:OLS-LMS)",fig.scap="LMS 回归的稳健性及其缺点 "}
+```{r OLS-LMS,fig.width=7,fig.height=3.5,fig.cap="(ref:OLS-LMS)",fig.scap="(ref:OLS-LMS-s)"}
 par(mar = c(4.5, 4.5, 1, 0.2), mfrow = c(1, 2), pch = 20)
 olsLms(x1, y1)
 olsLms(x2, y2, cex = c(rep(1, 50), rep(0.1, 500)))
 ```
 
-(ref:OLS-LMS) LMS 回归的稳健性及其缺点：左图体现了 LMS 回归的稳健性，右图体现了 LMS 回归对中心数据点敏感的特征。
+(ref:OLS-LMS) LMS 回归的稳健性及其缺点：左图体现了 LMS 回归的稳健性，右图体现了 LMS 回归对中心数据点敏感的特征
+
+(ref:OLS-LMS-s) LMS 回归的稳健性及其缺点
 
 图 \@ref(fig:OLS-LMS) 中的两幅散点图及其回归直线表明了 LMS 回归对离群点的稳健性和对中心数据的敏感性。左图中 OLS 回归直线的斜率明显被右上角的离群点“拉”大，但 LMS 回归并没有受离群点影响，它的斜率反映了大部分数据所体现的规律；右图中 OLS 回归直线斜率反映了所有数据的趋势，而 LMS 回归的斜率则明显违背了数据的趋势。通过模拟和图形，LMS 回归的优缺点一目了然。
 
@@ -722,7 +763,7 @@ for (i in 1:100) {
 }
 ```
 
-```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="用部分抽样方法诊断多个离群点",dev='tikz',fig.process=to_png,fig.width=4,fig.height=4,fig.showtext=FALSE,small.mar=FALSE}
+```{r outlier-resample,fig.cap="(ref:outlier-resample)",fig.scap="(ref:outlier-resample-s)",dev='tikz',fig.process=to_png,fig.width=4,fig.height=4,fig.showtext=FALSE,small.mar=FALSE}
 par(mar = c(4.1, 4.1, 0.5, 0.5), mfrow = c(2, 2), pch = 20)
 plot(x, y, col = rgb(0, 0, 0, 0.5), xlab = "$x$", ylab = "$y$")
 abline(fit)
@@ -733,7 +774,9 @@ abline(fit1) # 部分抽样：前 60 条数据
 plot(betaSim, ylab = "$\\beta_1$")
 ```
 
-(ref:outlier-resample) 用部分抽样方法诊断多个离群点：普通线性回归受离群点影响（左上），但传统离群点诊断方法如 Cook 距离并不能诊断出所有离群点（右上），如果我们对数据进行抽样（左下），则可以得到几类回归系数值（右下）。
+(ref:outlier-resample) 用部分抽样方法诊断多个离群点：普通线性回归受离群点影响（左上），但传统离群点诊断方法如 Cook 距离并不能诊断出所有离群点（右上），如果我们对数据进行抽样（左下），则可以得到几类回归系数值（右下）
+
+(ref:outlier-resample-s) 用部分抽样方法诊断多个离群点
 
 图 \@ref(fig:outlier-resample) 展示了传统诊断方法与这里提出的抽样诊断方法的比较。左上图显示普通线性回归受离群点影响严重：理论上回归直线应该是水平的（斜率为 0），但右上角的两个离群点将回归直线拉起；右上图画出了这个回归模型中每个样本点的 Cook 距离，从图中可以看到，只有最后一条数据是离群点，而事实上倒数第二条数据也是离群点，只是删除这一条数据之后回归模型不会有太大变化（受最后一条数据掩盖），所以它不能被 Cook 距离识别出来；左下图显示了一种抽样的可能性：我们抽取数据的前 60 条（图中用实心点表示），去掉数据的后 42 条（空心点表示），然后重新建立回归模型，并画出回归直线，此时我们可以看到，由于去掉了两个离群点，回归直线的斜率大致为 0，与理论相符了；基于这种抽样的想法，我们将这个步骤重复 100 次，每次重新随机抽取一部分数据（可能包含离群点，也可能不包含），并重新计算回归系数，最终把 100 次的斜率都记录下来并画在右下图中，可以看出，这些斜率大致分为三群，这种“多群”的特征反映出原数据中有不止一个离群点（否则 100 个斜率只会分为两群：包含或不包含一个离群点的结果），靠近 0 的斜率是抽样不包含两个离群点的结果，而靠近 1 的斜率是包含两个离群点的结果，中间一层斜率是包含一个离群点的结果（可能是最后一条数据，也可能是倒数第二条）。这样我们就成功诊断出传统方法找不出来或者找不完全的离群点现象。这个模拟的 Flash 动画版本可以在网页 <https://yihui.org/cn/2008/09/multiple-outliers-detection/> 观看。
 
@@ -741,42 +784,45 @@ plot(betaSim, ylab = "$\\beta_1$")
 
 ## 思考与练习
 
-(ref:randomForest-music) 音乐数据预测概率的棱锥图：四种颜色表示四个艺术家，点越接近于顶点则预测为该艺术家的概率越大。
+(ref:randomForest-music) 音乐数据预测概率的棱锥图：四种颜色表示四个艺术家，点越接近于顶点则预测为该艺术家的概率越大
+
+(ref:randomForest-music-s) 音乐数据预测概率的棱锥图
 
 1. 三元图的思想可以被扩展到四维的情况，但此时的图形就不是平面图了，而是一个三棱锥，它有四个顶点。以下 R 代码先对 \@ref(subsec:music) 小节的 `music` 数据做了一个随机森林模型，然后用这个模型预测原始数据中每个样本的来自每个艺术家的可能性（有四种可能，概率之和为 1，因为有四个艺术家）。通常我们取最大可能的预测为一个样本的因变量预测值，但这样做有时候会显得武断，对数据探索不够，例如四个概率值为 $(0.01,\,0.49,\,0.48,\,0.02)$，那么我们的预测结果一定是第二类吗？显然第三类的概率也很大，那么这个样本究竟有什么异常情况导致预测值在两类上的概率都比较大？此时不妨用 GGobi （\@ref(sec:dynamic-graphics) 小节）看一看这些预测概率的“形状”。图 \@ref(fig:randomForest-music) 就是这样一个四列概率值的三维图形，从这一幅图形可能很难感受到它是棱锥形状的，当我们使用 GGobi 的“二维巡游”模式时就能看清楚了。在三棱锥中间位置上的样本都是有较高不确定性的音乐样本，即：很难判断它们究竟该预测为哪一类。用 GGobi 的刷子识别这些点，看看它们对应的原始变量值是否有什么异常。
 
-    ```{r,eval=FALSE}
-    data(music, package = "MSG")
-    library(randomForest) # 建立随机森林模型
-    fit <- randomForest(artist ~ ., data = music[, -2])
-    music.prob <- predict(fit, type = "prob") # 预测四类概率
-    library(rggobi)
-    g <- ggobi(music.prob)
-    music.ggobi <- ggobi_get()$music.prob
-    glyph_colour(music.ggobi) <- as.integer(music$artist)
-    d <- displays(g)[[1]]
-    pmode(d) <- "2D Tour" # 二维巡游模式
-    # 保存截图 ggobi_display_save_picture(path = 'randomForest-music.png')
-    ```
-    ```{r randomForest-music,fig.cap="(ref:randomForest-music)",fig.scap="音乐数据预测概率的棱锥图",echo=FALSE}
-    knitr::include_graphics(path = "images/randomForest-music.png", dpi = NA)
-    ```
+```{r,eval=FALSE}
+data(music, package = "MSG")
+library(randomForest) # 建立随机森林模型
+fit <- randomForest(artist ~ ., data = music[, -2])
+music.prob <- predict(fit, type = "prob") # 预测四类概率
+library(rggobi)
+g <- ggobi(music.prob)
+music.ggobi <- ggobi_get()$music.prob
+glyph_colour(music.ggobi) <- as.integer(music$artist)
+d <- displays(g)[[1]]
+pmode(d) <- "2D Tour" # 二维巡游模式
+# 保存截图 ggobi_display_save_picture(path = 'randomForest-music.png')
+```
+
+```{r randomForest-music,fig.cap="(ref:randomForest-music)",fig.scap="(ref:randomForest-music-s)",echo=FALSE}
+knitr::include_graphics(path = "images/randomForest-music.png", dpi = NA)
+```
 
 1. 自行编写一个画三元图的函数，并体会这种从三维到二维的变换。以下是不完整的代码，核心部分已经完成，需要实现控制边长范围和坐标网格线等功能：
 
-    ```{r triplot-fun}
-    triplot <- function(x, ...) {
-      x <- as.matrix(x)
-      x <- x / rowSums(x) # 将行之和标准化到 1
-      plot(x[, 2] + x[, 3] / 2, x[, 3] * sqrt(3) / 2, asp = 1, 
-           ann = FALSE, axes = FALSE, xlim = c(0, 1), 
-           ylim = c(0, sqrt(3) / 2), ...)
-      polygon(c(0, 1, 1 / 2), c(0, 0, sqrt(3) / 2))
-    }
-    # 测试数据
-    data(murcia, package = "MSG")
-    triplot(murcia[, 2:4], col = vec2col(murcia$site), pch = 19)
-    ```
+```{r triplot-fun}
+triplot <- function(x, ...) {
+  x <- as.matrix(x)
+  x <- x / rowSums(x) # 将行之和标准化到 1
+  plot(x[, 2] + x[, 3] / 2, x[, 3] * sqrt(3) / 2, asp = 1, 
+        ann = FALSE, axes = FALSE, xlim = c(0, 1), 
+        ylim = c(0, sqrt(3) / 2), ...)
+  polygon(c(0, 1, 1 / 2), c(0, 0, sqrt(3) / 2))
+}
+# 测试数据
+data(murcia, package = "MSG")
+triplot(murcia[, 2:4], col = vec2col(murcia$site), pch = 19)
+```
 
 1. 对于统计模拟来说，使用静态图形有什么潜在危险或劣势？换言之，动画有什么优势？另一方面，当今的计算机资源如此强大，让模拟变得非常简单，你是否担心模拟数据泛滥成灾？
 

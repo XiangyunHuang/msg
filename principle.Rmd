@@ -20,21 +20,23 @@ library(MSG)
 
 R 基础图形系统中默认的点的样式是空心点，在很多情况下这并不是一个好的选择，因为空心点在图中看起来太不起眼，尤其是数据点较少的时候。我们延续 \@ref(subsec:tvearn) 小节中的美剧演员收入数据，在这里讨论如何突出主要元素。图 \@ref(fig:pay-rating-points) 是演员收入与电视剧评分的散点图，左图使用了默认的空心点，右图使用了实心点。这批数据的样本量只有 72，左图中的点所用的墨水可能和坐标轴等次要元素差不多，所以数据在图中也显得不够突出，而实心点则很明显占据了一幅图的视觉重心。
 
-```{r pay-rating-points,fig.scap="演员收入与电视剧评分的空心和实心散点图",fig.cap="(ref:pay-rating-points)",fig.width=7,fig.height=3.5}
+```{r pay-rating-points,fig.scap="(ref:pay-rating-points-s)",fig.cap="(ref:pay-rating-points)",fig.width=7,fig.height=3.5}
 par(mfrow = c(1, 2))
 data("tvearn", package = "MSG")
 plot(pay/10^4 ~ rating, data = tvearn, ylab = "pay (10^4)") # 默认为空心点
 plot(pay/10^4 ~ rating, data = tvearn, pch = 19, ylab = "pay (10^4)") # 改为实心点
 ```
 
-(ref:pay-rating-points) 演员收入与电视剧评分的空心和实心散点图：右图的视觉冲击力更强。
+(ref:pay-rating-points) 演员收入与电视剧评分的空心和实心散点图：右图的视觉冲击力更强
+
+(ref:pay-rating-points-s) 演员收入与电视剧评分的空心和实心散点图
 
 这两幅图实际上有个共同的问题，就是图中空白区域太大，这是由最高收入的那位演员引起的。这种情况也从一定程度上降低了图形元素的表达效率，因为我们放眼望去，一幅图的一半区域都是空白，绝大部分点都集中在图的下半部分。当然，在这个问题上我们也不能绝对化，因为有时候这种大片空白能反衬处离群点 — 取决于我们要显示的重点是什么。当图中存在离群点时，解决办法之一就是取对数，这种办法能减轻数量级的影响，数据越大，则被拉向原点的幅度越大。我们都知道，取对数的前提条件是数字全都大于零，正好本例中的收入数据满足这个条件。对收入取过对数之后的散点图如图 \@ref(fig:pay-rating-log) 上图，由于此时纵坐标的刻度意义变了，我们在读图的时候需要了解数字 n 实际上代表的是 $10^{n}$，例如 6 与 5 的差距并非 1，而是 10 倍，即 $10^{6-5}$。
 
 如果我们关心的对象是收入和评分的关系，那么一幅散点图就足够了；如果我们还想进一步从图中了解每个点代表的演员是谁，那么我们就需要往图中加文本标签。标签是有很强显示力的工具，它能直截了当告诉我们信息，然而由于它的体积相对较大，若处理不当，反而会让图中充满文本信息，从而失去了数据本身的意义。在本例中添加姓名标签不容易做到自动化，即自动安排标签的位置让它们不要重叠，因为本身这幅图中的点就已经有重叠，不过 **maptools** 包中的 `pointLabel()` 函数提供了基于模拟退火算法和遗传算法的添加标签方案，它能尽量做到不让标签重叠。事实上即使用这些算法来添加标签，也仍然会出现大量的遮挡现象，如图 \@ref(fig:pay-rating-log) 下图，这也是受本书版面大小所限，读者可以运行代码在更大的图形窗口中查看结果，重叠程度应该会轻一些。
 
 
-```{r pay-rating-log,fig.cap="(ref:pay-rating-log)",fig.scap=" 取对数的收入与评分散点图以及演员名称 ",fig.width=7,fig.height=3.5}
+```{r pay-rating-log,fig.cap="(ref:pay-rating-log)",fig.scap="(ref:pay-rating-log-s)",fig.width=7,fig.height=3.5}
 par(mfrow = c(1, 2), mar = c(3.2, 3.6, .05, .05))
 plot(log10(pay) ~ rating, data = tvearn, pch = 19)
 plot(log10(pay) ~ rating, data = tvearn, pch = 20, ylab = "", col = "red")
@@ -43,13 +45,14 @@ with(tvearn, pointLabel(rating, log10(pay), labels = actor,
                         cex = .6, col = "#00000099", xpd = TRUE))
 ```
 
-(ref:pay-rating-log) 取对数的收入与评分散点图以及演员名称：纵轴的收入数据经过了以 10 为底的对数处理；下图中加上了演员的名称。
+(ref:pay-rating-log) 取对数的收入与评分散点图以及演员名称：纵轴的收入数据经过了以 10 为底的对数处理；下图中加上了演员的名称
 
+(ref:pay-rating-log-s) 取对数的收入与评分散点图以及演员名称
 
 顺便提一下，关于文本标签的使用，多维标度分析（Multidimensional Scaling，MDS）是一个非常适合以标签展示为主的统计学方法。简言之，MDS 的思想是将高维空间中个体之间的距离在低维空间中尽量准确地表达出来，这里的低维空间通常是二维平面。因为我们关心的重点是个体与个体之间的距离，那么最好将个体的某种特征画在图中，最直接的想法当然就是个体的名称，此时图的重点就是这些名称标签，所以尽管标签的背后对应着坐标点，我们也不必把点画出来，甚至坐标轴都可以完全去掉。图 \@ref(fig:music-mds) 是 \@ref(subsec:music) 小节提到过的音乐数据的 MDS 平面图，这幅图没有坐标轴，也没有点，只有曲目名称，这就足够了，因为这些名称之间的距离就是它们在标准化之后的原始数据上的距离（注意原始数据有 10 个变量，这里降维为 2），从图中我们可以很快看出曲目之间的相似性。
 
 
-```{r music-mds,fig.cap="(ref:music-mds)",fig.scap=" 音乐数据的多维标度分析平面图 ",fig.width=4,fig.height=4}
+```{r music-mds,fig.cap="(ref:music-mds)",fig.scap="(ref:music-mds-s)",fig.width=4,fig.height=4}
 data("music", package = "MSG")
 par(mar = c(0, 2, 0, 0))
 # 标准化所有频率变量到 0-1 之间并计算曲目之间欧式距离
@@ -61,7 +64,9 @@ plot(fit, type = "n", ann = FALSE, axes = FALSE)
 text(fit[, 1], fit[, 2], rownames(music), cex = .7, xpd = TRUE)
 ```
 
-(ref:music-mds) 音乐数据的多维标度分析平面图：Eels 的 Saturday Morning 离所有曲目最远，维瓦尔第的 V8 也比较独特。
+(ref:music-mds) 音乐数据的多维标度分析平面图：Eels 的 Saturday Morning 离所有曲目最远，维瓦尔第的 V8 也比较独特
+
+(ref:music-mds-s) 音乐数据的多维标度分析平面图
 
 关于图形元素主次关系，还牵涉到一些细节设置问题，这也是我们在附录 \@ref(cha:tricks) 介绍那么多图形细节的原因之一。例如，坐标轴的刻度短线的方向默认朝外（`tcl` 参数），这是合理的设置，如果刻度线朝内伸去的话，就可能会干涉到作图区域的元素；又如 `xaxs` 和 `yaxs` 参数，它们默认会先让作图区域的范围向外扩展 4\%，这样坐标轴和作图数据的边界之间就留出了一片小空间，数据中的最小值和最大值都不会紧贴坐标轴，也能让主要图形元素充分显示出来，不受坐标轴线的干扰。
 
@@ -88,7 +93,7 @@ char_gen(c("*", "Q"), n = 320, nrow = 8) # 从 Q 中找 *
 
 图形中的离散化现象很普遍，如 \@ref(sec:base-graph-ext) 小节的风向图就是一个例子，当然风向图中的离散化也许有一定道理。更多情况下是不必要的离散化，如根据不同年龄组计算身高的均值，这种情况下我们完全可以画身高和年龄（连续变量）的散点图，此时身高和年龄的关系一目了然，而不需要从一组组均值中去看它们的关系。更严重的问题是，离散化的分组往往带有任意性，我们可以按 5 岁一个区间分组，也可以按 10 岁一个区间，这种任意性的存在可能会导致结果的截然不同，甚至让我们得出相反的结论。
 
-```{r cut-plot,fig.cap="(ref:cut-plot)",fig.scap=" 任意离散化连续数据得到的不同结果 ",fig.width=6,fig.height=3}
+```{r cut-plot,fig.cap="(ref:cut-plot)",fig.scap="(ref:cut-plot-s)",fig.width=6,fig.height=3}
 set.seed(319)
 x <- rnorm(100)
 y <- rnorm(100)
@@ -97,7 +102,9 @@ cut_plot(x, y, c(-2.02, -0.9, -0.3, 1, 2, 2.5), col = "gray")
 cut_plot(x, y, c(-2.02, 0, 0.25, 0.5, 2.8, 3), col = "gray")
 ```
 
-(ref:cut-plot) 任意离散化连续数据得到的不同结果：左右散点图中数据完全相同，只是离散化分组区间不同，导致趋势截然不同。
+(ref:cut-plot) 任意离散化连续数据得到的不同结果：左右散点图中数据完全相同，只是离散化分组区间不同，导致趋势截然不同
+
+(ref:cut-plot-s) 任意离散化连续数据得到的不同结果
 
 图 \@ref(fig:cut-plot) 展示了离散化数据的一种弊病：左右两幅图中的数据完全相同，只是两幅图中我们用了不同的分组区间去将变量 x 离散化为 5 组，竖着的虚线表示分组的端点，在每一组内我们计算 y 的均值并连线，左图中我们看到数据有下降趋势，右图则显示为上升趋势，而事实是 x 和 y 是独立的，毫无关系。这就像盲人摸象的故事 — 有人摸到了耳朵说它像扇子，有人摸到了尾巴说像绳子。
 
@@ -120,18 +127,19 @@ Cleveland 也有类似的观点，提倡用尽量简单的图形元素表达尽�
 
 通过这一则例子，相信读者可以深刻体会到什么是图形垃圾。
 
-```{r worst-graph,fig.scap="史上最糟糕的图形垃圾",fig.cap="(ref:worst-graph)",echo=FALSE}
+```{r worst-graph,fig.scap="(ref:worst-graph-s)",fig.cap="(ref:worst-graph)",echo=FALSE}
 knitr::include_graphics(path = "images/worst-graph.png", dpi = NA)
 ```
 
-(ref:worst-graph) 史上最糟糕的图形垃圾：一幅超级复杂的图形，一共表达了 5 个数字，即 1972 年到 1976 年中，25 岁及以上的美国大学新生比例。
+(ref:worst-graph) 史上最糟糕的图形垃圾：一幅超级复杂的图形，一共表达了 5 个数字，即 1972 年到 1976 年中，25 岁及以上的美国大学新生比例
 
+(ref:worst-graph-s) 史上最糟糕的图形垃圾
 
 ## 设计布局
 
 这里说的布局主要指 \@ref(sec:plot) 小节提到的纵横比，它是一个对图形解释非常重要的概念，尤其是折线图。简单来说，纵横比影响的是图形元素宽高的比率。“瘦高”的图中，折线的斜率大，给人的感觉是升降趋势非常剧烈，而“矮胖”的图中，趋势变化则看起来平缓一些。
 
-```{r sunspots-asp,fig.cap="(ref:sunspots-asp)",fig.scap="不同纵横比设置下的太阳黑子时序图",fig.width=4.8,fig.height=4.8}
+```{r sunspots-asp,fig.cap="(ref:sunspots-asp)",fig.scap="(ref:sunspots-asp-s)",fig.width=4.8,fig.height=4.8}
 layout(matrix(1:2, 2), heights = c(2, 1))
 par(mar = c(4, 4, 0.1, 0.1))
 plot(sunspots)
@@ -139,6 +147,8 @@ plot(sunspots, asp = .1)
 ```
 
 (ref:sunspots-asp) 不同纵横比设置下的太阳黑子时序图：上图没有特别的纵横比设置，下图的 `asp` 参数为 0.1，从下图可以看出太阳黑子数量随着时间上升比下降速度更快。
+
+(ref:sunspots-asp-s) 不同纵横比设置下的太阳黑子时序图
 
 R 基础图形系统中通常用 `asp` 参数设置纵横比，下面我们给一个经典例子来说明它的作用。图 \@ref(fig:sunspots-asp) 是 1749 到 1984 年太阳黑子数量的时间序列图，数据为月度数据。我们都知道太阳黑子的数量有周期性，其周期大约为 11 年，这一点在图中可以很容易看出来（折线有规律地起伏）。图 \@ref(fig:sunspots-asp) 上图使用的是默认纵横比设置，即纵横比随着图形大小自动调整，而下图中固定为 0.1，初看起来这两幅图没有什么不同，但下图揭示了一个重要的发现：太阳黑子数量上升时的速度比下降的速度更快，注意观察图中上升的折线比下降的折线更陡峭，而上图中则很难看出这个现象，因为折线斜率太大。关于图 \@ref(fig:sunspots-asp) 我们要补充说明的是，下图并不是简单地把高度压缩了一下而已，即使图形的高度更高，图中的折线形状也不会变化，关于这一点读者可以自行验证。
 
@@ -156,7 +166,7 @@ Cleveland 对这个问题的建议是调整纵横比让所有的折线的倾斜�
 
 图形中有许多的心理因素需要考虑，相信读者应该看过一些关于视觉欺骗的图片，图 \@ref(fig:optical-illusion) 就是一个经典示例，其实红线和黑线一样长，但由于箭头方向内外朝向的问题，使得红线看起来更长。类似的心理因素还包括：
 
-```{r optical-illusion,fig.cap="(ref:optical-illusion)",fig.scap="一个经典的视觉欺骗示例",fig.width=4.8,fig.height=1.5}
+```{r optical-illusion,fig.cap="(ref:optical-illusion)",fig.scap="(ref:optical-illusions)",fig.width=4.8,fig.height=1.5}
 set.seed(320)
 par(mar = c(1, 0, 1, 0), xpd = TRUE)
 plot.new()
@@ -167,6 +177,8 @@ arrows(v[3:4], h[3:4], v[3:4] + .6, h[3:4], angle = 135, code = 3, col = 2)
 ```
 
 (ref:optical-illusion) 一个经典的视觉欺骗示例：红线和黑线谁更长？
+
+(ref:optical-illusions) 一个经典的视觉欺骗示例
 
 - 红色为夸张色，所以红色区域可能看起来比实际大小更大
 - 大区域中的填充颜色看起来比小区域更深一些
@@ -214,7 +226,7 @@ plot(ahull(x, alpha = 0.4), xlab = expression(x[1]), ylab = expression(x[2]))
 
 尽管直方图和误差线图都很流行，但读者也需要慎重考虑其使用。借用统计学家 Frank Harrell Jr 的话，“就像人有人权一样，数据也有数据权，请尊重数据权。”
 
-```{r error-bars,fig.cap="(ref:error-bars)",fig.scap=" 误差线图的弊端 ",fig.width=7,fig.height=3.5}
+```{r error-bars,fig.cap="(ref:error-bars)",fig.scap="(ref:error-bars-s)",fig.width=7,fig.height=3.5}
 set.seed(321)
 par(mfrow = c(1, 2), mar = c(4, 4, .5, .1))
 y <- c(runif(20), c(.43, .54), c(.6, runif(9, .3, .4)), 
@@ -226,7 +238,9 @@ arrows(mid, m - s, mid, m + s, code = 2, col = 1:4, angle = 90, length = .15)
 stripchart(y ~ x, vertical = TRUE, method = "jitter", pch = 20)
 ```
 
-(ref:error-bars) 误差线图的弊端：左图为常见的误差线图，右图是误差线图背后的完整数据。
+(ref:error-bars) 误差线图的弊端：左图为常见的误差线图，右图是误差线图背后的完整数据
+
+(ref:error-bars-s) 误差线图的弊端
 
 ## 思考与练习
 

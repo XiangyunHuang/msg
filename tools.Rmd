@@ -77,7 +77,7 @@ R 的官方网站 <https://www.R-project.org> 中对 R 有详细介绍，我们�
 
 下面我们以一个例子开始 R 图形之旅，见图 \@ref(fig:ggplot2-minard) ，它是基于 **ggplot2** 包的拿破仑远征图，可以说是 R 画图灵活性的一个典型代表。
 
-(ref:fig-ggplot2-minard) 在 R 中用 **ggplot2** 包重制拿破仑远征图：我们可以对比图 \@ref(fig:minard)。
+(ref:fig-ggplot2-minard) 在 R 中用 **ggplot2** 包重制拿破仑远征图：我们可以对比图 \@ref(fig:minard)
 
 (ref:fig-ggplot2-minard-s) 在 R 中用 **ggplot2** 包重制拿破仑远征图
 

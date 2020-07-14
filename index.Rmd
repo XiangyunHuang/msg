@@ -7,11 +7,23 @@ author:
   - 赵鹏
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-documentclass: book
+documentclass: ctexbook
+output:
+  bookdown::pdf_book:
+    keep_tex: yes
+    dev: "cairo_pdf"
+    latex_engine: xelatex
+    citation_package: natbib
+    template: tex/template.tex
+    pandoc_args:  --top-level-division=chapter
+    toc_depth: 3
+    toc_unnumbered: no
+    toc_appendix: yes
+    quote_footer: ["\\begin{flushright}", "\\end{flushright}"]
 bibliography:
-  - book.bib
-  - MSG-packages.bib
-  - Modern-Stat-Graphics.bib
+  - bib/book.bib
+  - bib/MSG-packages.bib
+  - bib/Modern-Stat-Graphics.bib
 biblio-style: plainnat
 natbiboptions: "authoryear,square"
 link-citations: yes
@@ -41,76 +53,26 @@ github-repo: XiangyunHuang/MSG-Book
 url: 'https\://bookdown.org/xiangyun/msg/'
 ---
 
-```{r setup,include=FALSE}
+```{r, include=FALSE}
+Sys.setlocale("LC_CTYPE", "Chinese")
+
+options(width = 55)
+options(bookdown.render.file_scope = FALSE)
+
 # 安装本书需要的 R 包，按字母排序
 lapply(c(
   "alphahull", "animation", "aplpack", "bookdown",
   "corrplot", "cowplot", "formatR", "fun",
-  "GGally", "ggplot2", "igraph", 
+  "GGally", "gganimate", "ggplot2", "igraph",
   "magick", "maps", "maptools", "MSG", "mvtnorm",
   "pdftools", "plot3D", "plotrix",
   "randomForest", "rgeos", "rggobi", "rgl",
-  "scatterplot3d", "showtext", "sna", "sp", "svglite",
+  "scatterplot3d", "showtext", "sna", "sp", "survminer", "svglite",
   "TeachingDemos", "tikzDevice", "vcd", "vioplot"
 ), function(pkg) {
   if (system.file(package = pkg) == "") install.packages(pkg)
 })
-```
 
-`r if (knitr::is_latex_output()) '<!--'` 
-
-# 欢迎 {#welcome .unnumbered}
-
-本书写作过程中收到来自 [Song Li](https://github.com/boltomli)、 [JackieMe](https://github.com/JackieMium) 、 [yang](https://github.com/yiluheihei) 的贡献，在此表示感谢，我们欢迎更多的人参与改进本书。
-
-本书搬迁过程中更新、替换了原稿中的很多代码，现在与本书配套的 R 软件版本是 `r R.version.string`，我们同时也在 R 版本 3.6.1 中完成测试。为方便读者复现本书中的计算结果和统计图形，同时也为了方便在 Travis 上自动测试贡献者提交的 PR 和自动部署每次提交的修改，本书的运行环境已经被打包成 Docker 镜像，托管在 Docker Hub 上，镜像地址是 <https://hub.docker.com/r/xiangyunhuang/msg-book>， 读者可从 Docker Hub 上下载，也可根据目录 `docker/` 下的 Dockerfile 本地构建。
-
-
-## 版权声明 {#copyright .unnumbered}
-
-本书电子版采用 Creative Commons （简称 CC）许可证“署名 --- 非商业性使用 --- 相同方式共享 2.5 中国大陆”，该许可证的全文可以从 <https://creativecommons.org/licenses/by-nc-sa/2.5/cn/> 获得；一份普通人可以理解的法律文本概要可以从 <https://creativecommons.org/licenses/by-nc-sa/2.5/cn/legalcode> 获得。
-
-```{r fig.align='center', echo=FALSE, fig.link='https://creativecommons.org/licenses/by-nc-sa/2.5/cn/', out.width='30%'}
-knitr::include_graphics('images/cc-by-nc-sa.svg')
-```
-
-本 CC 许可证赋予读者复制、发行、展览、表演、放映、广播或通过信息网络传播本作品以及创作演绎作品的自由，而无需向原作者征求许可或支付任何费用；本许可证与出版社版权独立，因此复制、传播或演绎本作品也无须征求出版社许可。您需要遵循的条件是：
-
-- 声明原作者的署名（Attribution）：不得将本作品归为自己的劳动
-- 不得将本作品用于商业目的（Noncommercial）
-- 基于本作品的演绎作品须遵守同样许可证发布（Share Alike）
-
-作者采用 CC 许可证的考虑主要有三点：
-
-- 让读者能免费、自由获得本书，节省经济支出；在有网络和电子文档的时代，我们应该充分利用这些工具的优势，如传播快捷、读者交流反馈方便（以便提高书籍质量）等
-- 版权的本来意义不在于控制所有权，它只不过是为了对原创者的一种署名激励；如果版权的存在妨碍了知识的传播，那么本人认为版权就没有太大的意义；CC 许可证中的“非商业”和“同样许可证”限制条款在书籍出版 14 年后会自动取消，即读者可以用于商业目的或更改至其它许可证；CC 许可证规定的 14 年似乎是很长的时间，但读者须知：通常的版权只有在原作者去世后 50 年才会被取消！换句话说，版权告诉我们一个很深刻的哲理：长寿是很重要的
-- 自由软件用户往往有某种痴狂的特征，而这种痴狂往往来源于自由软件的分享精神；R 语言让本人受益颇多，这本书可视作是对它的一种回馈；既然 R 语言是自由的，那么本书也将尽量“自由”
-
-尽管 CC 许可证没有限制作品的传播方式，但本作者不愿看到本书被任何人以论坛附件的方式发布在任何论坛（尤其是某某经济论坛），原因是本书稿尚未成熟，或许有诸多不完善之处甚至严重错误，作者在不断更新中，若要传播本书稿给他人，请仅仅给出本书的原始链接 <https://bookdown.org/xiangyun/msg/>，否则作者对传播过程中的错误概不负责。
-
-
-## 捐赠说明 {#donate .unnumbered}
-
-如果本书对您有任何帮助，您不妨考虑为“统计之都”网站（自愿）捐赠：<https://cosx.org/donate/>，捐赠所得将用于推广统计学和自由统计软件。捐赠之后请及时告知网站管理人员：[admin@cos.name](mailto:admin@cos.name)。
-
-## 软件信息 {#rsession .unnumbered}
-
-本书是在 RStudio 里用 R Markdown [@xie2018] 编辑的，bookdown [@xie2016] 组织各个章节的 Rmd 文件，knitr [@xie2015] 运行 Rmd 文件中的 R 代码块，并将 Rmd 文件转化为 md 文件，借助 [Pandoc](https://pandoc.org/) 将 md 文件转化为 html 和 tex 文件，在 [TinyTeX](https://yihui.org/tinytex/) 的作用下，同时输出 pdf 格式的书籍。
-
-```{r sessioninfo}
-sessionInfo(.packages(T))
-```
-
-## 致谢 {#acknowledgement .unnumbered}
-
-本书写作过程中收到了不少读者反馈，在此一并致谢。感谢魏太云、Dazhi Jiang 和郑冰对本书文字的校对和建议；感谢赵彦云老师对本书书名和写作风格的建议；感谢李皞对写 lattice 系统和 **rgl** 包的提议；感谢李丰的彩蛋建议；感谢王晓伟、李承文、FreemanZY、agri521、annidy、Zhanwu Dai 耗费眼神帮我挑选了本书第一例彩蛋（图 \@ref(fig:point-random)）；感谢殷腾飞增加动态图形系统 GGobi 的建议；感谢方莹提供第 \@ref(chap:data) 章的一些数据指引；本书部分小节的初稿内容来自一些朋友：王晓伟提供了 lattice 一节的初稿，邱怡轩提供 grid 和 rgl 两节的初稿，魏太云提供了《统计词话》的初稿，肖楠提供了 RgoogleMaps 一节的初稿。
-
-最后，我要感谢我的父母和亲人们在 2008 年以来每个长假给我提供绝佳的写作环境，让我心无旁骛地写书；感谢吴喜之老师将 R 这套工具引入中国人民大学统计学院的课堂，以及王星老师在统计计算和非参数统计课堂上对 R 的介绍，没有他们的努力，我也许不会踏进 R 的大门；感谢我的硕士导师赵彦云老师在我的本硕学习期间给我的各种指导；感谢“统计之都”网站的会员们在 [COS 论坛](https://d.cosx.org/) 上 S-Plus
-\& R 版块和我的交流，他们的问题也使我意识到了图形知识的需求；感谢周筠老师和卢鸫翔编辑以及出版团队；感谢本书写作期间所有给我提供过帮助的人们。
-
-`r if (knitr::is_latex_output()) '-->'`
-
-```{r bib,include=FALSE,cache=FALSE}
 # automatically create a bib database for R packages
 bib <- knitr::write_bib(
   x = c(
@@ -132,5 +94,49 @@ bib <- unlist(bib)
 # remove the ugly single quotes required by CRAN policy
 bib <- gsub("(\\\n)", " ", bib)
 bib <- gsub("'(Htmlwidgets|iframes|TeX Live|LaTeX|ggplot2|plotly|Leaflet|GGobi)'", "\\1", bib)
-xfun::write_utf8(bib, "MSG-packages.bib")
+xfun::write_utf8(bib, "bib/MSG-packages.bib")
+
+
+
+# convert pdf to png
+to_png <- function(fig_path) {
+  png_path <- sub("\\.pdf$", ".png", fig_path)
+  magick::image_write(magick::image_read_pdf(fig_path), format = "png", path = png_path, 
+                      density = 300, quality = 100)
+  return(png_path)
+}
+
+library(formatR)
+
+is_latex <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "latex")
+is_html <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "html")
+
+knitr::knit_hooks$set(
+  optipng = knitr::hook_optipng,
+  pdfcrop = knitr::hook_pdfcrop,
+  small.mar = function(before, options, envir) {
+    if (before) par(mar = c(4, 4, .1, .1), cex.lab = .95, cex.axis = .9, mgp = c(2, .7, 0), tcl = -.3) # smaller margin on top and right
+  },
+  font.cn = function(before, options, envir) {
+    if (before) pdf.options(family = "GB1")
+  },
+  font.en = function(before, options, envir) {
+    if (before) pdf.options(family = "Times")
+  }
+)
+
+knitr::opts_chunk$set(
+  fig.align = "center",
+  cache = TRUE,
+  small.mar = TRUE,
+  fig.showtext = TRUE,
+  dpi = 300
+)
+
+if (is_latex) {
+  knitr::opts_chunk$set(
+    out.width = "70%"
+  )
+}
+
 ```
