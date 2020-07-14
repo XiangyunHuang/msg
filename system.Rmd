@@ -972,7 +972,7 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
 : HTML 格式：将所有的帧用图形设备（\@ref(sec:device) 小节）记录为图片文件，并生成一个 HTML 页面，其中用 JavaScript 调用这些静态图片逐个显示形成动画；这个 HTML 页面的界面就像一个影音播放器，有开始/停止/前进/后退等功能，特别值得一提的是这个函数会把制作动画的 R 代码也写入 HTML 页面，这样观看动画的用户也能知道页面内的动画是如何生成的
 
 `saveLatex()`
-: PDF 格式：同样用图形设备记录所有帧并写入一个 LaTeX 文件，然后基于 LaTeX 宏包 animate 将这些帧编译为 PDF 文件中的动画，可以用 Adobe Reader 在页面内直接观看动画（其它 PDF 阅读器无法观看），实际上这里的动画也是用 JavaScript 驱动的；注意 `saveLatex()` 函数可以结合 Sweave 实时生成动画，这样我们可以将动画动态嵌入 LaTeX 文档
+: PDF 格式：同样用图形设备记录所有帧并写入一个 $\LaTeX$ 文件，然后基于 $\LaTeX$ 宏包 animate 将这些帧编译为 PDF 文件中的动画，可以用 Adobe Reader 在页面内直接观看动画（其它 PDF 阅读器无法观看），实际上这里的动画也是用 JavaScript 驱动的；注意 `saveLatex()` 函数可以结合 Sweave 实时生成动画，这样我们可以将动画动态嵌入 $\LaTeX$ 文档
 
 `saveGIF()`
 : GIF 动画格式：GIF 是一种最常见的动画图片格式，这里我们调用的是第三方软件 [ImageMagick](https://imagemagick.org/) 或者 [GraphicsMagick](http://www.graphicsmagick.org) 将 R 的图片转化为 GIF 动画，因此用户必须安装这两个软件中的一种（都是免费开源软件）

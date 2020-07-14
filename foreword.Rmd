@@ -47,7 +47,7 @@ summary(fit <- lm(counts ~ altitude, data = PlantCounts))
 
 正文中的代码以等宽正体表示，如 `inline R code`，函数名称以斜体表示，如 `function()`，对象类名称和参数名称用无衬线字体表示，如 `class using sans serif`，R 程序包用粗体表示，如 **package**。
 
-本书以 LaTeX 结合 R （Sweave，参见 @Leisch02 ）写成，所有图形均为 R 代码动态生成，因此整本书稿具有可重复性（reproducible），读者可从网上下载书稿源代码并配合适当的工具编译生成本书稿。本书的大部分图形都直接附带有源代码，少数图形的源代码被放在 **MSG** 包的演示中，当代码为 `demo('topic', package = 'MSG')` 形式时，读者在 R 中运行这句代码就可以看到源代码和相应的图形输出。当我们介绍一个函数的用法时，通常会使用一个 `usage()` 函数，它在 R 包 **formatR** 中。
+本书以 $\LaTeX$ 结合 R （Sweave，参见 @Leisch02 ）写成，所有图形均为 R 代码动态生成，因此整本书稿具有可重复性（reproducible），读者可从网上下载书稿源代码并配合适当的工具编译生成本书稿。本书的大部分图形都直接附带有源代码，少数图形的源代码被放在 **MSG** 包的演示中，当代码为 `demo('topic', package = 'MSG')` 形式时，读者在 R 中运行这句代码就可以看到源代码和相应的图形输出。当我们介绍一个函数的用法时，通常会使用一个 `usage()` 函数，它在 R 包 **formatR** 中。
 
 `r if (!knitr::is_latex_output()) '<!--'` 
 
