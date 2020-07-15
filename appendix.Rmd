@@ -298,7 +298,7 @@ x
 
     $$f(\theta)=c\frac{\exp(\theta)}{1+\exp(\theta)}\frac{1}{\sqrt{2\pi}}\exp(-\theta^{2}/2)$$
 
-    其中，$c$ 为使得 $f(\theta)$ 积分为 1 的常数。
+     \noindent 其中，$c$ 为使得 $f(\theta)$ 积分为 1 的常数。
 
 
 # MSG 附加包 {#cha:MSG}

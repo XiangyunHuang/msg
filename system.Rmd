@@ -327,7 +327,7 @@ x_{21} & x_{22} & \cdots & x_{2p}\\
 x_{n1} & x_{n2} & \cdots & x_{np}
 \end{array}\right]$$
 
-其中 $x_{ij}$ 表示第 $i$ 行、第 $j$ 列的数据。这是一个 $p$ 维矩阵，如果我们要将它投影到二维平面上，则需要右乘一个 $p\times2$ 的投影矩阵：
+\noindent 其中 $x_{ij}$ 表示第 $i$ 行、第 $j$ 列的数据。这是一个 $p$ 维矩阵，如果我们要将它投影到二维平面上，则需要右乘一个 $p\times2$ 的投影矩阵：
 
 $$A_{p\times2} = \left[\begin{array}{cc}
 a_{11} & a_{12}\\
@@ -657,7 +657,7 @@ for (i in 1:ani.options("nmax")) {
 ani.options(oopt) # 重置动画选项
 ```
 
-其中 `ani.options()` 可以用来设定一些和动画有关的选项，例如 `interval` 是动画中的停顿时间，`nmax` 是循环的次数，通常也是动画的总帧数。上面的代码大意就是用一个循环不断画图，每一次画图之后停顿一小会儿。这里的停顿是基于 R 函数 `Sys.sleep()` 实现的，后面我们可以看到 `ani.pause()` 函数的源代码。首先我们以一个具体实例“布朗运动”说明动画构建过程，参见 **animation** 包中的函数 `brownian.motion()`：
+\noindent 其中 `ani.options()` 可以用来设定一些和动画有关的选项，例如 `interval` 是动画中的停顿时间，`nmax` 是循环的次数，通常也是动画的总帧数。上面的代码大意就是用一个循环不断画图，每一次画图之后停顿一小会儿。这里的停顿是基于 R 函数 `Sys.sleep()` 实现的，后面我们可以看到 `ani.pause()` 函数的源代码。首先我们以一个具体实例“布朗运动”说明动画构建过程，参见 **animation** 包中的函数 `brownian.motion()`：
 
 ```{r brownian-motion-source}
 library(animation)
