@@ -7,8 +7,8 @@
 
 R 中散点图的函数为 `plot.default()`，但由于 `plot()` 是泛型函数（参见 \@ref(sec:plot) 小节），通常我们只需要提供两个数值型向量给 `plot()` 即可画散点图，或者提供一个两列的矩阵或数据框。函数 `plot.default()` 的用法如下：
 
-```{r plot-default-usage}
-usage(plot.default)
+```{r plot-default-usage, results='asis'}
+usage2(usage(plot.default, output = FALSE))
 ```
 
 其中若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数均已在 \@ref(sec:plot) 小节中介绍。
@@ -63,8 +63,8 @@ curve(sin(x) / x, from = -20, to = 20, n = 200,
 
 R 中函数曲线图的函数为 `curve()`，其用法如下：
 
-```{r curve-usage}
-usage(curve)
+```{r curve-usage, results='asis'}
+usage2(usage(curve, output = FALSE))
 ```
 
 参数 `expr` 为一个一元函数或者该函数的名称； `from` 和 `to` 分别定义了曲线的起点和终点； `n` 决定将定义域分成多少个小区间，以便计算函数值并连接曲线， `n` 值越大曲线越光滑； `add` 参数决定是否将曲线添加到现有图形上； `type` 参数决定了作图类型（参见 \@ref(sec:plot) 小节和图 \@ref(fig:plot-type)）。注意：若对一个函数直接应用 `plot()` 函数，那么泛型函数 `plot()` 会自动调用 `curve()` 完成作图。
@@ -86,8 +86,8 @@ sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 
 R 中向日葵散点图的函数为 `sunflowerplot()` ，其用法如下：
 
-```{r sunflowerplot-usage}
-usage(graphics:::sunflowerplot.default)
+```{r sunflowerplot-usage, results='asis'}
+usage2(usage(graphics:::sunflowerplot.default, output = FALSE))
 ```
 
  `x` 和 `y` 分别为散点图的两个变量； `number` 为人工给定的数据频数，即图中的花瓣数目，若不指定这个参数的话 R 会自动从 `x` 和 `y` 计算； `digits` 给定数值的有效数字位数，在计算重复数据之前原始数据会按照 `digits` 四舍五入； `add` 决定是否将向日葵散点图添加到当前图形上； `rotate` 决定是否随机旋转向日葵的角度； `pch` 给定散点图的点的类型； `cex` 给定散点图的点的缩放倍数； `cex.fact` 给定向日葵中心点的缩小倍数，真正的缩放倍数为 `cex/cex.fact` ； `col` 为散点的颜色， `bg` 为点的背景色； `size` 为向日葵花瓣的长度，单位为英寸； `seg.col` 为花瓣颜色； `seg.lwd` 为花瓣宽度。
@@ -125,8 +125,8 @@ $$\hat{S}(t)=\left\{ \begin{array}{ll}
 
 **survival** 包 [@survival] 提供了生存函数的计算和估计方法。具体函数为 `survfit()`，它返回一个 survfit 类的对象，而 **survival** 包扩展了泛型函数 `plot()`，使其拥有子函数 `plot.survfit()`，因此在估计完生存函数之后，我们可以直接调用 `plot()` 生成生存函数图。函数 `plot.survfit()` 的用法如下：
 
-```{r plot-survfit-usage}
-usage(survival:::plot.survfit)
+```{r plot-survfit-usage, results='asis'}
+usage2(usage(survival:::plot.survfit, output = FALSE))
 ```
 
 
@@ -181,9 +181,9 @@ G^{2}=2\sum n_{ij}\mathrm{log}(\frac{n_{ij}}{\hat{\mu}_{ij}});\;\;\chi^{2}=\sum\
 
 R 中马赛克图的函数为 `mosaicplot()` ，其用法如下：
 
-```{r mosaicplot-usage}
-usage(graphics:::mosaicplot.default)
-usage(graphics:::mosaicplot.formula)
+```{r mosaicplot-usage, results='asis'}
+usage2(usage(graphics:::mosaicplot.default, output = FALSE))
+usage2(usage(graphics:::mosaicplot.formula, output = FALSE))
 ```
 
 马赛克图函数是泛型函数，可以直接接受列联表数据或者公式作为参数，这里我们只介绍前一种情况。 `x` 为一个列联表数据（可以用函数 `table()` 生成）； `main` 、 `sub` 、 `xlab` 和 `ylab` 分别设定主标题、副标题和坐标轴标题； `sort` 指定展示变量的顺序； `dir` 指定马赛克图的拆分方向（横向拆分或纵向拆分）； `type` 给定残差的类型，即如前所述的三种残差。
@@ -235,8 +235,8 @@ $\chi^{2}$ 检验）生成的图形。
 
 R 中关联图的函数为 `assocplot()`，用法如下：
 
-```{r assocplot-usage}
-usage(assocplot)
+```{r assocplot-usage, results='asis'}
+usage2(usage(assocplot, output = FALSE))
 ```
 
 其中 `x` 为一个列联表数据（或者矩阵）； `col` 为朝上和朝下矩形的颜色； `space` 用来设置矩形之间的间距。
@@ -309,8 +309,8 @@ Table: (\#tab:contingency) 二维列联表的经典形式
 
 R 中四瓣图函数 `fourfoldplot()` 的用法如下：
 
-```{r fourfoldplot-usage}
-usage(fourfoldplot)
+```{r fourfoldplot-usage, results='asis'}
+usage2(usage(fourfoldplot, output = FALSE))
 ```
 
 
@@ -368,9 +368,9 @@ round(apply(UCBAdmissions, 3, function(x) chisq.test(x)$p.value), 3)
 
 R 中条件密度图的函数为 `cdplot()`，它主要是基于密度函数 `density()` 完成条件密度的计算 [@Hofmann05]，其用法如下：
 
-```{r cdplot-usage}
-usage(graphics:::cdplot.default)
-usage(graphics:::cdplot.formula)
+```{r cdplot-usage, results='asis'}
+usage2(usage(graphics:::cdplot.default, output = FALSE))
+usage2(usage(graphics:::cdplot.formula, output = FALSE))
 ```
 
 
@@ -424,9 +424,9 @@ ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
 
 R 中棘状图的函数为 `spineplot()` ，其用法如下：
 
-```{r spineplot-usage}
-usage(graphics:::spineplot.default)
-usage(graphics:::spineplot.formula)
+```{r spineplot-usage, results='asis'}
+usage2(usage(graphics:::spineplot.default, output = FALSE))
+usage2(usage(graphics:::spineplot.formula, output = FALSE))
 ```
 
 棘状图函数是泛型函数，可以直接接受数据或者公式作为参数。 `x` 可以是一个分类或数值向量（自变量），也可以直接输入一个列联表，后一种情况下则不需要再输入 `y` 参数； `y` 为因变量，是一个分类变量； `breaks` 在自变量是连续变量时给定自变量的分段区间或者分段方法，这个参数最终被传递给直方图函数 `hist()` （回顾 \@ref(sec:hist) 小节）以便计算自变量的密度； `off` 参数指定矩形竖条之间的间距，对于连续自变量来说， `off` 默认为 0，对于离散自变量， `off` 默认为 2； `col` 用来设定不同类别的 `y` 的颜色。
@@ -450,9 +450,9 @@ t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
 
 R 中 **aplpack** 包 [@aplpack] 提供了一个函数 `bagplot()` 可以用来画二维箱线图，其用法如下：
 
-```{r bagplot-usage}
+```{r bagplot-usage, results='asis'}
 library(aplpack, warn.conflicts = FALSE)
-usage(bagplot)
+usage2(usage(bagplot, output = FALSE))
 ```
 
 

@@ -559,9 +559,9 @@ htmlwidgets::saveWidget(gg, "faithful.html",
 
 绘制三维点线的方法与二维时非常相像，只需使用 `plot3d()` 函数并提供 x 轴、y 轴和 z 轴的坐标向量即可。此外，`plot3d()` 函数还提供了 `type` 参数，用来指定图形的形式，其可能的取值有 `p`、`s`、`l` 和 `h`，分别表示绘制点、球体、折线和到零点的垂线。如果要在已有的图形中加上新的点或线，则可以使用 `points3d()` 和 `lines3d()` 函数，其用法与 `plot3d()` 类似。
 
-```{r plot3d-usage}
+```{r plot3d-usage, results='asis'}
 library(rgl)
-usage(plot3d, "default")
+usage2(usage(plot3d, "default", output = FALSE))
 ```
 
 图 \@ref(fig:rgl-ch4) 提供了一个简单的示例，即模拟甲烷分子（$\mathrm{CH_{4}}$）的构造。
@@ -719,12 +719,12 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
 
 这五种导出方式中，`saveHTML()` 是最便利的，它不需要借助任何第三方软件，而且通常我们都有网页浏览器（如 Chrome、Firefox 等 ），这样就足够观看动画了。这些函数的用法都比较类似，一般情况下我们只需要提供一段生成多幅图片的 R 代码，利用默认参数设置就足够导出动画。它们的具体用法如下：
 
-```{r export-animations,warning=FALSE}
-usage(saveHTML)
-usage(saveLatex)
-usage(saveGIF)
-usage(saveSWF)
-usage(saveVideo)
+```{r export-animations,warning=FALSE, results='asis'}
+usage2(usage(saveHTML, output = FALSE))
+usage2(usage(saveLatex, output = FALSE))
+usage2(usage(saveGIF, output = FALSE))
+usage2(usage(saveSWF, output = FALSE))
+usage2(usage(saveVideo, output = FALSE))
 ```
 
 所有函数的第一个参数都是 `expr`，它通常是一段用花括号括起来的 R 代码。下面的代码是一个导出布朗运动动画为 HTML 页面的例子，其中 `img.name` 设定了图片的基础文件名，即所有图片将以 bm-plot1、bm-plot2、……、bm-plot50 依次命名（扩展名默认为 `.png`），`title` 指定了 HTML 页面的标题，`description` 是对动画的一个描述，将会被以 R 注释的形式写入 HTML 页面，`ani.height` 和 `ani.width` 分别设定动画的高度和宽度，单位默认为像素。这段代码生成的结果如图 \@ref(fig:html-interface) 所示。

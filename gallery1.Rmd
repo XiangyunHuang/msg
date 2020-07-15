@@ -52,8 +52,8 @@ b_{1}<b_{2}<\cdots<b_{j}<b_{j+1}<\cdots;\;b_{j+1}-b_{j}=h,\,j=1,2,\cdots
 
 最后，我们将密度估计值以矩形的形式表示出来，就完成了直方图的基本制作。当然，我们没有必要使用这样原始的方式制作直方图，R 中提供了  `hist()`  函数，其默认用法如下：
 
-```{r}
-usage(hist.default)
+```{r, results='asis'}
+usage2(usage(hist.default, output = FALSE))
 ```
 
 其中， `x` 为欲估计分布的数值向量；`breaks` 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的； `freq`  和  `probability`  参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）； `labels`  为逻辑值，决定是否将频数的数值添加到矩形条的上方；其它参数诸如  `density` 、 `angle` 、 `border`  均可参见低层作图函数"矩形"（ `rect()` ，\@ref(sec:polygon) 节）。
@@ -119,8 +119,8 @@ p2 + geom_density(fill = "lightgray", color = "black") +
 
 R 中茎叶图的函数为 `stem()`，其用法为：
 
-```{r}
-usage(stem)
+```{r, results='asis'}
+usage2(usage(stem, output = FALSE))
 ```
 
 参数  `scale`  控制着 $m$，即节与节之间的长度（ `scale`  越大则 $m$ 越小）； `width`  控制了茎叶图的宽度，若叶子的长度超出了这个设置，则叶子会被截取到长度  `width` ，然后以一个整数表示后面尚有多少片叶子没有被画出来。
@@ -186,10 +186,10 @@ stem(x, scale = 2)
 
 小提琴图来自于 **vioplot** 包 [@vioplot]，其函数为 `vioplot()` ，用法如下：
 
-```{r,message=FALSE,warning=FALSE}
+```{r,message=FALSE,warning=FALSE, results='asis'}
 library(sm)
 library(vioplot)
-usage(vioplot)
+usage2(usage(vioplot, output = FALSE))
 ```
 
 (ref:fig-vioplot-s) 三组双峰数据的小提琴图比较
@@ -250,11 +250,11 @@ oz.windrose(windagg)
 
 R 中相应的函数为 `boxplot()`，其用法如下：
 
-```{r boxplot-usage}
+```{r boxplot-usage, results='asis'}
 # 默认用法
-usage(boxplot.default)
+usage2(usage(boxplot.default, output = FALSE))
 # 公式用法
-usage(graphics:::boxplot.formula)
+usage2(usage(graphics:::boxplot.formula, output = FALSE))
 ```
 
 因为 `boxplot()` 是一个泛型函数，所以它可以适应不同的参数类型。目前它支持两种参数类型：公式（ `formula` ）和数据，后者对我们来说可能更容易理解（给一批数据、作相应的箱线图），而前者在某些情况下更为方便，后面我们会举例说明。参数  `x`  为一个数值向量或者列表，若为列表则对列表中每一个子对象依次作出箱线图； `range`  是一个延伸倍数，决定了箱线图的末端（须）延伸到什么位置，这主要是考虑到离群点的原因，在数据中存在离群点的情况下，将箱线图末端直接延伸到最大值和最小值对描述数据分布来说并不合适（图形缺乏稳健性），所以 R 中的箱线图默认只将图形延伸到离箱子两端 $\mathrm{range}\times(Q_3-Q_1)$ 处，即上下四分位数分别加/减内四分位距（Interquartile
@@ -332,8 +332,8 @@ dotchart(t(VADeaths)[, 5:1], col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
 
 R 中点图的函数为 `dotchart()`，用法如下：
 
-```{r dotchart-usage}
-usage(dotchart)
+```{r dotchart-usage, results='asis'}
+usage2(usage(dotchart, output = FALSE))
 ```
 
 其中， `x` 与条形图的 `height` 参数相同，为一个数值向量或者矩阵； `labels` 为数据的标签；其它参数主要用来设置图形的样式如颜色、缩放倍数、点的样式等，此处略去。
@@ -374,8 +374,8 @@ plot_grid(p1, p2, ncol = 1)
 
 R 中条形图的函数为 `barplot()`，用法如下：
 
-```{r barplot-usage}
-usage(barplot.default)
+```{r barplot-usage, results='asis'}
+usage2(usage(barplot.default, output = FALSE))
 ```
 
 条形图的主要参数是 `height`，它指定了长条的长度。这个参数可以接受一个数值向量或者一个数值矩阵作为参数。前者容易理解，后者稍有些复杂：当传入一个矩阵时，条形图针对矩阵的每一列画图。若 `beside` 为 `FALSE`，则矩阵每一列占据一条的位置，该条由若干矩形堆砌而成，这些矩形的高度对应着矩阵的行数据；若 `beside` 为 `TRUE`，这些矩形则并排排列而非堆砌； `width` 可以设置条的宽度； `space` 用以设置条之间的间距； `names.arg` 为条形图的标签，即每一条的名称； `legend.text` 参数在 `height` 为矩阵时比较有用，可以用来添加图例； `horiz` 用以设置条形图的方向（水平或垂直）； `density` 、 `angle` 等参数可以参考矩形的章节（\@ref(sec:polygon) 节）； `plot` 为逻辑值，决定是否将条形图添加到现有图形上。
@@ -415,8 +415,8 @@ rug(faithful$eruptions)
 
 R 中坐标轴须的函数为 `rug()` ，其用法如下：
 
-```{r rug-usage}
-usage(rug)
+```{r rug-usage, results='asis'}
+usage2(usage(rug, output = FALSE))
 ```
 
 
@@ -448,9 +448,9 @@ stripchart(count ~ spray, data = InsectSprays, method = "jitter")
 
 R 中带状图的函数为 `stripchart()` ，其用法如下：
 
-```{r stripchart-usage}
-usage(graphics:::stripchart.default)
-usage(graphics:::stripchart.formula)
+```{r stripchart-usage, results='asis'}
+usage2(usage(graphics:::stripchart.default, output = FALSE))
+usage2(usage(graphics:::stripchart.formula, output = FALSE))
 ```
 
 
@@ -486,8 +486,8 @@ barplot(pie.sales, col = pie.col, horiz = TRUE, names.arg = "", space = 0.5)
 
 饼图的原理很简单，每一个扇形的角度与相应数据的数值大小成比例，关于饼图的知识此处不再赘述。R 提供了函数 `pie()` 制作饼图，用法如下：
 
-```{r pie-usage}
-usage(pie)
+```{r pie-usage, results='asis'}
+usage2(usage(pie, output = FALSE))
 ```
 
 参数 `x` 为一个数值向量， `labels` 为标签，其它参数基本上都是为多边形准备的，因为扇形实际上是多边形所作，例如 `edges` 可以设定圆弧的光滑程度（多边形的边越多则越光滑）， `density` 、 `angle` 等参数参见多边形的章节（\@ref(sec:polygon) 小节）。
@@ -528,10 +528,10 @@ qnorm(seq(0.1, .9, .2))
 
 R 中 QQ 图的函数为 `qqplot()` 。由于正态分布是我们经常检验的分布，R 也直接提供了一个画正态分布 QQ 图的函数 `qqnorm()` ，这两个函数都在基础包 **stats** 包中，它们的用法如下：
 
-```{r qqplot-usage}
-usage(qqplot)
-usage(stats:::qqnorm.default)
-usage(qqline)
+```{r qqplot-usage, results='asis'}
+usage2(usage(qqplot, output = FALSE))
+usage2(usage(stats:::qqnorm.default, output = FALSE))
+usage2(usage(qqline, output = FALSE))
 ```
 
 

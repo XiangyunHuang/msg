@@ -196,7 +196,7 @@ box() # 补齐边框
 关于点的设置，我们既可以在很多作图函数中用 `pch` 等参数实现，也可以在用低层函数 `points()` 向已有图形中添加点来实现。后一种方法往往更灵活自由。`points()` 用法：
 
 ```{r points-usage}
-usage(points.default)
+usage2(usage(points.default, output = FALSE))
 ```
 
 函数 `points()` 的参数如 `pch` 和 `col` 等在 \@ref(sec:par) 小节介绍 `par()` 函数时中有详细解释，但这两个函数中相同名称的参数最主要的一点区别就是，前者可以使用向量，而后者只能接受一个单值作为参数。此外还有一点细小差异在于参数 `bg`，它在函数 `points()` 中表示的是点的背景色而非图形的背景色。为了向图中添加一系列不同样式的点，我们可以使用向量作为 `points()` 的参数。
@@ -279,7 +279,7 @@ text(4, 9.8, "segments")
 关于直线，我们在平面坐标系中只需要确定两个因素就可以确定它的位置：斜率和截距。函数 `abline()` 就是用来添加直线的，参数同样可以使用向量（这一点在低层函数中几乎普遍适用，下文不再重复说明）。函数用法如下：
 
 ```{r abline-usage}
-usage(abline)
+usage2(usage(abline, output = FALSE))
 ```
 
 其中，`a` 是截距，`b` 是斜率，`h` 是画水平线时的纵轴值，`v` 是画垂直线时的横轴值，`reg` 是一个能用函数 `coef()` 提取系数（包含斜率和截距）的 R 对象，典型的就是用线性模型（回归）生成的对象，系数是一个长度为 2 的向量，分别为截距和斜率；后面的 `...` 表示还可以传入其它参数（比如 `lty`、`col` 等）。
@@ -287,13 +287,13 @@ usage(abline)
 线段可以用函数 `segments()` 生成，用法如下：
 
 ```{r segments-usage}
-usage(segments)
+usage2(usage(segments, output = FALSE))
 ```
 
 前四个参数表示线段的起点和终点坐标，后面的参数相信读者也都已经熟悉。箭头可以用函数 `arrows()` 生成，用法如下：
 
 ```{r arrows-usage}
-usage(arrows)
+usage2(usage(arrows, output = FALSE))
 ```
 
 类似于线段，前四个参数表示箭头的起点和终点坐标，`length` 表示箭头尖上短线的长度（单位：英寸），`angle` 表示箭头尖短线的角度（默认为 $30\,^{\circ}$），`code` 表示箭头的样式（整数 1~3 分别表示尾部箭头、首部箭头和两端都带箭头），注意若 `length` 设置为 0，那么将不会画出箭头（只有箭头线的主体即一条线段）。关于曲线、直线、线段和箭头函数的示例代码和效果参见图 \@ref(fig:lines-demo)。
@@ -309,7 +309,7 @@ demo("xsplineDemo", package = "MSG")
 下面我们再介绍一下一种特殊的曲线——X-样条（X-spline），样条是用光滑曲线连接若干数据点的曲线，注意它与前面提到的曲线 `lines()` 的区别在于数据点之间的连接线。样条函数用法如下：
 
 ```{r xspline-usage}
-usage(xspline)
+usage2(usage(xspline, output = FALSE))
 ```
 
 前两个参数给定点的位置；`shape` 为样条的形状，取值在 $[-1, 1]$ 之间，当取值为负数时，曲线穿过给定的点，负值绝对值越小则曲线的角度越尖锐，反之角度越圆滑；`shape` 取值为正数时，曲线脱离给定的点，正值越小越靠近给定点；`open` 决定是否样条曲线封闭；`repEnds` 为逻辑值，当样条曲线不封闭时，该参数决定是否重复使用端点上的点；`draw` 决定是否画线，若为 `FALSE`，则仅仅计算曲线的坐标位置而不画线；`border` 为曲线的颜色；`col` 为封闭曲线的填充颜色。图 \@ref(fig:xspline-demo) 为各种形状的 X-样条，注意观察 `shape` 参数与曲线形状的对应关系。
@@ -319,8 +319,8 @@ usage(xspline)
 R 中绘制多边形也是很方便的，主要使用 `polygon()` 函数。矩形是多边形的特例， R 提供了专门的函数 `rect()` 来绘制它。多边形的主要特征在于增加了一些填充选项，比如颜色填充，或者用阴影线填充。关于颜色、线条样式的设置就不再重复说明。矩形和多边形的用法如下：
 
 ```{r polygon-usage}
-usage(rect)
-usage(polygon)
+usage2(usage(rect, output = FALSE))
+usage2(usage(polygon, output = FALSE))
 ```
 
 矩形函数的前四个参数分别指定左下角和右上角的坐标，用以确定矩形的位置。同样，多边形函数的前两个参数给出一系列坐标点，用以围成一个多边形；`density` 参数设置阴影线的填充密度（每英寸填充多少条线），如果设置了一个正值，那么颜色填充参数 `col` 将被用到阴影线上，只有当 `density` 被设置为负数或 `NA` 或 `NULL` 时 `col` 才可以填充整个区块颜色；`angle` 参数设置填充线条的角度；`col` 设置填充颜色；`border` 设置边框颜色，若设置为 `FALSE` 或 `NA`，那么边框线将被省略。
@@ -362,7 +362,7 @@ demo("kaleidoscope", package = "MSG")
 有时为了方便图形阅读者知道图中元素的更精确的位置，我们可以用添加背景网格线的办法来辅助读者的视线对齐坐标轴。函数 `grid()` 所实现的就是这一个功能，它的用法较简单：
 
 ```{r grid-usage}
-usage(grid)
+usage2(usage(grid, output = FALSE))
 ```
 
 可以看到，这个函数已经使用了一些默认的参数设置，例如将网格线的颜色设置为浅灰色，线条样式设置为点线，这是一种比较美观的设置，让网格线既不显得太突兀，又能达到辅助的效果；一般情况下，我们可以直接使用不带参数的 `grid()` 函数添加网格。参数 `nx` 和 `ny` 分别表示横纵轴上网格线的条数，颜色、线条样式和线条宽度参数不必再说明，最后 `equilogs` 参数意思是，当坐标取了对数之后，是依然使用等距的网格线（`TRUE`）还是根据对数函数使用不等距的网格线（`FALSE`）。
@@ -375,9 +375,9 @@ usage(grid)
 本节中的文本以及下一节中的图例都是用来辅助解释图形的信息，图形中的所有文本可以分为三类：标题（主副标题和坐标轴标题）、任意文本和图形周边文本。`title()` 函数用来添加标题，`text()` 函数用来向图形中任意位置添加文本，`mtext()` 函数用来向图的四条边上添加文本。用法如下：
 
 ```{r text-usage}
-usage(title)
-usage(text.default)
-usage(mtext)
+usage2(usage(title, output = FALSE))
+usage2(usage(text.default, output = FALSE))
+usage2(usage(mtext, output = FALSE))
 ```
 
 若无特别设定，这些文本的样式都将根据当前的函数 `par()` 结果来设置，比如颜色、字体等。函数 `title()` 的前四个参数就是主、副、x 轴、y 轴标题的字符串，`line` 设置一个距离图形边缘的行数（即：文本与图形边缘的距离为 line $\times$ 行高）；`outer` 表示是否将文本放在外边界中（参见 \@ref(sec:par) 小节的说明）；函数 `text()` 的参数 `labels` 就是欲添加的文本（对应横纵坐标的设置，可以是字符串向量），若不指定本参数，那么默认将以数字 `1:length(x)` 作为文本标记添加到图中；`adj` 与 `par()` 中说明相同；`pos` 参数取值整数 1\~4 分别表示文本的位置在坐标点的下、左、上、右方，注意，它会覆盖参数 `adj` 的设置；`offset` 参数会根据 `pos` 参数的取值将文本向相应的方向移动一定比例的距离；`vfont` 参数用 Hershey 矢量字体来设置文本的字体式样，取值长度为 2 的向量，第一个元素指定字体（Typeface），第二个元素指定式样（Style）。关于字体和式样的搭配种类，请查看帮助 `?Hershey`，使用 Hershey 矢量字体的优势在于：
@@ -420,7 +420,7 @@ legend(-0.2, 9.8, c("Upper", "Lower"),
 函数 `legend()` 的作用是添加图例。众所周知，图例也是很重要的辅助信息，告诉图形使用者图中各组不同样式的元素分别代表何种对象。它的参数比较多，但实际应用中通常仅仅用到其中少数几个：
 
 ```{r legend-usage}
-usage(legend)
+usage2(usage(legend, output = FALSE))
 ```
 
 前两个参数 `x` 和 `y` 表示图例的坐标位置（左上角顶点的坐标）；`legend` 参数通常为一个字符向量，表示图例中的文字；`fill` 参数指定一个与图例字符向量对应的颜色向量用以在文本左边绘制一个颜色填充方块；`col` 参数设置图例中点和线的颜色；`lty`、`lwd` 和 `pch` 参数指定图例中点线的样式；`angle` 和 `density` 参数效果类似于 `fill` 参数，只是换成指定角度和密度的阴影线填充方块；`bty` 参数设置图例框的样式，很类似 `par()` 中的同名参数；`title` 参数设定图例的标题；剩余参数用来设置更细微的地方，不太常用。
@@ -434,7 +434,7 @@ usage(legend)
 坐标轴是图中元素所代表数值大小的参照物，因此它在图形中的作用也很重要，特别是有时候我们需要对坐标轴做一定的特殊设置，比如作一幅双坐标轴的图形，或者在坐标轴标记中使用特殊的文本，那么就必须使用 `axis()` 函数来辅助完成对坐标轴的设置和调整。该函数的用法如下：
 
 ```{r axis-usage}
-usage(axis)
+usage2(usage(axis, output = FALSE))
 ```
 ```{r axis-demo,fig.scap="(ref:axis-demo-s)",fig.cap="(ref:axis-demo)",dev='tikz',fig.process=to_png}
 data(Export.USCN, package = "MSG")
@@ -884,8 +884,8 @@ layout.show(2)
 R 提供了 `layout()`\index{layout()}函数作为设置图形版面拆分的工具，其用法如下：
 
 ```{r layout-usage}
-usage(layout)
-usage(layout.show)
+usage2(usage(layout, output = FALSE))
+usage2(usage(layout.show, output = FALSE))
 ```
 
 其中 `mat` 参数为一个矩阵，提供了作图的顺序以及图形版面的安排；`widths` 和 `heights` 提供了各个矩形作图区域的长和宽的比例；`respect` 控制着各图形内的横纵轴刻度长度的比例尺是否一样；`n` 为欲显示的区域的序号。
@@ -913,10 +913,10 @@ demo("layout_margin", package = "MSG")
 R 中还有另外一种拆分屏幕的方法，即 `split.screen()`\index{split.screen()}。这种方法比前两种方法更灵活，它不仅可以像前两种方法一样设定将作图区域拆分为若干行列，也可以随意指定作图区域在屏幕上的位置。该函数及相关函数用法如下： 
 
 ```{r split-screen-usage}
-usage(split.screen)
-usage(screen)
-usage(erase.screen)
-usage(close.screen)
+usage2(usage(split.screen, output = FALSE))
+usage2(usage(screen, output = FALSE))
+usage2(usage(erase.screen, output = FALSE))
+usage2(usage(close.screen, output = FALSE))
 ```
 
 拆分后的屏幕由若干个区域构成，每个区域有一个编号，即 screen。我们可以用函数 `screen()` 指定要作图的区域号，或者用 `erase.screen()` 擦除该区域的图形，而 `split.screen()` 的用法主要由 `figs` 参数控制，该参数既可以取值为一个长度为 2 的向量（指定行列的数目），也可以是一个 4 列的数值矩阵，用来指定图形区域的坐标位置。后一种用法比较灵活，它可以将图形作在屏幕的任意位置上，这里的 4 列矩阵分别给定区域横坐标的左和右以及纵坐标的下和上的位置，即给定了区域左下角和右上角的坐标，这样就可以划分出一块矩形作图区域来。注意这里的坐标值应该在 `[0, 1]` 范围内，整个屏幕左下角坐标为 `(0, 0)`，右上角坐标为 `(1, 1)`。
@@ -972,7 +972,7 @@ R 的图形设备可以支持简单的交互式操作，包括支持对鼠标和
 **graphics** 包中的函数 `locator()` 可以获取当前鼠标在图形坐标系统中的位置坐标，其用法为：
 
 ```{r locator-usage}
-usage(locator)
+usage2(usage(locator, output = FALSE))
 ```
 
 当我们在图形窗口中创建了一幅图形后，我们可以调用该函数并通过点击鼠标获得坐标。参数 `n` 表示鼠标点击的次数，`type` 为点击鼠标之后生成的图形类型，可以边点鼠标边画点或画线，后面的参数为一些图形参数，设定点或线的样式。
@@ -997,7 +997,7 @@ locator(3)
 **graphics** 包中的函数 `identify()` 可以通过鼠标点击一幅散点图识别鼠标周围的数据点，并且可以给辨识出的数据添加标签，其默认用法如下：
 
 ```{r identify-usage}
-usage(identify, "default")
+usage2(usage(identify, "default", output = FALSE))
 ```
 
 `x` 和 `y` 给出散点图的原始数据，以便鼠标位置坐标与原始数据进行距离匹配，`labels` 为数据的标签，默认用数据的序号 1、2、3……。
@@ -1015,7 +1015,7 @@ demo('mouse_move', package='MSG')
 **grDevices** 包中的函数 `getGraphicsEvent()` 则提供了更灵活的交互，它可以捕获三种鼠标事件（鼠标按下、鼠标移动和鼠标弹起）和一种键盘事件（键盘输入）。用法如下：
 
 ```{r getGraphicsEvent-usage}
-usage(getGraphicsEvent)
+usage2(usage(getGraphicsEvent, output = FALSE))
 ```
 
 后面六个参数分别定义了鼠标和键盘事件所对应的行为（通过给定函数实现），具体解释和示例请参见其帮助文件，这里我们只是给出一个例子说明。图 \@ref(fig:graphicsEvent) 演示了鼠标移动的效果：我们在黑色背景的窗口中画了一批数据点，然后通过鼠标的移动在鼠标周围生成一个矩形框，框内的点变成黄色且放大的样式，而框外的点为红色的小点。随着鼠标的移动，矩形框也会在屏幕上移动，从而会框住不同的点。

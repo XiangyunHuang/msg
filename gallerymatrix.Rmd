@@ -54,9 +54,9 @@ ggplot(contour_grid_tidy, aes(x, y)) +
 
 R 中等高图的函数为 `contour()`，同时 **grDevices** 包中也提供了等高线的计算函数 `contourLines()`，用法分别如下：
 
-```{r contour-usage}
-usage(contour.default)
-usage(contourLines)
+```{r contour-usage, results='asis'}
+usage2(usage(contour.default, output = FALSE))
+usage2(usage(contourLines, output = FALSE))
 ```
 
 
@@ -126,8 +126,8 @@ demo("volcano", package = "MSG")
 
 R 中的颜色等高图函数为 `filled.contour()`，其用法如下：
 
-```{r filled-contour-usage}
-usage(filled.contour)
+```{r filled-contour-usage, results='asis'}
+usage2(usage(filled.contour, output = FALSE))
 ```
 
 这里面大多数参数与 `contour()` 函数完全相同，区别在于多了几个定义颜色的参数。 `color.palette` 给定一个调色板函数，用以生成一系列颜色供等高图填充使用，默认是青、白、粉调色板（回顾 \@ref(sec:palette) 小节）；如果我们不指定调色板，也可以用 col 参数指定各高度水平对应的颜色； `plot.title` 、 `plot.axes` 、 `key.title` 和 `key.axes` 四个参数分别控制着等高图的标题、等高图的坐标轴、图例的标题和图例的坐标轴，它们都能接受若干语句（statement）作为参数值。
@@ -158,8 +158,8 @@ text(rep(1:8, 3), rep(1:3, each = 8), as.vector(x))
 
 R 中颜色图的函数为 `image()`，其用法如下：
 
-```{r image-usage}
-usage(image.default)
+```{r image-usage, results='asis'}
+usage2(usage(image.default, output = FALSE))
 ```
 
 参数 `x` 、 `y` 、 `z` 与等高线的参数类似，不过由于该函数为泛型函数，因此也可以接受不同类型的参数，这三个参数除了可以接受两个数值向量和一个矩阵之外， `x` 还可以接受一个列表，列表中包含三个子对象：`x$x`、`x$y` 和 `x$z`，这三个子对象分别为两个数值向量和一个矩阵，这种情况下就不需要另外单独提供 `y` 和 `z` 参数了； `col` 设置一个颜色序列以便映射到不同大小的数值； `add` 为逻辑值，决定是否将颜色图添加到现有图形上； `breaks` 给定 `z` 分段的区间端点。
@@ -206,10 +206,10 @@ round(head(sines), 5)
 
 R 中矩阵图的函数为 `matplot()`，矩阵点的函数为 `matpoints()`，矩阵线的函数为 `matlines()`，它们的用法如下：
 
-```{r matplot-usage}
-usage(matplot)
-usage(matpoints)
-usage(matlines)
+```{r matplot-usage, results='asis'}
+usage2(usage(matplot, output = FALSE))
+usage2(usage(matpoints, output = FALSE))
+usage2(usage(matlines, output = FALSE))
 ```
 
 函数 `matplot()` 为高层作图函数（创建新图形），而后两个函数均为低层作图函数（向现有图形上添加元素）。参数 `x` 和 `y` 为输入的矩阵，做图的方式是用 `x` 的列为横轴方向的变量， `y` 的列为纵轴方向的变量，然后用这些列依次作散点图（ `x` 的第一列对 y 的第一列， `x` 的第二列对 `y` 的第二列，依次类推）；如果这两个参数有一个缺失，那么 x 将被 `1:nrow(y)` 代替， `y` 被非缺失的参数矩阵代替；注意两个矩阵要么有一个列数为 1，要么列数相等，否则会报错；后面设置颜色、线型等样式的参数 `type` 、 `lty` 、 `lwd` 、 `pch` 、 `col` 、 `cex` 、 `bg` 等在附录 \@ref(cha:tricks) 和第\@ref(cha:elements)章已经讲述过多次，此处不再赘述。
@@ -224,8 +224,8 @@ usage(matlines)
 
 R 中热图函数为 **stats** 包中的 `heatmap()` ，其用法如下：
 
-```{r heatmap-usage}
-usage(heatmap)
+```{r heatmap-usage, results='asis'}
+usage2(usage(heatmap, output = FALSE))
 ```
 
 其中 `x` 是数据矩阵，它的类型只能是矩阵，不能是数据框或其它类型； `Rowv` 和 `Colv` 分别决定了行和列如何计算层次聚类和重新排序，若设置为 `NULL`（默认），则按层次聚类的结果将行和列重新排序并相应画谱系图，若为 `NA` 的话，则不画谱系图； `distfun` 决定用哪个函数计算距离以便进一步计算聚类，默认为 `dist()` ； `hclustfun` 决定用哪个函数计算层次聚类； `scale` 决定对行或列进行标准化，或者不进行标准化； `margins` 设定图形的下边距和右边距； `...` 参数传递给 `image()` ，所以我们还可以利用 `image()` 的参数来调整图形外观，比如用 `col` 设置单元格的颜色系列。

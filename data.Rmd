@@ -427,8 +427,8 @@ SongWords[sample(nrow(SongWords), 10), ]
 
 聚类的数据基础是距离矩阵；个体与个体能够聚为一类，本质原因是它们之间的距离相近，这里的距离通常采用欧氏距离，即点 $\mathbf{x}_{i}=(x_{i1},x_{i2},\ldots,x_{ip})$ 与点 $\mathbf{x}_{j}=(x_{j1},x_{j2},\ldots,x_{jp})$ 之间的距离为 $d_{ij}=\sqrt{(x_{i1}-x_{j1})^{2}+\cdots+(x_{ip}-x_{jp})^{2}}$。除了个体与个体之间的距离之外，我们还需要定义个体与类、以及类与类之间的距离，这些定义又有多种方式，例如定义一个点与一类点之间的距离为这个点与该类中离它最近的点之间的距离（或最远的点，或类的中心，等等）。定义好这些距离之后，我们就可以开始层次聚类了：首先将所有个体视为单独的类（即：若个体数量为 $n$ 那么此时就有 $n$ 类），然后将最近的两类归到同一类中，接着重新计算一下 $n-1$ 类之间的距离并将最近的两类归为一类，如此操作下去最终所有的个体都将归入同一类。在 R 中我们可以用函数 `hclust()` 来实现层次聚类，需要提供的是距离矩阵和类与类之间的距离定义：
 
-```{r hclust-usage}
-usage(hclust)
+```{r hclust-usage, results='asis'}
+usage2(usage(hclust, output = FALSE))
 ```
 ```{r song-words-hclust, fig.cap="(ref:song-words-hclust)",fig.scap="(ref:song-words-hclust-s)"}
 SongCorr <- cor(SongWords) # 词风相关矩阵
