@@ -1,270 +1,4 @@
-# 系统 {#chap:system}
-
-> “我不想用各种说法和怀疑来影响你，华生，”他说，“我只要求你将各种事实尽可能详尽地报告给我，至于归纳推理就留给我好了。”
-> 
-> “哪些事实呢？”我问道。
-> 
-> “与该案可能有关的任何事实，无论是多么地间接，特别是年轻的巴斯克维尔与邻里的关系或与查尔兹爵士暴卒有关的任何新的问题。”
-> 
-> ——柯南 $\cdot$ 道尔《巴斯克维尔的猎犬》  
-
-除了基础图形系统之外，R 还自带另一套图形系统即 **grid**（网格图形），网格图形系统是一套基础设施性质的图形系统，它本身不包含统计图形，只是提供了一些画图形元素的工具。在此基础上诞生了 **lattice** 图形系统和 **ggplot2** 图形系统，其中 **lattice** 包已经随 R 本身发布，**ggplot2** 包目前的地位还只是一个附加包，但由于它的灵活和美观，用户数量与日俱增，所以我们在本章优先介绍它，并且建议读者可以不必学习 **lattice** 系统。除了这些静态图形系统之外，R 还有一些附加包支持动态图形和交互式图形，即：用户可以用鼠标或键盘和图形进行交互，比如用鼠标选取图中的点并高亮，或者拖拉旋转图形；代表性的附加包有 **rggobi** 、 **iplots** 、 **rgl** 和 **playwith** 等。另外我们还可以利用 R 包 **animation** 生成动画。这些附加包极大增强了统计图形的探索功能和趣味性。
-
-
-## ggplot2 图形 {#sec:ggplot2}
-
-基础图形系统虽然灵活，但它无穷无尽的选项往往让用户感到迷茫，后面的 **lattice** 系统也有同样的问题（甚至更严重）。**ggplot2** 包 [@ggplot2] 从易用性出发，结合了基础图形系统的简便以及 **grid** 和 **lattice** 的灵活，并以“The Grammar of Graphics”一书 [@Wilkinson05] 的理论为支撑，构建了一套易用、实用而且美观的图形系统。ggplot2 的核心概念是“层”，所有的图形都是由层的叠加构成，这是对统计图形的一个非常形象的抽象；另外，它在程序实现上也很巧妙：它扩展了泛型函数 `+`，也许用户会对此感到迷茫，后面我们看了具体例子马上就能明白。加号实际上是一个函数。我们平时看到的加法可以写成函数调用的形式：
-
-```{r plus-generic}
-1 + 2 # 我们看到的加法
-`+`(1, 2) # 加号作为一个函数使用
-methods("+") # 加号上的 S3 方法
-```
-
-在 **ggplot2** 中，画图只需要将若干个图层简单相加即可，语法非常精炼，如：
-
-```{r plus-ggplot2}
-library(ggplot2)
-p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
-  geom_point() # 先画一个散点图的图层
-p + geom_smooth(method = "loess") # 用散点图加上平滑层
-```
-
-使用 ggplot2 时，通常我们不必担心细节问题，例如图形的边距会自动调整，不会留出大片空白，元素颜色会自动根据变量取值从调色板中选取，图例会自动添加，等等。这些自动化的设计可以为我们节省大量的调整细节的时间。相比之下，我们使用基础图形常常需要缩小边距（默认值太大）、手工添加图例，显得非常麻烦。
-
-函数 `ggplot()` 是 ggplot2 中的核心函数之一，它能让我们快速画出灵活的图形，其用法如下：
-
-```{r qplot-usage}
-usage(qplot)
-```
-
-其中 x、y、z 分别是要画图的变量，data 可以提供一个数据框（在这里面寻找前面提到的变量）；geom 默认值为“自动”，它会根据提供的数据类型自动生成合适的图形。例如，如果我们提供的 x 和 y 是数值型变量，那么画出来的就是散点图；如果只提供数值型的 x，那么就画直方图；如果提供离散型的 x，那么就按照各分类的频数画条形图；下一节我们我们再详细介绍它；stat 指定对数据做的统计变换；剩下的参数都是一些细节调整，可以根据具体任务设定；特别要提到的是 ... 参数，这里面还有很多灵活设置，最常见的可能是切片（facet），即以某些分类变量对数据切分后分别对小块数据作图。
-
-整个 ggplot2 系统大致由几何形状（geom）、统计量（statistic）、标度（scale）、坐标系（coordinate system）和切片（facet）构成，下面我们分别作介绍。
-
-### 几何形状
-
-```{r mtcars-smooth,fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)"}
-ggplot(aes(x = hp, y = mpg), data = mtcars) +
-  geom_point() +
-  geom_smooth(method = "loess")
-```
-
-(ref:mtcars-smooth-s) 汽车马力与每加仑汽油行驶里程的关系
-
-(ref:mtcars-smooth) 汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的
-
-在 ggplot2 中，几何形状简称 geom （Geometric objects），这些形状包括：点、条、线、箱线图和文本等。实际上它们就是第\@ref(cha:elements)章介绍的图形元素，但是 ggplot2 在这些元素上做了更多工作，例如箱线图并非基础图形元素，但它在 ggplot2 中的地位也是基础形状，还有平滑曲线和平滑带，背后都涉及到大量的统计计算，而 ggplot2 对它打包之后，用户用起来就简单多了，否则我们需要手工建立平滑模型（可能是线性回归，可能是 LOWESS，或是分位数回归等），然后取一系列 x 值并拟合 y 值。
-
-几何形状通常和统计量紧密相关。因为要画出几何形状，必须计算一些坐标值（例如箱线图中的分位数、条形图的高度），所以我们必须要知道对数据做什么样的统计变换或汇总。
-
-图 \@ref(fig:mtcars-smooth) 展示了 \@ref(sec:stars) 小节曾经提到过的汽车数据。从图中我们可以看到，随着汽车马力增大，每加仑汽油能行驶的英里数在降低，但并非直线下降，而是在逐渐变缓，这也符合常识—— 不可能有哪种汽车的马力大到无法开动的程度。图中的平滑曲线基于 LOWESS 生成，它是散点图的重要辅助工具，后面 \@ref(subsec:percentage) 小节和 \@ref(subsec:lowess) 小节还会详细介绍。
-
-### 统计量
-
-统计量指定了对原始数据做何种变换，进而用几何形状表达出来。ggplot2 中除了划分直方图区间求频数、求分位数、计算密度值这些普通的变换功能之外，还有一些新颖的统计量，例如根据二维数据用网格划分区间求每个格子内的数据频数（实际上就是二维直方图），或者用蜂巢形状将平面划分为一系列的六边形区间再求数据频数。
-
-```{r diamonds-hex,fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)"}
-ggplot(aes(x = carat, y = price), data = diamonds) +
-  geom_hex()
-```
-
-(ref:diamonds-hex-s) 钻石重量与价格的蜂巢图
-
-(ref:diamonds-hex) 钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小
-
-图 \@ref(fig:diamonds-hex) 是 **ggplot2** 包中 diamonds 数据的一幅蜂巢图，它展示了在每个蜂巢格子里的数据频数大小，这种图形和平滑散点图的思想类似，都是要展示二维数据的密度，只不过实现方法不同而已。蜂巢图的背后是散点图，但具体的点都没有显示出来，我们看到的只有蜂巢及其颜色。从图例中可以看出，红色表示该单元格内的数据频数为 7000 左右，蓝色表示 1000。该数据内大多数钻石的价格（纵轴）和重量（横轴为克拉数）都偏小。另外，我们也很容易看出，随着克拉数增大，价格也相应升高，这也是符合常识的，但有些 3 克拉的钻石价格和 0.5 克拉的一样，这可能是因为打磨质量的问题。
-
-当散点图中的点的数目非常大时，蜂巢图既能保持散点图中两个变量的关系，又能提供对数据密度的概括。蜂巢图的计算基于 **hexbin** 包 [@hexbin]，这个包自身也可以画蜂巢图，**ggplot2** 包只是调用其中的函数完成蜂巢的计算。
-
-统计量相关函数通常会生成一些新的变量，这些变量可以用来手工构造图形。例如计算密度的 `stat_density()` 函数会生成一个 density 变量，即密度值，回忆 \@ref(sec:vioplot) 小节介绍的小提琴图，它就是基于密度值围成的多边形区域，在 ggplot2 中，我们同样可以构造小提琴图，以下是一个根据钻石数据价格变量生成的小提琴图：
-
-```{r ggplot2-violin}
-ggplot(diamonds, aes(x = price)) +
-  stat_density(aes(ymax = ..density.., ymin = -..density..),
-    geom = "ribbon", position = "identity"
-  )
-```
-
-注意其中 density 变量的两边都需要用 `..` 围起来，这是 ggplot2 的语法规定，这种写法表示变量从统计量函数中计算而来，并非原始数据自带的。 ribbon 是带状的几何形状，本质上是多边形，通常带有填充色。
-
-### 标度
-
-标度通常指定如何从数据映射到几何形状的颜色、符号和大小等属性，这也是 ggplot2 系统的一个非常吸引人的特征。大多数情况下，我们只需要指定用来做标度的变量即可，剩下的映射工作 ggplot2 会自动完成。例如图 \@ref(fig:iris-ggplot2) 中，我们指定 `color` 和 `shape` 两个参数之后， ggplot2 就能自动用 **RColorBrewer** 包的离散调色板生成颜色并添加图例。图 \@ref(fig:point-iris) 画的是几乎是同样的散点图，但其代码显然相形见绌。
-
-```{r iris-ggplot2,fig.scap="(ref:iris-ggplot2-s)",fig.cap="(ref:iris-ggplot2)"}
-ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
-  geom_point(aes(color = Species, shape = Species))
-```
-
-(ref:iris-ggplot2-s) ggplot2 中的鸢尾花花瓣长宽散点图
-
-(ref:iris-ggplot2) ggplot2 中的鸢尾花花瓣长宽散点图：对比图 \@ref(fig:point-iris) 看看 ggplot2 中语法之简洁，颜色、形状、图例一气呵成
-
-标度除了用在颜色和符号上之外，还可以用在大小上，例如用图中圆圈的大小表示第三维变量的大小，这与 \@ref(sec:symbols) 小节的符号图很相似。ggplot2 中可以用 size 参数还设置和元素大小对应的变量，并可以用 `scale_size()` 函数来调整映射的端点（最小值和最大值）。图 \@ref(fig:quake6-bubbles) 就是这样的一个示例。**MSG** 包中的 `quake6` 数据记录了 1973 年到 2010 年每个月发生的 6 级以上的地震信息，我们可以按照年份和月份汇总地震发生的频数，然后画年份和月份的散点图，并将频数信息附着在点上。从图中可以看到，地震发生的频数似乎随着年份在增加，尤其是 2007 年 4 月和 2009 年 10 月地震活动非常频繁。另外，7 月似乎是地震低发期。注意这批数据来自美国地震局（USGS），这让我们考虑到地震频数逐年增加可能是个假象，很可能是因为近年来地震记录设备越来越先进，更多地震活动被探测到并记录了下来。
-
-### 刻度 {#subsec:scale}
-
-替换合适的刻度/尺度有利于显示数据
-
-
-### 坐标系
-
-```{r quake6-bubbles,fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
-data(quake6, package = "MSG")
-ggplot(quake6, aes(x = year, y = month)) +
-  stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
-```
-
-(ref:quake6-bubbles-s) 1973 年以来全球 6 级以上地震的时间频数图
-
-(ref:quake6-bubbles) 1973 年以来全球 6 级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7 月的地震频率相对较低？
-
-```{r diamonds-cut,fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1}
-p <- ggplot(aes(x = cut, y = log(price)), data = diamonds) +
-  geom_boxplot()
-p
-p + coord_flip()
-```
-
-(ref:diamonds-cut-s) 钻石雕琢水平和对数价格的关系
-
-(ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 `Fair` 到 `Ideal` 雕琢水平逐渐增高，但价格并没有严格上升
-
-我们平时用到的坐标系大多数都是笛卡尔坐标系，ggplot2 也提供了极坐标系和地图坐标系，并支持笛卡尔坐标系的翻转，即交换 x 轴和 y 轴。函数 `coord_flip()` 可以用来翻转几乎任何图形，而且由于 ggplot2 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上 `coord_flip()` 再打印即可。图 \@ref(fig:diamonds-cut) 是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。
-
-```{r diamonds-polar,fig.scap="(ref:diamonds-polar-s)",fig.cap="(ref:diamonds-polar)"}
-ggplot(aes(x = cut, fill = cut), data = diamonds) +
-  coord_polar() +
-  geom_bar(width = 1, show.legend = FALSE)
-```
-
-(ref:diamonds-polar-s) 钻石雕琢水平的极坐标条形图
-
-(ref:diamonds-polar) 钻石雕琢水平的极坐标条形图：各种雕琢水平下的钻石数量差别很大
-
-图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，这一点在 \@ref(subsec:china-vs-us) 小节中我们还会再举例说明，请读者慎用。
-
-### 切片 {#subsec:facet}
-
-切片的思想来自于 Trellis 图形：将整批数据按照某一个或两个分类变量切成一个个子集，然后对这些子集画图。在 ggplot2 中实现切片也很简单，添加一个 `facet_xxx()`函数即可。这个函数的参数取值为一个公式，公式左侧决定在行上摆放的子集图形，右侧决定列上的图形。
-
-图 \@ref(fig:diamonds-carat) 给出了每一种雕琢水平下的钻石重量密度曲线，整幅图形按照雕琢水平切片，公式为 `cut ~ .`，意思是每一行摆放一种 cut 值。五种雕琢水平下，雕琢最好的钻石的重量大多都在 1 克拉以下，密度曲线严重右偏。
-
-```{r diamonds-carat,fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
-ggplot(aes(x = carat), data = diamonds) +
-  geom_density() +
-  facet_grid(cut ~ .)
-```
-
-(ref:diamonds-carat-s) 按雕琢水平切片后的钻石重量密度曲线
-
-(ref:diamonds-carat) 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻
-
-切片的版面设置除了上面介绍的行列排列之外，还有一种从左到右、从上到下的排列方式。有时候切片生成的子集数目如果太多的话，无论按行或按列摆放可能都摆不下，这时候可以考虑这种顺序排列的方式，参见 `facet_wrap()` 的帮助文档（前一种排列叫 `facet_grid()`）。
-
-### 分组 {#subsec:group}
-
-[介绍 group 参数和切片/分面的区别]{.todo}
-
-
-
-### 位置调整
-
-位置调整主要针对条形图中的矩形条的位置摆放。在 \@ref(sec:barplot) 小节中我们讲到了基础图形系统中的条形图，里面有个 `beside` 参数可以指定矩形条是并排排列还是堆砌排列，ggplot2 系统中的位置调整也类似。当然，不仅条形图中有矩形条，直方图中也有，所以我们同样可以画堆砌直方图。另外在散点图中也有一类重要的位置调整，即随机打乱，这一点在 \@ref(sec:stripchart) 小节和图 \@ref(fig:discrete-var) 中都提到过。略微随机打乱散点图中的点的位置，能减轻图的重叠程度，尤其是有很多个点都在同一个位置上时，由于重叠的原因，我们可能会被误导（以为该处只有 1 个点）。随机打乱也可以作为一种几何形状添加到图中，如：
-
-```{r geom-jitter-demo}
-ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
-  geom_point() +
-  geom_jitter(color = "red") # 对比随机打乱的散点
-```
-
-[介绍 ggrepel <https://github.com/slowkow/ggrepel> 和 ggbeeswarm <https://github.com/eclarke/ggbeeswarm>]{.todo}
-
-### 图例 {#subsec:legend}
-
-添加、取消、修改图例
-
-二维的图例 [biscale](https://github.com/slu-openGIS/biscale) 和 [multiscales](https://github.com/clauswilke/multiscales) 和 [ggnewscale](https://github.com/eliocamp/ggnewscale)
-
-### 注释 {#subsec:annotation}
-
-### 字体 {#subsec:font}
-
-相比于 R 基础绘图系统，ggplot2 系统可以更加精细地设置各处字体。
-
-```{r font-in-ggplot,fig.cap="(ref:font-in-ggplot)",fig.scap="(ref:font-in-ggplot-s)",message=FALSE,fig.showtext=FALSE}
-p1 <- ggplot(pressure, aes(x = temperature, y = pressure)) +
-  geom_point()
-p2 <- p1 + theme(
-  axis.title = element_text(family = "sans"),
-  axis.text = element_text(family = "serif")
-)
-p3 <- p1 + labs(x = "温度", y = "压力") +
-  theme(
-    axis.title = element_text(family = "GB1"),
-    axis.text = element_text(family = "serif")
-  )
-p4 <- p1 + labs(
-  x = "温度", y = "压力", title = "散点图",
-  subtitle = "Vapor Pressure of Mercury as a Function of Temperature",
-  caption = paste("Data on the relation between temperature in degrees Celsius and",
-    "vapor pressure of mercury in millimeters (of mercury).",
-    sep = "\n"
-  )
-) +
-  theme(
-    axis.title = element_text(family = "GB1"),
-    axis.text.x = element_text(family = "serif"),
-    axis.text.y = element_text(family = "sans"),
-    title = element_text(family = "GB1"),
-    plot.subtitle = element_text(family = "sans", size = rel(0.7)),
-    plot.caption = element_text(family = "sans", size = rel(0.6))
-  )
-library(cowplot)
-plot_grid(p1, p2, p3, p4,
-  labels = c(
-    "默认字体设置", "英文字体设置",
-    "中文字体设置", "任意字体设置"
-  ), label_fontfamily = "GB1", ncol = 2,
-  label_x = 0.1, label_y = 0.6
-)
-```
-
-(ref:font-in-ggplot-s) 在 ggplot2 绘图系统中设置中英文字体
-
-(ref:font-in-ggplot) 在 ggplot2 绘图系统中，字体可以非常容易地做到精细的设置，轴的标题、标签和图的主、副标题等都可以设置不同的字体、字号和字样
-
-### 配色 {#subsec:color}
-
-RColorBrewer 和 colorspace
-
-### 主题 {#subsec:theme}
-
-可能读者已经注意到，ggplot2 图形有一套自己的独特风格，它与别的图形系统在外观上的典型区别就是它通常会画一个灰色的背景，背景中有网格线。首先，网格线是为了辅助阅读图形而画的，这是非常重要的图形组成部分；其次，灰色的背景也有其原因：因为一篇文章的文字通常是黑色，所以灰底的图形会和黑色文字能融合得更好，这是一点美学上的考虑。有的用户可能喜欢这样的设置，有的用户则可能很不习惯这种默认设置。ggplot2 可以自定义主题，例如 `theme_bw()` 就是黑白主题，但它的黑白主题几乎仅限于设定灰色背景为白色，图中元素的颜色不会受到影响，如：
-
-```{r ggplot2-theme}
-ggplot(aes(x = mpg, y = wt), data = mtcars) +
-  geom_point() # 默认主题下的图
-old <- theme_set(theme_bw()) # 设置黑白主题
-ggplot(aes(x = mpg, y = wt), data = mtcars) +
-  geom_point() # 黑白主题下的图
-theme_set(old) # 恢复原来的主题设定
-```
-
-主题还涉及到大量的细节问题，如文字的大小、颜色、旋转角度、图例的位置等等，读者可以参考 `theme_set()` 函数的帮助文档。
-
-经过这些“图层”的分解与抽象，ggplot2 系统中的图形可以像一个魔方一样任意组合，这也是一种重要的编程思想——让对象可重用。例如我们可以创建一个散点图的图层，然后加上平滑层，或者加上切片层，这些“相加”的操作都不需要重新写创建散点图图层的代码，大大减轻了代码量。
-
-```{r ggplot2-layers}
-p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
-  geom_point() # 散点图的图层
-p + geom_smooth(method = "loess") # 用散点图加上平滑层并打印出来
-p + facet_grid(~am) # 用自动档和手动挡将散点图切片并打印
-p + geom_density2d() # 散点图上加上二维核密度估计层
-```
-
-本节对 ggplot2 系统的介绍非常粗略，详细内容可以阅读 @ggplot2， 该系统的作者也提供了配套的网站示例，这个网站也是笔者经常参考的资源：<https://ggplot2.tidyverse.org/>。
+# 其它系统 {#chap:system}
 
 ## 网格图形
 
@@ -1050,6 +784,134 @@ knitr::include_graphics(path = c(
 (ref:animation-pollen-s) pollen 数据中暗藏的特征
 
 (ref:animation-pollen) pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧
+
+## 图形界面 {#cha:GUI}
+
+虽然 R 自身几乎没有图形用户界面（GUI），但 CRAN 中存在若干用来生成 GUI 的附加包，例如 **RGtk2** 和 **gWidgets**，R 基础包中也有 **tcltk** 可以制作简单的图形界面。根据笔者自身的经验，**gWidgets** 是最易学的一个附加包。尽管 **tcltk** 包由 R 自带、用户不必额外安装，但它的图形界面相对简陋，帮助文档也不够健全，而且个人认为 tcl/tk 界面不够美观，尽管如此，还是有很多包都基于 **tcltk** 包来创建界面，比如 John Fox 的 **Rcmdr** [@Rcmdr] 包就是一个比较成熟和著名的 R 用户界面；**RGtk2** 包的功能非常完善，但用它构建界面也经常让人觉得过于繁琐。相比之下，**gWidgets** 则是在抽象程度和功能之间有着很好的平衡的一个附加包，因此这里我们着重介绍它。
+
+**gWidgets** 包本身只是一个抽象框架，它需要附着在一个具体的界面包上才能生成具体界面元素，这也是它的灵活性所在：使用 **gWidgets** 包创建图形界面时，我们可以不必关心最终用哪种界面实现，这些界面与创建界面的代码是分离的。对 **gWidgets** 包而言，它至少有两种界面实现：GTK+ 界面和 tcl/tk 界面，分别对应着 **gWidgetsRGtk2** 包和 **gWidgetstcltk** 包（历史上曾经有过基于 **gWidgetsrJava** 包的 Java 界面，但后来作者不再维护这个包了）。由于 GTK+ 界面看起来美观一些，这里我们只以 GTK+ 界面为例，但创建 GUI 的代码几乎可以不作任何修改转化为 tcl/tk 界面（有时候会有细微差别）。首先我们需要安装并加载 **gWidgetsRGtk2** 包：
+
+```{r gwidgets-install,eval=FALSE}
+install.packages("gWidgetsRGtk2")
+library(gWidgetsRGtk2)
+options(guiToolkit = "RGtk2") # 这项设置可省略
+# 如果要创建 tcl/tk 界面则需要安装 gWidgetstcltk 并设置 options(guiToolkit='tcltk')
+```
+
+创建图形界面有三大关键要素：一是界面控件，如按钮、下拉框、文本框等，二是这些控件的位置安排，或者嵌套关系，三是事件，因为控件通常是用来响应一些用户事件的，例如鼠标点击或键盘动作等。这些要素在 gWidgets 的框架下非常简易明了，下面我们以一个最简单的例子说明这些要素：
+
+```{r gwidgets-simple-demo,eval=FALSE}
+gw <- gwindow("Hi Window!") # 创建一个窗口，它是所有控件的载体
+gb <- gbutton("Open", container = gw, handler = function(h, ...) {
+  gfile("Open a file", type = "open")
+})
+```
+
+首先我们用 `gwindow()` 函数创建了一个窗口，几乎所有的界面都需要有一个窗口来装载图形控件，这个函数的第一个参数是窗口的标题；接下来我们用 `gbutton()` 创建一个按钮，注意此时我们指定这个按钮被装在刚才创建的窗口对象中，这通过 `container` 参数实现，`gbutton()` 的第一个参数为按钮上的文本；在创建按钮时我们也绑定了一个事件在它上面，即 `handler` 参数，这个参数的取值为一个函数，上例中的函数格式为这个参数的固定取值格式（第一个参数为 `h`，剩下的参数为 `...`），函数用来执行事件，比如这里如果我们点击按钮，那么触发的事件将是弹出一个打开文件的对话框，它通过 `gfile()` 函数实现。在真实的应用中，我们一般需要对打开的文件进行进一步操作，这个文件的地址可从 `gfile()` 的返回值中得到。
+
+**gWidgets** 包中的控件包括：
+
+`gwindow()`
+: 窗口
+
+`gbutton()`
+: 按钮
+
+`gedit(), gtext(), glabel()`
+: 单行文本框和多行文本框，标签（它只能显示文本，不可编辑）
+
+`gcheckbox(), gcheckboxgroup(), gradio()`
+: 复选框、复选框组和单选框
+
+`gcombobox(), gdroplist()`
+: 下拉框（前者允许用户自行输入选项，后者只能从给定列表中选择）
+
+`gfile(), gfilebrowse(), gcalendar()`
+: 文件对话框和日历控件 
+
+`gmessage(), ginput(), gconfirm(), galert()`
+: 消息对话框、输入对话框、确认对话框和警告对话框
+
+`gdf(), gdfnotebook()`
+: 可编辑的数据表控件（后者的界面更丰富）
+
+`gtable()`
+: 不可编辑的数据表控件
+
+`ggroup()`
+: 组合控件，它没有具体外观，但可以作为其它控件的载体，将其它控件组合在一起
+
+`gframe()`
+: 框架，可选择性地带文本标签
+
+`gmenu(), gtoolbar(), gstatusbar()`
+: 菜单、工具栏和状态栏
+
+`ggraphics()`
+: 图形控件，可将 R 图形嵌入界面中（依赖于 **cairoDevice** 包）
+
+`gimage()`
+: 图片控件，可显示任意本地图片文件
+
+`gnotebook()`
+: 标签页，或选项卡，包含若干子页面，顶部为页面名称，页面之间可以来回切换显示
+
+`gslider(), gspinbutton()`
+: 滑动条和计数按钮，前者可由鼠标拖动滑杆改变控件的值，后者通过鼠标点击按钮上的上下或左右箭头来逐步改变值
+
+`gtree()`
+: 树型控件（展示树型嵌套结构）
+
+大部分控件都有其取值，可以用函数 `svalue()` 提取或改变。例如文本框控件的取值就是其中的文本，我们也可以通过 `svalue()` 改变文本框中的文本：
+
+```{r gwidgets-svalue-demo,eval=FALSE}
+gtxt <- gedit("initial text", container = TRUE)
+svalue(gtxt) # 返回 'initial text'
+svalue(gtxt) <- "changed text" # 文本框中的文本被更新
+```
+
+类似地，我们也可以用 `enabled()` 和 `visible()` 分别控制控件的可用性（不可用时控件通常变为灰色）和可见性。我们还可以用一系列 `addHandlerXXX()` 函数来事后往控件上添加事件，例如 `addHandlerClicked()` 可以添加鼠标点击事件，等等。
+
+特别值得一提的是，gWidgets 和 R 的数据结构融合得非常好，对于熟悉 R 数据结构的用户来说，这些控件甚至可以直接当作 R 对象使用。典型的例子如数据表控件，我们可以用方括号从控件中取值：
+
+
+```{r gwidgets-gtable-demo,eval=FALSE}
+gtb <- gtable(iris, container = TRUE)
+gtb[1, 1] # 表中第 1 行第 1 列的值
+gtb[1:10, 1:2] # 前 10 行前 2 列的值
+```
+
+最后我们展示一个简单的应用实例：在 \@ref(sec:color) 小节中我们介绍了 R 中的颜色生成机制，其中有一种就是通过红绿蓝三原色混合生成颜色，我们可以利用 gWidgets 创建一个简易图形界面来动态实现这种混合，最终效果如图 \@ref(fig:color-selector)。
+
+```{r gwidgets-color-selector,eval=FALSE}
+library(gWidgetsRGtk2)
+g <- ggroup(horizontal = FALSE, container = gwindow("Color Selector"))
+x <- c(0, 0, 0) # 红绿蓝颜色成分向量
+for (i in 1:3) {
+  gslider(from = 0, to = 1, by = 0.05, action = i, handler = function(h, ...) {
+    x[h$action] <<- svalue(h$obj)
+    par(bg = rgb(x[1], x[2], x[3]), mar = rep(0, 4))
+    plot.new()
+  }, container = g)
+}
+ggraphics(container = g, width = 200, height = 100)
+```
+```{r color-selector,echo=FALSE,fig.cap="(ref:color-selector)",fig.scap="(ref:color-selector-s)",fig.subcap=c("",""),out.width="45%"}
+knitr::include_graphics(path = c(
+  "images/gwidgets-color-selector1.png",
+  "images/gwidgets-color-selector2.png"
+))
+```
+
+(ref:color-selector-s) 用 **gWidgets** 制作的颜色混合器
+
+(ref:color-selector) 用 **gWidgets** 制作的颜色混合器：调节红绿蓝三原色的成分可以获得新的混合色
+
+
+上面的代码中，首先我们用 `ggroup()` 来排版布局，主要是让控件以纵向方向排列，因为默认情况下新控件会横向排列；接着我们用循环创建三个滑动条分别代表红绿蓝，它们的取值范围为 0 到 1，滑动一步时值的变动为 0.05，其中绑定的事件为画空白图，图的背景按照向量 x 的三个成分由 `rgb()` 函数混合而成，这里我们使用了一点新概念，即 `action` 参数，它的意义稍微有点曲折：`action` 参数将来会传给 `handler` 参数中的函数，具体传递过程是，它的取值会被放在 `h` 参数的 `action` 子元素中，也就是我们可以用 `h$action` 来提取传入的值；循环中三个滑动条的 `action` 值分别为 1、2、3，而 `handler` 的函数中 `h$obj` 可以用来调用控件本身，所以用 `svalue()` 就可以提取该控件当前的值，并赋给 x 中的第 i 个元素，这里的赋值符号用的是双箭头 `<<-`，原因是在普通的赋值符下（等号 `=` 或者单箭头 `<-`），R 的变量作用域会使得函数内部对变量的修改只是局部的修改，外部的变量值不会改变，但双箭头可以从内部改变外部变量的值。这样，每次我们拖动第 i 个滑动条时，触发的事件是 x 中的第 i 个值被修改为滑动条的值，然后带背景色的空白图形会根据新的颜色被重画。最后我们使用了图形控件 `ggraphics()` 将 R 图形嵌入当前的图形界面，一个完整的颜色混合器界面就完成了。图 \@ref(fig:color-selector) 中左图显示的是 50\% 的红色配 50\% 的蓝色，结果是紫色；右图是 70\% 红、100\% 绿和 10\% 蓝混合的结果。
+
+通过以上介绍，我们相信在 R 中创建 GUI 不再是难事。在日常工作中，偶尔写一个简单界面也能为我们的工作增添一些乐趣和便利。**formatR** 包 [@formatR] 就是笔者编写的一个用来自动整理 R 代码的图形界面，点一下按钮，文本框中的 R 代码就会被整理整齐（自动添加空格和缩进），更多介绍参见 <https://yihui.org/formatr/>。另外，图形界面也是让图形发挥更大功效的有力工具，如 GGobi 软件若离开了它的图形界面，可能会失色不少。
+
 
 ## 思考与练习
 

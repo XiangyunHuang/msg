@@ -1,0 +1,486 @@
+# 双变量图 {#cha:gallery2}
+
+## 散点图 {#sec:plot-default}
+
+
+散点图通常用来展示两个变量之间的关系，这种关系可能是线性或非线性的。图中每一个点的横纵坐标都分别对应两个变量各自的观测值。因此，散点所反映出来的趋势也就是两个变量之间的关系。
+
+R 中散点图的函数为 `plot.default()`，但由于 `plot()` 是泛型函数（参见 \@ref(sec:plot) 小节），通常我们只需要提供两个数值型向量给 `plot()` 即可画散点图，或者提供一个两列的矩阵或数据框。函数 `plot.default()` 的用法如下：
+
+```{r plot-default-usage}
+usage(plot.default)
+```
+
+其中若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数均已在 \@ref(sec:plot) 小节中介绍。
+
+(ref:fig-scatter-alpha-s) 半透明散点图中的规律
+
+(ref:fig-scatter-alpha) 半透明散点图中的规律：左图是一幅普通的散点图，图中几乎看不出数据有任何异常特征；右图中对点使用了透明度为 0.01 的红色，图中立即显示出一个深色的圆圈，表明该圆圈上集中了大量数据点
+
+```{r scatter-alpha, fig.width=4,fig.height=2, dev='png', dev.args=list(type = "cairo"), fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha-s)",results='hide', fig.show="hold"}
+demo("alphaDemo", package = "MSG")
+
+p <- ggplot(BinormCircle, aes(V1, V2)) +
+  theme_void() +
+  theme(axis.ticks = element_blank(), 
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    plot.background = element_rect(linetype = "solid",color = "black")
+  )
+p1 <- p + geom_point(color = rgb(1, 0, 0))
+p2 <- p + geom_point(color = rgb(1, 0, 0), alpha = 0.01)
+plot_grid(p1, p2, ncol = 2)
+```
+
+图 \@ref(fig:scatter-alpha)
+展示了一个人造数据的散点图：我们设计了 2 万个样本，其中有 1 万个样本点来自于两个独立的标准正态分布，另 1 万个样本点的坐标落在半径为 0.5 的圆上，最后将这 2 万个样本拼起来并打乱顺序。该数据收录在 **MSG** 包中，名为 `BinormCircle`。虽然数据只有两个变量，但我们用普通的统计模型和数值分析几乎无法找出数据的特征，例如线性回归显示两个变量 `V1` 和 `V2` 的回归系数非常不显著：
+
+```{r BinormCircle-lm}
+data(BinormCircle, package = "MSG")
+head(BinormCircle) # 数据前 6 行
+# 回归系数以及 P 值（不显著）
+coef(summary(lm(V2 ~ V1, BinormCircle)))
+```
+
+换用高阶回归的结果也类似：无论回归阶数为多少，系数均不显著，这一点从数据的构造上就可以知道（理论上两个变量的相关系数为 0）。由于样本量太大，普通的散点图上点与点之间严重重叠，所以也很难看出散点图有何异常，而使用半透明色的散点图则很容易看出，在大量的数据点中，还隐藏着一个圆圈，说明有相当一部分数据分布有特殊规律。我们在网页 <https://yihui.org/en/2008/09/to-see-a-circle-in-a-pile-of-sand/>
+上给出了其它五种不同的解决方案，都可以从图形的角度反映出这种规律。本章 \@ref(sec:smoothScatter) 小节也将以平滑散点图的方式再回顾这批数据。
+
+## 一元函数曲线图 {#sec:curve}
+
+(ref:fig-curve-s) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图
+
+(ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）
+
+```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
+par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
+chippy <- function(x) sin(cos(x) * exp(-x / 2))
+curve(chippy, -8, 7, n = 2008, xlab = "$x$", ylab = "$\\mathrm{chippy}(x)$")
+curve(sin(x) / x, from = -20, to = 20, n = 200, 
+      xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
+```
+
+函数曲线图没有什么特殊之处，仅仅是一条曲线而已，R 专门提供了一个函数，目的是为了节省我们去使用低层作图函数（如 `lines()`）的精力和时间。利用这个函数，我们可以方便地对任何一元函数作出它在某段定义域上的曲线。
+
+R 中函数曲线图的函数为 `curve()`，其用法如下：
+
+```{r curve-usage}
+usage(curve)
+```
+
+参数 `expr` 为一个一元函数或者该函数的名称； `from` 和 `to` 分别定义了曲线的起点和终点； `n` 决定将定义域分成多少个小区间，以便计算函数值并连接曲线， `n` 值越大曲线越光滑； `add` 参数决定是否将曲线添加到现有图形上； `type` 参数决定了作图类型（参见 \@ref(sec:plot) 小节和图 \@ref(fig:plot-type)）。注意：若对一个函数直接应用 `plot()` 函数，那么泛型函数 `plot()` 会自动调用 `curve()` 完成作图。
+
+图 \@ref(fig:curve) 给出了函数 $f(x)=\sin(\cos(x)*\exp(-x/2))$ 的曲线以及均匀分布 $U(-1,1)$ 的特征函数曲线作为示例，其中特征函数为概率论中定义的 $\varphi_{X}(t) = \mathrm{E}[\exp(itX)]$。由于 `curve()` 与数据分析关系不甚密切，我们在此只是粗略介绍一下。
+
+## 向日葵散点图 {#sec:sunflowerplot}
+
+(ref:fig-sunflowerplot-s) 鸢尾花花瓣长和宽的向日葵散点图
+
+(ref:fig-sunflowerplot) 鸢尾花花瓣长和宽的向日葵散点图
+
+```{r sunflowerplot,fig.width=4,fig.height=4,fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
+par(mar = c(4, 4, 0.2, 0.2))
+sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
+```
+
+向日葵散点图（Sunflower Scatter Plot）是用来克服散点图中数据点重叠问题的特殊散点图工具。它采用的办法是在有重叠的地方用一朵"向日葵花"的花瓣数目来表示重叠数据的个数，这样我们就很容易看出来散点图中哪些地方的数据有重叠，而且能知道重叠的具体数目。向日葵散点图在数据特别密集或者数据类型为分类数据时很有用，因为这两种情况下都容易产生重复的数据点，尤其是后一种情况下，数据几乎必然有重复（除非列联表单元格频数为 1）。
+
+R 中向日葵散点图的函数为 `sunflowerplot()` ，其用法如下：
+
+```{r sunflowerplot-usage}
+usage(graphics:::sunflowerplot.default)
+```
+
+ `x` 和 `y` 分别为散点图的两个变量； `number` 为人工给定的数据频数，即图中的花瓣数目，若不指定这个参数的话 R 会自动从 `x` 和 `y` 计算； `digits` 给定数值的有效数字位数，在计算重复数据之前原始数据会按照 `digits` 四舍五入； `add` 决定是否将向日葵散点图添加到当前图形上； `rotate` 决定是否随机旋转向日葵的角度； `pch` 给定散点图的点的类型； `cex` 给定散点图的点的缩放倍数； `cex.fact` 给定向日葵中心点的缩小倍数，真正的缩放倍数为 `cex/cex.fact` ； `col` 为散点的颜色， `bg` 为点的背景色； `size` 为向日葵花瓣的长度，单位为英寸； `seg.col` 为花瓣颜色； `seg.lwd` 为花瓣宽度。
+
+图 \@ref(fig:sunflowerplot) 为鸢尾花花瓣长和宽的向日葵散点图，注意左下方和中部都有一些重复数据，这幅图的颜色用的是金色 `'gold'`，目的是为了使向日葵散点图看起来与其名称相符，不过似乎使用鸢尾花的颜色更符合数据的背景，读者不妨试试看。
+
+## 生存函数图
+
+在很多医学研究中，我们主要关心的变量是病人的某种事件发生的时间，例如死亡、疾病复发等。事实上，以“生存时间”为研究对象的领域并不仅限于医学，例如在金融领域，我们可能需要了解信用卡持有者的信用风险发生时间。这类数据一般统称为生存数据（survival data），而生存数据通常有一个特征就是删失，即观测对象因为某种原因退出了我们的观察。关于生存分析的详细理论请参考 @Therneau00 等。
+
+(ref:fig-survival-s) 急性髓细胞白血病病人生存函数图
+
+(ref:fig-survival) 急性髓细胞白血病病人生存函数图
+
+```{r survival,fig.width=4.8,fig.height=3.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
+library(survival)
+leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
+plot(leukemia.surv, lty = 1:2, xlab = "time")
+legend("topright", c("Maintenance", "No Maintenance"), lty = 1:2, bty = "n")
+survminer::ggsurvplot(leukemia.surv, data = aml)
+```
+
+
+本节要介绍的图形对象主要是生存函数（Survival Function），其定义是个体存活超过时间 $t$ 的概率： $$S(t)=P(T>t);\; t\geq0$$
+
+对于存在删失的生存数据 $(t_{i},\delta_{i}),\, i=1,\cdots,n$（其中 $t_{i}$ 为记录时间，$\delta_{i}=0$ 表示存在删失，1 表示个体没有删失），生存函数的 Kaplan-Meier 估计 [@Kaplan58] 为：
+
+$$\hat{S}(t)=\left\{ \begin{array}{ll}
+\prod_{i:\, t_{(i)}\leq t}(\frac{n-i}{n-i+1})^{\delta_{(i)}}, & \mbox{对}t\leq t_{(n)};\\
+\left\{ \begin{array}{ll}
+0 & \mbox{如果}\delta_{(n)}=1,\\
+\mbox{未定义} & \mbox{如果}\delta_{(n)}=0,
+\end{array}\right. & \mbox{对}t>t_{(n)}.
+\end{array}\right.$$
+
+**survival** 包 [@survival] 提供了生存函数的计算和估计方法。具体函数为 `survfit()`，它返回一个 survfit 类的对象，而 **survival** 包扩展了泛型函数 `plot()`，使其拥有子函数 `plot.survfit()`，因此在估计完生存函数之后，我们可以直接调用 `plot()` 生成生存函数图。函数 `plot.survfit()` 的用法如下：
+
+```{r plot-survfit-usage}
+usage(survival:::plot.survfit)
+```
+
+
+其中 `x` 为一个 survfit 类的对象，通常由 `survfit()` 返回； `conf.int` 决定是否在生存曲线上下作置信区间曲线（当图中只有一条生存曲线时默认会作置信区间）； `mark.time` 决定是否用短竖线标记出删失的时刻，或者直接指定一个时间向量以标记删失时刻； `mark` 给出删失标记的样式，即：标记点的类型（参见图 \@ref(fig:point-type)）。
+
+图 \@ref(fig:survival) 展示了急性髓细胞白血病（Acute Myelogenous Leukemia）数据 `aml` 的生存函数图，该数据有一个分组变量 `x` 表示病人是否接受了化疗，从图中可以看出，接受化疗的病人生存函数的下降速度比没接受化疗的病人要慢，表明化疗还是有一定作用的。进一步我们可以用对数秩检验知道这两组病人的生存时间在 10\% 的显著水平下有显著差异：
+
+```{r survdiff-test}
+survdiff(Surv(time, status) ~ x, data = aml)
+```
+
+
+根据 \@ref(sec:plot) 小节和图 \@ref(fig:plot-type)
+的讲解，读者不难发现，生存函数图实际上就是在生存函数估计值的基础上使用阶梯状参数 `type = 's'` 制成的线图。
+
+## 马赛克图 {#sec:mosaicplot}
+
+
+马赛克图（Mosaic Plots）是展示多维列联表数据的工具。前面我们已经提到过两种展示列联表数据的工具（\@ref(sec:assocplot) 和 \@ref(sec:fourfoldplot) 小节），但它们都只能展示低维列联表，而马赛克图对于列联表的维数没有限制。
+
+马赛克图的表现形式为与频数成比例的矩形块，整幅图形看起来就像是若干块马赛克放置在平面上。马赛克图背后的统计理论是对数线性模型（log-linear model），我们先回顾一个最简单的二维列联表的独立模型。
+
+二维列联表的独立性从概率角度来说就是单元格的频率等于边际频率的乘积：
+
+\begin{equation}
+\pi_{ij}=\pi_{i\cdot}\pi_{\cdot j}
+(\#eq:independence)
+\end{equation}
+
+取对数即得：
+
+\begin{equation}
+\mathrm{log}(\pi_{ij})=\mathrm{log}(\pi_{i\cdot})+\mathrm{log}(\pi_{\cdot j})
+(\#eq:logindependence)
+\end{equation}
+
+根据 $\mu_{ij}=n\pi_{ij}$ 进一步写成频数的形式：
+
+\begin{equation}
+\mathrm{log}(\mu_{ij})=\lambda+\lambda_{i}^{r}+\lambda_{j}^{c}
+(\#eq:freqindependence)
+\end{equation}
+
+$\lambda_{i}^{r}$ 和 $\lambda_{j}^{c}$ 分别表示行效应和列效应，$\lambda$ 为常数。 \@ref(eq:freqindependence) 式就是最普通的对数线性模型。通过计算拟合，我们可以得到行列效应的估计值。对数线性模型在马赛克图中的主要表现是单元格的残差，而单元格的残差可以有三种：似然比残差（离差，deviance）$G^{2}$、Pearson $\chi^{2}$ 残差和 Freeman-Tukey 残差，前两种定义如下式：
+
+\begin{equation}
+G^{2}=2\sum n_{ij}\mathrm{log}(\frac{n_{ij}}{\hat{\mu}_{ij}});\;\;\chi^{2}=\sum\frac{\left(n_{ij}-\hat{\mu}_{ij}\right)^{2}}{\hat{\mu}_{ij}}
+(\#eq:loglinearres)
+\end{equation}
+
+残差反映的是某个单元格拟合的好坏。马赛克图用 5 级颜色表达了残差的大小，后面我们结合具体例子说明。
+
+R 中马赛克图的函数为 `mosaicplot()` ，其用法如下：
+
+```{r mosaicplot-usage}
+usage(graphics:::mosaicplot.default)
+usage(graphics:::mosaicplot.formula)
+```
+
+马赛克图函数是泛型函数，可以直接接受列联表数据或者公式作为参数，这里我们只介绍前一种情况。 `x` 为一个列联表数据（可以用函数 `table()` 生成）； `main` 、 `sub` 、 `xlab` 和 `ylab` 分别设定主标题、副标题和坐标轴标题； `sort` 指定展示变量的顺序； `dir` 指定马赛克图的拆分方向（横向拆分或纵向拆分）； `type` 给定残差的类型，即如前所述的三种残差。
+
+下面我们结合泰坦尼克号数据 `Titanic` 来说明马赛克图的用法。泰坦尼克号乘客生存情况的原始数据如下：
+
+```{r Titanic-data}
+ftable(Titanic)
+```
+
+该数据给出了分舱位（一二三等舱和船员舱）、分性别（男女）、分年龄（大人小孩）的生存情况。泰坦尼克号的沉没是一件著名的历史事件，至今仍然有很多人在研究它。我们所关心的问题主要是通过一些比例看出当时救援的侧重性，如：是否头等舱的乘客生还比例最高？"女士和孩子优先" 的原则在各船舱有没有被很好遵守？......
+
+(ref:fig-mosaicplot-s) 泰坦尼克号乘客生存数据马赛克图
+
+(ref:fig-mosaicplot) 泰坦尼克号乘客生存数据马赛克图：按性别、年龄和船舱等级划分
+
+```{r mosaicplot,fig=T,fig.width=5.2,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
+par(mar = c(2, 3.5, .1, .1))
+mosaicplot(Titanic, shade = TRUE, main = "")
+```
+
+
+图 \@ref(fig:mosaicplot) 以马赛克图的形式将这个 $4\times2\times2\times2$ 的列联表数据展示在了同一张图中，通过矩形块（马赛克）的大小，我们可以清楚看出各舱位、不同性别、年龄的人群的生还状况。例如，对头等舱来说，无论是大人小孩或男女，下方的矩形都比上方的矩形要高（尤其是女性和小孩），这说明头等舱的生还率相对来说都比较高，很可能当时的救援是偏向头等舱的；从年龄来说，头等舱和二等舱中小孩的生存率要远高于大人，但三等舱中小孩的生存率和大人相比差异并不是太显著；但从性别角度来看，各舱位基本上还是将生存机会优先让给女性了，男性的生还率在各舱位来说都相对较低。类似地，我们还可以从图中挖掘出更多的现象，这里不再深入。另外，图中用不同颜色表示出了个单元格的残差大小，其中虚线框表示残差为负数，我们可以清楚看出哪些单元格的拟合欠佳。感兴趣的读者还可以使用 **stats** 包中的 `loglin()` 函数拟合对数线性模型、从统计模型的角度继续分析。
+
+## 关联图 {#sec:assocplot}
+
+(ref:fig-assocplot-s) 眼睛颜色与头发颜色的关联图
+
+(ref:fig-assocplot) 眼睛颜色与头发颜色的关联图
+
+```{r assocplot,fig.width=4.8,fig.height=4, fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
+(x <- margin.table(HairEyeColor, c(1, 2)))
+assocplot(x)
+chisq.test(x)$p.value # 卡方检验 P 值
+```
+
+关联图（Cohen-Friendly Association
+Plot）是展示二维列联表数据的一种工具 [@Cohen80; @Friendly92]，它主要是基于列联表的独立性检验理论（Pearson
+$\chi^{2}$ 检验）生成的图形。
+
+我们知道，对于一个 $r\times c$ 列联表，$\chi^{2}$ 统计量的定义为如下平方和形式：
+
+\begin{equation} 
+\chi^{2}=\sum_{i=1}^{r}\sum_{j=1}^{c}d_{ij}^{2};\;\; d_{ij}=\frac{f_{ij}-e_{ij}}{\sqrt{e_{ij}}}
+(\#eq:cap)
+\end{equation} 
+
+其中，$f_{ij}$ 为单元格中的观测频数，$e_{ij}$ 为期望频数，二者相差越大，则会导致检验统计量的值越大，说明行变量和列变量越不独立。关联图所展示内容的正是这种差异，它的设计思路是，将图形同样以 $r\times c$ 的形式布局，每一个 "单元格" 中用一个矩形表示观测频数和期望频数的信息，具体来说，矩形的高度与 Pearson 残差 $f_{ij}-e_{ij}$ 成比例，宽度与期望频数 $\sqrt{e_{ij}}$ 成比例。这样一来，矩形的面积便与 $d_{ij}$ 成比例；此外，矩形自身带有方向，朝上表示残差为正，朝下则为负，不同方向的矩形同时也以不同颜色区分开来。
+
+R 中关联图的函数为 `assocplot()`，用法如下：
+
+```{r assocplot-usage}
+usage(assocplot)
+```
+
+其中 `x` 为一个列联表数据（或者矩阵）； `col` 为朝上和朝下矩形的颜色； `space` 用来设置矩形之间的间距。
+
+图 \@ref(fig:assocplot)
+是关于 `HairEyeColor` 数据的关联图。原始数据为一个三维数组，首先我们在性别维度上将数据汇总，得到眼睛颜色（棕蓝褐绿）和头发颜色（黑棕红金）人数的列联表。我们关心的问题是头发颜色与眼睛颜色之间是否存在关联，当然我们可以马上用函数 `chisq.test()` 作检验，但是检验的结果非常单一，我们只能知道零假设（独立）可否被拒绝，而图 \@ref(fig:assocplot) 则细致展示了数据的内部信息，例如从图中我们可以清楚看到，并非所有单元格都与期望频数有很大差异，只是少数几个单元格贡献了较大的 $\chi^{2}$ 值，如金发碧眼、金发棕眼等；事实上，这批数据为调查数据，眼睛颜色和头发颜色都为受访者（Delaware 大学的 592 名学生）自己填写，我们观察到金发碧眼单元格的期望频数和实际频数差异甚大，据说这背后有一则有趣的故事：由于“金发碧眼”是大家公认的美的标准，因此有些学生在填问卷时故意偏向于填写“金发碧眼”，导致“金发碧眼”的实际频数严重偏高[^assocplot-isu]。从图 \@ref(fig:assocplot) 的代码输出中我们知道，$\chi^{2}$ 检验可以拒绝零假设，眼睛的颜色与头发的颜色并不独立，二者之间存在某种关联关系，然而这种关联关系是由于生物或遗传原因引起还是受访者有意隐瞒自己的信息，则需要我们进一步斟酌了。
+
+在 **vcd** 包 [@vcd] 中有一个类似的关联图函数 `assoc()`，功能比本节中介绍的函数要更强大，详细介绍参见 @Meyer06;
+@Zeileis07。
+
+[^assocplot-isu]: 笔者在爱荷华州立大学统计系读博士期间，每周统计图形小组有一次讨论，这则消息来自于笔者的一位导师 Heike Hofmann 教授
+
+## 四瓣图 {#sec:fourfoldplot}
+
+
+四瓣图（Fourfold Plot）是用来查看 $2\times2\times k$ 列联表中两个二分变量之间关联关系的一种图示工具，它主要是基于二维列联表的检验理论而建立起来的 [@Friendly94]。
+
+表 \@ref(tab:contingency) 是一个典型的二维列联表。通常我们想检验的是行变量与列变量是否独立。前面 \@ref(sec:assocplot) 小节中曾经利用 $\chi^{2}$ 检验构造了关联图，这里我们从优比（Odds Ratio，OR）的角度出发对列联表进行检验。
+
+首先我们定义以下二式分别为在因素出现和不出现的情况下事件的发生率（医学上常称为风险）：
+
+\begin{equation} 
+\frac{P_{1}}{P_{1}+P_{3}};\;\;\frac{P_{2}}{P_{2}+P_{4}}
+(\#eq:OR1)
+\end{equation} 
+
+进而我们用这二式之比得到优比：
+
+\begin{equation} 
+\mathrm{OR}\equiv\frac{P_{1}}{P_{1}+P_{3}}/\frac{P_{2}}{P_{2}+P_{4}}=\frac{P_{1}(P_{2}+P_{4})}{P_{2}(P_{1}+P_{3})}
+(\#eq:OR)
+\end{equation} 
+
+Table: (\#tab:contingency) 二维列联表的经典形式
+
+|         |             事件              |               |
+| ------: | :---------------------------: | ------------- |
+|         |       发生　　不发生        |               |
+| 因素 有 |  $P_{1}$　　$P_{3}$   | $P_{1}+P_{3}$ |
+|      无 |  $P_{2}$　　$P_{4}$   | $P_{2}+P_{4}$ |
+|         | $P_{1}+P_{2}$　$P_{3}+P_{4}$ |               |
+
+
+由于通常情况下事件发生的几率都比较小（尤其是医学上的疾病），即 $P_{1}$ 相对 $P_{3}$ 来说较小，$P_{2}$ 相对 $P_{4}$ 来说较小，因此 \@ref(eq:OR) 式可以近似用 \@ref(eq:ORapprox) 式代替：
+
+\begin{equation} 
+\mathrm{OR}\approx\Psi\equiv\frac{P_{1}P_{4}}{P_{2}P_{3}}
+(\#eq:ORapprox)
+\end{equation} 
+
+我们记各单元格的样本实现值分别为 $a,b,c,d$；如果事件和因素相互独立，那么因素是否发生对事件是否发生（或发生率）没有影响，因此在零假设下优比的样本实现值 $ad/bc$ 应该接近于 1。换句话说，如果优比与 1 显著不同，那么很可能行列变量不独立。
+
+四瓣图正是基于这样一个比例来完成制图的，它将优比体现在两个相邻的四分之一圆的半径之比：如果两个扇形半径差异显著，那么说明行列变量不独立，即因素对事件有影响，这便是四瓣图最基本的用法，而背后还有关于优比置信区间的计算，并且这个置信区间也在图中用两道弧线表现了出来。四瓣图最终的读法就是观察两瓣相邻扇形的置信区间弧线是否有重叠，有则说明不能拒绝零假设，反之可以拒绝。这是基于假设检验和区间估计之间的转换关系而得以成立的。
+
+计算置信区间需要用到 $\Psi$ 的方差以及正态性假定。$\Psi$ 的方差并不容易直接计算，但取对数之后就很容易了：
+
+\begin{equation}
+\mathrm{Var}(\mathrm{log}(\Psi))=\frac{1}{a}+\frac{1}{b}+\frac{1}{c}+\frac{1}{d}
+(\#eq:ORlog)
+\end{equation}
+
+其置信区间为：
+
+\begin{equation}
+\mathrm{log}(\Psi)\pm q_{1-\alpha/2}\sqrt{\mathrm{Var}(\mathrm{log}(\Psi))}
+(\#eq:ORconf)
+\end{equation}
+
+通过对 \@ref(eq:ORconf) 取指数即可还原到 $\Psi$ 本身的置信区间。关于四瓣图的数学理论就介绍到这里，感兴趣的读者可以参阅 @Friendly94  或者直接阅读 `fourfoldplot()` 的源代码（大约 200 行）。
+
+R 中四瓣图函数 `fourfoldplot()` 的用法如下：
+
+```{r fourfoldplot-usage}
+usage(fourfoldplot)
+```
+
+
+其中 `x` 是一个 $2\times2\times k$ 的数组，当 $k=1$ 时，它也可以直接取一个 $2\times2$ 的矩阵； `color` 设定四分之一圆的填充颜色，处于同一对角线上的扇形颜色相同，颜色填充的顺序也反映出优比与 1 的大小； `onf.level` 为置信水平； `std` 为列联表的标准化方法，决定了标准化时分母所除的数。当 $k\geq1$ 时，该函数会依次生成 $k$ 幅四瓣图。
+
+(ref:fig-fourfoldplot-s) 加州伯克利分校录取数据四瓣图
+
+(ref:fig-fourfoldplot) 加州伯克利分校录取数据四瓣图
+
+```{r fourfoldplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-fourfoldplot)",fig.scap="(ref:fig-fourfoldplot-s)"}
+ftable(UCBAdmissions) # 以紧凑形式展现出来的 UCB 录取数据
+fourfoldplot(UCBAdmissions, mfcol = c(2, 3)) # 2 行 3 列排版
+```
+
+图 \@ref(fig:fourfoldplot) 是加州伯克利分校（UCB）录取数据的四瓣图，数据见于图中的代码输出。这批数据为一个 $2\times2\times6$ 的数组，我们可以分系别来看学生的录取是否与性别有关。从图中反映的情况来看，只有 A 系的四瓣图显示出了置信区间弧线不相交的情况，说明 A 系学生的录取与性别不独立，而其它系都不能拒绝零假设"录取与性别无关"。
+
+现在我们不妨通过一些简单的 R 语言计算来证实两件事情。首先是扇形颜色的填充与优比的关系，计算优比的代码如下：
+
+
+```{r UCB-OR}
+(x <- apply(UCBAdmissions, 3, function(x) (x[1, 1] * x[2, 2]) / (x[1, 2] * x[2, 1])))
+```
+
+
+C 和 E 系的优比大于 1，观察图 \@ref(fig:fourfoldplot) 可知， `color` 参数的第一个颜色值填充第一、三象限的扇形，而优比小于 1 时，第一个颜色值填充第二、四象限。
+
+其次我们完全可以将优比的置信区间分别算出来，看它们是否包含数值 1：
+
+```{r UCB-CI}
+y <- qnorm(0.975) * sqrt(apply(UCBAdmissions, 3, function(x) {
+  sum(1 / x)
+}))
+conf <- exp(cbind(log(x) - y, log(x) + y))
+colnames(conf) <- c("2.5%", "97.5%")
+conf
+```
+
+
+显然，这些置信区间中只有 A 系的不包含 1 在内，因此对于该系来说可以拒绝零假设。这与图形得到的结论是完全相符的。这里我们提醒读者注意上面的 R 代码与数学公式的对应关系，很多时候根据数学公式写 R 代码是非常简单的工作。最后我们可以看看卡方检验的 P 值，这些 P 值对应的结论和上面的图形和优比的结论都相同：
+
+```{r UCB-chisq}
+# 对每个系的录取数据进行卡方检验分别得到 P 值
+round(apply(UCBAdmissions, 3, function(x) chisq.test(x)$p.value), 3)
+```
+
+## 条件密度图 {#sec:cdplot}
+
+
+条件密度图（Conditional Density Plot），顾名思义，展示的是一个变量的条件密度，确切地说是一个分类变量 $Y$ 相对一个连续变量 $X$ 的条件密度 $P(Y|X)$。假设 $Y$ 的取值为 $1,2,\cdots,k$，那么条件密度图将按照 $X$ 的取值从小到大在纵轴方向上依次展示出 $Y=i\;(i=1,2,\cdots,k)$ 的条件概率分布比例 $P_{i}=P(Y=i|X=x)$，这些比例大小沿横轴方向上以多边形表示，在任一一个 $X$ 点，所有比例之和均为 1，这个性质是显而易见的：
+
+\begin{equation} 
+\sum_{i=1}^{k}P(Y=i|X=x)=1;\;\forall x
+(\#eq:cdp)
+\end{equation} 
+
+R 中条件密度图的函数为 `cdplot()`，它主要是基于密度函数 `density()` 完成条件密度的计算 [@Hofmann05]，其用法如下：
+
+```{r cdplot-usage}
+usage(graphics:::cdplot.default)
+usage(graphics:::cdplot.formula)
+```
+
+
+函数 `cdplot()` 是泛型函数，它可以支持两种参数类型：直接输入两个数值向量 `x` 和 `y` 或者一个公式 `y~x`。 `x` 为条件变量 $X$，它是一个数值向量， `y` 是一个因子向量，即离散变量 $Y$； `plot` 为逻辑值，决定了是作出图形还是仅仅计算而不作图； `ylevels` 给出因子的取值水平（或者分类的名称）， `bw` 、 `n` 、 `from` 和 `to` 都将被传递给 `density()` 函数以计算密度值，请参考 `density()` 帮助文件； `col` 给定一个颜色向量，用以代表 $Y$ 的各种取值（默认为不同深浅的灰色）； `border` 为多边形的边线颜色；其它参数诸如标题、坐标轴范围等此处略去。
+
+(ref:fig-cdplot-s) 航天飞机 O 型环在不同温度下失效的条件密度图
+
+(ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效
+
+```{r cdplot,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
+demo("cdplotDemo", package = "MSG")
+
+fail <-  factor(
+  c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1,
+    2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1),
+  levels = 2:1, 
+  labels = c("yes", "no")
+)
+temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
+  70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81
+)
+fail_temperature <- data.frame(fail = fail, temperature = temperature)
+ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
+  geom_density(position = "fill") +
+  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)]),
+    shape = 21, colour = "blue", fill = "yellow") +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous("fail", expand = c(0, 0), breaks = c(0.25, 0.75), 
+    labels = c("no", "yes"),
+    sec.axis = dup_axis(name = NULL, 
+      breaks = seq(0, 1, 0.2), 
+      labels = c(0, "", 0.4, "", 0.8, ""))
+  ) +
+  scale_fill_manual(values = c("red", "lightblue")) +
+  theme_classic() +
+  theme(legend.position = "none")
+```
+
+
+这里我们以美国国家航空和宇宙航行局的一批 O 型环（O-ring，一种由橡胶或塑料制成的平环，用作垫圈）失效数据为例，这批数据有两个变量：温度变量和是否失效的变量。为了探索温度对 O 型环失效的影响，我们可以使用诸如 Logistic 回归之类的统计模型去计算、分析，而这里我们用条件密度图来展示温度的影响，如图 \@ref(fig:cdplot)。由于因变量是一个二分类变量，图中相应有两个多边形（带颜色的区域）分别表示是否失效，从图中我们可以清楚观察到，随着温度的上升，失效的可能性越来越小（下面的多边形高度越来越高），但失效的概率与温度并不是简单的线性关系，例如 55 到 65 之间的温度上升会使得失效概率迅速下降，而当气温更高的时候，失效概率下降的速度会减缓。为了更清楚地观察条件密度图的效果，我们也将原始数据以点的形式添加到图中；不难发现，O 型环失效的情况大多对应着相对较低的温度。
+
+这里需要提醒读者注意的是，密度值的计算和估计与数据样本量大小有关系，小的样本量可能会导致密度估计的不精确，进而导致图形的误导性，因此使用条件密度图的时候务必注意样本量的问题。
+
+## 棘状图 {#sec:spineplot}
+
+[^spineplot-spinogram]: 对于连续的自变量则称为 Spine Plot，离散自变量则为 Spinogram，这个单词是仿照 Histogram 而造。
+
+棘状图（Spine Plot/Spinogram[^spineplot-spinogram]）可以看作是马赛克图（\@ref(sec:mosaicplot) 小节）的特例，也可以看作是堆砌条形图（\@ref(sec:barplot) 小节）的推广。棘状图的外观看起来像是高低不齐的荆棘丛，因此而得名。
+
+棘状图的原理和条件密度图非常类似，都展示了在给定某个自变量的情况下因变量的概率分布，但是棘状图首先对连续型的自变量进行了离散化处理，然后在离散的区间内计算因变量的条件分布。除此之外，棘状图还兼顾了自变量的分布，在横轴方向上以不同宽度的矩形表示自变量的分布密度。因此，从纵轴方向上看，棘状图用堆砌的矩形块表示因变量的分布密度，这使得它看起来像堆砌的条形图，而从横轴方向上看，棘状图用不同的矩形宽度表示自变量的密度分布，这使得它又像是马赛克图（马赛克图中矩形的长宽和频数成比例）。尤其是自变量为分类变量时，棘状图与马赛克图几乎无异。从概念和定义上来讲，棘状图实际上是用 $P(Y|X)$ 对 $P(X)$ 所作的图。
+
+R 中棘状图的函数为 `spineplot()` ，其用法如下：
+
+```{r spineplot-usage}
+usage(graphics:::spineplot.default)
+usage(graphics:::spineplot.formula)
+```
+
+棘状图函数是泛型函数，可以直接接受数据或者公式作为参数。 `x` 可以是一个分类或数值向量（自变量），也可以直接输入一个列联表，后一种情况下则不需要再输入 `y` 参数； `y` 为因变量，是一个分类变量； `breaks` 在自变量是连续变量时给定自变量的分段区间或者分段方法，这个参数最终被传递给直方图函数 `hist()` （回顾 \@ref(sec:hist) 小节）以便计算自变量的密度； `off` 参数指定矩形竖条之间的间距，对于连续自变量来说， `off` 默认为 0，对于离散自变量， `off` 默认为 2； `col` 用来设定不同类别的 `y` 的颜色。
+
+(ref:fig-spineplot-s) 航天飞机 O 型环在不同温度下失效的棘状图
+
+(ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 $(60, 75]$ 区间内
+
+```{r spineplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
+# 数据取自条件密度图一节
+par(mar = c(4, 4, .5, 2))
+t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
+```
+
+图 \@ref(fig:spineplot) 重新使用航天飞机 O 型环失效数据作了棘状图。我们可以看到，自变量温度被分为了 7 个长度为 5 的区间，每个区间内失效的比率都用堆砌的矩形表达。注意棘状图的横坐标轴比较特殊，它对自变量的值来说并不一定是均匀的，因为图中矩形的宽需要表达自变量的密度，所以横坐标的作用仅仅是作为密度值大小的参照物。棘状图会返回一个汇总表，表中给出了自变量的分段情况以及相应的频数。读者可以结合频数表理解棘状图。
+
+
+## 二维箱线图 {#sec:bagplot}
+
+在 \@ref(sec:boxplot) 小节中我们介绍了普通的箱线图，即用箱线表示一维数据的各个分位数。在二维情况下，我们可以用类似的思想画二维箱线图。二维箱线图又名袋图（Bag Plot），它由 @Rousseeuw99 提出。二维箱线图的做法是从数据的中心向外，逐渐用凸包多边形将散点图中的点包起来，直到包到一半的数据点，此时的凸包相当于普通箱线图中的箱子，然后再向外包到所有数据点。二维箱线图的基本构成就是一个中心和两个多边形，它们能粗略描述数据的二维分布情况。
+
+R 中 **aplpack** 包 [@aplpack] 提供了一个函数 `bagplot()` 可以用来画二维箱线图，其用法如下：
+
+```{r bagplot-usage}
+library(aplpack, warn.conflicts = FALSE)
+usage(bagplot)
+```
+
+
+其中 `x` 和 `y` 分别是横纵坐标轴上的数据向量，也可以直接提供一个 2 列的矩阵或数据框； factor 类似 `boxplot()` 中的 `range` 参数，用来定义离群点，取值越大，则离群点越少（数据点离中心的距离可以越远）； `approx.limit` 界定了大数据的样本量，如果原始数据的样本量超过这个数字，则随机抽取 `approx.limit` 个数据点用作二维箱线图的计算； `dkmethod` 取值 1 或 2，决定用哪种方法计算袋子的范围，取值 2 计算更精确；其它设置颜色或形状的参数此处略去。
+
+(ref:fig-bagplot-s) Consumer Reports 中汽车数据的二维箱线图和密度等高图
+
+(ref:fig-bagplot) Consumer Reports 中汽车数据的二维箱线图（左）和二维密度等高图（右）
+
+```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
+# 数据来自 rpart 包中的 car.test.frame
+par(mfrow = c(1, 2), mar = c(4, 4, 0.1, 0.1), bty = "l")
+car.wd <- with(car.test.frame, cbind(Weight, Disp.))
+bagplot(car.wd, cex = 0.9)
+box()
+library(KernSmooth) # 二维核密度估计并画等高线图
+est <- bkde2D(car.wd, apply(car.wd, 2, dpik))
+with(est, {
+  contour(x1, x2, fhat,
+    xlab = "Weight", ylab = "Disp.",
+    xlim = range(car.wd[, 1]),
+    ylim = range(car.wd[, 2])
+  )
+  points(car.wd, pch = 16, cex = 0.9)
+})
+```
+
+
+图 \@ref(fig:bagplot) 左图展示了 Consumer Reports 中汽车数据中车重 `Weight` 和气缸排量 `Disp.` 两个变量的二维箱线图，图中心有一个米字型的点，代表二维数据的中位数，内层深色袋子包含了一半的数据点（约 30 个），外层袋子本应包含所有数据点，但由于默认设置有 5 个离群点的存在，所以只包含了 55 个数据点，读者可以将 `factor` 参数设置为 6，便可包含所有数据点。作为对比，右图从二维核密度估计的角度画出了密度值的等高图，这两幅图可以看作是相通的，左图里层袋子就是右图中密度曲面[^bagplot-surf] 从中心向外积分数值到 0.5 时对应的区域。
+
+[^bagplot-surf]: 不要忘记：等高图实际上是三维图形！请想象这个“曲面”的形状。

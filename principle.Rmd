@@ -1,4 +1,4 @@
-# 原则 {#chap:principle}
+# 作图原则 {#chap:principle}
 
 ```{r,include=FALSE}
 library(MSG)

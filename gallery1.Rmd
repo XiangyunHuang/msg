@@ -1,0 +1,642 @@
+# (PART) 图库 {-}
+
+# 单变量图 {#cha:gallery1}
+
+> 他解释说："你要明白，我认为人的大脑原本像一间空空的屋子，必须有选择地用一些家具填满它。只有笨蛋才把他碰到的各种各样的破烂都塞进去。这样的话，那些可能用得上的知识就被挤了出来；或者，充其量也只是把那些破烂同其它东西混杂在一块儿。结果，在需要时却难得找到了。因此，一个善于工作的人，对于将什么东西纳入自己的头脑里是非常仔细的。他只会容纳那些工作时用得着的工具，而且又将这些工具分门别类，安排得井然有序。如果认为这间屋子的墙壁富有弹性，可以随意扩展，那就大错特错了。毫无疑问，总有一天，当你增加点滴知识时，却把从前熟悉的知识给忘记了。因此，不要让无用的信息挤掉那些有用的信息，这一点是至关重要的。"
+>
+> ——柯南 $\cdot$ 道尔《血字的研究》
+
+
+本章中，我们结合 R 语言中的相关函数以及数据实例对各种统计图形依次作出介绍。从第 \@ref(sec:hist) 节到 \@ref(sec:pie) 节的所有图形都是基于 **graphics** 包所作，其后的图形均来自于其它函数包。图形的介绍顺序大致按函数的字母序，但直方图、箱线图和散点图等常见图形放在前面，而饼图被有意安排在最后。
+
+## 直方图 {#sec:hist}
+
+直方图（Histogram）是展示连续数据分布最常用的工具，它本质上是对密度函数的一种估计。在介绍作图方法之前，我们有必要先了解一下它的基本数学思想，本节仅作简要介绍，
+详细的数学理论参见 @Scott92。
+
+我们知道，对于连续随机变量来说，其密度函数即为分布函数的导数：
+
+\begin{equation} 
+f(x)=F'(x)=\lim_{h\rightarrow0}\frac{F(x+h)-F(x)}{h}
+(\#eq:density)
+\end{equation} 
+
+因此，我们自然而然地从分布函数的估计出发，得到密度函数的估计。当我们拿到一批数据 $X_1,X_2,\ldots,X_n$ 时，我们最容易想到的分布函数估计就是经验分布函数：
+
+\begin{equation} 
+\hat{F}_{n}(x)=\frac{1}{n}\sum_{i=1}^{n}\mathbf{I}(X_{i}\leq x)
+(\#eq:empirical)
+\end{equation} 
+
+其中 $\mathbf{I}(\cdot)$ 为示性函数；结合公式 \@ref(eq:density) 和 \@ref(eq:empirical) 以及示性函数的性质，我们可以直接得到以下密度函数估计：
+
+\begin{equation} 
+\hat{f}_{n}(x)=\lim_{h\rightarrow0}\frac{1}{n}\sum_{i=1}^{n}\frac{\mathbf{I}(x<X_{i}\leq x+h)}{h}
+(\#eq:den-est)
+\end{equation} 
+
+公式 \@ref(eq:den-est) 实际上已经给出了直方图作为密度函数估计工具的基本思想：划分区间并计数有多少数据点落入该区间。实际数据不可能无限稠密，因此 $h\rightarrow0$ 的条件往往是不可能实现的，于是我们退而求其次，只是在某一些区间段里面估计区间上的密度。首先我们将实数轴划分为若干宽度为 $h$ 的区间（我们称 $h$ 为“窗宽”）：
+
+\begin{equation} 
+b_{1}<b_{2}<\cdots<b_{j}<b_{j+1}<\cdots;\;b_{j+1}-b_{j}=h,\,j=1,2,\cdots
+(\#eq:den-est2)
+\end{equation} 
+
+然后，根据以下直方图密度估计表达式，计算区间 $(b_j,b_{j+1}]$ 上的密度估计值：
+
+\begin{equation} 
+\hat{f}_{n}(x)=\frac{1}{nh}\sum_{i=1}^{n}\mathbf{I}(b_{j}<X_{i}\leq b_{j+1});\;x\in(b_{j},b_{j+1}]
+(\#eq:den-formula)
+\end{equation} 
+
+
+最后，我们将密度估计值以矩形的形式表示出来，就完成了直方图的基本制作。当然，我们没有必要使用这样原始的方式制作直方图，R 中提供了  `hist()`  函数，其默认用法如下：
+
+```{r}
+usage(hist.default)
+```
+
+其中， `x` 为欲估计分布的数值向量；`breaks` 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的； `freq`  和  `probability`  参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）； `labels`  为逻辑值，决定是否将频数的数值添加到矩形条的上方；其它参数诸如  `density` 、 `angle` 、 `border`  均可参见低层作图函数"矩形"（ `rect()` ，\@ref(sec:polygon) 节）。
+
+(ref:fig-hist-geyser-s) 喷泉间隔时间直方图
+
+(ref:fig-hist-geyser) 喷泉间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
+
+
+```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE,out.width="70%"}
+par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
+data(geyser, package = "MASS")
+hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
+hist(geyser$waiting, freq = FALSE, xlab = "waiting", main = "(2) freq = FALSE")
+hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", main = "(3) breaks = 5")
+hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) breaks = 40")
+
+library(ggplot2)
+library(cowplot)
+p <- ggplot(aes(waiting), data = geyser)
+p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
+p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
+p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
+p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
+plot_grid(p1, p2, p3, p4, labels = c(
+  "(1) freq = TRUE",
+  "(2) freq = FALSE",
+  "(3) breaks = 5",
+  "(4) breaks = 40"
+), ncol = 2)
+```
+
+我们以黄石国家公园喷泉数据 `geyser` [@Venables02] 为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。另外一点需要提醒的是直方图中的密度曲线。SPSS 软件在绘制直方图时，会有选项提示是否添加正态分布密度曲线，这也是完全的误导。因为数据不一定来自正态分布，添加正态分布的密度曲线显然是不合理的。相比之下，图 \@ref(fig:hist-density) 的做法才是真正从数据本来的分布出发得到的密度曲线。
+
+
+(ref:fig-hist-density-s) 直方图与密度曲线的结合
+
+(ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中
+
+```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="35%"}
+demo("hist_geyser", package = "MSG")
+df <- data.frame(
+  x = seq(40, 110, 5), y = 0,
+  xend = seq(40, 110, 5), yend = ht
+)
+p2 + geom_density(fill = "lightgray", color = "black") +
+  geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
+    data = df, lty = 3
+  )
+```
+
+
+直方图函数在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上
+（例如图 \@ref(fig:layout-margin)）。
+
+由于直方图需要对连续型数据做离散分组，因此它有一个明显的缺点，就是它的形状依赖于分组的端点，例如若有好几个相同的数值正好处在分组端点上，那么我们只要稍微向左或向右移动一下分组端点，这些数据点就会被划分入不同的区间，导致矩形条的高度变化。@Scott92 提出了一种解决这种直方图不稳定性问题的办法叫“移动平均直方图”（Average Shifted Histogram，简称 ASH），它的思想是使用一系列移动的区间去划分数据，比如 $(b_1+ih/n,b_2+ih/n,\ldots,b_n+ih/n)$，$i=0,\cdots,n-1$，最后将这 $n$ 种划分方法的频数结果"平均"起来，就得到了 ASH 图，这样有效避免了边界点的归属问题。然而，在核密度估计理论已经非常完备的今天，我们几乎没有必要再用这种技巧去克服原来的问题了，毕竟 ASH 与核密度估计比起来显得还是太粗糙。图 \@ref(fig:hist-density) 的核密度曲线基于函数 `density()` 计算而来，它的参数包括核函数和窗宽等，实际应用中我们可能需要尝试不同的核函数以及窗宽值，@Venables02 第 5.6 小节介绍了一些选择的经验可供参考。
+
+[密度曲线的延伸 --- 岭线 ggridges <https://github.com/clauswilke/ggridges>]{.todo}
+
+## 茎叶图
+
+茎叶图（Stem-and-Leaf Plot）与直方图的功能类似，也是展示数据密度的一种工具。相比之下，茎叶图对密度的刻画显得非常粗略，而且对原始数据通常会作舍入处理，它只是在早期计算机尚不发达时对于手工整理数据来说比较方便。茎叶图的整体形状如同植物的茎和叶，对于一个数据，通常取其 $10^n$ 部分为茎（$n$ 视所有数据的数量级而定），剩下的尾数为叶，放置于茎旁，这样每隔 $m10^n$ 就对数据作一次归类汇总，将落入区间 $[km10^{n},\ (k+1)m10^{n}]$ 的数据汇集为叶子（$k,m$ 为整数，$m$ 通常取 1，$k=1,2,3,\cdots$），我们不妨称这种区间为一个“节”，节的长度与直方图的“窗宽”本质上是同样的概念。显然，叶子越长则表明该节上数据频数越高。
+
+R 中茎叶图的函数为 `stem()`，其用法为：
+
+```{r}
+usage(stem)
+```
+
+参数  `scale`  控制着 $m$，即节与节之间的长度（ `scale`  越大则 $m$ 越小）； `width`  控制了茎叶图的宽度，若叶子的长度超出了这个设置，则叶子会被截取到长度  `width` ，然后以一个整数表示后面尚有多少片叶子没有被画出来。
+
+
+下面我们以 **datasets** 包中 `islands` 数据为例说明茎叶图的作法。该数据记录了世界上各大陆地块的面积大小，原始数据前 10 条如下（单位：千平方英里）：
+
+```{r islands-data}
+head(islands, 10)
+```
+
+
+可以看出，以上数据中最大的数量级为 $10^{4}$，而大部分数据的数量级集中在 $10^{1}$，因此茎上的数量级取作 $10^{3}$ 相对比较合适---更大的数量级会导致茎的节数非常少，对分布的刻画过于粗略；而更小的数量级会导致节数过多，使得茎叶图几乎退化为数据的原始表示，这样也难以看出数据的集中趋势。下图展示了 48 块大陆块面积的分布，该茎叶图窗宽为 $2\times10^{3}$，图中注明了原始数据小数点位置在 `|` 后面三位数处，因此我们从图中“还原”原始数据时，需要用（“茎的区间‘+’叶”）$\times10^{3}$。
+
+(ref:fig-stem-islands) 本图展示了世界上主要的 48 块大陆面积的分布状况，可以明显看出，这些面积数据是严重右偏的，意即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小
+
+(ref:fig-stem-islands-s) 世界各地大陆块面积茎叶图 
+
+```{r stem-islands, fig.cap="(ref:fig-stem-islands)", fig.scap="(ref:fig-stem-islands-s)"}
+stem(islands)
+ggplot(as.data.frame(islands)) +
+  geom_histogram(aes(islands / 1000), binwidth = 2) +
+  coord_flip(xlim = c(15, 0))
+stem(islands, width = 20)
+# 可以增大窗宽 stem(islands, scale = 2) 看看效果
+```
+
+Figure: (\#fig:fig-stem-islands) 本图展示了世界上主要的 48 块大陆面积的分布状况，可以明显看出，这些面积数据是严重右偏的，意即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小
+
+
+可以明显看出，这些面积数据是严重右偏的，即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小。
+
+我们以上图为例说明一下茎叶图的制作过程及其相应解释。首先我们将原始数据除以 $10^{3}$，并四舍五入到小数点后的一位数：
+
+```{r stem-process}
+# 去掉陆地名称以便显示数据
+unname(sort(round(islands / 1000, 1)))
+```
+
+然后从 0 到 $18\times10^{3}$、以 $2\times10^{3}$ 为窗宽，分段整理数据，每一段（节）中依次放置落入该段的数据的小数位，堆砌起来便形成了茎叶图的叶子。例如 $11.5$ 落入了 $[10,12]$ 的区间，我们就将尾数 5 放在 10 的右边；类似地，17.0 在 $[16,18]$ 之间，我们将 0 放在 16 右边；关于茎叶图顶部的一长串 0 的解释此处不再赘述。
+
+
+下图是利用泊松分布（$\lambda=10$）随机数生成的茎叶图，可以看出数据密度在 10 附近最高，这与理论相符。由于窗宽为 1，不存在舍入问题，所以图形可以还原到原始数据，请读者自行对应数据观察茎叶图。
+
+(ref:fig-stem-poisson) $\lambda = 10$ 的泊松分布随机数茎叶图：可以看出数据密度在 10 附近最高，这与
+理论相符。注意这幅图可以完全还原到原始数据
+
+(ref:fig-stem-poisson-s) 泊松分布随机数茎叶图
+
+```{r stem-poisson, fig.cap="(ref:fig-stem-poisson)", fig.scap="(ref:fig-stem-poisson-s)"}
+# 均值 lambda 为 10 的泊松分布随机数
+sort(x <- rpois(80, lambda = 10))
+stem(x, scale = 2)
+```
+
+
+经过前面的说明，现在我们不妨将茎叶图简单理解为横放着的直方图，只是茎叶图通常都以某个便利的整数为窗宽，不如直方图那样精细。此外，茎叶图曾经的优势（简单、可手工绘制）在今天这个计算机时代也显得并不突出，因此，除非特殊情况，我们建议主要使用直方图作为密度函数估计工具。
+
+## 风玫瑰图
+
+## 箱线图 {#sec:boxplot}
+
+箱线图（Box Plot 或 Box-and-Whisker Plot）主要是从四分位数的角度出发
+描述数据的分布，通过最大值（$Q_4$）、上四分位数（$Q_3$）、中位数（$Q_2$）、下四分位数（$Q_1$）和最小值（$Q_0$）五处位置来获取一维数据的分布概况。我们知道，这五处位置之间包含了四段数据，每段中数据量均为总数据量的 $1/4$。通过每一段数据占据的长度，我们可以大致推断出数据的集中或离散趋势（长度越短，说明数据在该区间上越密集，反之则稀疏）。
+
+R 中相应的函数为 `boxplot()`，其用法如下：
+
+```{r boxplot-usage}
+# 默认用法
+usage(boxplot.default)
+# 公式用法
+usage(graphics:::boxplot.formula)
+```
+
+因为 `boxplot()` 是一个泛型函数，所以它可以适应不同的参数类型。目前它支持两种参数类型：公式（ `formula` ）和数据，后者对我们来说可能更容易理解（给一批数据、作相应的箱线图），而前者在某些情况下更为方便，后面我们会举例说明。参数  `x`  为一个数值向量或者列表，若为列表则对列表中每一个子对象依次作出箱线图； `range`  是一个延伸倍数，决定了箱线图的末端（须）延伸到什么位置，这主要是考虑到离群点的原因，在数据中存在离群点的情况下，将箱线图末端直接延伸到最大值和最小值对描述数据分布来说并不合适（图形缺乏稳健性），所以 R 中的箱线图默认只将图形延伸到离箱子两端 $\mathrm{range}\times(Q_3-Q_1)$ 处，即上下四分位数分别加/减内四分位距（Interquartile
+Range，简称 $\text{IQR}\equiv Q_3-Q_1$）的倍数，超过这个范围的数据点就被视作离群点，在图中直接以点的形式表示出来； `width`  给定箱子的宽度； `varwidth`  为逻辑值，若为 `TRUE`，那么箱子的宽度与样本量的平方根成比例，这在多批数据同时画多个箱线图时比较有用，能进一步反映出样本量的大小； `notch`  也是一个有用的逻辑参数，它决定了是否在箱子上画凹槽，凹槽所表示的实际上是中位数的一个区间估计，其计算式为 $Q_2\pm1.58\mathrm{IQR}/\sqrt{n}$ [@McGill78; @Chambers83]，区间置信水平为 95%，在比较两组数据中位数差异时，我们只需要观察箱线图的凹槽是否有重叠部分，若两个凹槽互不交叠，那么说明这两组数据的中位数有显著差异（P 值小于 0.05）； `horizontal`  为逻辑值，设定箱线图是否水平放置； `add`  设置是否将箱线图添加到现有图形上（例：图 \@ref(fig:symbols-pop)）；其它参数诸如设置箱子颜色、位置、更详细的宽度等参见 `?boxplot`。
+
+
+(ref:fig-insects-boxplot-s) 各种杀虫剂下昆虫数目的箱线图
+
+(ref:fig-insects-boxplot) 昆虫数目箱线图：六种杀虫剂下昆虫的数目分布
+
+```{r insects-boxplot, fig.width=3.6, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1}
+boxplot(count ~ spray, data = InsectSprays,
+        col = "lightgray", horizontal = TRUE, pch = 4)
+ggplot(aes(y = count, x = spray), data = InsectSprays) +
+  geom_boxplot(outlier.shape = 4) +
+  coord_flip()
+```
+
+
+绘制单个箱线图时只需要给 `boxplot()` 传入一个数值向量即可，如：`boxplot(rnorm(100))`；这里我们主要使用公式型的参数，以 **datasets** 包中的杀虫剂数据 `InsectSprays` 为例。该数据有两列，第一列为昆虫数目，第二列为杀虫剂种类（ABCDEF），这里是随机抽取的 10 列数据：
+
+```{r insects-data}
+InsectSprays[sample(nrow(InsectSprays), 10), ]
+```
+
+为了了解杀虫剂的效果，我们需要对各种杀虫剂下昆虫的数目作出比较。图 \@ref(fig:insects-boxplot) 是一个简单的箱线图展示。不难看出，除了 B 和 D 对应的昆虫数据呈左偏形态外，其它组均有右偏趋势，看起来各组数据的平均水平差异比较明显；另外注意观察图中的两个离群点（以 “$\times$” 表示）。总体看来，C 的效果最好。事实上，我们可以对这个数据作方差分析，检验杀虫剂类型对昆虫数目是否有显著影响：
+
+```{r insects-aov}
+insects.aov <- aov(count ~ spray, data = InsectSprays)
+summary(insects.aov)
+```
+
+上述分析告诉我们杀虫剂类型有显著影响（P 值接近于 0），也印证了我们对图形的观察。
+
+
+(ref:fig-rnorm-boxplot-s) 箱线图的凹槽与统计推断
+
+(ref:fig-rnorm-boxplot) 箱线图的凹槽与统计推断：从凹槽不交叠的情况来看，两样本中位数有显著差异
+
+```{r rnorm-boxplot,fig.width=4.8,fig.height=2.4, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)", fig.ncol=1, fig.show='hold'}
+x <- rnorm(150)
+y <- rnorm(50, 0.8)
+boxplot(list(x, y),
+  names = c("x", "y"), horizontal = TRUE,
+  col = 2:3, notch = TRUE, varwidth = TRUE
+)
+ggplot(
+  data = data.frame(
+    num = c(x, y),
+    idx = c(rep("x", 150), rep("y", 50))
+  ),
+  aes(y = num, fill = idx)
+) +
+  geom_boxplot(notch = TRUE) +
+  coord_flip()
+# Wilcoxon检验的P值
+wilcox.test(x, y)$p.value
+```
+
+最后我们再以一个模拟数据的例子展示箱线图凹槽的功能。这里我们分别从正态分布 $\mathrm{N}(0,1)$ 和 $\mathrm{N}(0.5,1)$ 中各自产生 150 和 50 个随机数，然后作箱线图比较两组数据中间位置的差异。图 \@ref(fig:rnorm-boxplot) 为一次模拟的结果，图中的凹槽表明了两组数据的中位数有显著差异，Wilcoxon 秩和检验也证实了这一结论。此外，该图还使用了  `varwidth`  参数以表明两组数据样本量的大小不同。
+
+## Cleveland 点图 {#sec:dotchart}
+
+
+在前面条形图（\@ref(sec:barplot) 小节）和后面饼图（\@ref(sec:pie) 小节）的章节中我们提到了点图 [@Cleveland85]，事实上点图和条形图的功能非常类似：条形图通过条的长度表示数值大小，点图通过点的位置表示数值大小，二者几乎可以在任何情况下互换。
+
+(ref:fig-dotchart-s) 弗吉尼亚死亡率数据的 Cleveland 点图
+
+(ref:fig-dotchart) 弗吉尼亚死亡率数据的 Cleveland 点图
+
+```{r dotchart,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)"}
+par(mar = c(4, 4, 0.2, 0.2))
+dotchart(t(VADeaths)[, 5:1], col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
+```
+
+R 中点图的函数为 `dotchart()`，用法如下：
+
+```{r dotchart-usage}
+usage(dotchart)
+```
+
+其中， `x` 与条形图的 `height` 参数相同，为一个数值向量或者矩阵； `labels` 为数据的标签；其它参数主要用来设置图形的样式如颜色、缩放倍数、点的样式等，此处略去。
+
+图 \@ref(fig:dotchart) 再次以弗吉尼亚死亡率数据为例，给出了点图的展示。对比图 \@ref(fig:vadeaths-barplot) 不难发现点图与条形图的相通之处。相比之下，点图的图形元素更加简洁，制图时不会显得太拥挤，我们可以视情况在这二者选其一作为表达工具。
+
+
+## 条形图 {#sec:barplot}
+
+(ref:fig-vadeaths-barplot-s) 弗吉尼亚死亡率数据条形图
+
+(ref:fig-vadeaths-barplot) 弗吉尼亚死亡率数据条形图： 堆砌和并列的条形图效果
+
+```{r vadeaths-barplot, fig.width=4.8, fig.height=4.8, fig.cap = "(ref:fig-vadeaths-barplot)", fig.scap="(ref:fig-vadeaths-barplot-s)", fig.show="hold"}
+library(RColorBrewer) # 用分类调色板
+par(mfrow = c(2, 1), mar = c(3, 2.5, 0.5, 0.1))
+death <- t(VADeaths)[, 5:1]
+barplot(death, col = brewer.pal(4, "Set1"))
+barplot(death,
+  col = brewer.pal(4, "Set1"), beside = TRUE,
+  legend.text = TRUE
+)
+# ggplot2
+reshape_VADeaths <- transform(
+  expand.grid(
+    sex = colnames(VADeaths),
+    age = rownames(VADeaths)
+  ),
+  rates = as.vector(t(VADeaths))
+)
+p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
+p1 <- p + geom_col(position = "stack")
+p2 <- p + geom_col(position = "dodge")
+plot_grid(p1, p2, ncol = 1)
+```
+
+如同前面 \@ref(sec:begin) 节中曾经提到的，条形图目前是各种统计图形中应用最广泛的，但条形图所能展示的统计量比较贫乏：它只能以矩形条的长度展示原始数值，对数据没有任何概括或推断。
+
+R 中条形图的函数为 `barplot()`，用法如下：
+
+```{r barplot-usage}
+usage(barplot.default)
+```
+
+条形图的主要参数是 `height`，它指定了长条的长度。这个参数可以接受一个数值向量或者一个数值矩阵作为参数。前者容易理解，后者稍有些复杂：当传入一个矩阵时，条形图针对矩阵的每一列画图。若 `beside` 为 `FALSE`，则矩阵每一列占据一条的位置，该条由若干矩形堆砌而成，这些矩形的高度对应着矩阵的行数据；若 `beside` 为 `TRUE`，这些矩形则并排排列而非堆砌； `width` 可以设置条的宽度； `space` 用以设置条之间的间距； `names.arg` 为条形图的标签，即每一条的名称； `legend.text` 参数在 `height` 为矩阵时比较有用，可以用来添加图例； `horiz` 用以设置条形图的方向（水平或垂直）； `density` 、 `angle` 等参数可以参考矩形的章节（\@ref(sec:polygon) 节）； `plot` 为逻辑值，决定是否将条形图添加到现有图形上。
+
+图 \@ref(fig:vadeaths-barplot)
+下图展示了参数 `beside` 和 `legend.text` 的效果。该图以 1940 年弗吉尼亚州分年龄组、分地区和分性别死亡率数据 `VADeaths` 为基础，展示了各组之间死亡率的差异。其中，堆砌的条形图容易比较各年龄组总死亡率的大小。显然，年龄越高，死亡率越大。而并列的条形图容易比较组内的城乡和性别差异。一般说来，男性死亡率高于女性，农村男性死亡率低于城市男性，但女性的城乡差异没有明显规律。由于人眼对长度比比例更敏感（例如在区分城乡和性别差异时，图 \@ref(fig:vadeaths-barplot)
+的上图就不如下图直观），所以我们制图时要考虑清楚我们想展示的是数据的哪一方面，将最关键的信息用最能激发视觉感知的形式表现出来。
+
+```{r vadeaths-data}
+VADeaths # 弗吉尼亚州死亡数据
+```
+
+
+
+
+
+
+
+
+
+
+## 坐标轴须 {#sec:rug}
+
+
+坐标轴须（Rug）顾名思义就是往坐标轴上添加短须。短须的作用是标示出相应坐标轴上的变量数值的具体位置，每一根短须都对应着一个数据。这样做的好处在于，我们可以从坐标轴须的分布了解到该变量的分布，尤其是当我们使用那些带有汇总性质的图形（如箱线图）时，我们会失去原始数据的位置，得到的只是一幅展示综合统计量的图形。坐标轴须与一些统计图形的结合会让图形表达的信息更丰富，图形的使用者也可以自由选择看图的侧重点。
+
+(ref:fig-rug-s) 带坐标轴须的喷泉间隔时间密度曲线图
+
+(ref:fig-rug) 带坐标轴须的喷泉间隔时间密度曲线图
+
+```{r rug,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
+par(mar = c(3, 4, 0.4, 0.1))
+plot(density(faithful$eruptions), main = "")
+rug(faithful$eruptions)
+```
+
+
+R 中坐标轴须的函数为 `rug()` ，其用法如下：
+
+```{r rug-usage}
+usage(rug)
+```
+
+
+其中 `x` 为一个向量，给出短须的位置； `ticksize` 为短须的长度； `side` 为欲画短须的坐标轴的位置（与函数 `axis()` 的参数相同，参见 \@ref(sec:axis) 小节）； `lwd` 和 `col` 分别设定短须的宽度和颜色。
+
+图 \@ref(fig:rug) 为坐标轴须的一个展示。在 \@ref(sec:hist) 小节中我们使用喷泉数据制作了直方图和密度图以便查看间隔时间的分布，这里我们在密度曲线的基础上添加上坐标轴须，以使我们能更清楚了解间隔时间数据的具体位置，而不是仅仅看一条曲线。从坐标轴须的疏密我们也可以知道分布密度的大小，这与密度曲线是相辅相成的。
+
+严格来说，坐标轴须不能算作是图形，它只是图形的附加物，从 R 的角度来说它也只是低层作图函数，但由于它在表达数据上的优势，这里我们也将其列入本书的图库中。
+
+
+
+## 带状图 {#sec:stripchart}
+
+(ref:fig-stripchart-s) 各种杀虫剂下昆虫数目的带状图
+
+(ref:fig-stripchart) 各种杀虫剂下昆虫数目的带状图：堆砌和随机打乱的带状图
+
+```{r stripchart,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
+layout(matrix(1:2, 2), height = c(1, 1))
+par(mar = c(4, 4, 0.2, 0.2))
+boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, 
+        border = "red", col = "lightgreen", at = 1:6 - 0.3)
+stripchart(count ~ spray, data = InsectSprays, method = "stack", add = TRUE)
+stripchart(count ~ spray, data = InsectSprays, method = "jitter")
+```
+
+
+带状图（Strip Chart），又叫一维散点图（1-D Scatter Plot），是针对一维数据的散点图，它本质上是数据与固定值（固定 x 或固定 y）之间的散点图，这样形成的图形外观是带状的，因此称之为带状图。
+
+R 中带状图的函数为 `stripchart()` ，其用法如下：
+
+```{r stripchart-usage}
+usage(graphics:::stripchart.default)
+usage(graphics:::stripchart.formula)
+```
+
+
+带状图函数为泛型函数，可以直接接受数据参数或者公式参数。 `x` 为数据，一般为一个向量； `method` 指定作图方法，取值 `overplot` 意思是将所有的数据点画在一条直线上，不管它们是否有重叠，`jitter` 意思是将直线上的数据随机打乱，以免数据重叠导致我们不知道在某个位置究竟有多少个点，`stack` 意思是将重叠的数据堆砌起来，某个位置重叠的数据越多，则堆砌越高； `jitter` 给定打乱的程度，参见 `jitter()` 函数（图 \@ref(fig:discrete-var) 有示例）； `vertical` 设定带状图的方向（横向或纵向）； `group.names` 为每一组数据的名称标签； `add` 决定是否将带状图添加到现有图形上； `at` 给定每条带子的位置。
+
+作为描述一维数据分布的工具，带状图有其独特的优势：它的作图方法可以反映出原始数据的疏密。若原始数据有重叠，它也有相应的办法处理，最终使所有的数据点都能够被展示出来。图 \@ref(fig:stripchart)
+重新使用了杀虫剂数据 `InsectSprays`，上图展示了堆砌的带状图，并且在图中同时放置了箱线图作为对比，如果只是观察箱线图，我们无从得知数据在若干位置有重复，只知道数据四分位点的位置，而带状图则可以告诉我们在哪些位置分别有多少数据点；下图为随机打乱的带状图，作图方法只是将 y 方向上的固定数值添加了随机数，使原本重叠在一起的数据重新拥有不同的纵坐标，从而将重叠的数据分开来。
+
+回顾前面 \@ref(sec:rug) 小节中我们曾经用坐标轴须在坐标轴上标记出原始数据，这与带状图在一条直线上用点表达原始数据的想法有异曲同工之妙，然而坐标轴须本身没有堆砌和随机打乱数据的功能（可以通过函数 `jitter()` 函数实现），所以有时候使用不妨视情况向图中添加带状图作为变量分布的辅助性描述。
+
+
+
+## 饼图 {#sec:pie}
+
+(ref:fig-pie-chart-s) 各类馅饼销售数据的饼图
+
+(ref:fig-pie-chart) 各类馅饼销售数据的饼图：对比上面的饼图和下面的点图以及条形图，人眼对角度或比例的感知能力是否弱于对长度的感知能力？
+
+```{r pie-chart,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)"}
+layout(matrix(c(1, 2, 1, 3), 2)) # 拆分作图区域
+par(mar = c(4, 4, 0.2, 0.2))
+pie.sales <- c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12)
+names(pie.sales) <- c("Blueberry", "Cherry", "Apple",
+                      "Boston Cream", "Other", "Vanilla Cream")
+pie.col <- c("purple", "violetred1", "green3", "cornflowerblue", "cyan", "white")
+pie.sales <- sort(pie.sales, decreasing = TRUE) # 排序有助于可读性
+pie(pie.sales, col = pie.col)
+dotchart(pie.sales, xlim = c(0, 0.3))
+barplot(pie.sales, col = pie.col, horiz = TRUE, names.arg = "", space = 0.5)
+```
+
+饼图是目前应用非常广泛的统计图形，然而，根据统计学家（主要是 Cleveland 和 McGill）和一些心理学家的调查结果 [@Cleveland85]，这种以比例展示数据的统计图形实际上是很糟糕的可视化方式。因此，R 关于饼图的帮助文件中清楚地说明了并不推荐使用饼图，而是使用条形图（\@ref(sec:barplot) 小节）或点图（\@ref(sec:dotchart) 小节）作为替代。读者若有兴趣可以到“统计之都”论坛查看这则关于饼图的幽默：<https://d.cosx.org/d/101157>。
+
+饼图的原理很简单，每一个扇形的角度与相应数据的数值大小成比例，关于饼图的知识此处不再赘述。R 提供了函数 `pie()` 制作饼图，用法如下：
+
+```{r pie-usage}
+usage(pie)
+```
+
+参数 `x` 为一个数值向量， `labels` 为标签，其它参数基本上都是为多边形准备的，因为扇形实际上是多边形所作，例如 `edges` 可以设定圆弧的光滑程度（多边形的边越多则越光滑）， `density` 、 `angle` 等参数参见多边形的章节（\@ref(sec:polygon) 小节）。
+
+图 \@ref(fig:pie-chart) 同时给出了饼图、点图和条形图分别对一个不同牌子馅饼的销售数据的展示，请读者对比并思考饼图对于展示数据的弱势，例如从饼图中看 Boston Cream 和 Vanilla Cream 差异有多大，而在条形图中看差异又是多大？两种情况下我们对差异的感受相同吗？
+
+至此，我们已经全部介绍完 **graphics** 包中的统计图形函数，读者一般不用安装别的附加包就可以完成以上的图形制作。下面我们开始选择性介绍其它基础包和附加包中的图形函数和图形种类。
+
+
+
+## QQ 图 {#sec:qqplot}
+
+
+关于统计分布的检验有很多种，例如 KS 检验、卡方检验等。从图形的角度来说，我们也可以用 QQ 图（Quantile-Quantile
+Plots）来检查数据是否服从某种分布。QQ 图的原理并不复杂：如果一批数据 $x_{1},x_{2},\ldots,x_{n}$ 服从某种理论分布，那么将排序后的数据 $x_{(1)},x_{(2)},\ldots,x_{(n)}$ 和理论分布的分位数 $q_{1/n},q_{2/n},\ldots,q{}_{n/n}$ 去画散点图，得到的 $n$ 个点应该大致排列在对角线上，因为这两批数字应该大致相等。从另一个角度来看，检验一批数据是否服从某种理论分布，也就是看其经验分布和理论分布是否一致，而排序后的数据 $x_{(1)},x_{(2)},\ldots,x_{(n)}$ 可以看作是经验分布的 $1/n,\,2/n,\,\cdots,n/n$ 分位数，若这些分位数和理论分位数一致，也就说明了经验分布和理论分布相似。为了说明这一点，我们可以看看数值模拟的结果：
+
+```{r quantile-sim}
+# 从 N(0, 1) 中生成 1000 个随机数的分位数
+quantile(rnorm(1000), probs = seq(.1, .9, .2))
+# 真实的分位数
+qnorm(seq(0.1, .9, .2))
+```
+
+以上数据的 5 个分位数和理论分位数都比较接近，读者可以模拟其它分布，例如从卡方分布中生成随机数，看其分位数是多少，与正态分布分位数差异如何。
+
+R 中 QQ 图的函数为 `qqplot()` 。由于正态分布是我们经常检验的分布，R 也直接提供了一个画正态分布 QQ 图的函数 `qqnorm()` ，这两个函数都在基础包 **stats** 包中，它们的用法如下：
+
+```{r qqplot-usage}
+usage(qqplot)
+usage(stats:::qqnorm.default)
+usage(qqline)
+```
+
+
+由于 `qqplot()` 检验的是两批数据的分布是否相同，所以它需要两个数据参数 x 和 y ， `qqnorm()` 只需要一个数据参数 x ，其它设置标签和标题等元素的图形参数此处不再赘述。
+
+(ref:fig-qqnorm-s) 喷泉间隔时间的正态分布 QQ 图
+
+(ref:fig-qqnorm) 喷泉间隔时间的正态分布 QQ 图（左图）及数据密度曲线和实际正态分布密度曲线（右图）
+
+```{r qqnorm,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
+par(mfrow = c(1, 2))
+par(mar = c(4, 4, 0.2, 0.2))
+x <- scale(geyser$waiting)
+qqnorm(x, cex = 0.7, asp = 1, main = "")
+abline(0, 1)
+plot(density(x), main = "", xlim = range(x))
+curve(dnorm, from = -3, to = 3, lty = 2, add = TRUE)
+```
+
+
+图 \@ref(fig:qqnorm) 左图是喷泉间隔时间数据的正态分布 QQ 图（\@ref(sec:hist) 小节的直方图用到过），注意其中的数据经过了标准化，使之均值为 0，方差为 1。可以看出，数据点并不呈直线分布，这说明（标准化后的）数据的分布和标准正态分布有所差异，那么具体是何种差异呢？图的左边有一部分点偏离在直线上方，说明实际分位数大于理论分位数。从密度曲线的角度来说，也就是实际数据的分布曲线更偏右一些，理论分布曲线左边的尾巴向左伸得更远，而图的右边又有一些点在直线下方，说明此处实际分布曲线偏左，即实际分位数偏小。右图画出了数据的核密度估计曲线（实线）和真正的标准正态分布密度曲线（虚线），读者可以将二者的对比结合左图来理解 QQ 图中数据点偏离直线的方向与分布曲线的偏向关系。
+
+注意：图 \@ref(fig:qqnorm) 的 QQ 图中我们用了纵横比参数 `asp = 1`，这样使得图中横纵坐标的单位长度表示的数值大小相同，为我们比较点的横纵坐标值大小提供了更好的视觉辅助。
+
+QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它也可以推广到检查数据是否来自某个位置参数分布族。例如，若数据来自正态分布 $N(5,1)$，我们拿它和标准正态分布 $N(0,1)$ 画 QQ 图的话，数据点仍然会大致排列在直线上，此时直线的斜率仍然是 1，但截距就不是 0 了，而是 5。正态分布是位置参数分布族中的一种分布：若 $X\sim N(\mu,\sigma^{2})$，那么 $X + \delta \sim \mathrm{N}(\mu+\delta,\sigma^{2})$ 仍然是正态分布。均值 $\mu$ 是位置参数。
+
+
+
+## 小提琴图 {#sec:vioplot}
+
+
+小提琴图（Violin Plot）是密度曲线图与箱线图的结合，因为它的外观有时候与小提琴的形状比较相像（尤其是展示双峰数据的密度时），所以我们称之为小提琴图。小提琴图的本质是利用密度值生成的多边形（\@ref(sec:polygon) 小节），但该多边形同时还沿着一条直线作了另一半对称的“镜像”，这样两个左右或上下对称的多边形拼起来就形成了小提琴图的主体部分，最后一个箱线图也会被添加在小提琴的中轴线上。
+
+小提琴图来自于 **vioplot** 包 [@vioplot]，其函数为 `vioplot()` ，用法如下：
+
+```{r,message=FALSE,warning=FALSE}
+library(sm)
+library(vioplot)
+usage(vioplot)
+```
+
+(ref:fig-vioplot-s) 三组双峰数据的小提琴图比较
+
+(ref:fig-vioplot) 三组双峰数据的小提琴图比较
+
+```{r vioplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-vioplot)",fig.scap="(ref:fig-vioplot-s)"}
+f <- function(mu1, mu2)
+  c(rnorm(300, mu1, 0.5), rnorm(200, mu2, 0.5))
+x1 <- f(0, 2)
+x2 <- f(2, 3.5)
+x3 <- f(0.5, 2)
+vioplot(x1, x2, x3,
+  horizontal = TRUE, col = "bisque",
+  names = c("A", "B", "C")
+)
+```
+
+
+参数 `x, ...` 为一系列数值向量； `h` 传递给 **sm** 包 [@sm] 中的函数 `sm.density()` 用来计算密度；至于颜色、方向、边线等样式这里就不再介绍。
+
+图 \@ref(fig:vioplot)
+用三个随机数序列展示了小提琴图的外观及其在表达数据密度和比较统计分布参数（中位数、众数等）上的功效。
+
+**lattice** 包中的函数 `panel.violin()` 也提供了类似的小提琴图展示。关于小提琴图的理论请参考 @Hintze98。
+
+
+## 延伸与小结 {#sec:base-graph-ext}
+
+到目前为止，我们已经用了 38 小节的篇幅介绍了所有 **graphics** 包中的图形以及部分附加包中的图形，基于以下两个考虑，我们将在本小节简略介绍一下其它包中的其它图形之后结束本章：
+
+1.  R 附加包数目太多：截至 2020 年 7 月 14 日，CRAN 上的 R 包数量已经突破 16000 个，其中很多都包含作图的函数，如果我们这样继续列举下去，本书将永远没有尽头。有一个叫“R Graphical Manual”的网站[^rgraphicalmanual]，基于 R 附加包中的例子画出了所有图形，在 R 2.9.0 的 1877 个附加包的示例代码中，一共生成了 21924 幅图形，尽管有很多示例代码可以同时生成多幅图形，但两万多幅图形背后包含的图形种类很可能成百上千，这样的数目是本书无法承载的。
+
+[^rgraphicalmanual]: 原网页 http://bm2.genes.nig.ac.jp 已失效，[快照](https://web.archive.org/web/20100813180430/http://bm2.genes.nig.ac.jp/RGM2/
+
+2.  很多 R 函数的用法都比较类似：一方面，有些附加包为了便于用户使用，只是扩展了泛型函数 `plot()`，这样用户只需要在建完特定的模型之后 `plot()` 相应的对象即可，例如 **MASS** 包中的岭回归；另一方面，对于基础图形而言，很多参数都是通用的，它们的意义通常比较固定，例如 `col` 参数通常表示主要图形元素的颜色等，这样，即使不看帮助文档，大致也能猜到用法，所以我们没有必要把每一个作图函数的用法都详细介绍一遍。
+
+由于 R 拥有大量的附加包，图形种类也被极大扩展，R 的初级用户往往会提出这样一个自然的问题：
+
+> 我怎么知道有哪些作图的包？或者说怎样找到合适我的包呢？
+
+这个问题并不容易回答，它需要结合具体问题来看。从一般原则来说，用户可以浏览一下 CRAN 关于图形的分类列表（Task
+View）：<https://cran.r-project.org/web/views/Graphics.html>，这是一个很好的导航页面，它总结了一些有用的包的功能。对于具体的问题，也可以广泛寻求网络上的帮助和指导（参见 \@ref(sec:R-intro) 小节）。
+
+本小节选取了 **plotrix** 包中的两个作图函数作为代表，让读者了解基于 R 的基础图形系统的扩展可能性。@Lemon06 是在 R
+News 上关于这个包的一篇介绍性文章，文章标题将这个包描述为"（它）位于 R 的红灯区"，原因是它看起来触犯了一些作图的常见规则，比如它扩展了饼图（甚至还有 3D 饼图这种统计学家很不齿的图形！）、介绍了如何将坐标轴截断、可以画像 Excel 那样的渐变色条形图等等，这里笔者也不知该包的作者究竟是开玩笑还是认真的，总之这个包的确显示了 R 基础图形系统的扩展性，但一些扩展的方向需要我们三思，例如截断坐标轴的作法就是 @Cleveland85 所反对的。下面我们分别介绍风向图和浮动饼图。
+
+(ref:fig-windrose-s) 展示风力大小和频数的风向图
+
+(ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 \%，因此 0 \~ 10 km/h 的东北风的频率大约是 7 \%。无风的频率大约是 8 \%
+
+```{r windrose,fig.width=5.4,fig.height=4.6,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",small.mar = FALSE}
+library(plotrix) # 直接取自 oz.windrose() 函数的例子
+windagg <- matrix(c(
+  8, 0, 0, 0, 0, 0, 0, 
+  0, 4, 6, 2, 1, 6, 3, 
+  0, 4, 2, 8, 5, 3, 5, 
+  2, 1, 1, 5, 5, 2, 4, 
+  1, 4, 1, 2, 1, 2, 4, 
+  0, 3, 1, 3, 1
+), nrow = 5, byrow = TRUE)
+par(mar = c(0.5, 0.5, 4.0, 0.5))
+oz.windrose(windagg)
+```
+
+
+风向图（Wind Rose）又称“风玫瑰图”或“风向玫瑰图”，通常用来展示东南西北甚至更多方向上的风力强度和频数，它是观察风力在各个方向上分布的一种直观办法，以图 \@ref(fig:windrose)
+为例：它用八根指针表示东、东南、南、西南等八个方向上的风，在每一根指针上对各等风速进行频数汇总，最后除以观察时间内的刮风次数（包括无风次数），就得到了各种风速的频率，分别用指针的一小节来表示。也就是说，指针的某一小节越长，表示该风速水平上的刮风次数越多。中心的圆圈表示无风的频率，之所以要用圆圈，原因很简单，因为无风是没有风向的，无法用指针表达；无风的总频率被分配到了八个方向上，所以我们不能简单看圆圈的大小来决定无风频率，而是要将圆圈大小乘以方向的数目（这里为 8），当然这种计算对读者来说太麻烦，所以图的左边直接以文本标注的形式标出了无风的总频率。该风向图的模板取自澳大利亚气象局。
+
+在一些与气象有关的部门，风向图有其特殊用处。例如，机场需要参考当地的风向图来决定应该以什么样的方向修建飞机跑道。由于顺风对飞机飞行不利，所以飞机在机场起飞和降落最好是能逆风，这样能使飞机在较短距离升空和降落。若图 \@ref(fig:windrose) 是一个真实的机场的长期风向数据，则机场跑道可能考虑东北-西南方向或者东西方向，前者的刮风频率较高，而后者的强度较大。笔者对机场建设了解甚少，这里只是介绍一种考虑的可能性。另外，根据笔者目前掌握的知识，当今的飞机似乎受风向影响已经大大减小了。
+
+我们在风向图中看到一项数据处理的缺陷：风向数据本来应该是连续的，但在画图的时候无论是风向还是风速都被离散化了（也许风向在观测时就只能是离散的），这种离散化对读者理解来说有利，但它毕竟是损失了数据信息。若有气象工作者能看到这里，笔者提议考虑将风速的图示表达方式换成小提琴图（\@ref(sec:vioplot) 小节），或者至少箱线图（\@ref(sec:boxplot) 小节），除非现在这种人工分组的方式有任何坚实的科学基础。
+
+(ref:fig-floating-pie-s) 在同一幅图的多个位置放置饼图
+
+(ref:fig-floating-pie) 在同一幅图的多个位置放置饼图：这是个人造的“质量测试”，颜色深的成份太大会导致饼图“沉下去”
+
+```{r floating-pie,fig.width=4.8,fig.height=3.6,results="hide",fig.cap="(ref:fig-floating-pie)",fig.scap="(ref:fig-floating-pie-s)"}
+demo("float_pie", package = "MSG")
+```
+
+浮动饼图是 **plotrix** 包对饼图的一个扩展，它可以将饼图作为一个基本的图形元素安排在任意位置，即：一幅图中可以有多幅饼图分散在不同位置。尽管我们一直批评饼图在表达数据上的弱势，但在某些极端情况下，饼图也未必糟糕得无可救药。试想如果一幅饼图只分为两份或三份，也许我们可以准确识别各个角度的大小。另外，有时候我们也许要比较多组比例的分布情况，例如在空间中表示各个地点的某个变量构成（性别比例、年龄结构等），此时在多个位置分别画饼图也许能让我们很容易比较各个位置上的比例构成。图 \@ref(fig:floating-pie)
+展示了一个例子，改编自 `floating.pie()` 函数自身的例子，我们假设要检验一批产品的质量，若“黑色成分”超过 50 \% 则表明质量不合格；图中我们将不合格的产品“沉”了下去，这种形象表达或许更能引起读图者的注意。
+
+至此，除了 \@ref(sec:parcoords) 小节，我们所介绍的图形几乎都是基于 R 的基础图形系统构造的，即：用点、线、颜色、形状等基本元素来构造完整的图形。这种方式的确给了我们极大的自由，让我们可以随意控制图形，而且很多时候我们也不必用基本图形元素来自行构造图形，因为 R 及其附加包已经提供了太多相对完善的高层作图函数，这些函数应该可以涵盖相当一部分用户的需求。然而我们在最后需要提醒读者的是，在 R 的基础图形系统之外还存在好几种选择，我们的思维不必局限在如此原始的画图方式上。R 基础图形系统的缺点至少包括：
+
+1.  图形元素一旦画出来就不可编辑。如果需要更改图形，只能重画整幅图形（实际上这个缺点并不严重，因为修改代码和重新运行代码对某些代码编辑器来说非常方便）
+
+2.  作图功能不够自动。比如我们常常需要根据某个分类变量给相应的图形元素赋予颜色，这时候只能将分类变量人工转变为颜色向量，事后还要手工添加图例；再比如添加 LOWESS 光滑曲线或回归直线及其置信区间，用户需要经过繁琐的过程才能完成，而这些作图的常规任务应该能尽量自动完成，而不要让用户操心每一个细节；
+
+3.  图形系统几乎没有交互功能，用户很难与图形设备交互，比如用鼠标选取一部分点并高亮之（附录 \@ref(sec:interaction) 小节介绍了非常简单的交互功能）；
+
+4.  有些细节设置不够合理，例如点的样式默认为空心圆圈（`pch = 1`），尽管空心圆圈在某些场合下有其特殊优点，但一般说来这种设置没有足够的视觉冲击力，点在图中不够明显，用 @Cleveland85 的话说，就是"数据不能突出来"；
+
+接下来的一章，我们将介绍不同的图形系统来弥补 R 基础图形系统的不足。
+
+## 思考与练习
+
+1.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性。本题源于 COS 论坛帖子：<https://d.cosx.org/d/18521>。
+
+2.  用 QQ 图评价数据正态性应该注意什么问题？模拟一些正态分布的数据，画出 QQ 图，看看如果数据真的来自正态分布，QQ 图看起来是什么样的。或者参考 **animation** 包中的 `sim.qqnorm()` 函数。
+
+3.  如果箱线图中出现大量的占据范围很大的离群点，则会导致箱子的主体部分被压得很扁，此时我们很难看清分位数的位置。请问对于这种情况有什么好的解决办法？
+
+4.  条形图的横坐标通常是无序的，人们往往根据数据的原始顺序画条形图；比如画各省市的人口总数时，我们总是看到北京在第一位，这可能是因为统计局数据总是把北京放在第一行。条形图横坐标的顺序选取对读图是否有影响？或者说我们应该怎样安排条形图的横坐标？提示：参考 \@ref(subsec:canabalt) 小节。
+
+5.  尽管一元函数曲线图和展示数据似乎没什么关系，但它在优化一元目标函数或者对一元函数求根时通常有帮助。例如我们用 `uniroot()` 求根时需要提供根的大致区间，请参考帮助文档说明一元函数曲线图在这里有什么用处。
+
+6.  基于第 \@ref(sec:matplot) 小节介绍的矩阵图，编写一个画平行坐标图的函数，参数主要包括一个数据框（可以选择性地包括其它修饰性参数，例如数据标准化的方法等），函数的主体部分只有一行代码，形式如下：
+
+    ```{r parcoords-fun-demo,eval=FALSE}
+    parcoords <- function(x, ...) {
+      # 如何处理 x？
+      matplot(..., type = "l", lty = 1, pch = NA)
+    }
+    # 测试代码
+    parcoords(iris)
+    ```
+
+    提示：可以考虑 `col()` 函数，可能需要转置 `t()` ；想清楚我们是用怎样的两个矩阵去画线。
+
+7.  在信息可视化（Information
+    Visualization）领域，树图和标签云都非常流行，实际上这些图形从统计学角度来说表达的信息非常简单：它们表达的只是数字大小。树图为 Treemap，不是 \@ref(sec:rpart) 小节提到的分类与回归树，但思想类似，也是递归分割，如图 \@ref(fig:disk-usage) 是笔者操作系统中的 R 包文件大小树图。树图主要是用矩形大小代表数字大小，纵横交替分割一个大矩形为小单元。图 \@ref(fig:disk-usage) 中最大的灰色矩形代表所有 R 包的大小，在 \~/R/x86\_64-pc-linux-gnu-library/2.12/ 文件夹下有若干 R 包，每个包都有自己的大小，其中最大的是 **mapdata**，其次是 **RGtk2**，然后是 **Rcpp**，等等。纵向划分的长矩形表示一个个包（面积和包的大小成比例），然后在这些矩形内部再横向划分小矩形分别表示子文件夹的大小，若子文件夹下还有子文件夹，那么继续纵横划分。树图同时表达了嵌套关系和数值大小，看起来一目了然，通常最大的矩形能最先吸引人的注意力。例如，若我们想清理磁盘上的文件，那么就会考虑究竟是哪些文件占用了很大的空间，此时树图就是很好的可视化方法（笔者正是用这样的办法清理自己的磁盘空间的）。图 \@ref(fig:disk-usage) 显示的是 Ubuntu 系统下的 Disk Usage Analyzer，Windows 下也有类似的软件如 WinDirStat。
+
+    ```{r disk-usage,fig.cap="(ref:fig-disk-usage)",fig.scap="(ref:fig-disk-usage-s)",echo=FALSE}
+    knitr::include_graphics("images/disk-usage.png", dpi = NA)
+    ```
+
+    标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是笔者英文博客（<https://yihui.org/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为笔者一直开发 **animation** 包，并研究着 Sweave。
+
+    ```{r yihui-name-wordle,fig.cap="(ref:fig-yihui-name-wordle)",fig.scap="(ref:fig-yihui-name-wordle-s)",echo=FALSE}
+    knitr::include_graphics("images/yihui-name-wordle.png", dpi = NA)
+    ```
+
+    本书大部分内容都是关于数据可视化的，统计学的成分比较大。请结合这里给出的两幅图形思考，信息可视化和数据可视化的区别是什么？它们各有什么优势以及如何结合它们的优势？
+
+
+(ref:fig-disk-usage-s) 系统中 R 附加包文件大小的树图
+
+(ref:fig-disk-usage) 系统中 R 附加包文件大小的树图：在笔者的系统中，所有 R 包中最大的是 **mapdata**，其次为 **RGtk2**
+
+(ref:fig-yihui-name-wordle-s) 笔者英文博客的标签云
+
+(ref:fig-yihui-name-wordle) 笔者英文博客的标签云：animation 和 Sweave 两个词最抢眼
