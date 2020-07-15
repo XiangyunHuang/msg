@@ -33,19 +33,8 @@ R 的功能概括起来可以分为两方面：一是统计计算（Statistical 
 R 的核心是一种解释性计算机语言，大部分用户可见的函数都是用 R 语言编写的，而用户也可以调用 C、C++ 或者 FORTRAN 程序以提高运算效率。正式发行的 R 版本中默认包括了 **base**（R 基础包）、**stats**（统计函数包）、**graphics**（图形包）、**grDevices**（图形设备包）、**datasets**（数据集包）等基础程序包，其中包含了大量的统计模型函数，如：线性模型/广义线性模型、非线性回归模型、时间序列分析、经典的参数/非参数检验、聚类和光滑方法等，还有大批灵活的作图程序。此外，附加程序包（add-on
 packages）中也提供了各式各样的程序用于特殊的统计学方法，但这些附加包都必须先安装到 R 的系统中才能够使用 [@Hornik-FAQ]。
 
-本书不会过多涉及到附加包，所介绍的图形主要基于 R 自身的 **graphics** 包，当然也不可避免会使用 **base** 和 **grDevices** 等基础包中的函数，这些基础包一般不用特别加载，R 在启动的时候会自动加载进来；在第\@ref(cha:gallery)章中会使用一些附加包介绍特殊的统计数据和统计方法、模型涉及到的图形，例如分类数据（Categorical Data）会提到 **vcd** 包，生存分析会用到 **survival** 包。当我们需要调用附加包时，可以使用 `library()` 函数，例如加载 **MSG** 包：
 
-```{r}
-library(MSG)
-```
-
-```{r}
-search() # 目前的工作环境中被加载进来的包
-```
-
-R 的官方网站 <https://www.R-project.org> 中对 R 有详细介绍，我们也可以从它在世界各地的镜像（CRAN：<https://CRAN.R-project.org>，全称 Comprehensive R Archive Network）下载 R 的安装程序和附加包。通常，我们可以在 R 中用函数 `install.packages()` 安装附加包，Windows 用户也可以从菜单中点击安装：Packages $\Rightarrow$ Install Package(s)）。注意：附加包都是从镜像上下载的，因此安装时要保证网络连接正常；当然我们也可以先将程序包下载到本地计算机上然后安装。
-
-可能令读者感到不便的一点是，R 不像别的统计软件那样有图形用户界面（GUI，即 Graphical User Interface，后面附录 \@ref(cha:GUI) 会详细介绍），因此它不会显得很傻瓜，它的界面常常是命令行界面（CLI，即 Command Line Interface），即：输入一些代码，R 就会输出相应的运算结果或其它输出结果。因此，在正式使用 R 之前，我们有必要大致了解一下 R 的运作方式。
+R 的官方网站 <https://www.R-project.org> 中对 R 有详细介绍，我们也可以从它在世界各地的镜像（CRAN：<https://CRAN.R-project.org>，全称 Comprehensive R Archive Network）下载 R 的安装程序和附加包。可能令读者感到不便的一点是，R 不像别的统计软件那样有图形用户界面（GUI，即 Graphical User Interface，后面附录 \@ref(cha:GUI) 会详细介绍），因此它不会显得很傻瓜，它的界面常常是命令行界面（CLI，即 Command Line Interface），即：输入一些代码，R 就会输出相应的运算结果或其它输出结果。因此，在正式使用 R 之前，我们有必要大致了解一下 R 的运作方式。
 
 计算机科学家 Nikiklaus Wirth 曾经提出，程序语言的经典构成是“数据结构+算法”：数据结构是程序要处理的对象，算法则是程序的灵魂。R 也不例外，它有自己独特的数据结构，这些数据结构尤其适应统计分析的需要，它们包括：向量（vector）、矩阵（matrix）、数据框（data frame）、列表（list）、数组（array）、因子（factor）和时间序列（ts）等。当然，数值、文本和逻辑数据都可以在 R 中灵活使用，附录 \@ref(sec:object) 中给出了一些简单的数据操作例子，请读者通过阅读该章熟悉 R 的数据对象；至于算法，我们暂时可以不去过多了解，因为 R 中已经包含了大量设计好的函数，对于一般的用户来讲都不必自行设计算法，除非有特殊或者自定义的算法，那么也可以根据 R 的语法规则编写程序代码。
 
@@ -62,13 +51,8 @@ R 的官方网站 <https://www.R-project.org> 中对 R 有详细介绍，我们�
 
 其中，R-intro 手册附录 A 中给了一个很好的代码入门演示，推荐读者通过这个演示初步熟悉 R 语言；其它手册都比较偏重 R 的底层介绍，不适合对计算机程序没有深入了解的初学者阅读；另外还有 Emmanuel Paradis 编写的《R for Beginners》也是较好的入门教材（已由笔者及其他几位合作者翻译为中文，可从统计之都 <https://cosx.org> 获得）；丁国徽也已将几本官方手册翻译为中文，R-intro 的中文翻译文档可以在官方网站上下载。除了 R 的书籍之外，我们也推荐 R 的初学者和爱好者通过访问“统计之都”网站及其 R 语言版块 <https://d.cosx.org/t/r> 共同学习、讨论和研究。
 
-最后需要特别指出的是，R 拥有一套完善而便利的帮助系统，这对于初学者也是很好的资源。若已知函数名称，我们可以简单用问号 `?` 来获取该函数的帮助，比如查询计算均值的函数帮助，只需要在命令行中敲入 `?mean`，则会弹出一个窗口显示该函数的详细说明。大多数情况下，`?` 等价于 `help()` 函数；但有少数特殊的函数在查询其帮助时需要在函数名上加引号，比如 `?+` 就查不到加法的帮助信息，而 `?'+'` 或者 `help('+')` 则可顺利查到加法帮助信息，类似的还有 `if`、`for` 等。
+由于 R 是完全开放源代码的，所以我们可以自由修改代码以构建符合自己需要的程序，但是一方面这需要一定的其它程序语言技能（典型的如 C 语言），因为 R 的很多基础函数都是用 C 写的；另一方面，对于绝大多数用户，其实没有必要对基础包进行修改——既然 R 是开源软件，其代码必然受到很多用户监视，这样就会最大程度减少程序错误、优化程序代码，而且我们也可以在 R 里面自定义函数，这些函数可以保存起来，以后同样还能继续使用，或者自行编写 R 包。对比起来，现今的商业统计软件都将源代码和计算过程封闭在用户完全不知道的黑匣子中，而在用户界面上花大量的功夫，这对统计来说，毫无疑问并非长久之计。我们相信，随着读者对 R 的深入了解，一定能体会到这个软件的真正强大之处。
 
-一般来说，帮助窗口会显示一个函数所属的包、用途、用法、参数说明、返回值、参考文献、相关函数以及示例，这些信息是相当丰富的。当然，更多情况下，我们并不知道函数名称是什么，此时也可以使用搜索功能，即函数 `help.search()`（几乎等价于双问号 `??`）。例如我们想知道方差分析的函数名称，则可输入命令 `help.search('analysis of variance')`，弹出的信息窗口会显示与搜索关键词相关的所有函数，如 `aov()` 等。
-
-知道名称以后，接下来我们就可以通过前面讲到的 "`?`" 来查询具体函数的帮助信息。函数 `help.start()` 可以打开一个网页浏览器用来浏览帮助。如果这些帮助功能还不够用，例如有时候需要的函数在已经安装的包中找不到，那么可以到官方网站上搜索：<https://www.r-project.org/search.html>，网站上的邮件列表导航（Mailing List Archives）也是很有用的资源，其中有大批统计相关学科的著名教授以及世界各地的统计研究者和 R 爱好者在那里用邮件的方式公开回答各种关于 R 的问题。
-
-我们在此如此强调帮助系统，目的在于告诉读者，要想学好 R 语言，除了阅读相关书籍资料，也应该自己多多动手利用信息资源解决自己的问题。
 
 ## 安装 R 语言和 ggplot2 包
 
@@ -80,33 +64,68 @@ R 软件可以在多种操作系统上运行，包括 Windows、Linux 以及 Mac
 
 安装好 R 之后，Windows 用户可以从程序快捷方式直接启动 R，Linux 用户则可从终端敲入命令 `R` 启动；在启动 R 时，屏幕上会显示类似如下信息，告诉我们 R 是由很多贡献者一起协作编写的免费软件，用户可以在一定许可和条件（GPL）下重新发布它：
 
-```{r, echo=FALSE}
-cat(head(system("R -e NULL", TRUE)[-1], 16), sep = "\n")
+```{r, echo=FALSE, results='asis'}
+cat("```", head(system("R -e NULL", TRUE)[-1], 16), "```", sep = "\n")
+```
+如前文所述，R 的附加包需要另行安装。Windows 用户可以点击菜单（Packages $\Rightarrow$ Install Package(s)）安装附加包（附加包都是从镜像上下载的，因此安装时要保证网络连接正常；当然我们也可以先将程序包下载到本地计算机上然后安装）。不过，更普遍的做法是在 R 中用函数 `install.packages()`。例如，安装 **ggplot2** 包的方法是运行：
+
+```{r, eval=FALSE}
+install.packages("ggplot2")
 ```
 
-由于 R 是完全开放源代码的，所以我们可以自由修改代码以构建符合自己需要的程序，但是一方面这需要一定的其它程序语言技能（典型的如 C 语言），因为 R 的很多基础函数都是用 C 写的；另一方面，对于绝大多数用户，其实没有必要对基础包进行修改——既然 R 是开源软件，其代码必然受到很多用户监视，这样就会最大程度减少程序错误、优化程序代码，而且我们也可以在 R 里面自定义函数，这些函数可以保存起来，以后同样还能继续使用，或者自行编写 R 包。对比起来，现今的商业统计软件都将源代码和计算过程封闭在用户完全不知道的黑匣子中，而在用户界面上花大量的功夫，这对统计来说，毫无疑问并非长久之计。我们相信，随着读者对 R 的深入了解，一定能体会到这个软件的真正强大之处。
+本书配备了一个名为 **MSG** 的附加包，提供一些实例和有用的函数，安装方法是类似的:
 
-下面我们以一个例子开始 R 图形之旅，见图 \@ref(fig:ggplot2-minard) ，它是基于 **ggplot2** 包的拿破仑远征图，可以说是 R 画图灵活性的一个典型代表。
+```{r, eval=FALSE}
+install.packages("MSG")
+```
+
+本书不会过多涉及到附加包，所介绍的图形主要基于 R 自身的 **graphics** 包和当前最流行的 **ggplot2**包，当然也不可避免会使用 **base** 和 **grDevices** 等基础包中的函数，这些基础包一般不用特别加载，R 在启动的时候会自动加载进来。在第\@ref(cha:gallery)章中会使用一些附加包介绍特殊的统计数据和统计方法、模型涉及到的图形，例如分类数据（Categorical Data）会提到 **vcd** 包，生存分析会用到 **survival** 包。当我们需要调用附加包时，可以使用 `library()` 函数，例如加载 **MSG** 包：
+
+```{r}
+library(MSG)
+```
+
+我们可以用 `search()` 函数来查看目前的工作环境中被加载进来的包：
+
+```{r}
+search() 
+```
+
+下面，我们以一个例子开始 R 图形之旅。
+
+图 \@ref(fig:ggplot2-minard) 是基于 **ggplot2** 包的拿破仑远征图，可以说是 R 画图灵活性的一个典型代表。
 
 (ref:fig-ggplot2-minard) 在 R 中用 **ggplot2** 包重制拿破仑远征图：我们可以对比图 \@ref(fig:minard)
 
 (ref:fig-ggplot2-minard-s) 在 R 中用 **ggplot2** 包重制拿破仑远征图
 
 ```{r ggplot2-minard, fig.cap='(ref:fig-ggplot2-minard)', fig.scap='(ref:fig-ggplot2-minard-s)', fig.width=4.9, fig.height=2.5}
-troops <- read.table(system.file("extdata", "troops.txt", package = "MSG"), header = TRUE)
-cities <- read.table(system.file("extdata", "cities.txt", package = "MSG"), header = TRUE)
+troops <- read.table(
+  system.file("extdata", "troops.txt", package = "MSG"), 
+  header = TRUE)
+cities <- read.table(
+  system.file("extdata", "cities.txt", package = "MSG"), 
+  header = TRUE)
 library(ggplot2)
-p <- ggplot(cities, aes(x = long, y = lat)) # 框架
-p <- p + geom_path(aes(size = survivors, colour = direction, group = group), 
-                   data = troops, lineend = "round") # 军队路线
-p <- p + geom_point() # 城市点
-p <- p + geom_text(aes(label = city), hjust = 0, vjust = 1, size = 2.5) # 城市名称
-p <- p + scale_colour_manual(values = c("grey50", "red")) + 
+ggplot(cities, aes(long, lat)) + # 框架
+  geom_path(aes(size = survivors, colour = direction, group = group), 
+            data = troops, lineend = "round") + # 军队路线
+  geom_point() + # 城市点
+  geom_text(aes(label = city), 
+            hjust = 0, vjust = 1, size = 2.5) + # 城市名称
+  scale_colour_manual(values = c("grey50", "red")) + 
   scale_size(range = c(1, 10)) +
   theme(legend.position = "none") + 
   xlim(24, 39) # 细节调整工作
-print(p) # 打印全图
 ```
+
+最后需要特别指出的是，R 拥有一套完善而便利的帮助系统，这对于初学者也是很好的资源。若已知函数名称，我们可以简单用问号 `?` 来获取该函数的帮助，比如查询计算均值的函数帮助，只需要在命令行中敲入 `?mean`，则会弹出一个窗口显示该函数的详细说明。大多数情况下，`?` 等价于 `help()` 函数；但有少数特殊的函数在查询其帮助时需要在函数名上加引号，比如 `?+` 就查不到加法的帮助信息，而 `?'+'` 或者 `help('+')` 则可顺利查到加法帮助信息，类似的还有 `if`、`for` 等。
+
+一般来说，帮助窗口会显示一个函数所属的包、用途、用法、参数说明、返回值、参考文献、相关函数以及示例，这些信息是相当丰富的。当然，更多情况下，我们并不知道函数名称是什么，此时也可以使用搜索功能，即函数 `help.search()`（几乎等价于双问号 `??`）。例如我们想知道方差分析的函数名称，则可输入命令 `help.search('analysis of variance')`，弹出的信息窗口会显示与搜索关键词相关的所有函数，如 `aov()` 等。
+
+知道名称以后，接下来我们就可以通过前面讲到的 "`?`" 来查询具体函数的帮助信息。函数 `help.start()` 可以打开一个网页浏览器用来浏览帮助。如果这些帮助功能还不够用，例如有时候需要的函数在已经安装的包中找不到，那么可以到官方网站上搜索：<https://www.r-project.org/search.html>，网站上的邮件列表导航（Mailing List Archives）也是很有用的资源，其中有大批统计相关学科的著名教授以及世界各地的统计研究者和 R 爱好者在那里用邮件的方式公开回答各种关于 R 的问题。
+
+我们在此如此强调帮助系统，目的在于告诉读者，要想学好 R 语言，除了阅读相关书籍资料，也应该自己多多动手利用信息资源解决自己的问题。
 
 ## 思考与练习
 
