@@ -368,7 +368,40 @@ faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5
 
 在众多统计图形中，脸谱图可算是最有幽默味道的一种，读者不妨在一些轻松的场合或听众精力不集中时尝试使用这种图形，也许能让听众感觉眼前一亮，主动解读图中的数据。
 
-## 泰勒图
+## 三元图 {#subsec:ternary}
+
+三元图（Ternary diagram）是用来展示一类特殊数据的图形：数据只有三列，每一行之和为 1 或 100，这类数据通常是成分数据，在化学中比较常见，比如某混合物中各种成分的百分比。又如，我们知道土壤可以分为沙土（`sand`）、壤土（`clay`）和黏土（`silt`）三种成分或类别，从不同地点采集的土壤样本在这三种成分上的分布可能不一样。
+
+表 \@ref(tab:murcia-data) 展示了西班牙 Murcia 省土壤样本成分的部分数据。这批数据包含 88 个样本，取自 8 个样地，每个样地随机取 11 处样本。我们关心的问题是，用这些成分数据能否区分出不同的样地？
+
+```{r murcia-data}
+data(murcia, package = "MSG")
+kable2(head(murcia), "西班牙 Murcia 省土壤样本成分（部分）")
+```
+
+(ref:murcia-ternary) 西班牙 Murcia 省的土壤样本三元图：三角形的三个顶点分别代表沙土、壤土和黏土。图中的点越靠近某个顶点则说明该成分越大
+
+(ref:murcia-ternary-s) 西班牙 Murcia 省的土壤样本三元图
+
+```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="(ref:murcia-ternary-s)"}
+data(murcia, package = "MSG")
+library(vcd)
+ternaryplot(murcia[, 2:4], main = "", col = vec2col(murcia$site), cex = .5)
+```
+
+图 \@ref(fig:murcia-ternary) 是这批数据的三元图。三元图的思想是把每一行数据以一个点的形式放在等边三角形中，它越靠近三角形的某个顶点则说明对应的成分数值越大。显然，如果一个点完全处在某个顶点上，那么说明这个点对应的样本在某个成分上取值为 100%，在另外两个成分上取值为 0%。图 \@ref(fig:murcia-ternary) 中 8 个样地分别用不同颜色标记，可以看出，每个样地的三种成分有所区别，比如左下角的一批样本（绿点）的沙土成分较大，而右上角的样本（蓝点）沙土成分很小。
+
+本案例的数据加载和三元图绘制的 R 代码如下：
+
+```{r, eval=FALSE, echo=FALSE}
+data(murcia, package = "MSG")
+library(vcd)
+ternaryplot(murcia[, 2:4], main = "", col = vec2col(murcia$site), cex = .5)
+```
+
+该图用 **vcd** 包中的 `ternaryplot()` 函数所作。由于数据中的成分数值差异不是太极端，所以图中的点都聚在一起，不太容易观察。感兴趣的读者可以自行编写函数实现设置坐标轴范围的功能，例如本例的图可以通过缩小坐标轴范围来放大点与点之间的差异。实际上这个图形的核心计算部分非常简单：假设原始数据是 $(a,\,b,\,c)$ 且 $a+b+c=1$，那么在三元图中的坐标就是 $(b+c/2,\,\sqrt{3}c/2)$，也就是说三元图本质上就是散点图。这个坐标变换的原理是物理学中的质心概念：首先我们知道等边三角形三个顶点的坐标分别为 $(0,\,0)$，$(1,\,0)$ 和 $(1/2,\,\sqrt{3}/2)$，如果以一条数据的三个成分为权重对这三个顶点坐标加权平均的话，得到的就是该条数据对应的坐标，实际上也就是认为三个顶点上的质量都为 1，以成分为权重求质心的位置，即 $(0a+1b+c/2,\,0a+0b+\sqrt{3}c/2)$。
+
+本章最后的思考与练习中有对三元图的扩展，读者可以看看四维情况下的三棱锥和这里的三角形的相似之处。
 
 ## 条件分割图 {#sec:coplot}
 
@@ -662,7 +695,6 @@ print(rpart(Species ~ ., iris), digits = 2)
 图 \@ref(fig:andrews-curve)
 左下图是将鸢尾花数据标准化之后的调和曲线图，由于数据的数量级更加靠近，所以曲线之间的差异也更明显，导致各股曲线更加松散。右下图是标准化之后的黑莓树数据调和曲线图，该数据名为 `trees`，在 **datasets** 包中，数据包含 3 列：周长、高和体积；从图中我们可以观察到有一条曲线明显与其它曲线"不合群"，因此可以初步判断它是一个离群点，由于这条曲线的数值能够超过 4，我们可以用函数返回值来查找它对应的行（事实是第 31 行），代码见图 \@ref(fig:andrews-curve)。
 
-## Hexagon Binning Matrix
 
 ## 地图 {#sec:maps}
 
@@ -695,4 +727,79 @@ demo("AgriComp", package = "MSG")
 
 https://github.com/XiangyunHuang/MSG-Book/issues/62
 
-## 平滑散点图在地图上形成热力图
+
+地图是展示空间数据最直接的方式，\@ref(sec:maps) 小节介绍了 R 语言中地图的用法。刘思喆曾给出一张 2010 年 11 月和 2011 年 3 月我国地震震源分布情况的对比图[^3]，此图利用 **MASS** 包中的 `kde2d()` 函数进行二维核密度估计，蓝色的深浅反映了点的密集程度。由图可见，2010 年的四川地区是地震频发区域，而 2011 年，云南盈江地区地震的发生次数明显增加。有时，由 R 中自带的地图数据绘制的图形显得较为单调。Markus Loecher 就此开发了 **RgoogleMaps** 包 [@RgoogleMaps]，将 Google Maps 提供的（卫星）地图数据引入 R 中：首先，此包利用 Google Maps API，为 R 提供了一个十分便利的接口，以抓取 Google 服务器上的静态地图；其次，用户可使用获得的地图作为背景，在其上方自由叠加图形元素。对于一般的经纬度坐标数据，此包可计算包含这些数据点的矩形边界，以确定抓取地图的范围。其工作流程概括如下：
+
+[^3]: 原网页现仅有文字存档 <http://bjt.name/2011/03/13/china-earthquake-map.html>
+
+-   读取经纬度数据
+-   通过计算确定获取图片所需参数
+-   访问 Google Maps 服务器抓取图片
+-   依据经纬度数据在图片上叠加图形元素
+
+**MSG** 包中的 `eq2010` 数据收录了来自中国国家地震科学数据共享中心的 354 条四川地区地震数据。3 个变量分别为震源的纬度、经度和震级大小（单位：面波震级 Ms），时间跨度为 2010 年 3 月 23 日到 2010 年 4 月 23 日。本节具体的代码参见 `eqMaps` 演示：
+
+```{r eqMaps-demo,eval=FALSE}
+demo("eqMaps", package = "MSG")
+```
+
+```{r RgoogleMaps,fig.cap="(ref:RgoogleMaps)",fig.scap="(ref:RgoogleMaps-s)",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
+knitr::include_graphics(path = c(
+  "images/RgoogleMaps-1.png",
+  "images/RgoogleMaps-2.png"
+))
+```
+
+(ref:RgoogleMaps) 在卫星地图上标记地震发生的地点和震级：左图仅标记地点，右图用圆圈大小代表震级大小
+
+(ref:RgoogleMaps-s) 在卫星地图上标记地震发生的地点和震级
+
+图 \@ref(fig:RgoogleMaps) 显示了地震震源位置分布情况，背景采用了 Google Maps 提供的卫星地图数据。左图仅仅体现了震源位置的分布情况，不妨考虑将震级的大小映射为圆的半径大小，但图中存在着部分地震多发地带，如果使用圆来呈现震源的位置，这些区域的圆将出现严重的叠加现象，此处可以尝试使用 \@ref(sec:plot) 节中的透明度叠加来克服这类重叠问题，如右图所示，然而这里由于数据量不够大，这种透明度叠加的效果并不是非常明显。
+
+**RgoogleMaps** 包的潜力仍尚待挖掘。一方面，它可以展示空间分布信息，例如在 2010 年的 ggplot2 案例分析竞赛中，David Kahle 利用 **RgoogleMaps** 包和公开的犯罪信息数据，展示了休斯顿地区暴力犯罪的分布情况 [^4]；另一方面，如果数据包含时间属性，那么我们可以固定住抓取图片的边界，并保证叠加元素的坐标对应正确，便能制作出有用的动画。读者可以发挥想象力，拓展更多的应用情境。
+
+[^4]: <http://1t.click/Ksb>
+
+本节只是介绍了一个非常简单的应用，但也引出了一个重要话题：统计图形如何与它要表达的问题的背景相融合？用通俗的话讲，就是要找"应景"的背景。在这方面，图 \@ref(fig:pork-price-orig) 实际上做得很好，很有吸引眼球的效果，让人一看就明白要表达的主题。当然，背景元素也不能喧宾夺主，这一点在 \@ref(subsec:element-priority) 小节中有详细论述。
+
+(ref:randomForest-music) 音乐数据预测概率的棱锥图：四种颜色表示四个艺术家，点越接近于顶点则预测为该艺术家的概率越大
+
+(ref:randomForest-music-s) 音乐数据预测概率的棱锥图
+
+## 思考与练习
+
+1.  三元图的思想可以被扩展到四维的情况，但此时的图形就不是平面图了，而是一个三棱锥，它有四个顶点。以下 R 代码先对 \@ref(subsec:music) 小节的 `music` 数据做了一个随机森林模型，然后用这个模型预测原始数据中每个样本的来自每个艺术家的可能性（有四种可能，概率之和为 1，因为有四个艺术家）。通常我们取最大可能的预测为一个样本的因变量预测值，但这样做有时候会显得武断，对数据探索不够，例如四个概率值为 $(0.01,\,0.49,\,0.48,\,0.02)$，那么我们的预测结果一定是第二类吗？显然第三类的概率也很大，那么这个样本究竟有什么异常情况导致预测值在两类上的概率都比较大？此时不妨用 GGobi （\@ref(sec:dynamic-graphics) 小节）看一看这些预测概率的"形状"。图 \@ref(fig:randomForest-music) 就是这样一个四列概率值的三维图形，从这一幅图形可能很难感受到它是棱锥形状的，当我们使用 GGobi 的"二维巡游"模式时就能看清楚了。在三棱锥中间位置上的样本都是有较高不确定性的音乐样本，即：很难判断它们究竟该预测为哪一类。用 GGobi 的刷子识别这些点，看看它们对应的原始变量值是否有什么异常。
+
+```{r,eval=FALSE}
+data(music, package = "MSG")
+library(randomForest) # 建立随机森林模型
+fit <- randomForest(artist ~ ., data = music[, -2])
+music.prob <- predict(fit, type = "prob") # 预测四类概率
+library(rggobi)
+g <- ggobi(music.prob)
+music.ggobi <- ggobi_get()$music.prob
+glyph_colour(music.ggobi) <- as.integer(music$artist)
+d <- displays(g)[[1]]
+pmode(d) <- "2D Tour" # 二维巡游模式
+# 保存截图 ggobi_display_save_picture(path = 'randomForest-music.png')
+```
+
+```{r randomForest-music,fig.cap="(ref:randomForest-music)",fig.scap="(ref:randomForest-music-s)",echo=FALSE}
+knitr::include_graphics(path = "images/randomForest-music.png", dpi = NA)
+```
+
+1.  自行编写一个画三元图的函数，并体会这种从三维到二维的变换。以下是不完整的代码，核心部分已经完成，需要实现控制边长范围和坐标网格线等功能：
+
+```{r triplot-fun}
+triplot <- function(x, ...) {
+  x <- as.matrix(x)
+  x <- x / rowSums(x) # 将行之和标准化到 1
+  plot(x[, 2] + x[, 3] / 2, x[, 3] * sqrt(3) / 2, asp = 1, 
+        ann = FALSE, axes = FALSE, xlim = c(0, 1), 
+        ylim = c(0, sqrt(3) / 2), ...)
+  polygon(c(0, 1, 1 / 2), c(0, 0, sqrt(3) / 2))
+}
+# 测试数据
+data(murcia, package = "MSG")
+triplot(murcia[, 2:4], col = vec2col(murcia$site), pch = 19)
+```
