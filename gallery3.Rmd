@@ -510,6 +510,7 @@ tbl <- aggregate(ncases / (ncases + ncontrols) ~ agegp * alcgp, data = esoph, me
 colnames(tbl) <- c("agegp", "alcgp", "mean")
 reshape(tbl, timevar = "alcgp", idvar = "agegp", direction = "wide", sep = "_")
 ```
+
 ## 分类与回归树图 {#sec:rpart}
 
 分类与回归树（Classification and Regression Tree，CART）是一种递归分割（Recursive Partition）技术，目的是寻找自变量的某种分割，使得样本分割之后因变量各组之间的差异最大。这种分割会一直递归进行下去，直到满足停止条件。详细理论请参见 @Breiman84。

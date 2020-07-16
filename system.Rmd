@@ -659,11 +659,19 @@ ani.options(oopt) # 重置动画选项
 
 \noindent 其中 `ani.options()` 可以用来设定一些和动画有关的选项，例如 `interval` 是动画中的停顿时间，`nmax` 是循环的次数，通常也是动画的总帧数。上面的代码大意就是用一个循环不断画图，每一次画图之后停顿一小会儿。这里的停顿是基于 R 函数 `Sys.sleep()` 实现的，后面我们可以看到 `ani.pause()` 函数的源代码。首先我们以一个具体实例“布朗运动”说明动画构建过程，参见 **animation** 包中的函数 `brownian.motion()`：
 
-```{r brownian-motion-source}
+```{r brownian-motion-source, results = "asis"}
 library(animation)
+cat("```r\n")
 brownian.motion
-# 函数 ani.pause() 定义如下
+cat("```\n")
+```
+
+函数 `ani.pause()` 定义如下：
+
+```{r ani-pause, results = "asis"}
+cat("```r\n")
 ani.pause
+cat("```\n")
 ```
 
 布朗运动就是一些点在平面上随机游走，下一次的位置坐标是在上一次的位置坐标上加上独立同分布的正态随机数。注意这个动画中我们需要固定图的坐标范围，这样所有的点的位置才有一个固定的参照系，从而显示出“动感”。

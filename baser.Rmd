@@ -374,7 +374,7 @@ usage2(usage(grid, output = FALSE))
 
 本节中的文本以及下一节中的图例都是用来辅助解释图形的信息，图形中的所有文本可以分为三类：标题（主副标题和坐标轴标题）、任意文本和图形周边文本。`title()` 函数用来添加标题，`text()` 函数用来向图形中任意位置添加文本，`mtext()` 函数用来向图的四条边上添加文本。用法如下：
 
-```{r text-usage}
+```{r text-usage, results = "asis"}
 usage2(usage(title, output = FALSE))
 usage2(usage(text.default, output = FALSE))
 usage2(usage(mtext, output = FALSE))
@@ -419,7 +419,7 @@ legend(-0.2, 9.8, c("Upper", "Lower"),
 
 函数 `legend()` 的作用是添加图例。众所周知，图例也是很重要的辅助信息，告诉图形使用者图中各组不同样式的元素分别代表何种对象。它的参数比较多，但实际应用中通常仅仅用到其中少数几个：
 
-```{r legend-usage}
+```{r legend-usage, results = "asis"}
 usage2(usage(legend, output = FALSE))
 ```
 
@@ -883,7 +883,7 @@ layout.show(2)
 
 R 提供了 `layout()`\index{layout()}函数作为设置图形版面拆分的工具，其用法如下：
 
-```{r layout-usage}
+```{r layout-usage, results = "asis"}
 usage2(usage(layout, output = FALSE))
 usage2(usage(layout.show, output = FALSE))
 ```
@@ -912,7 +912,7 @@ demo("layout_margin", package = "MSG")
 
 R 中还有另外一种拆分屏幕的方法，即 `split.screen()`\index{split.screen()}。这种方法比前两种方法更灵活，它不仅可以像前两种方法一样设定将作图区域拆分为若干行列，也可以随意指定作图区域在屏幕上的位置。该函数及相关函数用法如下： 
 
-```{r split-screen-usage}
+```{r split-screen-usage, results = "asis"}
 usage2(usage(split.screen, output = FALSE))
 usage2(usage(screen, output = FALSE))
 usage2(usage(erase.screen, output = FALSE))
@@ -971,7 +971,7 @@ R 的图形设备可以支持简单的交互式操作，包括支持对鼠标和
 
 **graphics** 包中的函数 `locator()` 可以获取当前鼠标在图形坐标系统中的位置坐标，其用法为：
 
-```{r locator-usage}
+```{r locator-usage, results = "asis"}
 usage2(usage(locator, output = FALSE))
 ```
 
@@ -1190,42 +1190,41 @@ demo("signSTAT", package = "MSG")
 
 1. 利用三角形的边长关系画一个指北箭头如下
 
-    ```{r north-arrow,fig.width=2,fig.height=2.5,echo=FALSE}
-    north.arrow <- function(x, y, h) {
-      polygon(c(x, x, x + h / 2), c(y - h, y, y - (1 + sqrt(3) / 2) *
-        h), col = "black", border = NA)
-      polygon(c(x, x + h / 2, x, x - h / 2), c(y - h, y - (1 + sqrt(3) / 2) *
-        h, y, y - (1 + sqrt(3) / 2) * h))
-      text(x, y, "N", adj = c(0.5, 0), cex = 4)
-    }
-    par(mar = rep(0, 4))
-    plot(1,
-      type = "n", ylim = c(0, 1), axes = FALSE,
-      ann = FALSE
-    )
-    north.arrow(1, 0.8, 0.4)
-    ```
+```{r north-arrow,fig.width=2,fig.height=2.5,echo=FALSE}
+north.arrow <- function(x, y, h) {
+  polygon(c(x, x, x + h / 2), c(y - h, y, y - (1 + sqrt(3) / 2) *
+    h), col = "black", border = NA)
+  polygon(c(x, x + h / 2, x, x - h / 2), c(y - h, y - (1 + sqrt(3) / 2) *
+    h, y, y - (1 + sqrt(3) / 2) * h))
+  text(x, y, "N", adj = c(0.5, 0), cex = 4)
+}
+par(mar = rep(0, 4))
+plot(1,
+  type = "n", ylim = c(0, 1), axes = FALSE,
+  ann = FALSE
+)
+north.arrow(1, 0.8, 0.4)
+```
 
 1. 一些数学上函数可以产生有趣的“心形曲线”，例如在极坐标系下 $r(\theta)=1-\sin(\theta)$ 生成的就是心形的曲线，笛卡尔坐标下方程 $(x^{2}+y^{2}-1)^{3}-x^{2}y^{3}=0$ 对应的解也可以形成心形曲线。这里我们考虑一种简单的心形曲线如下图所示：
 
-    ```{r heart-curve,fig.width=2,fig.height=2,echo=FALSE}
-    MSG::heart_curve(col = "red")
-    abline(v = 0, h = pi / 2, lty = 2, col = "gray")
-    ```
+```{r heart-curve,fig.width=2,fig.height=2,echo=FALSE}
+MSG::heart_curve(col = "red")
+abline(v = 0, h = pi / 2, lty = 2, col = "gray")
+```
 
-    这是个左右对称的形状，因此只需要知道左右任一侧的画法就知道整体画法了。实际上，右侧由上下两部分构成，上面是直径为 1 的半圆，下面是翻转了 $90\,^{\circ}$ 的曲线 $y=\sin(x)，x\in[0,\pi/2]$。请思考如何用多边形构造这个形状。MSG 包中的函数 `heart_curve()` 可供参考。
+这是个左右对称的形状，因此只需要知道左右任一侧的画法就知道整体画法了。实际上，右侧由上下两部分构成，上面是直径为 1 的半圆，下面是翻转了 $90\,^{\circ}$ 的曲线 $y=\sin(x)，x\in[0,\pi/2]$。请思考如何用多边形构造这个形状。MSG 包中的函数 `heart_curve()` 可供参考。
 
 1. 温度计形状用来表达比例数据通常很形象，我们可以设定温度计的范围在 $[0,\,1]$ 之间，用汞柱的高度来表达比例。用 R 构造一支“温度计”很简单，如下图：这些温度计实际上由一个灰圆点、一个红圆点、一条灰线段和一条红线段叠加构成，红线段的长度表示比例大小，其它图形元素都只是背景。请尝试用四个图形元素构造温度计，注意这些图形元素的叠加顺序（例如红线必须在灰线之后画，否则会被覆盖）。\@ref(sec:symbols) 小节的符号图中，“符号”的选项之一就是用温度计，但不如这里的温度计形象。对于追求细节完美的用户来说，这里线段末端的样式也值得注意，因为我们实际生活中看到的汞柱末端是弧形的，所以这里要是画成矩形就不合适了；线段末端的三种样式在 \@ref(sec:par) 小节中有介绍。
 
-    ```{r thermometer-demo,fig.width=4,fig.height=1.5,echo=FALSE}
-    par(mar = rep(0.5, 4))
-    plot.new()
-    for (i in c(.2, .5, .8)) {
-      segments(0.1, i, 1, i, lwd = 20, col = "gray")
-      points(.1, i, cex = 5, pch = 19, col = "gray")
-      segments(0.1, i, 1 - i, i, lwd = 10, col = "red")
-      points(.1, i, cex = 3, pch = 19, col = "red")
-    }
-    text(0.02, c(.2, .5, .8), LETTERS[1:3])
-    ```
-
+```{r thermometer-demo,fig.width=4,fig.height=1.5,echo=FALSE}
+par(mar = rep(0.5, 4))
+plot.new()
+for (i in c(.2, .5, .8)) {
+  segments(0.1, i, 1, i, lwd = 20, col = "gray")
+  points(.1, i, cex = 5, pch = 19, col = "gray")
+  segments(0.1, i, 1 - i, i, lwd = 10, col = "red")
+  points(.1, i, cex = 3, pch = 19, col = "red")
+}
+text(0.02, c(.2, .5, .8), LETTERS[1:3])
+```

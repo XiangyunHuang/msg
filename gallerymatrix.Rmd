@@ -284,14 +284,14 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 6.  基于第 \@ref(sec:matplot) 小节介绍的矩阵图，编写一个画平行坐标图的函数，参数主要包括一个数据框（可以选择性地包括其它修饰性参数，例如数据标准化的方法等），函数的主体部分只有一行代码，形式如下：
 
-    ```{r parcoords-fun-demo,eval=FALSE}
-    parcoords <- function(x, ...) {
-      # 如何处理 x？
-      matplot(..., type = "l", lty = 1, pch = NA)
-    }
-    # 测试代码
-    parcoords(iris)
-    ```
+```{r parcoords-fun-demo,eval=FALSE}
+parcoords <- function(x, ...) {
+  # 如何处理 x？
+  matplot(..., type = "l", lty = 1, pch = NA)
+}
+# 测试代码
+parcoords(iris)
+```
 
-    提示：可以考虑 `col()` 函数，可能需要转置 `t()` ；想清楚我们是用怎样的两个矩阵去画线。
+提示：可以考虑 `col()` 函数，可能需要转置 `t()` ；想清楚我们是用怎样的两个矩阵去画线。
 
