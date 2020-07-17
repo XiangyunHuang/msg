@@ -1,5 +1,3 @@
-# (PART) 图海 {-}
-
 # 单变量图 {#cha:gallery1}
 
 > 他解释说："你要明白，我认为人的大脑原本像一间空空的屋子，必须有选择地用一些家具填满它。只有笨蛋才把他碰到的各种各样的破烂都塞进去。这样的话，那些可能用得上的知识就被挤了出来；或者，充其量也只是把那些破烂同其它东西混杂在一块儿。结果，在需要时却难得找到了。因此，一个善于工作的人，对于将什么东西纳入自己的头脑里是非常仔细的。他只会容纳那些工作时用得着的工具，而且又将这些工具分门别类，安排得井然有序。如果认为这间屋子的墙壁富有弹性，可以随意扩展，那就大错特错了。毫无疑问，总有一天，当你增加点滴知识时，却把从前熟悉的知识给忘记了。因此，不要让无用的信息挤掉那些有用的信息，这一点是至关重要的。"
@@ -7,12 +5,33 @@
 > ——柯南 $\cdot$ 道尔《血字的研究》
 
 
-本章中，我们结合 R 语言中的相关函数以及数据实例对各种统计图形依次作出介绍。从第 \@ref(sec:hist) 节到 \@ref(sec:pie) 节的所有图形都是基于 **graphics** 包所作，其后的图形均来自于其它函数包。图形的介绍顺序大致按函数的字母序，但直方图、箱线图和散点图等常见图形放在前面，而饼图被有意安排在最后。
+本章介绍常见的单变量统计图。
 
 ## 直方图 {#sec:hist}
 
 直方图（Histogram）是展示连续数据分布最常用的工具，它本质上是对密度函数的一种估计。在介绍作图方法之前，我们有必要先了解一下它的基本数学思想，本节仅作简要介绍，
 详细的数学理论参见 @Scott92。
+
+
+(ref:fig-hist-geyser-s) 喷泉间隔时间直方图
+
+(ref:fig-hist-geyser) 喷泉间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
+
+
+```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE,out.width="100%"}
+data(geyser, package = "MASS")
+p <- ggplot(aes(waiting), data = geyser)
+p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
+p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
+p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
+p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
+plot_grid(p1, p2, p3, p4, labels = c(
+  "(1) freq = TRUE",
+  "(2) freq = FALSE",
+  "(3) breaks = 5",
+  "(4) breaks = 40"
+), ncol = 2)
+```
 
 我们知道，对于连续随机变量来说，其密度函数即为分布函数的导数：
 
@@ -50,51 +69,28 @@ b_{1}<b_{2}<\cdots<b_{j}<b_{j+1}<\cdots;\;b_{j+1}-b_{j}=h,\,j=1,2,\cdots
 \end{equation} 
 
 
-最后，我们将密度估计值以矩形的形式表示出来，就完成了直方图的基本制作。当然，我们没有必要使用这样原始的方式制作直方图，R 中提供了  `hist()`  函数，其默认用法如下：
+最后，我们将密度估计值以矩形的形式表示出来，就完成了直方图的基本制作。
 
-```{r, results='asis'}
-usage2(usage(hist.default, output = FALSE))
-```
+我们以黄石国家公园喷泉数据 `geyser` [@Venables02] （表 \@ref(tab:tab-geyser)）为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。
 
- \noindent 其中， `x` 为欲估计分布的数值向量；`breaks` 决定了计算分段区间的方法，它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法），区间的划分直接决定了直方图的形状，因此这个参数是非常关键的； `freq`  和  `probability`  参数均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）； `labels`  为逻辑值，决定是否将频数的数值添加到矩形条的上方；其它参数诸如  `density` 、 `angle` 、 `border`  均可参见低层作图函数"矩形"（ `rect()` ，\@ref(sec:polygon) 节）。
-
-(ref:fig-hist-geyser-s) 喷泉间隔时间直方图
-
-(ref:fig-hist-geyser) 喷泉间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
-
-
-```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE,out.width="70%"}
-par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
+```{r tab-geyser}
 data(geyser, package = "MASS")
-hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
-hist(geyser$waiting, freq = FALSE, xlab = "waiting", main = "(2) freq = FALSE")
-hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", main = "(3) breaks = 5")
-hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", main = "(4) breaks = 40")
-
-library(ggplot2)
-library(cowplot)
-p <- ggplot(aes(waiting), data = geyser)
-p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
-p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
-p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
-p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
-plot_grid(p1, p2, p3, p4, labels = c(
-  "(1) freq = TRUE",
-  "(2) freq = FALSE",
-  "(3) breaks = 5",
-  "(4) breaks = 40"
-), ncol = 2)
+kable2(head2(geyser), "黄石国家公园喷泉数据（部分）")
 ```
 
-我们以黄石国家公园喷泉数据 `geyser` [@Venables02] 为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。另外一点需要提醒的是直方图中的密度曲线。SPSS 软件在绘制直方图时，会有选项提示是否添加正态分布密度曲线，这也是完全的误导。因为数据不一定来自正态分布，添加正态分布的密度曲线显然是不合理的。相比之下，图 \@ref(fig:hist-density) 的做法才是真正从数据本来的分布出发得到的密度曲线。
 
+另外一点需要提醒的是直方图中的密度曲线。SPSS 软件在绘制直方图时，会有选项提示是否添加正态分布密度曲线，这也是完全的误导。因为数据不一定来自正态分布，添加正态分布的密度曲线显然是不合理的。相比之下，图 \@ref(fig:hist-density) 的做法才是真正从数据本来的分布出发得到的密度曲线。
 
 (ref:fig-hist-density-s) 直方图与密度曲线的结合
 
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中
 
-```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="35%"}
-demo("hist_geyser", package = "MSG")
+```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="70%"}
+d = density(geyser$waiting)
+ht = NULL
+brk = seq(40, 110, 5)
+for (i in brk) ht = c(ht, d$y[which.min(abs(d$x - i))])
+
 df <- data.frame(
   x = seq(40, 110, 5), y = 0,
   xend = seq(40, 110, 5), yend = ht
@@ -105,15 +101,78 @@ p2 + geom_density(fill = "lightgray", color = "black") +
   )
 ```
 
+R 语言绘制直方图的基础函数是  `hist()`  函数，其默认用法如下：
 
-直方图函数在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上
+```{r, results='asis'}
+usage2(usage(hist.default, output = FALSE))
+```
+
+\noindent 参数含义：
+
+`x`:
+: 欲估计分布的数值向量。
+
+`breaks`:
+: 决定了计算分段区间的方法。它可以是一个向量（依次给出区间端点），或者一个数字（决定拆分为多少段），或者一个字符串（给出计算划分区间的算法名称），或者一个函数（给出划分区间个数的方法）。区间的划分直接决定了直方图的形状，因此这个参数是非常关键的。
+
+`freq` 和 `probability`:
+: 均取逻辑值（二者互斥），前者决定是否以频数作图，后者决定是否以概率密度作图（这种情况下矩形面积为 1）。
+
+`labels`:
+: 逻辑值，决定是否将频数的数值添加到矩形条的上方。
+
+\noindent 其它参数诸如  `density` 、 `angle` 、 `border`  均可参见低层作图函数"矩形"（ `rect()` ，\@ref(sec:polygon) 节）。
+
+图 \@ref(fig:hist-geyser) 与图 \@ref(fig:hist-density) 可以用 `hist()` 函数绘制，代码是：
+
+```{r, eval=FALSE, echo=TRUE}
+par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
+
+hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
+hist(geyser$waiting, freq = FALSE, xlab = "waiting", 
+     main = "(2) freq = FALSE")
+hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", 
+     main = "(3) breaks = 5")
+hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", 
+     main = "(4) breaks = 40")
+
+demo("hist_geyser", package = "MSG")
+```
+
+\noindent 也可以用ggplot2 包，方法如下：
+
+```{r, eval=FALSE,echo=TRUE}
+library(cowplot)
+p <- ggplot(aes(waiting), data = geyser)
+p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
+p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), 
+                         aes(y = ..density..))
+p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
+p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), 
+                         fill = "red", color = "black")
+plot_grid(p1, p2, p3, p4, 
+          labels = c("(1) freq = TRUE", "(2) freq = FALSE",
+                     "(3) breaks = 5", "(4) breaks = 40"), 
+          ncol = 2)
+
+df <- data.frame(x = seq(40, 110, 5), y = 0, 
+                 xend = seq(40, 110, 5), yend = ht)
+p2 + geom_density(fill = "lightgray", color = "black") +
+  geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
+    data = df, lty = 3)
+```
+
+直方图函数 `hist()` 在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上
 （例如图 \@ref(fig:layout-margin)）。
 
 由于直方图需要对连续型数据做离散分组，因此它有一个明显的缺点，就是它的形状依赖于分组的端点，例如若有好几个相同的数值正好处在分组端点上，那么我们只要稍微向左或向右移动一下分组端点，这些数据点就会被划分入不同的区间，导致矩形条的高度变化。@Scott92 提出了一种解决这种直方图不稳定性问题的办法叫“移动平均直方图”（Average Shifted Histogram，简称 ASH），它的思想是使用一系列移动的区间去划分数据，比如 $(b_1+ih/n,b_2+ih/n,\ldots,b_n+ih/n)$，$i=0,\cdots,n-1$，最后将这 $n$ 种划分方法的频数结果"平均"起来，就得到了 ASH 图，这样有效避免了边界点的归属问题。然而，在核密度估计理论已经非常完备的今天，我们几乎没有必要再用这种技巧去克服原来的问题了，毕竟 ASH 与核密度估计比起来显得还是太粗糙。图 \@ref(fig:hist-density) 的核密度曲线基于函数 `density()` 计算而来，它的参数包括核函数和窗宽等，实际应用中我们可能需要尝试不同的核函数以及窗宽值，@Venables02 第 5.6 小节介绍了一些选择的经验可供参考。
 
+
 ## 茎叶图
 
-茎叶图（Stem-and-Leaf Plot）与直方图的功能类似，也是展示数据密度的一种工具。相比之下，茎叶图对密度的刻画显得非常粗略，而且对原始数据通常会作舍入处理，它只是在早期计算机尚不发达时对于手工整理数据来说比较方便。茎叶图的整体形状如同植物的茎和叶，对于一个数据，通常取其 $10^n$ 部分为茎（$n$ 视所有数据的数量级而定），剩下的尾数为叶，放置于茎旁，这样每隔 $m10^n$ 就对数据作一次归类汇总，将落入区间 $[km10^{n},\ (k+1)m10^{n}]$ 的数据汇集为叶子（$k,m$ 为整数，$m$ 通常取 1，$k=1,2,3,\cdots$），我们不妨称这种区间为一个“节”，节的长度与直方图的“窗宽”本质上是同样的概念。显然，叶子越长则表明该节上数据频数越高。
+茎叶图（Stem-and-Leaf Plot）与直方图的功能类似，也是展示数据密度的一种工具。相比之下，茎叶图对密度的刻画显得非常粗略，而且对原始数据通常会作舍入处理，它只是在早期计算机尚不发达时对于手工整理数据来说比较方便。
+
+茎叶图的整体形状如同植物的茎和叶，对于一个数据，通常取其 $10^n$ 部分为茎（$n$ 视所有数据的数量级而定），剩下的尾数为叶，放置于茎旁，这样每隔 $m10^n$ 就对数据作一次归类汇总，将落入区间 $[km10^{n},\ (k+1)m10^{n}]$ 的数据汇集为叶子（$k,m$ 为整数，$m$ 通常取 1，$k=1,2,3,\cdots$），我们不妨称这种区间为一个“节”，节的长度与直方图的“窗宽”本质上是同样的概念。显然，叶子越长则表明该节上数据频数越高。
 
 R 中茎叶图的函数为 `stem()`，其用法为：
 
@@ -121,29 +180,52 @@ R 中茎叶图的函数为 `stem()`，其用法为：
 usage2(usage(stem, output = FALSE))
 ```
 
-参数  `scale`  控制着 $m$，即节与节之间的长度（ `scale`  越大则 $m$ 越小）； `width`  控制了茎叶图的宽度，若叶子的长度超出了这个设置，则叶子会被截取到长度  `width` ，然后以一个整数表示后面尚有多少片叶子没有被画出来。
+\noindent 参数含义：
+
+`scale`:
+: 控制着 $m$，即节与节之间的长度（ `scale`  越大则 $m$ 越小）。
+
+`width`:
+: 控制了茎叶图的宽度，若叶子的长度超出了这个设置，则叶子会被截取到长度  `width` ，然后以一个整数表示后面尚有多少片叶子没有被画出来。
 
 
-下面我们以 **datasets** 包中 `islands` 数据为例说明茎叶图的作法。该数据记录了世界上各大陆地块的面积大小，原始数据前 10 条如下（单位：千平方英里）：
+下面我们以 **datasets** 包中 `islands` 数据（表 \@ref(tab:islands-data)）为例说明茎叶图的作法，该数据记录了世界上各大陆地块的面积大小。
 
 ```{r islands-data}
-head(islands, 10)
+data(canabalt)
+kable2(head(islands, 10), "世界上各大陆地块的面积（部分）（单位：千平方英里）")
 ```
-
 
 可以看出，以上数据中最大的数量级为 $10^{4}$，而大部分数据的数量级集中在 $10^{1}$，因此茎上的数量级取作 $10^{3}$ 相对比较合适——更大的数量级会导致茎的节数非常少，对分布的刻画过于粗略；而更小的数量级会导致节数过多，使得茎叶图几乎退化为数据的原始表示，这样也难以看出数据的集中趋势。下图展示了 48 块大陆块面积的分布，该茎叶图窗宽为 $2\times10^{3}$，图中注明了原始数据小数点位置在 `|` 后面三位数处，因此我们从图中“还原”原始数据时，需要用（“茎的区间”+“叶”）$\times10^{3}$。
 
 (ref:fig-stem-islands) 本图展示了世界上主要的 48 块大陆面积的分布状况，可以明显看出，这些面积数据是严重右偏的，意即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小
 
-(ref:fig-stem-islands-s) 世界各地大陆块面积茎叶图 
+(ref:fig-stem-islands-s) 世界各地大陆块面积茎叶图和直方图 
 
-```{r stem-islands, fig.cap="(ref:fig-stem-islands)", fig.scap="(ref:fig-stem-islands-s)"}
-stem(islands)
-ggplot(as.data.frame(islands)) +
-  geom_histogram(aes(islands / 1000), binwidth = 2) +
-  coord_flip(xlim = c(15, 0))
-stem(islands, width = 20)
-# 可以增大窗宽 stem(islands, scale = 2) 看看效果
+```{r stem-islands, fig.cap="(ref:fig-stem-islands)", fig.scap="(ref:fig-stem-islands-s)",out.width="100%"}
+# sink("clipboard")
+# # sink(file="Stem.txt")
+# stem(islands)
+# sink()
+# # stem_txt <- readLines("Stem.txt")
+# stem_txt <- readLines("clipboard")
+# # unlink("stem.txt")
+
+stem_txt <- readLines("temp/Stem-islands.txt")
+x <- islands
+stem1 <- ggplot(as.data.frame(x)) +
+  geom_histogram(aes(x / 1000), binwidth = 2, fill = "white") +
+  coord_flip(xlim = c(18, -6)) +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank()) +
+  theme_void() +
+  annotate("text", x = seq(-6, 18, 2), y = 0, hjust = 0, label = stem_txt)
+  
+stem2 <- ggplot(as.data.frame(x)) +
+  geom_histogram(aes(x / 1000), binwidth = 2) +
+  coord_flip(xlim = c(18, -6))
+  
+plot_grid(stem1, stem2, nrow = 1, align = "hv")
 ```
 
 可以明显看出，这些面积数据是严重右偏的，即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小。
@@ -160,6 +242,11 @@ unname(sort(round(islands / 1000, 1)))
 
 下图是利用泊松分布（$\lambda=10$）随机数生成的茎叶图，可以看出数据密度在 10 附近最高，这与理论相符。由于窗宽为 1，不存在舍入问题，所以图形可以还原到原始数据，请读者自行对应数据观察茎叶图。
 
+```{r, eval=FALSE, echo=TRUE}
+x <- rpois(80, lambda = 10)
+stem(x, scale = 2)
+```
+
 (ref:fig-stem-poisson) $\lambda = 10$ 的泊松分布随机数茎叶图：可以看出数据密度在 10 附近最高，这与
 理论相符。注意这幅图可以完全还原到原始数据
 
@@ -167,14 +254,38 @@ unname(sort(round(islands / 1000, 1)))
 
 ```{r stem-poisson, fig.cap="(ref:fig-stem-poisson)", fig.scap="(ref:fig-stem-poisson-s)"}
 # 均值 lambda 为 10 的泊松分布随机数
-sort(x <- rpois(80, lambda = 10))
-stem(x, scale = 2)
+set.seed(717)
+x <- rpois(80, lambda = 10)
+stem_txt <- readLines("temp/stem-poisson.txt")
+
+stem1 <- ggplot(as.data.frame(x)) +
+  geom_histogram(aes(x), binwidth = 2, fill = "white") +
+  coord_flip(xlim = c(17, 1)) +
+  theme(panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank()) +
+  theme_void() +
+  annotate("text", x = seq(1, 17, 1), y = 0, hjust = 0, label = stem_txt)
+  
+stem2 <- ggplot(as.data.frame(x)) +
+  geom_histogram(aes(x), binwidth = 2) +
+  coord_flip(xlim = c(17, 1))
+  
+plot_grid(stem1, stem2, nrow = 1, align = "hv")
 ```
 
 
 经过前面的说明，现在我们不妨将茎叶图简单理解为横放着的直方图，只是茎叶图通常都以某个便利的整数为窗宽，不如直方图那样精细。此外，茎叶图曾经的优势（简单、可手工绘制）在今天这个计算机时代也显得并不突出，因此，除非特殊情况，我们建议主要使用直方图作为密度函数估计工具。
 
+<!--
+
 ## 风玫瑰图
+
+- 歌曲，电影，以其他浪漫图片为结尾
+- 历史上的风玫瑰图
+- 风玫瑰图的实质是直方图 跟地图类比 一张纸张连接成环 成球
+- R 语言的风玫瑰图
+- 益辉建议的风玫瑰图
+- 给书做广告
 
 (ref:fig-windrose-s) 展示风力大小和频数的风向图
 
@@ -554,8 +665,6 @@ curve(dnorm, from = -3, to = 3, lty = 2, add = TRUE)
 
 QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它也可以推广到检查数据是否来自某个位置参数分布族。例如，若数据来自正态分布 $N(5,1)$，我们拿它和标准正态分布 $N(0,1)$ 画 QQ 图的话，数据点仍然会大致排列在直线上，此时直线的斜率仍然是 1，但截距就不是 0 了，而是 5。正态分布是位置参数分布族中的一种分布：若 $X\sim N(\mu,\sigma^{2})$，那么 $X + \delta \sim \mathrm{N}(\mu+\delta,\sigma^{2})$ 仍然是正态分布。均值 $\mu$ 是位置参数。
 
-## Tukey’s Hanging Rootogram
-
 ## 思考与练习
 
 1.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性。本题源于 COS 论坛帖子：<https://d.cosx.org/d/18521>。
@@ -567,3 +676,4 @@ QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它�
 4.  条形图的横坐标通常是无序的，人们往往根据数据的原始顺序画条形图；比如画各省市的人口总数时，我们总是看到北京在第一位，这可能是因为统计局数据总是把北京放在第一行。条形图横坐标的顺序选取对读图是否有影响？或者说我们应该怎样安排条形图的横坐标？提示：参考 \@ref(subsec:canabalt) 小节。
 
 
+-->
