@@ -148,6 +148,16 @@ curve(sin(x) / x, from = -20, to = 20, n = 200,
       xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
 ```
 
+**ggplot2**包里并没有现成的函数绘制一元函数曲线图。一个变通的方法就是设定一系列 x 值，根据函数关系计算出 y 值，然后绘制折线图即可（图 \@ref(fig:curve2) ）绘制代码如下：
+
+```{r curve2, echo=TRUE}
+df1 <- data.frame(x = seq(-8, 7, by = 0.01))
+p1 <- ggplot(transform(df1, y = chippy(x)), aes(x, y)) + geom_line()
+df2 <- data.frame(x = seq(-20, 20, by = 0.01))
+p2 <- ggplot(transform(df2, y = sin(x)/x), aes(x, y)) + geom_line()
+p1 / p2
+```
+
 由于这种曲线图与数据分析关系不甚密切，我们在此只是粗略介绍一下。
 
 ## 向日葵散点图 {#sec:sunflowerplot}
@@ -238,6 +248,74 @@ sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 
 这幅图的颜色用的是金色 `'gold'`，目的是为了使向日葵散点图看起来与其名称相符，不过似乎使用鸢尾花的颜色更符合数据的背景，读者不妨试试看。
 
+## 平滑散点图 {#sec:smoothScatter}
+
+### 概述 {-}
+
+平滑散点图的基础是散点图，但它并不直接将散点画出来，而是基于二维核密度估计 [@KernSmooth] 用特定颜色深浅表示某个位置的密度值大小，默认颜色越深说明二维密度值越大，即该处数据点越密集。二维核密度估计的原理和一维情况类似：一维核密度估计是在直线上按照距离远近对每个数据点加权，距离越近则对密度值贡献越大，因此数据点密集的地方的核密度值也相应大，二维情况下只是距离的计算放到了平面上，加权思想相同。
+
+由于平滑散点图大致保留了原始数据点的位置，因此两个变量之间的关系仍然可以从图中看出来，这一点和普通的散点图类似。平滑散点图进一步的优势在于它同时还显示了二维变量的密度，从密度中我们也许可以观察到局部的聚类现象（大块的深色）。
+
+### 示例 {-}
+
+我们对表 \@ref(tab:tab-BinormCircle) 绘制了平滑散点图，如图 \@ref(fig:smoothScatter) 所示。 从计算的角度来说，我们首先将平面划分为 $n\times n$ 的网格，计算每个网格点上的二维密度值，然后用颜色将密度值大小表达出来。关于这一点，可将图 \@ref(fig:smoothScatter) 放大 8 倍，就立刻理解"网格"的意思了。这幅图的原始散点图参见图 \@ref(fig:scatter-alpha) 左图。由于使用了核密度估计，这批数据中藏着的圆圈很容易就能被发现，因为它们的密度值都很大，导致这一圈上颜色也就相应较深。
+
+(ref:fig-smoothScatter-s) BinormCircle 数据的平滑散点图
+
+(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）
+
+```{r smoothScatter,fig.width=4.5,fig.height=4.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
+library(ggpointdensity)
+ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
+  geom_pointdensity(adjust = 0.1) +
+  theme(legend.position = "")
+```
+
+### 绘制方法 {-}
+
+R 语言绘制平滑散点图的基础函数为 `smoothScatter()` ，其用法如下：
+
+```{r smoothScatter-usage, results='asis'}
+usage2(usage(smoothScatter, output = FALSE))
+```
+
+\noindent 参数含义：
+
+`x` 和 `y`：
+： 两个数值向量，或者如果不提供 `y` 的话，可以提供一个两列的矩阵/数据框等给 `x`。
+
+`nbin`:
+: 横纵坐标方向上划分网格的数目，可以是长度为 1 或 2 的整数向量。
+
+`bandwidth`:
+: 计算核密度估计时使用的带宽。
+
+`colramp`：
+： 生成颜色向量的函数，默认生成从白色到蓝色渐变的颜色向量。
+
+`nrpoints`:
+: 需要画出来的点的数目。因为平滑散点图的目的不是画散点，而是画颜色块，但有时候图形中某些地方的密度估计非常低，因此对应颜色也非常浅，导致读者难以察觉那些地方还有数据点的存在，此时不妨直接将这些"离群点"直接画出来，注意画点时按密度值从小到大的顺序画，一直画到第 `nrpoints` 个点。
+
+其它参数几乎都是画图的一般参数，此处不再介绍。
+
+该函数的一个示例如下：
+
+```{r, eval=FALSE, echo=TRUE}
+par(mar = c(4, 4, 0.3, 0.1))
+smoothScatter(BinormCircle)
+```
+
+也可以使用基于 **ggplot2** 包的 **ggpointdensity** 包：
+
+```{r, eval=FALSE, echo=TRUE}
+library(ggpointdensity)
+ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
+  geom_pointdensity(adjust = 0.1) +
+  theme(legend.position = "")
+```
+
+平滑散点图看起来和图 \@ref(fig:scatter-alpha) 右图比较相似，但前者蕴含了更多的数理统计背景。不过，我们也不必一味追求数学理论，透明色可叠加这一点性质体现出的原理又何尝不是一种密度估计呢？
+
 ## 生存函数图
 
 ### 概述 {-}
@@ -274,7 +352,7 @@ kable2(head2(aml), "急性髓细胞白血病病人生存数据（部分）")
 ```{r survival,fig.width=4.8,fig.height=3.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
 library(survival)
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
-survminer::ggsurvplot(leukemia.surv, data = aml)
+survminer::ggsurvplot(leukemia.surv, data = aml, ggtheme = theme_gray())
 ```
 
 ### 绘制方法 {-}
@@ -603,18 +681,25 @@ kable2(head2(fail_temperature), "美国国家航空和宇宙航行局的一批 O
 (ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效
 
 ```{r cdplot,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
+# ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
+#   geom_density(position = "fill") +
+#   
+#   geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)]),
+#     shape = 21, colour = "blue", fill = "yellow") +
+#   scale_x_continuous(expand = c(0, 0)) +
+#   scale_y_continuous("fail", expand = c(0, 0), breaks = c(0.25, 0.75), 
+#     labels = c("no", "yes"),
+#     sec.axis = dup_axis(name = NULL, breaks = seq(0, 1, 0.2), 
+#                         labels = c(0, "", 0.4, "", 0.8, ""))) +
+#   scale_fill_manual(values = c("red", "lightblue")) +
+#   theme_classic() +
+#   theme(legend.position = "none")
 ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
   geom_density(position = "fill") +
-  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)]),
-    shape = 21, colour = "blue", fill = "yellow") +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous("fail", expand = c(0, 0), breaks = c(0.25, 0.75), 
-    labels = c("no", "yes"),
-    sec.axis = dup_axis(name = NULL, breaks = seq(0, 1, 0.2), 
-                        labels = c(0, "", 0.4, "", 0.8, ""))) +
-  scale_fill_manual(values = c("red", "lightblue")) +
-  theme_classic() +
-  theme(legend.position = "none")
+  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)])) +
+    scale_y_continuous("fail", breaks = c(0.25, 0.75), 
+                       labels = c("no", "yes")) +
+  theme(legend.position = "")
 ```
 
 ### 绘制方法 {-}
@@ -677,16 +762,10 @@ points(temperature, c(0.25, 0.75)[as.integer(fail)],
 fail_temperature <- data.frame(fail = fail, temperature = temperature)
 ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
   geom_density(position = "fill") +
-  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)]),
-    shape = 21, colour = "blue", fill = "yellow") +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous("fail", expand = c(0, 0), breaks = c(0.25, 0.75), 
-    labels = c("no", "yes"),
-    sec.axis = dup_axis(name = NULL, breaks = seq(0, 1, 0.2), 
-                        labels = c(0, "", 0.4, "", 0.8, ""))) +
-  scale_fill_manual(values = c("red", "lightblue")) +
-  theme_classic() +
-  theme(legend.position = "none")
+  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)])) +
+    scale_y_continuous("fail", breaks = c(0.25, 0.75), 
+                       labels = c("no", "yes")) +
+  theme(legend.position = "")
 ```
 
 这里需要提醒读者注意的是，密度值的计算和估计与数据样本量大小有关系，小的样本量可能会导致密度估计的不精确，进而导致图形的误导性，因此使用条件密度图的时候务必注意样本量的问题。

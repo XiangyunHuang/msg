@@ -90,19 +90,20 @@ kable2(head2(geyser), "黄石国家公园喷泉数据（部分）")
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中
 
 ```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="70%"}
-d = density(geyser$waiting)
-ht = NULL
-brk = seq(40, 110, 5)
-for (i in brk) ht = c(ht, d$y[which.min(abs(d$x - i))])
+# d = density(geyser$waiting)
+# ht = NULL
+# brk = seq(40, 110, 5)
+# for (i in brk) ht = c(ht, d$y[which.min(abs(d$x - i))])
 
-df <- data.frame(
-  x = seq(40, 110, 5), y = 0,
-  xend = seq(40, 110, 5), yend = ht
-)
-p2 + geom_density(fill = "lightgray", color = "black") +
-  geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
-    data = df, lty = 3
-  )
+# df <- data.frame(
+#   x = seq(40, 110, 5), y = 0,
+#   xend = seq(40, 110, 5), yend = ht
+# )
+p2 + geom_density(color = "blue", size = 2)
+# p2 + geom_density(fill = "lightgray", color = "black") +
+#   geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
+#     data = df, lty = 3
+#   )
 ```
 
 ### 绘制方法 {-}
@@ -161,11 +162,7 @@ plot_grid(p1, p2, p3, p4,
                      "(3) breaks = 5", "(4) breaks = 40"), 
           ncol = 2)
 
-df <- data.frame(x = seq(40, 110, 5), y = 0, 
-                 xend = seq(40, 110, 5), yend = ht)
-p2 + geom_density(fill = "lightgray", color = "black") +
-  geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
-    data = df, lty = 3)
+p2 + geom_density(color = "blue", size = 2)
 ```
 
 直方图函数 `hist()` 在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上

@@ -2,6 +2,7 @@
 
 ## 等高图/等高线 {#sec:contour}
 
+### 概述 {-}
 
 等高图（Contour Plot）和等高线（Contour
 Line）表面上看起来是二维形式，但实际上展示的是三维数据。我们知道，三维图形往往比二维图形看起来更具有吸引力，然而在平面上展示三维图形也有其缺陷，最主要的就是视角问题：一幅三维图形可以有无数种视角，正视、侧视、俯视可能都会看到不同的信息，而且各种角度下可能都有一部分数据被前面的数据挡住而不能被看到。当然，这些问题都可以通过更灵活的图形设备克服，如 **rgl** 包 [@rgl]，但是在更多的情况下，我们的图形都必须展示在静态介质上（如书籍、论文等），我们不可能在纸面上拖动鼠标对图形进行交互式操作。因此，我们需要等高图这样一种以二维形式展示三维数据的工具。
@@ -10,9 +11,8 @@ Line）表面上看起来是二维形式，但实际上展示的是三维数据�
 
 (ref:fig-contour-grid) 网格数据的示意图：体会 x、y 与 z 的对应关系
 
-
 ```{r contour-grid,fig.width=4.8,fig.height=2.5,echo=FALSE,fig.cap="(ref:fig-contour-grid)",fig.scap="(ref:fig-contour-grid-s)",fig.show="hold"}
-par(mar = c(2.5, 3, 0.1, 0.1), mgp = c(1.5, .5, 0))
+# par(mar = c(2.5, 3, 0.1, 0.1), mgp = c(1.5, .5, 0))
 x <- 1:4
 y <- 1:3
 z <- rep(0, 12)
@@ -21,14 +21,14 @@ z[c(6, 7)] <- 2
 z[1] <- 5
 z[4] <- 3
 z[12] <- 4
-plot(expand.grid(x, y), xaxt = "n", yaxt = "n", 
-     type = "n", xlab = "x", ylab = "y",
-     xlim = c(0.5, 4.5), ylim = c(.5, 3.5), panel.first = grid())
-polygon(c(1, 2, 3, 4, 3, 2), c(2, 1, 1, 2, 3, 3), lty = 2)
-segments(2, 2, 3, 2)
-text(rep(x, 3), rep(y, each = 4), paste("z =", z), cex = 1.5)
-axis(1, 1:4, paste("x =", x))
-axis(2, 1:3, paste("y =", y))
+# plot(expand.grid(x, y), xaxt = "n", yaxt = "n", 
+#      type = "n", xlab = "x", ylab = "y",
+#      xlim = c(0.5, 4.5), ylim = c(.5, 3.5), panel.first = grid())
+# polygon(c(1, 2, 3, 4, 3, 2), c(2, 1, 1, 2, 3, 3), lty = 2)
+# segments(2, 2, 3, 2)
+# text(rep(x, 3), rep(y, each = 4), paste("z =", z), cex = 1.5)
+# axis(1, 1:4, paste("x =", x))
+# axis(2, 1:3, paste("y =", y))
 
 contour_grid_tidy <- transform(expand.grid(x = x, y = y), z = z)
 contour_grid_polygon <- data.frame(
@@ -36,12 +36,13 @@ contour_grid_polygon <- data.frame(
   y = c(2, 1, 1, 2, 3, 3)
 )
 ggplot(contour_grid_tidy, aes(x, y)) +
-  geom_text(aes(label = paste("z =", z))) +
+  geom_text(aes(label = paste("z =", z)), color = "blue") +
   scale_x_continuous(limits = c(0.5, 4.5), labels = function(x) paste("x =", x)) +
   scale_y_continuous(limits = c(0.5, 3.5), labels = function(x) paste("x =", x)) +
   geom_polygon(data = contour_grid_polygon, fill = NA, color = "black", lty = 2) +
-  geom_segment(aes(x = 2, y = 2, xend = 3, yend = 2)) +
-  theme_bw()
+  # theme_bw() +
+  geom_segment(aes(x = 2, y = 2, xend = 3, yend = 2))
+
 ```
 
 
@@ -52,15 +53,14 @@ ggplot(contour_grid_tidy, aes(x, y)) +
 
 等高线上通常会有数字表示高度，从这些数字我们不难想象出三维的山峰的形状，从这个意义上来说，等高图本质上也是一种三维图示方法。
 
-R 中等高图的函数为 `contour()`，同时 **grDevices** 包中也提供了等高线的计算函数 `contourLines()`，用法分别如下：
+### 示例 {-}
 
-```{r contour-usage, results='asis'}
-usage2(usage(contour.default, output = FALSE))
-usage2(usage(contourLines, output = FALSE))
+表 \@ref(tab:tab-ChinaLifeEdu) 是一组我国人口预期寿命（实际数据来自 2000 年）和高学历人口数量（定义为大专以上学历人数）的数据，数据来源于 2005 年中国统计年鉴。首先我们对这组二维变量利用 R 语言的 **KernSmooth** 包 [@KernSmooth] 进行核密度估计，得到二维核密度值（一个矩阵），然后用两个原始变量以及这个密度值矩阵作等高图（图 \@ref(fig:contour-pop)）。
+
+```{r tab-ChinaLifeEdu}
+data(ChinaLifeEdu, package = "MSG")
+kable2(head2(ChinaLifeEdu), "我国人口预期寿命（实际数据来自 2000 年）和高学历人口数量（部分）")
 ```
-
-
-参数 `x` 、 `y` 与 `z` 此处不再介绍； `nlevels` 可以设定等高线的条数、调整等高线的疏密； `levels` 设定一系列等高线的 `z` 值，只有这些值或者这些值附近的点才会被连起来； `labels` 为等高线上的标记字符串，默认是高度的数值； `xlim` 、 `ylim` 和 `zlim` 设定分别设定 `x` 、 `y` 与 `z` 的范围，默认从数据中获得； `method` 设定等高线的画法，有三种取值：`'simple'`（在等高线的末端加标签、标签与等高线重叠）、`'edge'`（在等高线的末端加标签、标签嵌在等高线内）或 `'flattest'`（在等高线最平缓的地方加标签、嵌在等高线内）；其它参数用来调整等高图的外观，此处略去不介绍。
 
 (ref:fig-contour-pop-s) 中国 31 地区国民预期寿命和高学历人数密度等高图
 
@@ -73,13 +73,13 @@ data(ChinaLifeEdu)
 x <- ChinaLifeEdu
 library(KernSmooth)
 est <- bkde2D(x, apply(x, 2, dpik))
-contour(est$x1, est$x2, est$fhat,
-  nlevels = 15, col = "darkgreen",
-  vfont = c("sans serif", "plain"),
-  xlab = "预期寿命",
-  ylab = "高学历人数"
-)
-points(x, pch = 20)
+# contour(est$x1, est$x2, est$fhat,
+#   nlevels = 15, col = "darkgreen",
+#   vfont = c("sans serif", "plain"),
+#   xlab = "预期寿命",
+#   ylab = "高学历人数"
+# )
+# points(x, pch = 20)
 
 
 est_tidy <- data.frame(
@@ -90,31 +90,89 @@ est_tidy <- data.frame(
 levels <- pretty(range(est_tidy$z, finite = TRUE), 15)
 
 ggplot(est_tidy, aes(life, edu)) +
+  geom_contour(aes(z = z), breaks = levels) +
+  geom_point(aes(Life.Expectancy, High.Edu.NO), data = x) +
+  # theme_bw() +
+  labs(x ="预期寿命", y = "高学历人数")
+```
+
+由于密度值反映的是某个位置上数据的密集程度，图 \@ref(fig:contour-pop) 所能揭示的现象是：中国 31 省市自治区在人口预期寿命和高学历人口数量上呈现出聚类的特征。图中密度值大的区域主要有中部、右上和左下三个，东中西格局比较明显，即：东部地区分布在图中右上角，中部省市分布在图中中部，西部地区集中在图中的左下角。对照图 \@ref(fig:symbols-pop) 可以知道聚类的具体地区名称，就更能理解这里"聚类"的含义了。这批数据更为详细的分析见 \@ref(sec:symbols)。
+
+### 绘制方法 {-}
+
+R 中等高图的函数为 `contour()`，同时 **grDevices** 包中也提供了等高线的计算函数 `contourLines()`，用法分别如下：
+
+```{r contour-usage, results='asis'}
+usage2(usage(contour.default, output = FALSE))
+usage2(usage(contourLines, output = FALSE))
+```
+
+\noindent 参数含义：
+
+`nlevels`:
+: 设定等高线的条数、调整等高线的疏密。
+
+`levels`:
+: 设定一系列等高线的 `z` 值，只有这些值或者这些值附近的点才会被连起来。
+
+`labels`:
+: 等高线上的标记字符串，默认是高度的数值。
+
+`xlim` 、 `ylim` 和 `zlim`:
+: 设定分别设定 `x` 、 `y` 与 `z` 的范围，默认从数据中获得。
+
+`method`:
+: 设定等高线的画法，有三种取值：`'simple'`（在等高线的末端加标签、标签与等高线重叠）、`'edge'`（在等高线的末端加标签、标签嵌在等高线内）或 `'flattest'`（在等高线最平缓的地方加标签、嵌在等高线内）。
+
+其它参数用来调整等高图的外观，此处略去不介绍。
+
+`contour()` 函数用来绘制图 \@ref(fig:contour-pop) 的代码如下：
+
+```{r, eval=FALSE, echo=TRUE}
+par(mar = c(4, 4, 0.2, 0.2))
+library(MSG)
+data(ChinaLifeEdu)
+x <- ChinaLifeEdu
+library(KernSmooth)
+est <- bkde2D(x, apply(x, 2, dpik))
+contour(est$x1, est$x2, est$fhat, nlevels = 15, col = "darkgreen",
+  vfont = c("sans serif", "plain"), 
+  xlab = "预期寿命", ylab = "高学历人数")
+points(x, pch = 20)
+```
+
+也可以用 **ggplot2** 包的 `geom_contour()` 函数来绘制：
+
+```{r, eval=FALSE, echo=TRUE}
+est_tidy <- data.frame(
+  life = rep(est$x1, length(est$x2)),
+  edu = rep(est$x2, each = length(est$x1)),
+  z = as.vector(est$fhat)
+)
+levels <- pretty(range(est_tidy$z, finite = TRUE), 15)
+ggplot(est_tidy, aes(life, edu)) +
   geom_contour(aes(z = z), breaks = levels, colour = "darkgreen") +
   geom_point(aes(Life.Expectancy, High.Edu.NO), data = x) +
   labs(x ="预期寿命", y = "高学历人数") +
   theme_bw()
 ```
 
-图 \@ref(fig:contour-pop)
-利用等高图展示了一个聚类现象。数据来源于 2005 年中国统计年鉴，数值参见 **MSG** 包中的 `ChinaLifeEdu` 数据，这里使用了其中两个变量：人口预期寿命（实际数据来自 2000 年）和高学历人口数量（定义为大专以上学历人数）。首先我们对这二维变量利用 **KernSmooth** 包 [@KernSmooth] 进行核密度估计，得到二维核密度值（一个矩阵），然后用两个原始变量以及这个密度值矩阵作等高图。由于密度值反映的是某个位置上数据的密集程度，图 \@ref(fig:contour-pop) 所能揭示的现象是：中国 31 省市自治区在人口预期寿命和高学历人口数量上呈现出聚类的特征，图中密度值大的区域主要有中部、右上和左下三个，东中西格局比较明显，即：东部地区分布在图中右上角，中部省市分布在图中中部，西部地区集中在图中的左下角，对照图 \@ref(fig:symbols-pop) 可以知道聚类的具体地区名称，就更能理解这里"聚类"的含义了。关于这批数据的分析，我们在 \@ref(sec:symbols) 小节仍会继续，这里不再深入。
-
-(ref:fig-contour-persp-s) 与等高图对应的三维透视图
-
-(ref:fig-contour-persp) 与等高图对应的三维透视图：从右至左依次有三个山峰，尤其是中部山峰最为突出，对照后面 \@ref(sec:symbols) 小节中图 \@ref(fig:symbols-pop) 可知，这三个山峰分别代表东中西的省份
-
-```{r contour-persp, fig.height=6,fig.width=7,fig.cap="(ref:fig-contour-persp)",fig.scap="(ref:fig-contour-persp-s)"}
-par(mar = rep(0, 4)) # 继续前面的例子
-persp(est$x1, est$x2, est$fhat, shade = 0.75, border = NA, 
-      col = "lightblue", phi = 20, theta = 15, box = FALSE)
-```
-
 在 **graphics** 包中还有一个类似的等高图函数 `filled.contour()`，它的原理完全类似，只是它用颜色来区分高度值的大小并且有颜色图例，看起来可能更美观一些，\@ref(sec:filled-contour) 小节中我们会详细介绍。
 
 ## 颜色等高图/层次图 {#sec:filled-contour}
 
+### 概述 {-}
 
 颜色等高图，@Cleveland93 又称之为层次图（Level Plot），与等高图的原理完全类似，只是颜色等高图用不同颜色表示不同高度，并配有颜色图例，用以说明图中的颜色与高度值的对应关系。读者可以回顾 \@ref(sec:contour) 小节关于等高图的介绍。
+
+### 示例 {-}
+
+
+图 \@ref(fig:filled-contour)
+描绘了新西兰 Maunga Whau 火山的地理数据 `volcano`，这份数据包含了在 10 m $\times$ 10 m 的地理网格上测得的火山高度，是一个 $87\times61$ 的矩阵。
+
+仔细观察图 \@ref(fig:filled-contour)，由于火山口的存在，颜色等高图的中部（偏左）有一小块区域的颜色并非白色，意即此处的高度比周围一圈要低。这种情况在三维图中有时未必能够迅速看出来，必须将视角调整为略向下俯视才能看到火山口。注意本图的调色板用的是"绿黄棕白"调色板，如 \@ref(sec:palette) 小节所介绍的，这种调色板比较适合展示地理数据。图 \@ref(fig:persp-pop)
+提供了真实的火山立体图形。
 
 (ref:fig-filled-contour-s) 新西兰 Maunga Whau 火山高度数据颜色等高图
 
@@ -124,51 +182,102 @@ persp(est$x1, est$x2, est$fhat, shade = 0.75, border = NA,
 demo("volcano", package = "MSG")
 ```
 
+### 绘制方法 {-}
+
 R 中的颜色等高图函数为 `filled.contour()`，其用法如下：
 
 ```{r filled-contour-usage, results='asis'}
 usage2(usage(filled.contour, output = FALSE))
 ```
 
-这里面大多数参数与 `contour()` 函数完全相同，区别在于多了几个定义颜色的参数。 `color.palette` 给定一个调色板函数，用以生成一系列颜色供等高图填充使用，默认是青、白、粉调色板（回顾 \@ref(sec:palette) 小节）；如果我们不指定调色板，也可以用 col 参数指定各高度水平对应的颜色； `plot.title` 、 `plot.axes` 、 `key.title` 和 `key.axes` 四个参数分别控制着等高图的标题、等高图的坐标轴、图例的标题和图例的坐标轴，它们都能接受若干语句（statement）作为参数值。
+这里面大多数参数与 `contour()` 函数完全相同，区别在于多了几个定义颜色的参数。 
 
-图 \@ref(fig:filled-contour)
-描绘了新西兰 Maunga Whau 火山的地理数据 `volcano`，这份数据包含了在 10 m $\times$ 10 m 的地理网格上测得的火山高度，是一个 $87\times61$ 的矩阵。仔细观察图 \@ref(fig:filled-contour)，由于火山口的存在，颜色等高图的中部（偏左）有一小块区域的颜色并非白色，意即此处的高度比周围一圈要低。这种情况在三维图中有时未必能够迅速看出来，必须将视角调整为略向下俯视才能看到火山口。注意本图的调色板用的是"绿黄棕白"调色板，如 \@ref(sec:palette) 小节所介绍的，这种调色板比较适合展示地理数据。图 \@ref(fig:persp-pop)
-提供了真实的火山立体图形。
+\noindent 参数含义：
 
-颜色等高图中的图形布局（等高图和图例实质上都是独立的图形）是用 `layout()` 函数（\@ref(sec:multipage) 小节）完成的，这给我们带来了扩展上的不便，主要是因为颜色等高图的坐标系统与单幅统计图形的坐标系统并不一样，例如我们无法在作完一幅等高图之后再往图中添加诸如标题、坐标轴等图形元素，这种情况下，我们不妨采用另一种类似的图形——颜色图，参见 \@ref(sec:image) 小节。
+`color.palette`:
+: 给定一个调色板函数，用以生成一系列颜色供等高图填充使用，默认是青、白、粉调色板（回顾 \@ref(sec:palette) 小节）；如果我们不指定调色板，也可以用 col 参数指定各高度水平对应的颜色。
+
+`plot.title` 、 `plot.axes` 、 `key.title` 和 `key.axes`:
+: 分别控制着等高图的标题、等高图的坐标轴、图例的标题和图例的坐标轴，它们都能接受若干语句（statement）作为参数值。
+
+利用该函数来绘制 \@ref(fig:filled-contour) 的代码如下：
+```{r, eval=FALSE, echo=TRUE}
+demo("volcano", package = "MSG")
+```
+
+颜色等高图中的图形布局（等高图和图例实质上都是独立的图形）是用 `layout()` 函数（\@ref(sec:multipage) 小节）完成的，这给我们带来了扩展上的不便，主要是因为颜色等高图的坐标系统与单幅统计图形的坐标系统并不一样，例如我们无法在作完一幅等高图之后再往图中添加诸如标题、坐标轴等图形元素。这种情况下，我们不妨使用另一种类似的图形——颜色图，参见 \@ref(sec:image) 小节。
 
 
 ## 颜色图 {#sec:image}
+
+### 概述 {-}
+
+颜色图（Color Image）与颜色等高图看起来非常类似，但是等高图需要从网格矩阵中计算等高的数据点，有时还需要一些平滑处理，而颜色图并不涉及任何背后的计算，只是简单将一个网格矩阵映射到指定的颜色序列上、以颜色方块表示数据的大小。在数据规律性较强且数据量较大的时候，这两种图形的区别可以说微乎其微，而当数据没什么规律或者数据量比较小的时候，颜色图的色块就可以很清楚地显露出来了，图 \@ref(fig:image24)
+为一个简单的示意图。
 
 (ref:fig-mage24-s) 颜色图中色块与数值的对应关系
 
 (ref:fig-mage24) 颜色图中色块与数值的对应关系：矩阵中数值越大，色块越趋近于白色，反之趋近红色
 
 ```{r image24,fig.width=4,fig.height=1.2,fig.cap="(ref:fig-mage24)",fig.scap="(ref:fig-mage24-s)"}
-par(mar = rep(0, 4))
+# par(mar = rep(0, 4))
 x <- matrix(sample(24), 8)
-image(1:8, 1:3, x, col = heat.colors(24), axes = FALSE, ann = FALSE)
-text(rep(1:8, 3), rep(1:3, each = 8), as.vector(x))
+# image(1:8, 1:3, x, col = heat.colors(24), axes = FALSE, ann = FALSE)
+# text(rep(1:8, 3), rep(1:3, each = 8), as.vector(x))
+expand.grid(h = 1:8, v = 1:3) %>% 
+  transform(z = as.vector(x)) %>% 
+  ggplot(aes(x = h, y = v)) +
+  geom_tile(aes(fill = z)) +
+  scale_fill_distiller(palette="YlOrRd") +
+  geom_text(aes(label = z)) + 
+  theme_void()
 ```
 
+### 示例 {-}
 
-颜色图（Color Image）与颜色等高图看起来非常类似，但是等高图需要从网格矩阵中计算等高的数据点，有时还需要一些平滑处理，而颜色图并不涉及任何背后的计算，只是简单将一个网格矩阵映射到指定的颜色序列上、以颜色方块表示数据的大小。在数据规律性较强且数据量较大的时候，这两种图形的区别可以说微乎其微，而当数据没什么规律或者数据量比较小的时候，颜色图的色块就可以很清楚地显露出来了，图 \@ref(fig:image24)
-为一个简单的示意图。
-
-R 中颜色图的函数为 `image()`，其用法如下：
-
-```{r image-usage, results='asis'}
-usage2(usage(image.default, output = FALSE))
-```
-
-参数 `x` 、 `y` 、 `z` 与等高线的参数类似，不过由于该函数为泛型函数，因此也可以接受不同类型的参数，这三个参数除了可以接受两个数值向量和一个矩阵之外， `x` 还可以接受一个列表，列表中包含三个子对象：`x$x`、`x$y` 和 `x$z`，这三个子对象分别为两个数值向量和一个矩阵，这种情况下就不需要另外单独提供 `y` 和 `z` 参数了； `col` 设置一个颜色序列以便映射到不同大小的数值； `add` 为逻辑值，决定是否将颜色图添加到现有图形上； `breaks` 给定 `z` 分段的区间端点。
+这里我们仍然以新西兰 Maunga Whau 火山高度数据 `volcano` 为例，绘制了颜色图（图 \@ref(fig:image)）。从外观上来看，它与前面的颜色等高图几乎无异（图  \@ref(fig:filled-contour)），但图 \@ref(fig:image) 中多了一些等高线，这也说明了颜色图较之颜色等高图的灵活性和可扩展性。在 \@ref(sec:filled-contour) 小节的最后我们曾提到颜色等高图作完之后就不容易再往图中添加图形元素，而这里颜色图只是单幅图形，作完之后仍然可以方便地添加图形元素。
 
 (ref:fig-image-s) 新西兰 Maunga Whau 火山高度数据颜色图
 
 (ref:fig-image) 新西兰 Maunga Whau 火山高度颜色图：图 \@ref(fig:persp) 提供了真实的火山立体图形；读者可以到笔者个人主页下载原图并放大 8 倍以上查看颜色图和颜色等高图的区别：颜色图是用颜色填充方块，而颜色等高图则是用颜色填充等高线之间的区域
 
-```{r image,fig.height=6,fig.width=6,fig.cap="(ref:fig-image)",fig.scap="(ref:fig-image-s)"}
+```{r image,fig.cap="(ref:fig-image)",fig.scap="(ref:fig-image-s)"}
+volcano %>% 
+  reshape2::melt() %>% 
+  transform(x = Var1 * 10, y = Var2 * 10) %>% 
+  ggplot(aes(x = x, y = y, z = value, fill = value)) + 
+  geom_tile() + 
+  geom_contour() +
+  scale_fill_distiller(palette="RdYlGn") +
+  labs(x = 'Meters North', y = 'Meters West', 
+       fill = 'Height\n(meters)')
+```
+
+### 绘制方法 {-}
+
+R 中颜色图的基础绘图函数为 `image()`，其用法如下：
+
+```{r image-usage, results='asis'}
+usage2(usage(image.default, output = FALSE))
+```
+
+\noindent 参数含义：
+
+`x` 、 `y` 、 `z`:
+: 与等高线的参数类似，不过由于该函数为泛型函数，因此也可以接受不同类型的参数。这三个参数除了可以接受两个数值向量和一个矩阵之外， `x` 还可以接受一个列表，列表中包含三个子对象：`x$x`、`x$y` 和 `x$z`，这三个子对象分别为两个数值向量和一个矩阵，这种情况下就不需要另外单独提供 `y` 和 `z` 参数了。
+
+`col`:
+: 设置一个颜色序列，以便映射到不同大小的数值。
+
+`add`:
+: 逻辑值，决定是否将颜色图添加到现有图形上。
+
+`breaks`:
+: 给定 `z` 分段的区间端点。
+
+以下代码可以绘制新西兰 Maunga Whau 火山高度的颜色图：
+
+```{r, eval=FALSE, echo=TRUE}
 par(mar = rep(0, 4), ann = FALSE)
 x <- 10 * (1:nrow(volcano))
 y <- 10 * (1:ncol(volcano))
@@ -180,8 +289,19 @@ contour(x, y, volcano,
 box()
 ```
 
-这里我们仍然以新西兰 Maunga Whau 火山高度数据 `volcano` 为例。图  \@ref(fig:image)
- 是火山数据的颜色图，从外观上来看，它与前面的颜色等高图几乎无异（图  \@ref(fig:filled-contour)），但图 \@ref(fig:image) 中多了一些等高线，这也说明了颜色图较之颜色等高图的灵活性和可扩展性。在 \@ref(sec:filled-contour) 小节的最后我们曾提到颜色等高图作完之后就不容易再往图中添加图形元素，而这里颜色图只是单幅图形，作完之后仍然可以方便地添加图形元素。
+而图 \@ref(fig:image) 其实是用 **ggplot2** 包绘制的：
+
+```{r, eval=FALSE, echo=TRUE}
+volcano %>% 
+  reshape2::melt() %>% 
+  transform(x = Var1 * 10, y = Var2 * 10) %>% 
+  ggplot(aes(x = x, y = y, z = value, fill = value)) + 
+  geom_tile() + 
+  geom_contour() +
+  scale_fill_distiller(palette="RdYlGn") +
+  theme_bw() +
+  labs(x = 'Meters North', y = 'Meters West', fill = 'Height\n(meters)')
+```
 
 统计数据中有不少是矩阵形式，例如相关系数阵、协方差阵等。我们可以将颜色图应用到这些矩阵形式数据的展示上。尤其是当矩阵行数列数较大时，我们可以借助人眼对颜色的视觉感知从颜色图中迅速找出一定的统计特征来（如很大或者很小的数值）。相比之下，对数据的直接观察并不容易找到规律或特征，因为这种形式下我们必须在脑中对数据两两比较，其速度必然会很慢。
 
@@ -189,22 +309,13 @@ box()
 
 ## 矩阵图、矩阵点、矩阵线 {#sec:matplot}
 
-(ref:fig-matplot-s) 用矩阵图画出的一系列正弦曲线
-
-(ref:fig-matplot) 用矩阵图画出的一系列正弦曲线：每条曲线都有不同的点线样式和颜色
-
-```{r matplot,fig.width=4.8,fig.height=3.5,fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
-sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
-par(mar = c(2, 4, .1, .1))
-matplot(sines, type = "b", pch = 21:24, col = 2:5, bg = 2:5)
-# 数据矩阵的前 6 行
-round(head(sines), 5)
-```
-
+### 概述 {-}
 
 矩阵图的名称来自于其参数类型，它可以针对一个矩阵将所有列以曲线的形式表达出来。与一元函数曲线图（\@ref(sec:curve) 小节）一样，它也没有什么特别之处，仅仅是提供了一个便利的封装：我们可以不必调用 `lines()` 等函数依次对矩阵的所有列画曲线。
 
-R 中矩阵图的函数为 `matplot()`，矩阵点的函数为 `matpoints()`，矩阵线的函数为 `matlines()`，它们的用法如下：
+### 绘制方法 {-}
+
+R 中矩阵图的函数为 `matplot()`，矩阵点的函数为 `matpoints()`，矩阵线的函数为 `matlines()`。前者为高层作图函数（创建新图形），而后两个函数均为低层作图函数（向现有图形上添加元素）。它们的用法如下：
 
 ```{r matplot-usage, results='asis'}
 usage2(usage(matplot, output = FALSE))
@@ -212,23 +323,49 @@ usage2(usage(matpoints, output = FALSE))
 usage2(usage(matlines, output = FALSE))
 ```
 
-函数 `matplot()` 为高层作图函数（创建新图形），而后两个函数均为低层作图函数（向现有图形上添加元素）。参数 `x` 和 `y` 为输入的矩阵，做图的方式是用 `x` 的列为横轴方向的变量， `y` 的列为纵轴方向的变量，然后用这些列依次作散点图（ `x` 的第一列对 y 的第一列， `x` 的第二列对 `y` 的第二列，依次类推）；如果这两个参数有一个缺失，那么 x 将被 `1:nrow(y)` 代替， `y` 被非缺失的参数矩阵代替；注意两个矩阵要么有一个列数为 1，要么列数相等，否则会报错；后面设置颜色、线型等样式的参数 `type` 、 `lty` 、 `lwd` 、 `pch` 、 `col` 、 `cex` 、 `bg` 等在附录 \@ref(cha:tricks) 和第\@ref(cha:elements)章已经讲述过多次，此处不再赘述。
+\noindent 参数含义：
+
+`x` 和 `y`:
+: 输入的矩阵，作图的方式是用 `x` 的列为横轴方向的变量， `y` 的列为纵轴方向的变量，然后用这些列依次作散点图（ `x` 的第一列对 y 的第一列， `x` 的第二列对 `y` 的第二列，依次类推）。如果这两个参数有一个缺失，那么 x 将被 `1:nrow(y)` 代替， `y` 被非缺失的参数矩阵代替。注意两个矩阵要么有一个列数为 1，要么列数相等，否则会报错。
+
+其他设置颜色、线型等样式的参数 `type` 、 `lty` 、 `lwd` 、 `pch` 、 `col` 、 `cex` 、 `bg` 等在附录 \@ref(cha:tricks) 和第\@ref(cha:elements)章已经讲述过多次，此处不再赘述。
 
 图 \@ref(fig:matplot)
 展示了一个正弦值矩阵的矩阵图。从图上方的代码中我们可以看到矩阵的前 6 行数值，该例中只给出了参数 `x` 而没有 `y`，所以 `matplot()` 用矩阵 `sines` 的每一列依次对 `1:20` 画曲线。
 
+
+(ref:fig-matplot-s) 用矩阵图画出的一系列正弦曲线
+
+(ref:fig-matplot) 用矩阵图画出的一系列正弦曲线：每条曲线都有不同的点线样式和颜色
+
+```{r matplot,echo=TRUE,fig.width=4.8,fig.height=3.5,fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
+sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
+par(mar = c(2, 4, .1, .1))
+matplot(sines, type = "b", pch = 21:24, col = 2:5, bg = 2:5)
+# 数据矩阵的前 6 行
+round(head(sines), 5)
+```
+
+如果使用 **ggplot2** 包绘制该图，下面的代码将绘制 \@ref(fig:matplot2)：
+
+```{r matplot2, echo=TRUE}
+df <- expand.grid(x = 1:20, y = factor(1:4)) 
+df$sines <- as.vector(sines)
+ggplot(df, aes(x = x, y = sines, color = y)) + 
+  geom_point(aes(shape = y)) +
+  geom_line()
+```
+
 ## 热图
+
+### 概述 {-}
 
 热图的基础就是 \@ref(sec:image) 小节中介绍的颜色图，但它在颜色图上做了一个特殊处理，就是聚类。具体来说，热图也是将一个矩阵中单元格数值用颜色表达，如颜色深表示数值大，但热图并非只是简单表达数值大小，而是对矩阵的行或列进行层次聚类，获得聚类的结果之后将行或列以聚类的顺序排列，并在颜色图的边界区域加上聚类的谱系图。这样一来，我们不仅可以直接观察矩阵中的数值分布状况，也可以立即知道聚类的结果，可谓一举两得。关于聚类分析的进一步介绍，参见 \@ref(subsec:cluster)
 小节。
 
-R 中热图函数为 **stats** 包中的 `heatmap()` ，其用法如下：
+### 示例 {-}
 
-```{r heatmap-usage, results='asis'}
-usage2(usage(heatmap, output = FALSE))
-```
-
-\noindent 其中 `x` 是数据矩阵，它的类型只能是矩阵，不能是数据框或其它类型； `Rowv` 和 `Colv` 分别决定了行和列如何计算层次聚类和重新排序，若设置为 `NULL`（默认），则按层次聚类的结果将行和列重新排序并相应画谱系图，若为 `NA` 的话，则不画谱系图； `distfun` 决定用哪个函数计算距离以便进一步计算聚类，默认为 `dist()` ； `hclustfun` 决定用哪个函数计算层次聚类； `scale` 决定对行或列进行标准化，或者不进行标准化； `margins` 设定图形的下边距和右边距； `...` 参数传递给 `image()` ，所以我们还可以利用 `image()` 的参数来调整图形外观，比如用 `col` 设置单元格的颜色系列。
+图 \@ref(fig:heatmap) 展示了 Motor Trend 杂志 1974 年汽车数据的热图。在图 \@ref(fig:stars) 中我们曾经部分使用过这批数据并说明了变量的含义，读者可以对比该图，看用颜色和用星形哪种方式表达数值大小更易感知。
 
 (ref:fig-heatmap-s) 汽车数据的热图
 
@@ -241,11 +378,42 @@ heatmap(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"),
         scale = "column", margins = c(4, 8))
 ```
 
-图 \@ref(fig:heatmap) 展示了 Motor Trend 杂志 1974 年汽车数据的热图。在图 \@ref(fig:stars) 中我们曾经部分使用过这批数据并说明了变量的含义，读者可以对比该图，看用颜色和用星形哪种方式表达数值大小更易感知。在汽车数据热图 \@ref(fig:heatmap) 中，我们使用了极端化调色板，用以强调极端值（回顾 \@ref(sec:palette) 小节），所以很容易观察到各项较大或较小的汽车性能指标，如马力最大的是 Maserati Bora。从行的聚类来说，可以看到同一品牌的不同型号容易聚在一起，如 Mazda 的两款车，通过颜色的比较，我们又可以看出聚在一类的车中，差异在哪个或哪些指标上；从列的聚类来说，马力 `hp` 和气缸排量 `disp` 两个变量比较相似，聚为了一类，而且它们最后才和其它指标聚成一类，说明这两个指标和其它指标的差异较大。可以想象，如果做主成分分析，这两个指标也许可以提取一个成分。注意图中的数据是对列进行过标准化的，如果不做标准化，那么聚类结果就容易被数量级大的变量主导，导致产生一些误解。
+在汽车数据热图 \@ref(fig:heatmap) 中，我们使用了极端化调色板，用以强调极端值（回顾 \@ref(sec:palette) 小节），所以很容易观察到各项较大或较小的汽车性能指标，如马力最大的是 Maserati Bora。从行的聚类来说，可以看到同一品牌的不同型号容易聚在一起，如 Mazda 的两款车，通过颜色的比较，我们又可以看出聚在一类的车中，差异在哪个或哪些指标上；从列的聚类来说，马力 `hp` 和气缸排量 `disp` 两个变量比较相似，聚为了一类，而且它们最后才和其它指标聚成一类，说明这两个指标和其它指标的差异较大。可以想象，如果做主成分分析，这两个指标也许可以提取一个成分。
+
+注意图中的数据是对列进行过标准化的，如果不做标准化，那么聚类结果就容易被数量级大的变量主导，导致产生一些误解。
+
+### 绘制方法 {-}
+
+R 中热图函数为 **stats** 包中的 `heatmap()` ，其用法如下：
+
+```{r heatmap-usage, results='asis'}
+usage2(usage(heatmap, output = FALSE))
+```
+
+\noindent 参数含义：
+
+`x`:
+: 数据矩阵，它的类型只能是矩阵，不能是数据框或其它类型。
+
+`Rowv` 和 `Colv`:
+: 分别决定了行和列如何计算层次聚类和重新排序。若设置为 `NULL`（默认），则按层次聚类的结果将行和列重新排序并相应画谱系图；若为 `NA` ，则不画谱系图。
+
+`distfun`:
+: 决定用哪个函数计算距离以便进一步计算聚类，默认为 `dist()`。
+
+`hclustfun`:
+: 决定用哪个函数计算层次聚类。
+
+`scale`:
+: 决定对行或列进行标准化，或者不进行标准化。
+
+`margins`:
+: 设定图形的下边距和右边距。
+
+`...`:
+: 传递给 `image()` ，所以我们还可以利用 `image()` 的参数来调整图形外观，比如用 `col` 设置单元格的颜色系列。
 
 普通颜色图只是按照原始行列顺序排列色块，所以看起来可能显得比较混乱，而通常来说热图中的色块看起来会稍微整齐一些，颜色相近的色块往往会排在相近的地方，这样一来，如果样本数据中真的存在很明显的聚类现象，那么在热图中的直接反映就是不同颜色色块的高度集中。
-
-## Hofmöller 图
 
 ## 延伸与小结 {#sec:base-graph-ext}
 
@@ -282,7 +450,19 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 ## 思考与练习
 
-6.  基于第 \@ref(sec:matplot) 小节介绍的矩阵图，编写一个画平行坐标图的函数，参数主要包括一个数据框（可以选择性地包括其它修饰性参数，例如数据标准化的方法等），函数的主体部分只有一行代码，形式如下：
+1. 图 \@ref(fig:fig-contour) 显示的等高线信息也可以用三维透视图表示，如图 \@ref(fig:fig-contour-persp) 所示。自己动手绘制（提示：R 语言的 `persp()` 函数）。比较这两种表示方法，各自有什么优势和不足？
+
+(ref:fig-contour-persp-s) 与等高图对应的三维透视图
+
+(ref:fig-contour-persp) 与等高图对应的三维透视图：从右至左依次有三个山峰，尤其是中部山峰最为突出，对照后面 \@ref(sec:symbols) 小节中图 \@ref(fig:symbols-pop) 可知，这三个山峰分别代表东中西的省份
+
+```{r contour-persp, fig.height=6,fig.width=7,fig.cap="(ref:fig-contour-persp)",fig.scap="(ref:fig-contour-persp-s)"}
+par(mar = rep(0, 4)) # 继续前面的例子
+persp(est$x1, est$x2, est$fhat, shade = 0.75, border = NA, 
+      col = "lightblue", phi = 20, theta = 15, box = FALSE)
+```
+
+2.  基于第 \@ref(sec:matplot) 小节介绍的矩阵图，编写一个画平行坐标图的函数，参数主要包括一个数据框（可以选择性地包括其它修饰性参数，例如数据标准化的方法等），函数的主体部分只有一行代码，形式如下：
 
 ```{r parcoords-fun-demo,eval=FALSE}
 parcoords <- function(x, ...) {
