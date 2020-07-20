@@ -122,7 +122,7 @@ usage2(usage(contourLines, output = FALSE))
 : 设定分别设定 `x` 、 `y` 与 `z` 的范围，默认从数据中获得。
 
 `method`:
-: 设定等高线的画法，有三种取值：`'simple'`（在等高线的末端加标签、标签与等高线重叠）、`'edge'`（在等高线的末端加标签、标签嵌在等高线内）或 `'flattest'`（在等高线最平缓的地方加标签、嵌在等高线内）。
+: 设定等高线的画法，有三种取值：`"simple"`（在等高线的末端加标签、标签与等高线重叠）、`"edge"`（在等高线的末端加标签、标签嵌在等高线内）或 `"flattest"`（在等高线最平缓的地方加标签、嵌在等高线内）。
 
 其它参数用来调整等高图的外观，此处略去不介绍。
 
@@ -249,8 +249,8 @@ volcano %>%
   geom_tile() + 
   geom_contour() +
   scale_fill_distiller(palette="RdYlGn") +
-  labs(x = 'Meters North', y = 'Meters West', 
-       fill = 'Height\n(meters)')
+  labs(x = "Meters North", y = "Meters West", 
+       fill = "Height\n(meters)")
 ```
 
 ### 绘制方法 {-}
@@ -300,7 +300,7 @@ volcano %>%
   geom_contour() +
   scale_fill_distiller(palette="RdYlGn") +
   theme_bw() +
-  labs(x = 'Meters North', y = 'Meters West', fill = 'Height\n(meters)')
+  labs(x = "Meters North", y = "Meters West", fill = "Height\n(meters)")
 ```
 
 统计数据中有不少是矩阵形式，例如相关系数阵、协方差阵等。我们可以将颜色图应用到这些矩阵形式数据的展示上。尤其是当矩阵行数列数较大时，我们可以借助人眼对颜色的视觉感知从颜色图中迅速找出一定的统计特征来（如很大或者很小的数值）。相比之下，对数据的直接观察并不容易找到规律或特征，因为这种形式下我们必须在脑中对数据两两比较，其速度必然会很慢。

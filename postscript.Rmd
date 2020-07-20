@@ -1,6 +1,6 @@
-\cleardoublepage
+# 后记 {#postscript .unnumbered}
 
-# 后记 {#postscript}
+\markboth{后记}{}
 
 2007 年 2 月，我在家读 A Handbook of Statistical Analysis Using R [@Everitt06]，书中读完前八章之后，萌发了写一篇关于统计图形综述的念头，于是用 $\LaTeX$ 匆匆写了几页，但几天后发现这不是一篇综述能讲清楚的事情，于是改为写一本三十来页的小册子，依次介绍 R 语言中的那些基本的统计图形，然而几天后发现这也不是一本小册子能装得下的内容，因为当时国内统计界对 R 语言的了解相对较少，所以有必要把统计图形放在整个 R 的系统下来讲述，于是在几经折腾之后，写这本书的念头诞生了。
 

@@ -1,6 +1,6 @@
 # 现代实例 {#chap:data}
 
-> "哦，你还不知道吧？"他笑了，大声说道。"很惭愧，我写了几篇专论，都是技术方面的。比方说，有一篇叫《论各种烟灰的辨别》。此文列举了一百四十种雪茄烟。卷烟、烟斗烟丝的烟灰，并附有彩色插图，以说明烟灰的区别。这是刑事审判中常常出现的重要证据，有时还是案件的重要线索。举例说，如果你断定某一谋杀案系一个抽印度雪茄的男人所为，显然缩小了侦查范围。在训练有素的人看来，印度雪茄的黑灰与'鸟眼'牌的白灰的区别，正如白菜和土豆的区别一样大。"
+> "哦，你还不知道吧？"他笑了，大声说道。"很惭愧，我写了几篇专论，都是技术方面的。比方说，有一篇叫《论各种烟灰的辨别》。此文列举了一百四十种雪茄烟。卷烟、烟斗烟丝的烟灰，并附有彩色插图，以说明烟灰的区别。这是刑事审判中常常出现的重要证据，有时还是案件的重要线索。举例说，如果你断定某一谋杀案系一个抽印度雪茄的男人所为，显然缩小了侦查范围。在训练有素的人看来，印度雪茄的黑灰与"鸟眼"牌的白灰的区别，正如白菜和土豆的区别一样大。"
 >
 > ------柯南 $\cdot$ 道尔《四签名》
 
@@ -461,7 +461,7 @@ fourfoldplot(
 在 **animation** 包中，有一个动画展示了这场比赛按时间顺序的所有投篮信息（队员、位置、结果和时间等），代码如下。专业球迷可以去前面提到的网站下载数据进一步分析。
 
 ```{r, eval=FALSE, echo=TRUE}
-demo('CLEvsLAL', package = 'animation')
+demo("CLEvsLAL", package = "animation")
 ```
 
 
@@ -477,7 +477,7 @@ demo('CLEvsLAL', package = 'animation')
 data(gov.cn.pct, package = "MSG")
 # 如 0.01% 在所有网站中出现的频数是 171000 次
 # kable(head(gov.cn.pct, 5), "latex", booktabs = TRUE, 
-#       caption = "中国政府网站中的百分比数据（部分）", align = 'c')
+#       caption = "中国政府网站中的百分比数据（部分）", align = "c")
 
 kable2(head2(gov.cn.pct), "中国政府网站中的百分比数据（部分）")
 ```
@@ -984,7 +984,7 @@ gg_olsLms <- function(df, lqs_xy){
   df$y1 <- predict(lqs)
   ggplot(df, aes(x, y)) +
     geom_point() + 
-    geom_smooth(aes(color = "OLS"), method = 'lm', se = FALSE) +
+    geom_smooth(aes(color = "OLS"), method = "lm", se = FALSE) +
     geom_line(aes(x = x, y = y1, color = "LMS")) +
     scale_color_manual(
       name="Model",
@@ -1123,7 +1123,7 @@ plot(betaSim, ylab = "$\\beta_1$")
 ```{r data-type}
 tables$data_type <- readr::read_csv("tables/data_type.csv")
 kable(tables$data_type,
-               col.names = c(' ', names(tables$data_type[, -1])),
+               col.names = c(" ", names(tables$data_type[, -1])),
                booktabs = TRUE,
                caption = "各种类型的数据对应的统计图形概览") %>%
   row_spec(1:2, hline_after = TRUE) %>%

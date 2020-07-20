@@ -190,7 +190,7 @@ usage2(usage(graphics:::persp.default, output = FALSE))
 : 坐标轴刻度线的数目。
 
 `ticktype`:
-: 设定坐标轴刻度类型：取值 `'simple'` 则简单画箭头表示坐标轴，`'detailed'` 则将详细的刻度标记在坐标轴上。
+: 设定坐标轴刻度类型：取值 `"simple"` 则简单画箭头表示坐标轴，`"detailed"` 则将详细的刻度标记在坐标轴上。
 
 下面是我们使用这个函数绘制图 \@ref(fig:persp) 的代码：
 
@@ -313,7 +313,7 @@ usage2(usage(stars, output = FALSE))
 : 比例尺的标签，默认为变量名称。
 
 `key.xpd`:
-: 设定比例尺的作图范围，参见 \@ref(sec:par) 小节（`par('xpd')`）。
+: 设定比例尺的作图范围，参见 \@ref(sec:par) 小节（`par("xpd")`）。
 
 `flip.labels`:
 : 设定每个星形底部的名称是否互相上下错位，以免名称太长导致文本之间互相重叠。
@@ -1290,7 +1290,7 @@ music.ggobi <- ggobi_get()$music.prob
 glyph_colour(music.ggobi) <- as.integer(music$artist)
 d <- displays(g)[[1]]
 pmode(d) <- "2D Tour" # 二维巡游模式
-# 保存截图 ggobi_display_save_picture(path = 'randomForest-music.png')
+# 保存截图 ggobi_display_save_picture(path = "randomForest-music.png")
 ```
 
 (ref:randomForest-music) 音乐数据预测概率的棱锥图：四种颜色表示四个艺术家，点越接近于顶点则预测为该艺术家的概率越大
@@ -1329,5 +1329,5 @@ ggplot(transform(quakes, depth_group = cut(depth, breaks = 4))) +
   geom_point(aes(long, lat), alpha = 0.1) +
   facet_wrap(~depth_group) + 
   xlim(160, 190) +
-  theme(legend.position = '')
+  theme(legend.position = "")
 ```

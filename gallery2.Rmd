@@ -246,7 +246,7 @@ usage2(usage(graphics:::sunflowerplot.default, output = FALSE))
 sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 ```
 
-这幅图的颜色用的是金色 `'gold'`，目的是为了使向日葵散点图看起来与其名称相符，不过似乎使用鸢尾花的颜色更符合数据的背景，读者不妨试试看。
+这幅图的颜色用的是金色 `"gold"`，目的是为了使向日葵散点图看起来与其名称相符，不过似乎使用鸢尾花的颜色更符合数据的背景，读者不妨试试看。
 
 ## 平滑散点图 {#sec:smoothScatter}
 
@@ -406,7 +406,7 @@ survminer::ggsurvplot(leukemia.surv, data = aml)
 survdiff(Surv(time, status) ~ x, data = aml)
 ```
 
-根据 \@ref(sec:plot) 小节和图 \@ref(fig:plot-type)的讲解，读者不难发现，生存函数图实际上就是在生存函数估计值的基础上使用阶梯状参数 `type = 's'` 制成的线图。
+根据 \@ref(sec:plot) 小节和图 \@ref(fig:plot-type)的讲解，读者不难发现，生存函数图实际上就是在生存函数估计值的基础上使用阶梯状参数 `type = "s"` 制成的线图。
 
 ## 关联图 {#sec:assocplot}
 
@@ -565,7 +565,7 @@ Table: (\#tab:contingency) 二维列联表的经典形式
 
 ```{r tab-UCBAdmissions}
 kable_styling(
-    knitr::kable(ftable(UCBAdmissions), "latex", col.names = c("Status", "Gender", "Dept.", "Number"), booktabs = TRUE, caption = "加州伯克利分校（UCB）录取数据", align = 'c'),
+    knitr::kable(ftable(UCBAdmissions), "latex", col.names = c("Status", "Gender", "Dept.", "Number"), booktabs = TRUE, caption = "加州伯克利分校（UCB）录取数据", align = "c"),
     font_size = table_font_size
 )
 ```
