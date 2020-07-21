@@ -116,7 +116,8 @@ iris.hist <- custom_iris() # 没有任何图形输出
 print(iris.hist) # 此时才有图形输出
 ```
 ```{r lattice-padding,echo=FALSE, echo=TRUE}
-lattice.options(layout.heights = list(top.padding = list(x = 0, units = "inches")))
+lattice.options(
+  layout.heights = list(top.padding = list(x = 0, units = "inches")))
 ```
 
 grid 和 trellis 是 lattice 的最基础的特点，除此之外它还有两个最直观的特点，一个是所谓“条件作图”，另一个就是稍显复杂的选项系统。
@@ -389,6 +390,7 @@ GGobi 擅长的是连续数据的动态和交互式图形。关于离散数据�
 
 ## plotly 交互图形 {#sec:interactive-graphics}
 
+<!--
 plotly的葵花图
 
 自 htmlwidgets [@htmlwidgets] 出世以来，涌现出越来越多的 R 包具备绘制交互式图形的能力[^gallery-htmlwidgets]，比如 leaflet [@leaflet] 和 plotly [@plotly]。
@@ -562,6 +564,7 @@ htmlwidgets::saveWidget(gg, "faithful.html",
 
 将文件 `faithful.html` 随同目录 `lib/` 一起移动到文件夹 `interactives/` 下
 
+-->
 ## rgl 三维图形 {#sec:rgl}
 
 **rgl** 是 R 的一个附加包（名字来自 R 和 [OpenGL](https://www.opengl.org/)），利用它可以在 R 中绘制可交互的三维图形，即用户通过鼠标的点击拖拽和滚轮滚动可以对图形进行旋转和缩放等操作。
@@ -685,7 +688,7 @@ ani.options(oopt) # 重置动画选项
 
 这里，我们以一个具体实例“布朗运动”说明动画构建过程，参见 **animation** 包中的函数 `brownian.motion()`：
 
-```{r brownian-motion-source, results = "asis", echo=TRUE}
+```{r brownian-motion-source, results = "asis", echo=FALSE}
 library(animation)
 cat("```r\n")
 brownian.motion
@@ -694,7 +697,7 @@ cat("```\n")
 
 函数 `ani.pause()` 定义如下：
 
-```{r ani-pause, results = "asis", echo=TRUE}
+```{r ani-pause, results = "asis"}
 cat("```r\n")
 ani.pause
 cat("```\n")
@@ -706,7 +709,7 @@ cat("```\n")
 
 gifski 将 PNG 图形合成制作 GIF 动态图形
 
-```{r, animation.hook="gifski", dev='png'}
+```{r, animation.hook="gifski", dev='png', eval=FALSE}
 for (i in 1:2) {
   pie(c(i %% 2, 6), col = c("red", "yellow"), labels = NA)
 }
@@ -729,6 +732,7 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
   exit_shrink() +
   ease_aes("sine-in-out")
 ```
+
 ### 动画导出
 
 根据前面的描述，我们已经可以马上写一些 R 动画，但是我们会立刻遇到问题：因为 R 图形默认显示在图形窗口中，而 R 的图形窗口对双重缓冲（double buffering）的支持还不太完善，目前只是 Windows 下的图形窗口支持双重缓冲，Linux 和 Mac OS 的图形窗口都会因为不支持缓冲而导致动画很“卡”。此外，按照前面的代码方案，在 R 里面播放动画时所有的计算都得重新实时进行，这些计算可能会很耗时间。综合这两个原因，我们可能需要将 R 中的动画导出为其它可以直接观看的格式。**animation** 包提供了五种导出格式，对应着以下五个函数：
@@ -750,8 +754,15 @@ ggplot(mtcars, aes(factor(cyl), mpg)) +
 
 这五种导出方式中，`saveHTML()` 是最便利的，它不需要借助任何第三方软件，而且通常我们都有网页浏览器（如 Chrome、Firefox 等 ），这样就足够观看动画了。这些函数的用法都比较类似，一般情况下我们只需要提供一段生成多幅图片的 R 代码，利用默认参数设置就足够导出动画。它们的具体用法如下：
 
+```r
+saveHTML(expr, img.name = "Rplot", global.opts = "", single.opts = "",
+    navigator = 
+      ani.options("nmax") <= 100 && ani.options("interval") >= 0.05, 
+    htmlfile = "index.html", ...)
+```
+
 ```{r export-animations,warning=FALSE, results='asis'}
-usage2(usage(saveHTML, output = FALSE))
+# usage2(usage(saveHTML, output = FALSE))
 usage2(usage(saveLatex, output = FALSE))
 usage2(usage(saveGIF, output = FALSE))
 usage2(usage(saveSWF, output = FALSE))
@@ -806,7 +817,7 @@ knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 
 从版本 2.6 开始，**animation** 包已经收录了大约 30 个统计学主题相关的函数，函数主题包括布朗运动、布丰投针、大数定律、中心极限定理、牛顿法求根、二分法求根、梯度下降法、抛硬币、置信区间、交叉验证、K-Means 聚类、k 近邻方法、最小二乘法、蒙特卡罗、豌豆机和抽样方法等。感兴趣的读者可以访问其网站[^animation-examples]看在线演示。
 
-[^animation-examples] <https://yihui.org/animation/examples/>
+[^animation-examples]: <https://yihui.org/animation/examples/>
 
 此外 **animation** 包还带有大量的演示（demo），这些演示展示了一些另类功能，如：
 
@@ -817,7 +828,7 @@ knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 - `demo("flowers")` 展示了从网络上下载图片并转化为动画；
 - `demo("CLEvsLAL")` 是一场 NBA 球赛的“回放”。
 
-```{r,eval=FALSE}
+```{r,eval=FALSE, echo=TRUE}
 demo("rgl_animation", package = "animation")
 ```
 

@@ -406,10 +406,9 @@ sample(colors(), 20)
 ```{r color-bar,eval=FALSE, echo=TRUE}
 pdf("colors-bar.pdf", height = 120)
 par(mar = c(0, 10, 3, 0) + 0.1, yaxs = "i")
-barplot(rep(1, length(colors())),
-  col = rev(colors()), names.arg = rev(colors()), horiz = TRUE,
-  las = 1, xaxt = "n", main = expression("Bars of colors in" ~ italic(colors()))
-)
+barplot(rep(1, length(colors())), col = rev(colors()), 
+        names.arg = rev(colors()), horiz = TRUE, las = 1, xaxt = "n", 
+        main = expression("Bars of colors in" ~ italic(colors())))
 dev.off()
 ```
 
@@ -454,7 +453,8 @@ gray(seq(0, 1, length = 5))
 
 ```{r rgb2hsv-demo, echo=TRUE}
 # 赋值给变量 rgb.mat
-(rgb.mat <- matrix(c(255, 0, 0, 0, 255, 0, 0, 0, 255, 10, 100, 200), nrow = 3))
+(rgb.mat <- matrix(c(255, 0, 0, 0, 255, 0, 0, 0, 255, 10, 100, 200), 
+                   nrow = 3))
 rgb2hsv(rgb.mat)
 ```
 
@@ -547,7 +547,8 @@ xx <- c(1912, 1912:1971, 1971)
 yy <- c(min(nhtemp), nhtemp, min(nhtemp))
 plot(xx, yy, type = "n", xlab = "Year", ylab = "Temperatures")
 for (i in seq(255, 0, -3)) {
-  yy <- c(45, nhtemp - (nhtemp - min(nhtemp)) * (1 - i / 255), 45) # rgb() 中的绿色成分逐渐变小
+  # rgb() 中的绿色成分逐渐变小:
+  yy <- c(45, nhtemp - (nhtemp - min(nhtemp)) * (1 - i / 255), 45) 
   polygon(xx, yy, col = rgb(1, i / 255, 0), border = NA)
   # 读者可以在这里加上 Sys.sleep(0.05) 以便看清作图过程
 }
@@ -644,7 +645,8 @@ abline(v = 2, h = 2, lty = 2)
 text(8, 3, "abline(a = 0, b = 1)") # 添加文本
 arrows(8, 3.5, 6, 5.7, angle = 40) # 添加箭头
 # 参数用了向量：不同灰度的线段
-segments(rep(3, 4), 6:9, rep(5, 4), 6:9, col = gray(seq(0.2, 0.8, length = 4)))
+segments(rep(3, 4), 6:9, rep(5, 4), 6:9, 
+         col = gray(seq(0.2, 0.8, length = 4)))
 text(4, 9.8, "segments")
 ```
 
@@ -947,7 +949,7 @@ usage2(usage(legend, output = FALSE))
 
 坐标轴是图中元素所代表数值大小的参照物，因此它在图形中的作用也很重要，特别是有时候我们需要对坐标轴做一定的特殊设置，比如作一幅双坐标轴的图形，或者在坐标轴标记中使用特殊的文本，那么就必须使用 `axis()` 函数来辅助完成对坐标轴的设置和调整。该函数的用法如下：
 
-```{r axis-usage}
+```{r axis-usage, results='asis'}
 usage2(usage(axis, output = FALSE))
 ```
 
@@ -1348,7 +1350,8 @@ $$f(x,y)=\sin(x^{2}/2-y^{2}/4+3)\cos(2x+1-\exp(y)),$$
 f2 <- function(x) sin(1 / 2 * x[1]^2 - 1 / 4 * x[2]^2 + 3) *
     cos(2 * x[1] + 1 - exp(x[2]))
 # par 为局部解；value 为目标函数值； convergence 为收敛指示代码
-optim(c(-.9, .9), f2, method = "L-BFGS-B", lower = c(-1, .5), upper = c(1, 2.2))
+optim(c(-.9, .9), f2, method = "L-BFGS-B", 
+      lower = c(-1, .5), upper = c(1, 2.2))
 ```
 
 为了叙述方便，我们将图中最高的点编号为 1，其它点按逆时针方向依次编号：

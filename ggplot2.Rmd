@@ -69,8 +69,14 @@ ggplot2 的核心概念是“层”：所有的图形都是由层的“叠加”
 **ggplot2** 作图的基本语法框架是：
 
 ```r
-ggplot() + geom_xxx() # 必选
-  + scale_xxx() + coordinate_xxx() + facet_xxx() + theme() + ... 可选
+# 必选：
+ggplot() + geom_xxx() + 
+# 可选:
+  scale_xxx() + 
+  coordinate_xxx() + 
+  facet_xxx() + 
+  theme() + 
+  ... 
 ```
 
 \noindent 即：`数据映射+几何形状+可选项(即坐标系+切片结构+主题+其他附加属性)`。每个 `+` 两侧都是图层。

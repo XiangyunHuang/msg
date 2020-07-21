@@ -300,7 +300,8 @@ volcano %>%
   geom_contour() +
   scale_fill_distiller(palette="RdYlGn") +
   theme_bw() +
-  labs(x = "Meters North", y = "Meters West", fill = "Height\n(meters)")
+  labs(x = "Meters North", y = "Meters West", 
+       fill = "Height\n(meters)")
 ```
 
 统计数据中有不少是矩阵形式，例如相关系数阵、协方差阵等。我们可以将颜色图应用到这些矩阵形式数据的展示上。尤其是当矩阵行数列数较大时，我们可以借助人眼对颜色的视觉感知从颜色图中迅速找出一定的统计特征来（如很大或者很小的数值）。相比之下，对数据的直接观察并不容易找到规律或特征，因为这种形式下我们必须在脑中对数据两两比较，其速度必然会很慢。

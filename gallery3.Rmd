@@ -277,7 +277,23 @@ palette("default") # 恢复默认调色板
 R 中星状图的函数为 `stars()` ，其用法如下：
 
 ```{r stars-usage, warning=FALSE, results='asis'}
-usage2(usage(stars, output = FALSE))
+# usage2(usage(stars, output = FALSE))
+```
+
+```r
+stars(x, full = TRUE, scale = TRUE, radius = TRUE, 
+    labels = dimnames(x)[[1L]], locations = NULL, nrow = NULL,
+    ncol = NULL, len = 1, key.loc = NULL, 
+    key.labels = dimnames(x)[[2L]], key.xpd = TRUE, xlim = NULL,
+    ylim = NULL, flip.labels = NULL, draw.segments = FALSE, 
+    col.segments = 1L:n.seg, col.stars = NA, col.lines = NA, 
+    axes = FALSE, frame.plot = axes, main = NULL, sub = NULL, 
+    xlab = "", ylab = "", cex = 0.8, lwd = 0.25, lty = par("lty"), 
+    xpd = FALSE,
+    mar = pmin(
+      par("mar"), 
+      1.1 + c(2 * axes + (xlab != ""), 2 * axes + (ylab !=""), 1, 0)), 
+    add = FALSE, plot = TRUE, ...)
 ```
 
 \noindent 参数含义：
@@ -552,8 +568,18 @@ R 语言的 **TeachingDemos** 包 [@TeachingDemos] 提供了两个脸谱图函�
 `faces2()` 的用法如下：
 
 ```{r faces2-usage, warning=FALSE, results='asis'}
+# library(TeachingDemos)
+# usage2(usage(faces2, output = FALSE))
+```
+
+```r
 library(TeachingDemos)
-usage2(usage(faces2, output = FALSE))
+faces2(mat, which = 1:ncol(mat), labels = rownames(mat), 
+    nrows = ceiling(nrow(mat)/ncols), 
+    ncols = ceiling(sqrt(nrow(mat))), byrow = TRUE, 
+    scale = c("columns", "all", "center", "none"),
+    fill = c(0.5, 0.5, 1,   0.5, 0.5, 0.3, 0.5, 0.5, 0.5, 
+             0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1,   0.5), ...)
 ```
 
 \noindent 参数含义：
@@ -909,8 +935,9 @@ usage2(usage(interaction.plot, output = FALSE))
 ```{r, eval=FALSE, echo=TRUE}
 par(mar = c(4, 4, 0.2, 0.2))
 with(esoph, {
-  interaction.plot(agegp, alcgp, ncases / (ncases + ncontrols), trace.label = "alcohol",
-                   fixed = TRUE, xlab = "Age", ylab = "Cancer Proportion")
+  interaction.plot(agegp, alcgp, ncases / (ncases + ncontrols), 
+                   trace.label = "alcohol", fixed = TRUE, 
+                   xlab = "Age", ylab = "Cancer Proportion")
 })
 ```
 
@@ -1324,8 +1351,9 @@ triplot(murcia[, 2:4], col = vec2col(murcia$site), pch = 19)
 
 ```{r coplot2, echo=TRUE, fig.cap="(ref:fig-coplot2)"}
 ggplot(transform(quakes, depth_group = cut(depth, breaks = 4))) +
-  geom_polygon(data = map_data("world", region = c("New Zealand", "Fiji")),
-               mapping = aes(long, lat, group = group, fill = region)) +
+  geom_polygon(
+    data = map_data("world", region = c("New Zealand", "Fiji")),
+    mapping = aes(long, lat, group = group, fill = region)) +
   geom_point(aes(long, lat), alpha = 0.1) +
   facet_wrap(~depth_group) + 
   xlim(160, 190) +

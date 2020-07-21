@@ -922,7 +922,9 @@ pie(pie_sales$ratio, col = pie_col)
 **ggplot2** 包里并没有直接做饼图的函数。不过，通过坐标旋转和柱状图结合的方式，也可以做出饼图来，代码如下：
 
 ```{r, eval=FALSE, echo=TRUE}
-pie_sales$name <- factor(pie_sales$name, levels = pie_sales$name[order(pie_sales$ratio)])
+pie_sales$name <- factor(
+  pie_sales$name,
+  levels = pie_sales$name[order(pie_sales$ratio)])
 ggplot(pie_sales, aes(x = "", y = ratio, fill = name)) +
   geom_bar(width = 1, stat = "identity", color = "white") +
   coord_polar("y", start = 0)+
