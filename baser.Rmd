@@ -189,16 +189,16 @@ for (i in 0:3) {
 : 坐标轴标签样式。取 0、1、2、3 四个整数之一，分别表示“总是平行于坐标轴”、“总是水平”、“总是垂直于坐标轴”和“总是竖直”。仔细观察图 \@ref(fig:par2) 中四幅图的不同坐标轴标签方向。
 
 `lend`
-: 线条末端的样式（圆或方形），取值为整数 0、1、2 之一（或相应的字符串 `"round", "mitre", "bevel"`），注意后两者的细微区别（仔细观察图 \@ref(fig:par2) 中宽线条中黑点的位置，在画线时，这些线条的起点和终点都是选择同样的坐标位置！）。
+: 线条末端的样式（圆或方形），取值为整数 0、1、2 之一（或相应的字符串 `"round"`, `"mitre"`, `"bevel"`），注意后两者的细微区别（仔细观察图 \@ref(fig:par2) 中宽线条中黑点的位置，在画线时，这些线条的起点和终点都是选择同样的坐标位置！）。
 
 `lheight`
 : 图中文本行高，取值为一个倍数，默认为 1。
 
 `ljoin`
-: 线条相交处的样式，取值为整数 0、1、2 之一（或相应的字符串 `"round", "mitre", "bevel"`），分别表示画圆角、画方角和切掉顶角。观察图 \@ref(fig:par1) 的三个直角的顶点。
+: 线条相交处的样式，取值为整数 0、1、2 之一（或相应的字符串 `"round"`, `"mitre"`, `"bevel"`），分别表示画圆角、画方角和切掉顶角。观察图 \@ref(fig:par1) 的三个直角的顶点。
 
 `lty`
-: 线条虚实样式：$0\Rightarrow$ 不画线，$1\Rightarrow$ 实线，$2\Rightarrow$ 虚线，$3\Rightarrow$ 点线，$4\Rightarrow$ 点划线，$5\Rightarrow$ 长划线，$6\Rightarrow$ 点长划线；或者相应设置如下字符串（分别对应前面的数字）：`"blank", "solid", "dashed", "dotted", "dotdash", "longdash", "twodash"`。还可以用由十六进制的数字组成的字符串表示线上实线和空白的相应长度，如 `"F624"`。详细解释请参见 \@ref(sec:lines) 一节。
+: 线条虚实样式：$0\Rightarrow$ 不画线，$1\Rightarrow$ 实线，$2\Rightarrow$ 虚线，$3\Rightarrow$ 点线，$4\Rightarrow$ 点划线，$5\Rightarrow$ 长划线，$6\Rightarrow$ 点长划线；或者相应设置如下字符串（分别对应前面的数字）：`"blank"`, `"solid"`, `"dashed"`, `"dotted"`, `"dotdash"`, `"longdash"`, `"twodash"`。还可以用由十六进制的数字组成的字符串表示线上实线和空白的相应长度，如 `"F624"`。详细解释请参见 \@ref(sec:lines) 一节。
 
 `lwd`
 : 线条宽度，默认为 1。
@@ -496,7 +496,7 @@ col2rgb("#FF00FF") # 红蓝混合为紫色
 
 - 离散型调色板（Qualitative palettes）：生成一系列彼此差异比较明显的颜色，通常用来标记分类数据。
 
-每一类调色板下有若干种具体的实现，例如 Blues 是连续型调色板下的一种，用以蓝色主题的渐变颜色：
+每一类调色板下有若干种具体的实现，例如 `"Blues"` 是连续型调色板下的一种，用以蓝色主题的渐变颜色：
 
 ```{r ColorBrewer-Blues, echo=TRUE}
 library(RColorBrewer)
@@ -626,7 +626,7 @@ for (n in c(63, 60, 76, 74)) {
 
 (ref:point-random) 点的随机艺术作品：随机生成点的大小、颜色和位置，分别用空心点和实心点画图
 
-### 曲线、直线、线段、箭头、X-样条 {#sec:lines}
+### 曲线、直线、线段、X-样条 {#sec:lines}
 
 在 \@ref(sec:par) 小节介绍函数 `par()` 时我们提到了关于线条的一些参数设置，例如 `lwd` 和 `lty` 等。类似地，我们可以用函数 `lines()` 来向图中添加曲线（这里所说的曲线本质上是一些线段的连接，并非光滑的曲线）；下面主要补充说明一下关于线条样式 `lty` 的设定。
 
@@ -684,24 +684,7 @@ usage2(usage(segments, output = FALSE))
 
 前四个参数表示线段的起点和终点坐标，后面的参数相信读者也都已经熟悉。
 
-箭头可以用函数 `arrows()` 生成，用法如下：
-
-```{r arrows-usage}
-usage2(usage(arrows, output = FALSE))
-```
-
-类似于线段，前四个参数表示箭头的起点和终点坐标，
-
-`length`:
-: 箭头尖上短线的长度（单位：英寸）。若设置为 0，那么将不会画出箭头（只有箭头线的主体即一条线段）。
-
-`angle`:
-: 箭头尖短线的角度（默认为 $30\,^{\circ}$）。
-
-`code`:
-: 箭头的样式（整数 1~3 分别表示尾部箭头、首部箭头和两端都带箭头）。
-
-关于曲线、直线、线段和箭头函数的示例代码和效果参见图 \@ref(fig:lines-demo)。
+关于曲线、直线和线段函数的示例代码和效果参见图 \@ref(fig:lines-demo)。
 
 下面我们再介绍一下一种特殊的曲线——X-样条（X-spline）。
 
@@ -741,6 +724,42 @@ usage2(usage(xspline, output = FALSE))
 ```{r xspline-demo,results='hide',fig.scap="(ref:xspline-demo-s)",fig.cap="(ref:xspline-demo)"}
 demo("xsplineDemo", package = "MSG")
 ```
+
+### 箭头、误差线 {#sec:arrow}
+
+图 \@ref(fig:lines-demo) 除了展示曲线、直线和线段外，还展示了箭头的示例。箭头的绘制方法与线段类似。之所以在此单独介绍，是因为一个特殊的原因：误差线常常是用箭头函数绘制的。
+
+绘制箭头的函数是 `arrows()`，用法如下：
+
+```{r arrows-usage, results='asis'}
+usage2(usage(arrows, output = FALSE))
+```
+
+类似于线段，前四个参数表示箭头的起点和终点坐标。其他参数简介如下：
+
+`length`:
+: 箭头尖上短线的长度（单位：英寸）。若设置为 0，那么将不会画出箭头（只有箭头线的主体即一条线段）。
+
+`angle`:
+: 箭头尖短线的角度（默认为 $30\,^{\circ}$）。
+
+`code`:
+: 箭头的样式（整数 1~3 分别表示尾部箭头、首部箭头和两端都带箭头）。
+
+令人意外的是，跟绘制箭头相比，这个函数更多情况下是用来绘制误差线的：只需将箭头尖短线的角度设置为 $90\,^{\circ}$ 即可。下面的代码将绘制一个带有误差线的条形图（见图 \@ref(fig:error-bars)）：
+
+```{r errorbar, echo=TRUE, eval=FALSE, fig.cap="", fig.scap=""}
+y <- c(runif(20), c(.43, .54), c(.6, runif(9, .3, .4)), 
+       c(runif(6, .5, .6) - .12, runif(4, .15, .22) + .12)) - .2
+x <- factor(rep(LETTERS[1:4], c(20, 2, 10, 10)))
+m <- tapply(y, x, mean)
+mid <- barplot(m, col = 1:4, ylim = c(0, .4))[, 1]
+s <- 2 * tapply(y, x, sd) / sqrt(table(x))
+arrows(mid, m - s, mid, m + s, code = 2, col = 1:4, 
+       angle = 90, length = .15)
+```
+
+关于误差线的讨论，见 \@ref(sec:stat-principle)节。
 
 ### 矩形、多边形 {#sec:polygon}
 
@@ -962,7 +981,7 @@ usage2(usage(axis, output = FALSE))
 : 表示在什么位置画坐标轴标记线。
 
 `labels`：
-： 指定坐标轴刻度标记的字符。
+: 指定坐标轴刻度标记的字符。
 
 @Murrell05 中第 3.4.5 小节举了一个双坐标轴图形的例子，图中用左右两边的纵轴分别表示摄氏和华氏的温度，即：对于图中同一点，既可以对照左边看摄氏度，也可以对照右边看华氏度；这就是双坐标轴的用途。此处我们不妨也举一个类似的例子，来说明 `axis()` 函数的功能。
 
@@ -1222,7 +1241,7 @@ usage2(usage(identify, "default", output = FALSE))
 
 **grDevices** 包中的函数 `getGraphicsEvent()` 提供了更灵活的交互，它可以捕获三种鼠标事件（鼠标按下、鼠标移动和鼠标弹起）和一种键盘事件（键盘输入）。用法如下：
 
-```{r getGraphicsEvent-usage}
+```{r getGraphicsEvent-usage, results='asis'}
 usage2(usage(getGraphicsEvent, output = FALSE))
 ```
 

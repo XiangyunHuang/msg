@@ -99,7 +99,7 @@ kable2(geyser, "黄石国家公园喷泉数据")
 #   x = seq(40, 110, 5), y = 0,
 #   xend = seq(40, 110, 5), yend = ht
 # )
-p2 + geom_density(color = "blue", size = 2)
+p2 + geom_density(color = "blue")
 # p2 + geom_density(fill = "lightgray", color = "black") +
 #   geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
 #     data = df, lty = 3
@@ -146,7 +146,7 @@ hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting",
 demo("hist_geyser", package = "MSG")
 ```
 
-\noindent 也可以用ggplot2 包，方法如下：
+\noindent 也可以用 **ggplot2** 包，方法如下：
 
 ```{r, eval=FALSE,echo=TRUE}
 library(cowplot)
@@ -684,9 +684,9 @@ dotchart(t(VADeaths)[, 5:1],
 
 **ggplot2** 包里虽然没有函数直接绘制点图，然而可以借助散点图完成，代码如下：
 
-(ref:fig-dotchart-s) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
+(ref:fig-dotchart2-s) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
 
-(ref:fig-dotchart) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
+(ref:fig-dotchart2) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
 
 ```{r dotchart2, echo=TRUE,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart2)",fig.scap="(ref:fig-dotchart-s2)"}
 tm <- rownames(VADeaths)
@@ -770,7 +770,7 @@ ggplot(faithful, aes(eruptions)) +
 
 ### 概述 {-}
 
-带状图（Strip Chart），又叫一维散点图（1-D Scatter Plot），是针对一维数据的散点图，它本质上是数据与固定值（固定 x 或固定 y）之间的散点图，这样形成的图形外观是带状的，因此称之为带状图。
+带状图（Strip Chart），又叫一维散点图（1-D Scatter Plot），是针对一维数据的散点图，它本质上是数据与固定值（固定 $x$ 或固定 $y$）之间的散点图，这样形成的图形外观是带状的，因此称之为带状图。
 
 作为描述一维数据分布的工具，带状图有其独特的优势：它的作图方法可以反映出原始数据的疏密。若原始数据有重叠，它也有相应的办法处理，最终使所有的数据点都能够被展示出来。
 
@@ -843,6 +843,8 @@ stripchart(count ~ spray, data = InsectSprays, method = "jitter")
 饼图是目前应用非常广泛的统计图形，原理很简单：每一个扇形的角度与相应数据的数值大小成比例。
 
 然而，根据统计学家（主要是 Cleveland 和 McGill）和一些心理学家的调查结果 [@Cleveland85]，这种以比例展示数据的统计图形实际上是很糟糕的可视化方式。因此，R 关于饼图的帮助文件中清楚地说明了并不推荐使用饼图，而是使用条形图（\@ref(sec:barplot) 小节）或点图（\@ref(sec:dotchart) 小节）作为替代。读者若有兴趣可以到“统计之都”论坛[^pie]查看这则关于饼图的幽默。
+
+尽管我们不推荐使用饼图，鉴于饼图的使用如此普遍，我们仍然在这里做简单介绍。
 
 [^pie]: <https://d.cosx.org/d/101157>
 
@@ -918,6 +920,16 @@ pie_col <- c("purple", "violetred1", "green3",
              "cornflowerblue", "cyan", "white")
 pie(pie_sales$ratio, col = pie_col)
 ```
+
+正如前文所说，这并非一种展示数据的好方式。比它更糟糕的，是 三维饼图。在 R 语言里，可以用 **plotrix** 包的 `pie3D()`函数绘制；
+
+```{r, eval=FALSE, echo=TRUE}
+library(plotrix)
+pie3D(pie_sales$ratio, labels = pie_sales$name, col = pie_col, 
+      explode=0.1, radius=.9, labelcex = 1.2,  start=0.7)
+```
+\noindent 感兴趣的读者可以自己查阅其帮助信息。
+
 
 **ggplot2** 包里并没有直接做饼图的函数。不过，通过坐标旋转和柱状图结合的方式，也可以做出饼图来，代码如下：
 

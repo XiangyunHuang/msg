@@ -38,8 +38,8 @@ p <- ggplot(BinormCircle, aes(V1, V2)) +
   theme(axis.ticks = element_blank(), axis.text = element_blank(),
         # plot.background = element_rect(linetype = "solid",color = "black"),
         axis.title = element_blank())
-p1 <- p + geom_point(color = rgb(1, 0, 0))
-p2 <- p + geom_point(color = rgb(1, 0, 0), alpha = 0.01)
+p1 <- p + geom_point(color = rgb(1,0,0)) + theme_void()
+p2 <- p + geom_point(color = rgb(1,0,0), alpha = 0.01) + theme_void()
 plot_grid(p1, p2, ncol = 2)
 ```
 
@@ -96,7 +96,8 @@ plot_grid(p1, p2, ncol = 2)
 ### 示例 {-}
 
 图 \@ref(fig:curve) 给出了函数 $f(x)=\sin(\cos(x)*\exp(-x/2))$ 的曲线以及均匀分布 $U(-1,1)$ 的特征函数曲线作为示例，其中特征函数为概率论中定义的 $\varphi_{X}(t) = \mathrm{E}[\exp(itX)]$。
-(ref:fig-curve-s) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图。
+
+(ref:fig-curve-s) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图和均匀分布 $U(-1,1)$ 的特征函数图
 
 (ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）
 
@@ -148,7 +149,7 @@ curve(sin(x) / x, from = -20, to = 20, n = 200,
       xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
 ```
 
-**ggplot2**包里并没有现成的函数绘制一元函数曲线图。一个变通的方法就是设定一系列 x 值，根据函数关系计算出 y 值，然后绘制折线图即可（图 \@ref(fig:curve2) ）绘制代码如下：
+**ggplot2**包里并没有现成的函数绘制一元函数曲线图。一个变通的方法就是设定一系列 $x$ 值，根据函数关系计算出 $y$ 值，然后绘制折线图即可（图 \@ref(fig:curve2) ）绘制代码如下：
 
 ```{r curve2, echo=TRUE}
 df1 <- data.frame(x = seq(-8, 7, by = 0.01))
@@ -170,8 +171,8 @@ p1 / p2
 
 ### 示例 {-}
 
-鸢尾花花瓣数据（表 \@ref(tab:tab-iris）常用来做统计图形的演示。我们将这组数据绘制了 鸢尾花花瓣长和宽的向日葵散点图，
-如图 \@ref(fig:sunflowerplot)所示。注意左下方和中部都有一些重复数据，通过花瓣数目的多少来体现。
+鸢尾花花瓣数据（表 \@ref(tab:tab-iris)常用来做统计图形的演示。我们将这组数据绘制了 鸢尾花花瓣长和宽的向日葵散点图，
+如图 \@ref(fig:sunflowerplot) 所示。注意左下方和中部都有一些重复数据，通过花瓣数目的多少来体现。
 
 
 ```{r tab-iris}
@@ -179,7 +180,7 @@ data(iris)
 kable2(iris, "鸢尾花花瓣数据")
 ```
 
-图 \@ref(fig:sunflowerplot) 为鸢尾花花瓣长和宽的向日葵散点图，注意左下方和中部都有一些重复数据，
+图 \@ref(fig:sunflowerplot)  为鸢尾花花瓣长和宽的向日葵散点图，注意左下方和中部都有一些重复数据，
 
 (ref:fig-sunflowerplot-s) 鸢尾花花瓣长和宽的向日葵散点图
 
@@ -262,7 +263,7 @@ sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 
 (ref:fig-smoothScatter-s) BinormCircle 数据的平滑散点图
 
-(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）
+(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色浅）
 
 ```{r smoothScatter,fig.width=4.5,fig.height=4.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
 library(ggpointdensity)
@@ -282,7 +283,7 @@ usage2(usage(smoothScatter, output = FALSE))
 \noindent 参数含义：
 
 `x` 和 `y`：
-： 两个数值向量，或者如果不提供 `y` 的话，可以提供一个两列的矩阵/数据框等给 `x`。
+: 两个数值向量，或者如果不提供 `y` 的话，可以提供一个两列的矩阵/数据框等给 `x`。
 
 `nbin`:
 : 横纵坐标方向上划分网格的数目，可以是长度为 1 或 2 的整数向量。

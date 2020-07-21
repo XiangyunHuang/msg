@@ -301,7 +301,7 @@ kurtosis(runif(100))
 head(methods("plot"), 24) # 显示前 24 个
 ```
 
-可以看出，这些函数都是以 `plot.*` 的形式定义的，其中*便是类的名称。泛型函数的基本原理就是：传给 `plot()` 的第一个参数是何种类，则调用何种函数进行作图。例如 `iris` 的类是 `data.frame`，那么 `plot(iris)` 就会调用 `plot.data.frame()` 作图（散点图矩阵）。下面的代码有助于进一步说明这种原理：
+可以看出，这些函数都是以 `plot.*` 的形式定义的，其中`*`便是类的名称。泛型函数的基本原理就是：传给 `plot()` 的第一个参数是何种类，则调用何种函数进行作图。例如 `iris` 的类是 `data.frame`，那么 `plot(iris)` 就会调用 `plot.data.frame()` 作图（散点图矩阵）。下面的代码有助于进一步说明这种原理：
 
 ```{r function-demo4,small.mar=FALSE, echo=TRUE}
 class(iris)
@@ -312,7 +312,7 @@ par(mar = c(4, 4, 3, 0.5))
 plot(x) # 调用 plot.density() 作密度曲线
 ```
 
-我们也可以对现有的泛型函数进行扩充，使它们适应我们自定义的类。例如 `print()` 也是一个常用的泛型函数，当我们在 R 控制台中键入一个对象以显示其内容时，实际上是调用了该函数以打印出对象的内容。现在我们定义一个 `print.xie()`，使得类名称为 xie 的对象在屏幕上打印出来时数值为真实数值的 2 倍：
+我们也可以对现有的泛型函数进行扩充，使它们适应我们自定义的类。例如 `print()` 也是一个常用的泛型函数，当我们在 R 控制台中键入一个对象以显示其内容时，实际上是调用了该函数以打印出对象的内容。现在我们定义一个 `print.xie()`，使得类名称为 `xie` 的对象在屏幕上打印出来时数值为真实数值的 2 倍：
 
 ```{r function-demo5}
 # 本例告诉我们，眼见未必为实！
@@ -399,11 +399,13 @@ library(RColorBrewer)
 
 为了配合本书的写作，笔者特意编写了一个 R 包名为 **MSG**（Modern Statistical Graphics 的缩写）。该包目前已经发布到 CRAN，所以读者可以用以下方式直接安装：
 
-```{r install-MSG,eval=FALSE}
+```{r install-MSG,eval=FALSE, echo=TRUE}
 install.packages("MSG")
 ```
 
-\noindent 也可以从笔者开发页面下载（<https://github.com/yihui/MSG>）并自行编译安装。这里简要介绍一下它包含的函数和数据。
+\noindent 也可以从笔者开发页面下载（<https://github.com/yihui/MSG>）并自行编译安装。
+
+这里，我们简要介绍一下它包含的函数和数据。
 
 ## 函数说明 {#sec:MSG-fun}
 
@@ -413,9 +415,9 @@ install.packages("MSG")
 `char_gen()`
 : 给定一个长度为 2 的字符向量，生成一个字符矩阵，其中包含若干个第 2 个字符和一个第 1 个字符，看用户从一大堆第 2 个字符中辨别第 1 个字符的难度。这可以是我们选择点的外观的一种依据，参见 \@ref(subsec:clear-symbols) 小节。
 
-    ```{r, echo = TRUE}
-    char_gen(c("6", "9"))  # 你能找出 6 吗？
-    ```
+```{r, echo = TRUE}
+char_gen(c("6", "9"))  # 你能找出 6 吗？
+```
 
 `cut_plot()`
 : 将一幅散点图的横坐标离散化，并计算每组内点的纵坐标的均值。参见 \@ref(subsec:data-processing) 小节。
