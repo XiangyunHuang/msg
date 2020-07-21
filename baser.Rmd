@@ -966,7 +966,7 @@ usage2(usage(axis, output = FALSE))
 
 ```{r tab-axis}
 data(Export.USCN, package = "MSG")
-kable2(Export.USCN, "1999~2004 年中美两国的出口贸易总额数据")
+kable2(x = Export.USCN, "1999~2004 年中美两国的出口贸易总额数据", only_head = FALSE)
 ```
 
 表 \@ref(tab:tab-axis) 是一组 1999\~2004 年中美两国的出口贸易总额数据[^axis-demo]。我们将这组数据展示在图 \@ref(fig:axis-demo)。其中，`axis()` 函数主要作用在于两个地方：

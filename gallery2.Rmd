@@ -13,7 +13,7 @@
 
 ```{r tab-BinormCircle}
 data(BinormCircle, package = "MSG")
-kable2(head2(BinormCircle), "一组人造的散点图数据（部分）")
+kable2(BinormCircle, "一组人造的散点图数据")
 ```
 
 该数据收录在 R 语言的 **MSG** 包中，名为`BinormCircle`。虽然数据只有两个变量，但我们用普通的统计模型和数值分析几乎无法找出数据的特征，例如，我们在 R 里运行下面的代码来加载数据，并计算线性回归系数和 P 值：
@@ -176,7 +176,7 @@ p1 / p2
 
 ```{r tab-iris}
 data(iris)
-kable2(head2(iris), "鸢尾花花瓣数据（部分）")
+kable2(iris, "鸢尾花花瓣数据")
 ```
 
 图 \@ref(fig:sunflowerplot) 为鸢尾花花瓣长和宽的向日葵散点图，注意左下方和中部都有一些重复数据，
@@ -342,7 +342,7 @@ $$\hat{S}(t)=\left\{ \begin{array}{ll}
 
 ```{r tab-aml}
 library(survival)
-kable2(head2(aml), "急性髓细胞白血病病人生存数据（部分）")
+kable2(aml, "急性髓细胞白血病病人生存数据")
 ```
 
 (ref:fig-survival-s) 急性髓细胞白血病病人生存函数图
@@ -430,7 +430,7 @@ survdiff(Surv(time, status) ~ x, data = aml)
 
 ```{r tab-haireyecolor}
 x <- margin.table(HairEyeColor, c(1, 2))
-kable2(x, "592 名学生的头发和眼睛的颜色数据")
+kable2(x, "592 名学生的头发和眼睛的颜色数据", only_head = FALSE)
 ```
 
 (ref:fig-assocplot-s) 眼睛颜色与头发颜色的关联图
@@ -669,7 +669,7 @@ temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
   70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81
 )
 fail_temperature <- data.frame(fail = fail, temperature = temperature)
-kable2(head2(fail_temperature), "美国国家航空和宇宙航行局的一批 O 型环失效数据")
+kable2(fail_temperature, "美国国家航空和宇宙航行局的一批 O 型环失效数据")
 ```
 
 为了探索温度对 O 型环失效的影响，我们可以使用诸如 Logistic 回归之类的统计模型去计算、分析，而这里我们用条件密度图来展示温度的影响，如图 \@ref(fig:cdplot)。
@@ -842,7 +842,7 @@ t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
 
 ```{r tab-car-test}
 data(car.test.frame, package = "rpart")
-kable2(head2(car.test.frame), "汽车测试报告数据（部分）")
+kable2(car.test.frame, "汽车测试报告数据")
 ```
 
 图 \@ref(fig:bagplot) 左图展示了车重和气缸排量的二维箱线图。图中心有一个米字型的点，代表二维数据的中位数；内层深色袋子包含了一半的数据点（约 30 个）。作为对比，右图从二维核密度估计的角度画出了密度值的等高图，这两幅图可以看作是相通的，左图里层袋子就是右图中密度曲面[^bagplot-surf] 从中心向外积分数值到 0.5 时对应的区域。

@@ -79,7 +79,7 @@ b_{1}<b_{2}<\cdots<b_{j}<b_{j+1}<\cdots;\;b_{j+1}-b_{j}=h,\,j=1,2,\cdots
 
 ```{r tab-geyser}
 data(geyser, package = "MASS")
-kable2(head2(geyser), "黄石国家公园喷泉数据（部分）")
+kable2(geyser, "黄石国家公园喷泉数据")
 ```
 
 
@@ -184,8 +184,10 @@ p2 + geom_density(color = "blue", size = 2)
 下面我们以 **datasets** 包中 `islands` 数据（表 \@ref(tab:islands-data)）为例说明茎叶图的作法，该数据记录了世界上各大陆地块的面积大小。
 
 ```{r islands-data}
-data(canabalt)
-kable2(head(islands, 10), "世界上各大陆地块的面积（部分）（单位：千平方英里）")
+data(islands)
+island2 <- data.frame(islands)
+names(island2) <- "Area"
+kable2(island2, "世界上各大陆地块的面积", insert_txt = "单位：千平方英里")
 ```
 
 可以看出，以上数据中最大的数量级为 $10^{4}$，而大部分数据的数量级集中在 $10^{1}$，因此茎上的数量级取作 $10^{3}$ 相对比较合适——更大的数量级会导致茎的节数非常少，对分布的刻画过于粗略；而更小的数量级会导致节数过多，使得茎叶图几乎退化为数据的原始表示，这样也难以看出数据的集中趋势。下图展示了 48 块大陆块面积的分布，该茎叶图窗宽为 $2\times10^{3}$，图中注明了原始数据小数点位置在 `|` 后面三位数处，因此我们从图中“还原”原始数据时，需要用（“茎的区间”+“叶”）$\times10^{3}$。
@@ -354,7 +356,7 @@ oz.windrose(windagg)
 
 ```{r insects-data}
 data(InsectSprays)
-kable2(head2(InsectSprays), "各种杀虫剂下昆虫的数目（部分）")
+kable2(InsectSprays, "各种杀虫剂下昆虫的数目")
 ```
 
 为了了解杀虫剂的效果，我们需要对各种杀虫剂下昆虫的数目作出比较。图 \@ref(fig:insects-boxplot) 是一个简单的箱线图展示。不难看出，除了 B 和 D 对应的昆虫数据呈左偏形态外，其它组均有右偏趋势，看起来各组数据的平均水平差异比较明显；另外注意观察图中的两个离群点（以 “$\times$” 表示）。总体看来，C 的效果最好。
@@ -557,7 +559,7 @@ vioplot(x1, x2, x3,
 
 ```{r vadeaths-data}
 data(VADeaths)
-kable2(head2(VADeaths), "弗吉尼亚州死亡数据（部分）")
+kable2(VADeaths, "弗吉尼亚州死亡数据", only_head = FALSE)
 ```
 
 图 \@ref(fig:vadeaths-barplot) 展示了各组之间死亡率的差异。其中，堆砌的条形图容易比较各年龄组总死亡率的大小。显然，年龄越高，死亡率越大。而并列的条形图容易比较组内的城乡和性别差异。一般说来，男性死亡率高于女性，农村男性死亡率低于城市男性，但女性的城乡差异没有明显规律。由于人眼对长度比比例更敏感（例如在区分城乡和性别差异时，图 \@ref(fig:vadeaths-barplot) 的上图就不如下图直观），所以我们制图时要考虑清楚我们想展示的是数据的哪一方面，将最关键的信息用最能激发视觉感知的形式表现出来。
@@ -854,7 +856,13 @@ pie_sales <- data.frame(
   name = c("Blueberry", "Cherry", "Apple", 
            "Boston Cream", "Other", "Vanilla Cream"))
 pie_sales <- pie_sales[order(-pie_sales$ratio), ]
-kable2(t(pie_sales), "各种馅饼销售份额")
+
+kableExtra::kable_styling(
+  knitr::kable(t(pie_sales), "latex",
+               booktabs = TRUE,
+               caption = "各种馅饼销售份额",
+               align = 'c') ,
+  latex_options = "scale_down")
 ```
 
 图 \@ref(fig:pie-chart) 同时给出了饼图、点图和条形图分别对一个不同牌子馅饼的销售数据的展示，请读者对比并思考饼图对于展示数据的弱势，例如从饼图中看 Boston Cream 和 Vanilla Cream 差异有多大，而在条形图中看差异又是多大？两种情况下我们对差异的感受相同吗？

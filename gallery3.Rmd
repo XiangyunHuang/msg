@@ -255,7 +255,7 @@ lines(trans3d(xr, yr, f(xr, yr), res), col = "pink", lwd = 2)
 
 ```{r mtcars-data}
 data(mtcars)
-kable2(head2(mtcars[, 1:7]), "汽车数据（部分）")
+kable2(mtcars[, 1:7], "汽车数据")
 ```
 
 我们为这组数据绘制了图 \@ref(fig:stars) 所示的星状图。从图中可以看到各种品牌和型号的汽车在这 7 方面的指标和性能表现。以星状图展示数据可以让我们很快找到一些有突出特征的个体，从而省去了在大批数据中逐个寻找、排序的过程。
@@ -390,7 +390,7 @@ G^{2}=2\sum n_{ij}\mathrm{log}(\frac{n_{ij}}{\hat{\mu}_{ij}});\;\;\chi^{2}=\sum\
 
 ```{r Titanic-data}
 data(Titanic)
-kable2(as.data.frame(ftable(Titanic)), "泰坦尼克号乘客生还情况")
+kable2(as.data.frame(ftable(Titanic)), "泰坦尼克号乘客生还情况", only_head = FALSE)
 ```
 
 (ref:fig-mosaicplot-s) 泰坦尼克号乘客生化数据马赛克图
@@ -458,7 +458,7 @@ mosaicplot(Titanic, shade = TRUE, main = "")
 
 ```{r ChinaPop-data}
 source(system.file("extdata", "ChinaPop.R", package = "MSG"), encoding = "UTF-8")
-kable2(head2(ChinaPop), "（部分）")
+kable2(ChinaPop, "我国 31 省市自治区的人口特征数据")
 ```
 
 
@@ -618,7 +618,7 @@ faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")],
 
 ```{r murcia-data}
 data(murcia, package = "MSG")
-kable2(head(murcia), "西班牙 Murcia 省土壤样本成分（部分）")
+kable2(murcia, "西班牙 Murcia 省土壤样本成分")
 ```
 
 (ref:murcia-ternary) 西班牙 Murcia 省的土壤样本三元图：三角形的三个顶点分别代表沙土、壤土和黏土。图中的点越靠近某个顶点则说明该成分越大
@@ -664,7 +664,7 @@ ternaryplot(murcia[, 2:4], main = "",
 
 ```{r tab-quakes}
 data(quakes)
-kable2(head2(quakes), "斐济岛附近的地震数据（部分）")
+kable2(quakes, "斐济岛附近的地震数据")
 ```
 
 (ref:fig-coplot-s) 给定震源深图的地震经纬度条件分割图
@@ -765,7 +765,7 @@ coplot(lat ~ long | depth,
 
 ```{r tab-warpbreaks}
 data(warpbreaks)
-kable2(head2(warpbreaks), "经纱断裂数据（部分）")
+kable2(warpbreaks, "经纱断裂数据")
 ```
 。
 (ref:fig-plot-design-s) 经纱断裂数据的因素效应图
@@ -857,7 +857,7 @@ y & =  \beta_{0}+\beta_{1}x_{1}+(\beta_{2}+\beta_{12}x_{1})x_{2}+\epsilon\\
 
 ```{r tab-esoph}
 data(esoph)
-kable2(head2(esoph), "法国食道癌数据（部分）")
+kable2(esoph, "法国食道癌数据")
 ```
 
 (ref:fig-interaction-plot-s) 法国食道癌数据的交互效应图
@@ -949,7 +949,7 @@ reshape(tbl, timevar = "alcgp", idvar = "agegp",
 
 ```{r tab-kyphosis}
 data(kyphosis, package = "rpart")
-kable2(head2(kyphosis), "脊椎矫正手术数据（部分）")
+kable2(kyphosis, "脊椎矫正手术数据")
 ```
 
 我们作了一棵简单的分类树，如图 \@ref(fig:rpart)。该数据
@@ -1111,7 +1111,7 @@ f_{i}(t)=\begin{cases}
 
 ```{r tab-trees}
 data(trees)
-kable2(head2(trees), "黑莓树数据（部分）")
+kable2(trees, "黑莓树数据")
 ```
 
 (ref:fig-andrews-curve-s) 鸢尾花数据和黑莓树数据的调和曲线图
@@ -1247,7 +1247,7 @@ demo("AgriComp", package = "MSG")
 
 ```{r tab-eq2010}
 data(eq2010, package = "MSG")
-kable2(head2(eq2010), "四川地区地震数据（部分）")
+kable2(eq2010, "四川地区地震数据")
 ```
 
 图 \@ref(fig:RgoogleMaps) 显示了地震震源位置分布情况，背景采用了 Google Maps 提供的卫星地图数据。左图仅仅体现了震源位置的分布情况，不妨考虑将震级的大小映射为圆的半径大小。然而，图中存在着部分地震多发地带，如果使用圆来呈现震源的位置，这些区域的圆将出现严重的叠加现象，此处可以尝试使用 \@ref(sec:plot) 节中的透明度叠加来克服这类重叠问题，如右图所示。这里由于数据量不够大，这种透明度叠加的效果并不是非常明显。

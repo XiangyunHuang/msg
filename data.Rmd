@@ -107,7 +107,7 @@ knitr::include_graphics(path = "images/canabalt-screenshot.png", dpi = NA)
 
 ```{r tab-canabalt}
 data(canabalt)
-kable2(head2(canabalt), "“末日狂奔”游戏得分消息（部分）")
+kable2(canabalt, "“末日狂奔”游戏得分消息")
 ```
 
 
@@ -168,7 +168,7 @@ ggplot(canabalt) +
 
 ```{r tab-music}
 data(music)
-kable2(head2(music[, 1:5]), "音乐曲目数据（部分）")
+kable2(music[, 1:5], "音乐曲目数据")
 ```
 
 
@@ -257,7 +257,7 @@ knitr::include_graphics(path = "images/China-v-US-graphic.jpg")
 
 ```{r tab-cn-vs-us}
 data(cn_vs_us)
-kable2(cn_vs_us[, 1:4], "中美国力数据")
+kable2(cn_vs_us[, 1:4], "中美国力数据", only_head = FALSE)
 ```
 
 
@@ -297,7 +297,7 @@ ggplot(cn_vs_us, aes(x = country, y = value, fill = country)) +
 
 ```{r tab-tvearn}
 data(tvearn)
-kable2(head2(tvearn[order(tvearn$pay, decreasing = TRUE), 1:4]), "电视剧演员薪酬（部分）")
+kable2(tvearn[order(tvearn$pay, decreasing = TRUE), 1:4], "电视剧演员薪酬）")
 ```
 
 
@@ -367,7 +367,7 @@ ggplot(aes(x = rating, y = pay, color = type), data = tvearn) +
 ```{r CLELAL09-data}
 data(CLELAL09, package = "animation")
  # 前 10 行数据
-kable2(head2(CLELAL09), "一场篮球比赛的球员坐标（部分）")
+kable2(CLELAL09, "一场篮球比赛的球员坐标")
 ```
 
 
@@ -386,7 +386,7 @@ demo("basketball", package = "MSG")
 
 ```{r assists-data}
 data(assists, package = "MSG")
-kable2(head2(assists[,1:6]), "一场篮球比赛的助攻数据（部分）", latex_options = "scale_down")
+kable2(assists[,1:6], "一场篮球比赛的助攻数据", latex_options = "scale_down")
 ```
 
 
@@ -479,7 +479,7 @@ data(gov.cn.pct, package = "MSG")
 # kable(head(gov.cn.pct, 5), "latex", booktabs = TRUE, 
 #       caption = "中国政府网站中的百分比数据（部分）", align = "c")
 
-kable2(head2(gov.cn.pct), "中国政府网站中的百分比数据（部分）")
+kable2(gov.cn.pct, "中国政府网站中的百分比数据")
 ```
 
 
@@ -592,7 +592,7 @@ with(gov.cn.pct, {
 
 ```{r tab-PlantCounts}
 data(PlantCounts, package = "MSG")
-kable2(head2(PlantCounts), "植物物种数目与海拔高度（部分）")
+kable2(PlantCounts, "植物物种数目与海拔高度")
 ```
 
 
@@ -688,7 +688,7 @@ gg_plant2
 
 ```{r SongWords-data}
 load(system.file("extdata", "SongWords.rda", package = "MSG"))
-kable2(head2(SongWords[, 1:8]), "宋词词频矩阵（部分）")
+kable2(SongWords[, 1:8], "宋词词频矩阵")
 ```
 
 
