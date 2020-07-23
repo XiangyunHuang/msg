@@ -88,9 +88,59 @@ plot(year, price, type = "o",
 plot(year, price, type = "o")
 ```
 
-### 疫情地图
+### 新冠疫情
 
-2020年春节前后，新冠疫情爆发，牵动着全人类的心。江苏有人吗，重绘地图，鹦鹉螺图，地图动画
+2020年春节前后，新冠疫情爆发，亿万人的生活和工作都或多或少受到疫情的影响。在疫情刚刚开始的元月份，我们就开始关注疫情的发展情况。那段日子里，笔者每天都在追踪新的疫情报道。有一天，朋友分享了一幅地图（如图 \@ref(fig:ncov-jiangsu)）。地图显示了 1 月 22 日全国各省确诊和疑似病例，只见沿海地区一片火红（红色表示新冠肺炎确诊病例），唯有江苏省是白色。图上搭配文字：“在吗，救我”，在地图上格外抢眼。
+
+江苏和周边省份差别真的有这么大吗？为此，笔者重新绘制了这张地图。
+
+```{r tab-ncovr}
+ncov <- readRDS("d:/Seafile/pz/github/ncov/static/data-download/ncov.RDS")
+ncov$area$date <- as.Date(ncovr:::conv_time(ncov$area$updateTime))
+x_list <- list() #vector("list", 2)
+choose_date <- c("2020-01-21", "2020-01-22")
+for (i in 1:2){
+  x_list[[i]] <- ncov$area[ncov$area$date <= as.Date(choose_date[i]), ]
+  x_list[[i]] <- x_list[[i]][!duplicated(x_list[[i]]$provinceName), ]
+}
+x <- merge(x_list[[1]], x_list[[2]], by = "locationId", all = TRUE)
+y <- x[, c("provinceShortName.y", "confirmedCount.x", "confirmedCount.y")] 
+y <- y[order(-y$confirmedCount.y),]
+names(y) <- c("名称", "01-21", "01-22")
+row.names(y) <- NULL
+kable2(y, "全国新冠肺炎确诊人数", only_head = FALSE)
+```
+
+
+(ref:ncov-jiangsu-s) 新冠疫情下的江苏
+
+(ref:ncov-jiangsu) 新冠疫情下的江苏。2020 年 1 月 22 日，除了江苏省，东部和中部地区一片火红
+
+```{r ncov-jiangsu, out.width="50%", fig.cap="(ref:ncov-jiangsu)", fig.scap="(ref:ncov-jiangsu-s)"}
+include_graphics("images/ncov-jiangsu.jpeg")
+```
+
+新绘制的地图如图 \@ref(fig:covid-19-map) 所示。我们 同样是用红色来表示疫情的地理分布。不同的是，我们用红色的深浅来区分确诊病例的多少。同时，由于各省确诊病例数量极差较大，数量跨三个数量级，我们使用了对数坐标，以便显示低值之间的差异。另外，新绘制地图中确诊病例比图 \@ref(fig:ncov-jiangsu) 中同一天显示的数量更多，这 可能是由于我们获取的是当天较晚时间更新的数据。于是，我们另外绘制了前一天的疫情地图。从图中可以看出，江苏跟周边省份差别并不是很大：1 月 21 日，除了浙江 5 例确诊（浅红色）外，江苏和安徽无确诊，山东只有一例，在地图上都是白色或接近白色；而 1 月 22 日，浙江共 10 例，而江苏、安徽、山东各增加一例，均是极浅的浅红色。
+
+(ref:fig-covid-19-map) 新冠疫情中国地图。图中用红色的深浅来表示确诊病例的多少。由于各省确诊病例数量极差较大，数量跨三个数量级，使用对数坐标来显示低值之间的差异
+
+(ref:fig-covid-19-map-s) 新冠疫情中国地图
+
+```{r, covid-19-map, fig.show='hold', out.width="49%", fig.cap="(ref:fig-covid-19-map)", fig.scap="(ref:fig-covid-19-map-s)"}
+library(dplyr)
+library(scales)
+for (choose_date in c("2020-01-21", "2020-01-22")){
+  x <- ncov$area[ncov$area$date <= as.Date(choose_date), ]
+  x <- x[!duplicated(x$provinceName), ]
+  print(plot_ggmap(x, show_capitials = FALSE, province_language = NA, add_title = choose_date))
+}
+```
+
+其实，我们可以看到，在图 \@ref(fig:ncov-jiangsu) 下方给出的数字中，很多省份其实只有 1 例确诊，却涂上了跟几百例确诊的省份同样的颜色，夸大了江苏和其他省份的差别。当然，笔者作图的角度是为了比较各省确诊病例的数量级；如果是为了区分“零确诊”与“有确诊”，那就是另外一回事了。在这个案例里，颜色的选择和图例的重要性可见一斑。
+
+为了直观地看到疫情在地理上的变化，笔者将每天各省的确诊病例做成一张地图，然后连起来做成一幅动画，可以在线观看[^map_animation]。关于笔者参与的有关新冠疫情的进一步研究工作，参见 @zou2020。
+
+[^map_animation]: <https://ncov2020.org/animation/map_animation.gif>
 
 ### 末日狂奔 {#subsec:canabalt}
 
@@ -284,12 +334,6 @@ ggplot(cn_vs_us, aes(x = country, y = value, fill = country)) +
   geom_col() + facet_wrap(~metric, scales = "free_y", ncol = 3)
 ```
 
-### 升降国旗
-
-新闻报道升旗时间
-
-升旗时间可以计算前后50年的每天偏移时间，做直方图
-
 ### 绝望主妇 {#subsec:tvearn}
 
 2010 年 8 月 11 日，TV Guide 杂志公布了一批收入最高的电视剧演员名单，数据中包括演员名称、电视剧名称、类别（正剧 Drama 或喜剧 Comedy）、平均每集的收入，随后有人继续整理了 72 名演员的性别、IMDB （环球电影数据库）评分等信息。数据中包括《绝望的主妇》中的 4 位，《好汉两个半》中的 3 位，等等。最高薪酬为每集 125 万美元 --- 该演员为《好汉两个半》中的 Charlie Sheen。《绝望的主妇》中的 4 位演员（Marcia Cross、Teri Hatcher、Felicity Huffman、Eva Longoria）的薪酬为 40 万美元，排在并列第 3。这批数据收录在 **MSG** 包的 `tvearn` 中。表 \@ref(tab:tab-tvearn) 列出了薪酬排名前十的数据。
@@ -356,6 +400,49 @@ ggplot(aes(x = rating, y = pay, color = type), data = tvearn) +
 ```
 
 ### 论坛热度
+
+在 R 语言用户社区里，有五个主要的 R 语言邮件列表系统，是 R 用户获取新资讯、相互交流、获取帮助的传统形式。其中，比较常用的是为普通用户提供帮助的 r-help[^r-help]，以及供开发者讨论的 r-devel[^r-devel]。在中文社区，“统计之都”[^cosx]是比较活跃的 R 语言论坛。然而，近年来，传统论坛的活跃度明显下降。我们想看看，这些传统论坛是何时衰落的；而论坛如今的热门话题一般都在聊些什么。
+
+[^r-help]: <https://stat.ethz.ch/mailman/listinfo/r-help>
+
+[^r-devel]: <https://stat.ethz.ch/mailman/listinfo/r-devel>
+
+[^cosx]: <https://d.cosx.org/>
+
+为此，我们创建了 Rchive 这个在线应用[^rchive]，中文叫做“R 区洛阳铲”，意思是挖掘历史的工具。
+
+[^rchive]: <https://sciwis.shinyapps.io/rchive/>
+
+
+(ref:rchive-s) R 区洛阳铲
+
+(ref:rchive) R 区洛阳铲：一个查询 R 语言邮件列表和论坛的在线应用
+
+
+```{r rchive, fig.cap="(ref:rchive)", fig.cap="(ref:rchive-s)"}
+knitr::include_graphics("images/rchive.png")
+```
+
+Rchive 的界面如图 \@ref(fig:rchive) 所示。这个网页分 COS（统计之都论坛）、R-devel、R-help 三个标签，点击每个标签就可以进入对应的统计图表界面。每个界面都是分三部分：
+
+- 顶部是一个滑动栏，用户可以选择想要观察的时间段。
+- 左栏是数据表，会根据顶端滑动栏选择的时间段筛选出相应的论坛帖子数据，包括发帖年月、回应帖量、帖子标题、参与人数、最近回帖年月和活跃时间。用户可以点击数据表各列顶部的列名称来重新排序，也可以输入关键字筛选。
+- 右栏是作图区，显示了给定时间段内的回帖数量的直方图、发帖数量的年际和月际变化图、以及发帖的活跃时间图。
+
+(ref:rchive-ts-s) R 语言论坛热度的年际变化
+
+(ref:rchive-ts) R 语言论坛热度的年际变化。左：统计之都论坛；中：R-help 邮件列表；右：R-devel 邮件列表
+
+```{r rchive-ts, out.width="33%", fig.cap="(ref:rchive-ts)", fig.scap="(ref:rchive-ts-s)", fig.show='hold'}
+knitr::include_graphics("images/cosx.png")
+knitr::include_graphics("images/rhelp.png")
+knitr::include_graphics("images/rdevel.png")
+```
+
+
+图 \@ref(fig:rchive-ts) 给出了三个论坛每年发帖总数的变化。从 1997 年创办开始，R-help 和 R-devel 的发帖量基本呈逐年上升的势态，其中 R-devel 在 2005 到 2011 年出现一个高的平台期，每年发帖超过 2000；而 R-help 在 2008 年发帖突破 20000，同样持续到 2011 年。之后，两个邮件列表的热度大体呈逐年下降趋势。相比之下，统计之都论坛在创办之后即进入 2005 年到 2006 年的巅峰，之后在 2007 到 2013 年之间维持一段平台期，每年发帖 14000 左右，此后便逐年下降。笔者对此没有做深入研究，仅仅是猜想，这可能跟社交媒体的兴起以及更多获取帮助方式的出现有关。
+
+R-help 邮件列表里的热门话题涉及 R 包的安装、文本操作、R 包开发等；R-devel 的话题比较高精尖，在这里略过；统计之都论坛 2019 年的热门话题，包含了书稿的群体创作、社区应用的开发、R 语言作图、R Markdown 的中文支持等，十分具有中国特色。
 
 ### 灌篮高手
 
