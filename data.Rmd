@@ -228,7 +228,7 @@ kable2(music[, 1:5], "音乐曲目数据")
 
 (ref:music-andrews-s) 音乐曲目左声道频率的调和曲线图
 
-```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=4.9,fig.height=2.8,dev='tikz',fig.process=to_png,fig.showtext=FALSE}
+```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=6,fig.height=2.8,dev='tikz',fig.process=to_png,fig.showtext=FALSE}
 par(mfrow = c(1, 2), mar = c(4.1, 4.1, 0.5, 0.5))
 andrews_curve(scale(music[, 4:6]), xlab = "$t$", ylab = "$f(t)$",
               n = 50, col = 1)
@@ -296,7 +296,7 @@ ggparcoord(music, columns = c(4, 5, 3), groupColumn = "type")
 
 (ref:cn-us-guardian-s) 2010 年中美国力对比扇形图
 
-```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="(ref:cn-us-guardian-s)",echo=FALSE,out.width="70%",fig.link="https://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
+```{r cn-us-guardian,fig.cap="(ref:cn-us-guardian)",fig.scap="(ref:cn-us-guardian-s)",echo=FALSE,fig.link="https://www.guardian.co.uk/news/datablog/2011/jan/19/china-social-media"}
 knitr::include_graphics(path = "images/China-v-US-graphic.jpg")
 ```
 
@@ -315,7 +315,7 @@ kable2(cn_vs_us[, 1:4], "中美国力数据", only_head = FALSE)
 
 (ref:cn-us-redraw-s) 2010 年中美国力对比条形图
 
-```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)"}
+```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)", fig.height=10}
 ggplot(data = cn_vs_us, aes(x = country, y = value, fill = country)) +
   geom_col() + facet_wrap(~metric, scales = "free_y", ncol = 3)
 ```
@@ -364,7 +364,7 @@ aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 
 图 \@ref(fig:tvearn) 上图为男女演员各自薪酬的直方图，可以看出直方图呈右偏趋势，这是由少数演员的薪酬极高造成的；下图为 IMDB 评分与薪酬的关系，我们将电视剧类别用不同颜色标注出来，发现不同类别之间的电视剧薪酬随着评分的变化关系并不相同。图中曲线为 LOWESS 曲线（\@ref(subsec:lowess) 小节）。对正剧而言， IMDB 评分与演员薪酬似乎没有关系，曲线几乎为一条水平线；对喜剧而言，这个关系并非直线关系，评分在 7.9 附近的薪酬最高，此前的薪酬随着评分上升而增加，此后的薪酬则大多回落到 20 万美元以下并再次呈上升趋势。为了理解这些现象背后的原因，我们有必要研究一下 IMDB 的评分机制。据笔者的初步了解，IMDB 网站并非简单将用户的打分平均，而是综合考虑诸多用户背景信息而加权得到的评分。为何评分高的喜剧不如评分低的喜剧中的演员薪酬高？是制片公司的问题还是 IMDB 评分的问题？笔者并非美剧迷，对这个问题的探索就到此为止，感兴趣的读者可以继续利用数据中的其它变量进一步分析。
 
-```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%"}
+```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10}
 dh1 <- ggplot(aes(x = pay), data = tvearn) +
   geom_histogram(binwidth = 20000) +
   facet_grid(gender ~ .)
@@ -433,7 +433,7 @@ Rchive 的界面如图 \@ref(fig:rchive) 所示。这个网页分 COS（统计�
 
 (ref:rchive-ts) R 语言论坛热度的年际变化。左：统计之都论坛；中：R-help 邮件列表；右：R-devel 邮件列表
 
-```{r rchive-ts, out.width="33%", fig.cap="(ref:rchive-ts)", fig.scap="(ref:rchive-ts-s)", fig.show='hold'}
+```{r rchive-ts, out.width="32%", fig.cap="(ref:rchive-ts)", fig.scap="(ref:rchive-ts-s)", fig.show='hold'}
 knitr::include_graphics("images/cosx.png")
 knitr::include_graphics("images/rhelp.png")
 knitr::include_graphics("images/rdevel.png")
@@ -576,7 +576,7 @@ kable2(gov.cn.pct, "中国政府网站中的百分比数据")
 
 [^1]: <https://news.sina.com.cn/c/2009-12-12/034016758777s.shtml>
 
-[^2]: 原网页 <http://chemhack.com/cn/2009/12/87-53-stat/> 已失效，[快照](https://web.archive.org/web/20120115032226/http://chemhack.com/cn/2009/12/87-53-stat/)
+[^2]: 原网页 <http://chemhack.com/cn/2009/12/87-53-stat/> 已失效，快照：<https://web.archive.org/web/20120115032226/http://chemhack.com/cn/2009/12/87-53-stat/>
 
 [^gif]: <https://yihui.org/cn/2009/12/statistics-in-their-eyes/>
 
@@ -870,8 +870,8 @@ plot(g,
   vertex.label.color = grey(0.1),
   vertex.size = 8, vertex.label.family = "wqy-microhei"
 )
-legend(0.7, -0.8, c("[0.05,0.10)", "[0.10,0.20)", "[0.20,0.30)", "[0.30,0.40)"),
-  col = col, lwd = sort(unique(E(g)$width)), cex = 0.8
+legend(0.9, -0.5, c("[0.05,0.10)", "[0.10,0.20)", "[0.20,0.30)", "[0.30,0.40)"),
+  col = col, lwd = sort(unique(E(g)$width)), cex = 0.8, bty = "n"
 )
 ```
 

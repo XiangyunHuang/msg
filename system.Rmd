@@ -82,7 +82,7 @@ for (i in 1:100) {
 
 **lattice** [@Sarkar08] 是基于 **grid** 包的一套统计图形系统，它的图形设计理念来自于 @Cleveland93 的 Trellis 图形[^trellis]，其主要特征是根据特定变量（往往是分类变量）将数据分解为若干子集，并对每个子集画图。就像数理统计中的条件期望、条件概率一样，**lattice** 的图形也是一种“条件作图”。
 
-[^trellis]: 原网页 http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/ 已失效，[快照](https://web.archive.org/web/20081019072358/http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/)
+[^trellis]: 原网页 <http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/> 已失效，快照：<https://web.archive.org/web/20081019072358/http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/>
 
 ### 简介 {#subsec:lattice-intro}
 
@@ -124,13 +124,13 @@ grid 和 trellis 是 **lattice** 的最基础的特点，除此之外它还有�
 
 我们先看一个条件作图的例子：`iris` 数据中有五个变量，四个数值变量分别代表了花的四个部位的属性，一个分类变量表示花的种类。假设现在我们想观察一下三种花的花萼长度的分布情况，并且把它们作一个对比。如果只使用基础图形的方法，无外乎有两种方案：一是分别对每类花的花萼长度画一张直方图，前后总共画三张图。这个方法显得冗繁，而且不易于图形间的对比观察。二是在同一画布上划分出三个区域，把三张图画到同一画布上。这个方法虽然易于图形间的对比，但是仍然显得有些复杂。那么有没有更为简单的方法呢？当然有，在 **lattice** 中往往只需一条简单的语句就能解决这个问题:
 
-```{r lattice-iris-hist,echo=TRUE, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)"}
-histogram(~ Sepal.Length | Species, layout = c(3, 1), data = iris)
-```
-
 (ref:lattice-iris-hist) 三种鸢尾花各自的花萼长度直方图：作图区域被拆分为三个面板分别放置各类的直方图
 
 (ref:lattice-iris-hist-s) 三种鸢尾花各自的花萼长度直方图
+
+```{r lattice-iris-hist,fig.width=6, fig.height=3, echo=TRUE, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)"}
+histogram(~ Sepal.Length | Species, layout = c(3, 1), data = iris)
+```
 
 图 \@ref(fig:lattice-iris-hist) 就是由 **lattice** 包中的 `histogram()` 函数生成的分类直方图。观察作图语句，两个逗号把括号里的内容分为了三部分，第一部分是公式，第二部分是选项，第三部分是数据。实际上，还有隐藏的第四部分——面板函数。本节的内容也将按照公式、选项、数据的顺序来对 **lattice** 系统做介绍。
 
@@ -212,7 +212,7 @@ str(comp)
 
 (ref:lattice-data-par) 制作 **lattice** 需要的数据框以及修改 **lattice** 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点
 
-```{r lattice-data-par,echo=TRUE, fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.2}
+```{r lattice-data-par,echo=TRUE, fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.2, out.width="80%", fig.show='hold'}
 print(bxp0 <- bwplot(which ~ data, data = comp, horizontal = TRUE))
 trellis.par.set(
   plot.symbol = list(pch = 19, col = "black"),
@@ -249,7 +249,9 @@ histogram(~ Sepal.Length | Species,
 
 (ref:lattice-panel-function) **lattice** 中添加了密度曲线的直方图：通过自定义面板函数添加密度曲线。
 
-```{r lattice-panel-function,fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-panel-function)"}
+(ref:lattice-panel-function-s) **lattice** 中添加了密度曲线的直方图
+
+```{r lattice-panel-function,fig.width=6, fig.height=3, fig.scap="(ref:lattice-panel-function-s)",fig.cap="(ref:lattice-panel-function)"}
 iris.panel <- histogram(~ Sepal.Length | Species,
   layout = c(3, 1), data = iris, type = "density",
   panel = function(x, ...) {
@@ -601,7 +603,7 @@ lines3d(x[ind], y[ind], z[ind], lwd = 2)
 
 (ref:rgl-ch4) 用 **rgl** 包画出来的甲烷分子立体结构：四个氢原子和一个碳原子
 
-```{r rgl-ch4,fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE}
+```{r rgl-ch4,out.width="30%", fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE}
 knitr::include_graphics(path = "images/rgl-ch4.png", dpi = NA)
 ```
 
@@ -623,7 +625,7 @@ persp3d(x, y, m, col = "green3", zlab = "Beta(x, y)")
 
 (ref:rgl-beta) Beta 函数的三维透视图：$\mathrm{Beta}(x,\,y) = \Gamma(x)\Gamma(y)/\Gamma(x+y)$
 
-```{r rgl-beta,fig.scap="(ref:rgl-beta-s)",fig.cap="(ref:rgl-beta)",echo=FALSE}
+```{r rgl-beta,out.width="75%", fig.scap="(ref:rgl-beta-s)",fig.cap="(ref:rgl-beta)",echo=FALSE}
 knitr::include_graphics(path = "images/rgl-beta.png", dpi = NA)
 ```
 
@@ -717,7 +719,7 @@ for (i in 1:2) {
 
 上面那个例子是用 R 基础函数生成基本图形，下面这个例子将使用 **ggplot2** 生成的图形，并结合 gganimate 制作动画 <https://github.com/thomasp85/gganimate>
 
-```{r mtcars-animate, fig.show='animate', message=FALSE, interval=1/10, eval=is_latex, echo=TRUE}
+```{r mtcars-animate, out.width="80%",fig.show='animate', message=FALSE, interval=1/10, eval=is_latex, echo=TRUE}
 library(ggplot2)
 library(gganimate)
 ggplot(mtcars, aes(factor(cyl), mpg)) + 
@@ -968,8 +970,9 @@ knitr::include_graphics(path = c(
 
 上面的代码中，首先我们用 `ggroup()` 来排版布局，主要是让控件以纵向方向排列，因为默认情况下新控件会横向排列；接着我们用循环创建三个滑动条分别代表红绿蓝，它们的取值范围为 0 到 1，滑动一步时值的变动为 0.05，其中绑定的事件为画空白图，图的背景按照向量 x 的三个成分由 `rgb()` 函数混合而成，这里我们使用了一点新概念，即 `action` 参数，它的意义稍微有点曲折：`action` 参数将来会传给 `handler` 参数中的函数，具体传递过程是，它的取值会被放在 `h` 参数的 `action` 子元素中，也就是我们可以用 `h$action` 来提取传入的值；循环中三个滑动条的 `action` 值分别为 1、2、3，而 `handler` 的函数中 `h$obj` 可以用来调用控件本身，所以用 `svalue()` 就可以提取该控件当前的值，并赋给 x 中的第 i 个元素，这里的赋值符号用的是双箭头 `<<-`，原因是在普通的赋值符下（等号 `=` 或者单箭头 `<-`），R 的变量作用域会使得函数内部对变量的修改只是局部的修改，外部的变量值不会改变，但双箭头可以从内部改变外部变量的值。这样，每次我们拖动第 i 个滑动条时，触发的事件是 x 中的第 i 个值被修改为滑动条的值，然后带背景色的空白图形会根据新的颜色被重画。最后我们使用了图形控件 `ggraphics()` 将 R 图形嵌入当前的图形界面，一个完整的颜色混合器界面就完成了。图 \@ref(fig:color-selector) 中左图显示的是 50\% 的红色配 50\% 的蓝色，结果是紫色；右图是 70\% 红、100\% 绿和 10\% 蓝混合的结果。
 
-通过以上介绍，我们相信在 R 中创建 GUI 不再是难事。在日常工作中，偶尔写一个简单界面也能为我们的工作增添一些乐趣和便利。**formatR** 包 [@formatR] 就是笔者编写的一个用来自动整理 R 代码的图形界面，点一下按钮，文本框中的 R 代码就会被整理整齐（自动添加空格和缩进），更多介绍参见 <https://yihui.org/formatr/>。另外，图形界面也是让图形发挥更大功效的有力工具，如 GGobi 软件若离开了它的图形界面，可能会失色不少。
+通过以上介绍，我们相信在 R 中创建 GUI 不再是难事。在日常工作中，偶尔写一个简单界面也能为我们的工作增添一些乐趣和便利。**formatR** 包 [@formatR] 就是笔者编写的一个用来自动整理 R 代码的图形界面，点一下按钮，文本框中的 R 代码就会被整理整齐（自动添加空格和缩进）[^formatr]。另外，图形界面也是让图形发挥更大功效的有力工具，如 GGobi 软件若离开了它的图形界面，可能会失色不少。
 
+[^formatr]: 更多介绍参见 <https://yihui.org/formatr/>
 
 ## 思考与练习
 
@@ -997,7 +1000,7 @@ knitr::include_graphics(path = "images/GGobi-narrow-brush.png", dpi = NA)
 
 1. **fun** 包 [@fun] 中有一个 3D 版本的“我的中国心”，效果如图 \@ref(fig:China-Heart-3D)；请对照 `demo("ChinaHeart3D", package = "fun")` 以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入 **rgl** 三维图形。
 
-```{r China-Heart-3D,fig.cap="(ref:China-Heart-3D)", fig.scap="(ref:China-Heart-3D-s)", echo=FALSE}
+```{r China-Heart-3D,out.width="30%",fig.cap="(ref:China-Heart-3D)", fig.scap="(ref:China-Heart-3D-s)", echo=FALSE}
 knitr::include_graphics(path = "images/China-Heart-3D.png", dpi = NA)
 ```
 

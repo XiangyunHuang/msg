@@ -54,7 +54,7 @@ qplot(x = V1, y = V2, data = BinormCircle)
 
 (ref:qplot) `qplot()`函数作图示例：与图 \@ref(fig:hist-geyser) 和 \@ref(fig:scatter-alpha) 相比，作图所用的函数有哪些区别？
 
-```{r qplot,fig.scap="(ref:qplot-s)",fig.cap="(ref:qplot)"}
+```{r qplot,fig.width=7, fig.height=3.5, fig.scap="(ref:qplot-s)",fig.cap="(ref:qplot)"}
 data(geyser, package = "MASS")
 data(BinormCircle, package = "MSG")
 qplot(x = waiting, data = geyser) | qplot(x = V1, y = V2, data = BinormCircle)
@@ -115,7 +115,7 @@ p + geom_smooth(method = "loess") # 用散点图加上平滑层
 
 (ref:mtcars-smooth) 汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的
 
-```{r mtcars-smooth, echo=TRUE, fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)"}
+```{r mtcars-smooth, out.width="75%", echo=TRUE, fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)"}
 ggplot(aes(x = hp, y = mpg), data = mtcars) +
   geom_point() +
   geom_smooth(method = "loess")
@@ -131,7 +131,7 @@ ggplot(aes(x = hp, y = mpg), data = mtcars) +
 
 (ref:diamonds-hex) 钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小
 
-```{r diamonds-hex, echo=TRUE, fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)"}
+```{r diamonds-hex, out.width="80%", echo=TRUE, fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)"}
 ggplot(aes(x = carat, y = price), data = diamonds) +
   geom_hex()
 ```
@@ -142,7 +142,7 @@ ggplot(aes(x = carat, y = price), data = diamonds) +
 
 (ref:ggplot2-violin) 使用 `stat_density()` 函数构建的小提琴图
 
-```{r ggplot2-violin, echo=TRUE, fig.width=4.8,fig.height=4,fig.cap="(ref:ggplot2-violin)"}
+```{r ggplot2-violin, echo=TRUE, fig.width=4.8,fig.height=3,out.width="80%",fig.cap="(ref:ggplot2-violin)"}
 ggplot(diamonds, aes(x = price)) +
   stat_density(aes(ymax = ..density.., ymin = -..density..),
     geom = "ribbon", position = "identity"
@@ -170,7 +170,7 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
 
 (ref:quake6-bubbles) 1973 年以来全球 6 级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7 月的地震频率相对较低？
 
-```{r quake6-bubbles, echo=TRUE, fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
+```{r quake6-bubbles, fig.width=7, fig.height=6, echo=TRUE, fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
 data(quake6, package = "MSG")
 ggplot(quake6, aes(x = year, y = month)) +
   stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
@@ -188,7 +188,7 @@ ggplot(quake6, aes(x = year, y = month)) +
 
 (ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 `Fair` 到 `Ideal` 雕琢水平逐渐增高，但价格并没有严格上升
 
-```{r diamonds-cut, echo=TRUE, fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1}
+```{r diamonds-cut, fig.width=7, fig.height=3.5, echo=TRUE, fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1}
 p <- ggplot(aes(x = cut, y = log(price)), data = diamonds) +
   geom_boxplot()
 p
@@ -217,7 +217,7 @@ ggplot(aes(x = cut, fill = cut), data = diamonds) +
 
 (ref:diamonds-carat) 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻
 
-```{r diamonds-carat, echo=TRUE,fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
+```{r diamonds-carat, echo=TRUE,fig.width=7, fig.height=7, out.width="75%", fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
 ggplot(aes(x = carat), data = diamonds) +
   geom_density() +
   facet_grid(cut ~ .)
@@ -235,7 +235,7 @@ ggplot(aes(x = carat), data = diamonds) +
 
 (ref:geom-jitter-demo-s) 随机打乱散点图中的点的位置 
 
-```{r geom-jitter-demo, fig.scap="(ref:geom-jitter-demo-s)",fig.cap="(ref:geom-jitter-demo)", echo=TRUE}
+```{r geom-jitter-demo, out.width="80%", fig.scap="(ref:geom-jitter-demo-s)",fig.cap="(ref:geom-jitter-demo)", echo=TRUE}
 ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
   geom_point() +
   geom_jitter(color = "red") # 对比随机打乱的散点

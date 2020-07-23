@@ -188,7 +188,7 @@ Cleveland 对这个问题的建议是：调整纵横比，让所有的折线的�
 
 (ref:optical-illusions) 一个经典的视觉欺骗示例
 
-```{r optical-illusion,fig.cap="(ref:optical-illusion)",fig.scap="(ref:optical-illusions)",fig.width=4.8,fig.height=1.5}
+```{r optical-illusion,out.width="75%", fig.cap="(ref:optical-illusion)",fig.scap="(ref:optical-illusions)",fig.width=4.8,fig.height=1.5}
 set.seed(320)
 par(mar = c(1, 0, 1, 0), xpd = TRUE)
 plot.new()
@@ -271,7 +271,9 @@ stripchart(y ~ x, vertical = TRUE, method = "jitter", pch = 20)
 
 3. @Lane09 是一篇相对较新的关于作图原则的论文，它总结了不少有用的原则，请阅读这篇论文并考虑其中的原则是否都有足够的说服力。例如作者建议通常情况下不要用背景颜色，而我们知道 ggplot2 系统的图形通常都带有灰色背景，它们是否有冲突？
 
-4. Michael Friendly 的数据可视化网站是一个具有丰富图形资源的网站，尤其值得称道的是他对统计图形历史的资料总结，同时他也给了很多劣质图形的例子，比如某杂志封面上关于康奈尔大学的学费和排名折线图（<http://www.datavis.ca/gallery/context.php>），可以说是极具误导性，请仔细阅读这些案例，并寻找我们身边的杂志和媒体中有哪些糟糕的统计图形。
+4. Michael Friendly 的数据可视化网站是一个具有丰富图形资源的网站，尤其值得称道的是他对统计图形历史的资料总结，同时他也给了很多劣质图形的例子，比如某杂志封面上关于康奈尔大学的学费和排名折线图[^knu]，可以说是极具误导性，请仔细阅读这些案例，并寻找我们身边的杂志和媒体中有哪些糟糕的统计图形。
+
+[^knu]: <http://www.datavis.ca/gallery/context.php>
 
 5. 压缩数据导致损失信息并不是统计图形特有的现象，我们身边经常能看到这种例子。比如我们看到一些重要的统计数据只公布均值的时候，甚至觉得不平，感觉就像“被（均值）代表”了一样。我们应该采取怎样的行动让人们拥有足够的保护原始数据的意识？
 

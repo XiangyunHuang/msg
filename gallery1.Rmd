@@ -27,12 +27,9 @@ p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
 p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
 p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
 p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
-plot_grid(p1, p2, p3, p4, labels = c(
-  "(1) freq = TRUE",
-  "(2) freq = FALSE",
-  "(3) breaks = 5",
-  "(4) breaks = 40"
-), ncol = 2)
+plot_grid(p1, p2, p3, p4, ncol = 2, label_size = 10,
+          labels = c("(1) freq = TRUE", "(2) freq = FALSE", 
+                     "(3) breaks = 5","(4) breaks = 40"))
 ```
 
 我们知道，对于连续随机变量来说，其密度函数即为分布函数的导数：
@@ -99,7 +96,7 @@ kable2(geyser, "黄石国家公园喷泉数据")
 #   x = seq(40, 110, 5), y = 0,
 #   xend = seq(40, 110, 5), yend = ht
 # )
-p2 + geom_density(color = "blue")
+p2 + geom_density(color = "blue", size = 1.2)
 # p2 + geom_density(fill = "lightgray", color = "black") +
 #   geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
 #     data = df, lty = 3
@@ -196,7 +193,7 @@ kable2(island2, "世界上各大陆地块的面积", insert_txt = "单位：千�
 
 (ref:fig-stem-islands-s) 世界各地大陆块面积茎叶图和直方图 
 
-```{r stem-islands, fig.cap="(ref:fig-stem-islands)", fig.scap="(ref:fig-stem-islands-s)",out.width="100%"}
+```{r stem-islands, fig.cap="(ref:fig-stem-islands)", fig.scap="(ref:fig-stem-islands-s)",out.width="100%", fig.height=5}
 # sink("clipboard")
 # # sink(file="Stem.txt")
 # stem(islands)
@@ -253,6 +250,7 @@ unname(sort(round(islands / 1000, 1)))
 下图是利用泊松分布（$\lambda=10$）随机数生成的茎叶图，可以看出数据密度在 10 附近最高，这与理论相符。由于窗宽为 1，不存在舍入问题，所以图形可以还原到原始数据，请读者自行对应数据观察茎叶图。
 
 ```{r, eval=FALSE, echo=TRUE}
+set.seed(717)
 x <- rpois(80, lambda = 10)
 stem(x, scale = 2)
 ```
@@ -262,7 +260,7 @@ stem(x, scale = 2)
 
 (ref:fig-stem-poisson-s) 泊松分布随机数茎叶图
 
-```{r stem-poisson, fig.cap="(ref:fig-stem-poisson)", fig.scap="(ref:fig-stem-poisson-s)"}
+```{r stem-poisson, fig.cap="(ref:fig-stem-poisson)", fig.scap="(ref:fig-stem-poisson-s)", fig.height=5}
 # 均值 lambda 为 10 的泊松分布随机数
 set.seed(717)
 x <- rpois(80, lambda = 10)
@@ -309,7 +307,7 @@ kable2(InsectSprays, "各种杀虫剂下昆虫的数目")
 
 (ref:fig-insects-boxplot) 昆虫数目箱线图：六种杀虫剂下昆虫的数目分布
 
-```{r insects-boxplot, fig.width=3.6, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1}
+```{r insects-boxplot, fig.width=4.8, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1}
 ggplot(aes(y = count, x = spray), data = InsectSprays) +
   geom_boxplot(outlier.shape = 4) +
   coord_flip()
@@ -389,7 +387,7 @@ summary(insects.aov)
 
 (ref:fig-rnorm-boxplot) 箱线图的凹槽与统计推断：从凹槽不交叠的情况来看，两样本中位数有显著差异
 
-```{r rnorm-boxplot,fig.width=4.8,fig.height=2.4, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)", fig.ncol=1, fig.show='hold'}
+```{r rnorm-boxplot,fig.width=4.8,fig.height=1.6, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)", fig.ncol=1, fig.show='hold'}
 x <- rnorm(150)
 y <- rnorm(50, 0.8)
 ggplot(
@@ -434,7 +432,7 @@ boxplot(list(x, y),names = c("x", "y"), horizontal = TRUE,
 
 (ref:fig-vioplot) 三组双峰数据的小提琴图比较
 
-```{r vioplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-vioplot)",fig.scap="(ref:fig-vioplot-s)"}
+```{r vioplot,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-vioplot)",fig.scap="(ref:fig-vioplot-s)"}
 f <- function(mu1, mu2) c(rnorm(300, mu1, 0.5), rnorm(200, mu2, 0.5))
 x1 <- f(0, 2)
 x2 <- f(2, 3.5)
@@ -662,7 +660,7 @@ ggplot(vd, aes(time, rate, color = time)) + geom_point() +
 
 (ref:fig-rug) 带坐标轴须的喷泉间隔时间密度曲线图
 
-```{r rug,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
+```{r rug,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
 ggplot(faithful, aes(eruptions)) + 
   geom_line(stat = "density") + 
   geom_rug() + 
@@ -726,7 +724,7 @@ ggplot(faithful, aes(eruptions)) +
 
 (ref:fig-stripchart) 各种杀虫剂下昆虫数目的带状图：堆砌和随机打乱的带状图
 
-```{r stripchart,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
+```{r stripchart,fig.width=4.8,fig.height=4.8,out.width="80%", fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
 layout(matrix(1:2, 2), height = c(1, 1))
 par(mar = c(4, 4, 0.2, 0.2))
 boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, 
@@ -817,7 +815,7 @@ kableExtra::kable_styling(
 
 (ref:fig-pie-chart) 各类馅饼销售数据的饼图：对比上面的饼图和下面的点图以及条形图，人眼对角度或比例的感知能力是否弱于对长度的感知能力？
 
-```{r pie-chart,fig.width=4.8,fig.height=10,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)"}
+```{r pie-chart,fig.width=6,fig.height=8,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)"}
 pie_sales <- data.frame(
   ratio = c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12),
   name = c("Blueberry", "Cherry", "Apple", 
@@ -897,7 +895,7 @@ ggplot(pie_sales, aes(x = "", y = ratio, fill = name)) +
 
 (ref:fig-floating-pie) 在同一幅图的多个位置放置饼图：这是个人造的“质量测试”，颜色深的成份太大会导致饼图“沉下去”
 
-```{r floating-pie,fig.width=4.8,fig.height=3.6,results="hide",fig.cap="(ref:fig-floating-pie)",fig.scap="(ref:fig-floating-pie-s)"}
+```{r floating-pie,fig.width=4.8,fig.height=3.6,out.width="75%", results="hide",fig.cap="(ref:fig-floating-pie)",fig.scap="(ref:fig-floating-pie-s)"}
 demo("float_pie", package = "MSG")
 ```
 
@@ -919,7 +917,7 @@ QQ 图的原理并不复杂：如果一批数据 $x_{1},x_{2},\ldots,x_{n}$ 服�
 
 (ref:fig-qqnorm) 喷泉间隔时间的正态分布 QQ 图（左图）及数据密度曲线和实际正态分布密度曲线（右图）
 
-```{r qqnorm,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
+```{r qqnorm,fig.width=4.8,fig.height=2.4,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
 geyser$waiting_scaled <- scale(geyser$waiting)
 qq1 <- ggplot(data = geyser, mapping = aes(sample = waiting_scaled)) +
   stat_qq_band() +
@@ -997,7 +995,9 @@ QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它�
 
 ## 思考与练习
 
-1.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性。本题源于 COS 论坛帖子：<https://d.cosx.org/d/18521>。
+1.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性[^cos18521]。
+
+[^cos18521]: 本题源于统计之都论坛帖子：<https://d.cosx.org/d/18521>。
 
 2.  用 QQ 图评价数据正态性应该注意什么问题？模拟一些正态分布的数据，画出 QQ 图，看看如果数据真的来自正态分布，QQ 图看起来是什么样的。或者参考 **animation** 包中的 `sim.qqnorm()` 函数。
 

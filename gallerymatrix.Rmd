@@ -66,7 +66,7 @@ kable2(ChinaLifeEdu, "我国人口预期寿命和高学历人口数量", insert_
 
 (ref:fig-contour-pop) 2005 年中国 31 地区国民预期寿命和高学历人数密度等高图
 
-```{r contour-pop,fig.width=4,fig.height=3,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)",fig.showtext=TRUE,fig.show="hold"}
+```{r contour-pop,fig.width=6,fig.height=4,results="hide",fig.cap="(ref:fig-contour-pop)",fig.scap="(ref:fig-contour-pop-s)",fig.showtext=TRUE,fig.show="hold"}
 par(mar = c(4, 4, 0.2, 0.2))
 library(MSG)
 data(ChinaLifeEdu)
@@ -219,7 +219,7 @@ demo("volcano", package = "MSG")
 
 (ref:fig-mage24) 颜色图中色块与数值的对应关系：矩阵中数值越大，色块越趋近于白色，反之趋近红色
 
-```{r image24,fig.width=4,fig.height=1.2,fig.cap="(ref:fig-mage24)",fig.scap="(ref:fig-mage24-s)"}
+```{r image24,fig.width=4,fig.height=1.2,out.width="75%", fig.cap="(ref:fig-mage24)",fig.scap="(ref:fig-mage24-s)"}
 # par(mar = rep(0, 4))
 x <- matrix(sample(24), 8)
 # image(1:8, 1:3, x, col = heat.colors(24), axes = FALSE, ann = FALSE)
@@ -339,7 +339,7 @@ usage2(usage(matlines, output = FALSE))
 
 (ref:fig-matplot) 用矩阵图画出的一系列正弦曲线：每条曲线都有不同的点线样式和颜色
 
-```{r matplot,echo=TRUE,fig.width=4.8,fig.height=3.5,fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
+```{r matplot,echo=TRUE,fig.width=4.8,fig.height=3,out.width="80%", fig.cap="(ref:fig-matplot)",fig.scap="(ref:fig-matplot-s)"}
 sines <- outer(1:20, 1:4, function(x, y) sin(x / 20 * pi * y))
 par(mar = c(2, 4, .1, .1))
 matplot(sines, type = "b", pch = 21:24, col = 2:5, bg = 2:5)
@@ -349,7 +349,7 @@ round(head(sines), 5)
 
 如果使用 **ggplot2** 包绘制该图，下面的代码将绘制 \@ref(fig:matplot2)：
 
-```{r matplot2, echo=TRUE}
+```{r matplot2,fig.width=4.8,fig.height=3,out.width="80%", echo=TRUE}
 df <- expand.grid(x = 1:20, y = factor(1:4)) 
 df$sines <- as.vector(sines)
 ggplot(df, aes(x = x, y = sines, color = y)) + 
@@ -372,7 +372,7 @@ ggplot(df, aes(x = x, y = sines, color = y)) +
 
 (ref:fig-heatmap) Motor Trend 杂志 1974 年汽车数据的热图
 
-```{r heatmap,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-heatmap)",fig.scap="(ref:fig-heatmap-s)"}
+```{r heatmap,fig.width=6,fig.height=6,fig.cap="(ref:fig-heatmap)",fig.scap="(ref:fig-heatmap-s)"}
 # 用极端化调色板
 library(RColorBrewer)
 heatmap(as.matrix(mtcars), col = brewer.pal(9, "RdYlBu"), 
@@ -422,7 +422,7 @@ usage2(usage(heatmap, output = FALSE))
 
 1.  R 附加包数目太多：截至 2020 年 7 月 14 日，CRAN 上的 R 包数量已经突破 16000 个，其中很多都包含作图的函数，如果我们这样继续列举下去，本书将永远没有尽头。有一个叫“R Graphical Manual”的网站[^rgraphicalmanual]，基于 R 附加包中的例子画出了所有图形，在 R 2.9.0 的 1877 个附加包的示例代码中，一共生成了 21924 幅图形，尽管有很多示例代码可以同时生成多幅图形，但两万多幅图形背后包含的图形种类很可能成百上千，这样的数目是本书无法承载的。
 
-[^rgraphicalmanual]: 原网页 http://bm2.genes.nig.ac.jp 已失效，[快照](https://web.archive.org/web/20100813180430/http://bm2.genes.nig.ac.jp/RGM2/
+[^rgraphicalmanual]: 原网页 <http://bm2.genes.nig.ac.jp> 已失效，快照：<https://web.archive.org/web/20100813180430/http://bm2.genes.nig.ac.jp/RGM2>
 
 2.  很多 R 函数的用法都比较类似：一方面，有些附加包为了便于用户使用，只是扩展了泛型函数 `plot()`，这样用户只需要在建完特定的模型之后 `plot()` 相应的对象即可，例如 **MASS** 包中的岭回归；另一方面，对于基础图形而言，很多参数都是通用的，它们的意义通常比较固定，例如 `col` 参数通常表示主要图形元素的颜色等，这样，即使不看帮助文档，大致也能猜到用法，所以我们没有必要把每一个作图函数的用法都详细介绍一遍。
 
@@ -431,7 +431,9 @@ usage2(usage(heatmap, output = FALSE))
 > 我怎么知道有哪些作图的包？或者说怎样找到合适我的包呢？
 
 这个问题并不容易回答，它需要结合具体问题来看。从一般原则来说，用户可以浏览一下 CRAN 关于图形的分类列表（Task
-View）：<https://cran.r-project.org/web/views/Graphics.html>，这是一个很好的导航页面，它总结了一些有用的包的功能。对于具体的问题，也可以广泛寻求网络上的帮助和指导（参见 \@ref(sec:R-intro) 小节）。
+View[^cran-taskview]），这是一个很好的导航页面，它总结了一些有用的包的功能。对于具体的问题，也可以广泛寻求网络上的帮助和指导（参见 \@ref(sec:R-intro) 小节）。
+
+[^cran-taskview]: <https://cran.r-project.org/web/views/Graphics.html>
 
 本小节选取了 **plotrix** 包中的两个作图函数作为代表，让读者了解基于 R 的基础图形系统的扩展可能性。@Lemon06 是在 R
 News 上关于这个包的一篇介绍性文章，文章标题将这个包描述为"（它）位于 R 的红灯区"，原因是它看起来触犯了一些作图的常见规则，比如它扩展了饼图（甚至还有 3D 饼图这种统计学家很不齿的图形！）、介绍了如何将坐标轴截断、可以画像 Excel 那样的渐变色条形图等等，这里笔者也不知该包的作者究竟是开玩笑还是认真的，总之这个包的确显示了 R 基础图形系统的扩展性，但一些扩展的方向需要我们三思，例如截断坐标轴的作法就是 @Cleveland85 所反对的。
@@ -457,7 +459,7 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 (ref:fig-contour-persp) 与等高图对应的三维透视图：从右至左依次有三个山峰，尤其是中部山峰最为突出，对照后面 \@ref(sec:symbols) 小节中图 \@ref(fig:symbols-pop) 可知，这三个山峰分别代表东中西的省份
 
-```{r contour-persp, fig.height=6,fig.width=7,fig.cap="(ref:fig-contour-persp)",fig.scap="(ref:fig-contour-persp-s)"}
+```{r contour-persp, fig.height=6,fig.width=7,out.width="80%", fig.cap="(ref:fig-contour-persp)",fig.scap="(ref:fig-contour-persp-s)"}
 par(mar = rep(0, 4)) # 继续前面的例子
 persp(est$x1, est$x2, est$fhat, shade = 0.75, border = NA, 
       col = "lightblue", phi = 20, theta = 15, box = FALSE)

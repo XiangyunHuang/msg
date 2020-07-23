@@ -46,7 +46,7 @@ par(mar = c(4, 4, 1, .5), bg = "yellow")
 
 (ref:par1) 左上：`adj` 用于字符相对位置的调整，“+”表示真实坐标点的位置，通过一个长度为 2 的向量 `c(x, y)` 可以分别调整字符在横纵坐标上相对平移的位置；右上：坐标轴元素的边界距离，参数 `mgp` 的三个数值分别控制了坐标轴标题、坐标轴刻度数字以及坐标轴线到图形的距离；左下：`tcl` 控制了坐标轴刻度线的方向和长度，`srt` 控制了字符串的旋转角度；右下：线条相交处的样式
 
-```{r par1,fig.cap="(ref:par1)",fig.scap="(ref:par1-s)",echo=FALSE}
+```{r par1,fig.height= 7, fig.width=7,  fig.cap="(ref:par1)",fig.scap="(ref:par1-s)",echo=FALSE}
 layout(matrix(c(1, 3, 4, 2), 2))
 par(mar = rep(1, 4))
 plot(1:5,
@@ -98,15 +98,14 @@ plot(1:10, xlab = "X title", ylab = "Y title",
 
 (ref:par2) 四幅图形演示了不同的图形边框（上右开、上右闭、右开和上开）、字体样式（正常、粗体、斜体和粗斜体）、字体族（衬线、无衬线、等宽、符号）、坐标轴标签样式、点样式（圆圈、方框、菱形、三角）、线末端样式和线样式（实线、虚线、点线、点划线）
 
-```{r par2,fig.cap="(ref:par2)",fig.scap="(ref:par2-s)",echo=FALSE}
+```{r par2,fig.height=7, fig.width=7, fig.cap="(ref:par2)",fig.scap="(ref:par2-s)",echo=FALSE}
 par(mfrow = c(2, 2), mar = c(3, 3, 3, 2))
 btype <- c("l", "7", "c", "u")
 fml <- c("serif", "sans", "mono", "symbol")
 for (i in 0:3) {
   plot(1:10,
     font.main = i + 1, las = i, pch = NA, bty = btype[i + 1],
-    main = paste("font.main = ", i + 1, "; las = ", i, ";
-                    bty = \"", btype[i + 1], "\"", sep = "")
+    main = paste("font.main = ", i + 1, "; las = ", i, "; bty = \"", btype[i + 1], "\"", sep = "")
   )
   if (i < 3) {
     text(5, 8, paste("family = \"", fml[i + 1], "\"", sep = ""),
@@ -248,7 +247,12 @@ for (i in 0:3) {
 `xpd`
 : 对超出边界的图形的处理方式。若取值 `FALSE`，表示把图形限制在作图区域内，出界的图形截去；若取值 `TRUE`：把图形限制在图形区域内，出界的图形截去；若取值 `NA`：把图形限制在设备区域内。这些区域的说明参见下文和图 \@ref(fig:plot-region)。
 
-```{r plot-region,echo=FALSE,fig.cap="(ref:plot-region)",fig.scap="(ref:plot-region-s)"}
+
+(ref:plot-region-s) 图形的各种区域说明
+
+(ref:plot-region) 图形的各种区域和边界说明：作图区域（当前作图区域）、图形区域和设备区域；图形边界和外边界
+
+```{r plot-region,fig.width=7, fig.height=3.5, echo=FALSE,fig.cap="(ref:plot-region)",fig.scap="(ref:plot-region-s)"}
 par(mar = c(0, 0, 0, 0), mfrow = c(1, 2))
 plot.new()
 rect(0, 0, 1, 1, col = "lightgray", border = NA)
@@ -280,9 +284,6 @@ text(.72, .75, "Figure 2")
 text(.5, .05, "oma[1]", cex = .7)
 ```
 
-(ref:plot-region-s) 图形的各种区域说明
-
-(ref:plot-region) 图形的各种区域和边界说明：作图区域（当前作图区域）、图形区域和设备区域；图形边界和外边界
 
 整个作图设备实际上可以分为三个区域，分别是：“作图区域（Plot Region）”、“图形区域（Figure Margin）”和 “设备区域（Device Region）”。这三个区域也对应着两种边界：“图形边界（Figure Margin）”和 “外边界（Outer Margin）”。这些概念对于初学者来说可能会感到迷惑，然而图 \@ref(fig:plot-region) 是一个很好的说明。
 
@@ -511,7 +512,7 @@ brewer.pal(9, "Blues")
 
 (ref:ColorBrewer-all-s) RColorBrewer 包中所有调色板颜色的演示
 
-```{r ColorBrewer-all,fig.scap="(ref:ColorBrewer-all-s)",fig.cap="(ref:ColorBrewer-all)"}
+```{r ColorBrewer-all,fig.width=6, fig.height= 8, fig.scap="(ref:ColorBrewer-all-s)",fig.cap="(ref:ColorBrewer-all)"}
 layout(matrix(1:3, 3), heights = c(2, 1, 1))
 par(mar = c(0, 4, 0, 0))
 display.brewer.all(type = "seq") # 连续型：18 种
@@ -569,7 +570,7 @@ usage2(usage(points.default, output = FALSE))
 
 (ref:point-type) 点的类型：`pch` 参数取值从 1 到 25 及其它符号。注意：21\~25 的点可以填充背景颜色
 
-```{r point-type, results='hide',fig.scap="(ref:point-type-s)",fig.cap="(ref:point-type)"}
+```{r point-type, fig.width=7, fig.height=3.5, out.width="80%", results='hide',fig.scap="(ref:point-type-s)",fig.cap="(ref:point-type)"}
 demo("pointTypes", package = "MSG")
 ```
 
@@ -591,7 +592,7 @@ demo("pointTypes", package = "MSG")
 
 (ref:point-iris-s) 鸢尾花的花瓣长宽散点图
 
-```{r point-iris, echo=TRUE,fig.scap="(ref:point-iris-s)",fig.cap="(ref:point-iris)"}
+```{r point-iris, out.width="80%", echo=TRUE,fig.scap="(ref:point-iris-s)",fig.cap="(ref:point-iris)"}
 # 先将鸢尾花的类型转化为整数 1、2、3，便于使用向量
 idx <- as.integer(iris[["Species"]])
 plot(iris[, 3:4],
@@ -604,7 +605,9 @@ legend("topleft",
 )
 ```
 
-图 \@ref(fig:point-random) 为本书的一例“彩蛋”：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果可以观看演示 `demo("pointArts", package = "MSG")`^[参见：<https://yihui.org/cn/2010/08/art-of-points-in-r/>]。若读者感兴趣，甚至可以用 R 为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。
+图 \@ref(fig:point-random) 为本书的一例“彩蛋”：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果可以观看演示 `demo("pointArts", package = "MSG")`[^art-of-points-in-r]。若读者感兴趣，甚至可以用 R 为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。
+
+[^art-of-points-in-r]:  <https://yihui.org/cn/2010/08/art-of-points-in-r/>
 
 ```{r point-random,echo=TRUE, fig.scap="(ref:point-random-s)",fig.cap="(ref:point-random)"}
 par(mar = c(0.2, 0.2, 0.2, 0.2), mfrow = c(2, 2))
@@ -1002,7 +1005,7 @@ kable2(x = Export.USCN, "1999~2004 年中美两国的出口贸易总额数据", 
 
 (ref:axis-demo-s) 中美出口额双坐标轴图示
 
-```{r axis-demo, echo=TRUE, fig.scap="(ref:axis-demo-s)",fig.cap="(ref:axis-demo)",dev='tikz',fig.process=to_png}
+```{r axis-demo, echo=TRUE,fig.width=7, fig.height=4, out.width="80%", fig.scap="(ref:axis-demo-s)",fig.cap="(ref:axis-demo)",dev='tikz',fig.process=to_png}
 data(Export.USCN, package = "MSG")
 par(mar = c(4, 4.5, .1, 4.5))
 # 看似条形图，实为粗线条，宽度 lwd = 10
@@ -1046,7 +1049,7 @@ text(0, dnorm(qnorm(0.95)), expression(integral(phi(x) * dx, -infinity, 1.65) %~
 
 (ref:plotmath) 正态分布密度函数公式的表示
 
-```{r plotmath,echo=FALSE,fig.cap="(ref:plotmath)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
+```{r plotmath,echo=FALSE,fig.width=4.8, fig.height=3.6, out.width="80%", fig.cap="(ref:plotmath)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), 
      type = "l", xlab = "$x$", ylab = "$\\phi(x)$")
 text(-3, 0.37, adj = c(0, 1), 
@@ -1125,7 +1128,7 @@ matrix(c(1, 2, 1, 3), 2)
 
 (ref:layout) 函数 `layout()` 的版面设置示意图
 
-```{r layout,fig.cap="(ref:layout)"}
+```{r layout,fig.width=7, fig.height=2, out.width="80%", fig.cap="(ref:layout)"}
 layout(matrix(c(1, 2, 1, 3), 2), c(1, 3), c(1, 2))
 layout.show(2)
 ```
@@ -1249,7 +1252,7 @@ usage2(usage(getGraphicsEvent, output = FALSE))
 
 (ref:graphicsEvent) 鼠标在图形窗口中移动的效果图
 
-```{r graphicsEvent,fig.cap="(ref:graphicsEvent)",results='hide'}
+```{r graphicsEvent,out.width="80%", fig.cap="(ref:graphicsEvent)",results='hide'}
 demo("mouse_move", package="MSG")
 ```
 
@@ -1310,7 +1313,7 @@ diff(auv)
 
 (ref:waterfall-chart) “统计之都”网站八月第一周访问数据瀑布图：周一访问量为 939， 周二上升，周三开始下降（红色矩形表示访问量下降），直到周末降到最低。这个规律在其它星期都存在，也许它反映了大众普遍的劳累和忙碌规律？
 
-```{r waterfall-chart,echo=TRUE, fig.scap="(ref:waterfall-chart-s)",fig.cap="(ref:waterfall-chart)"}
+```{r waterfall-chart,echo=TRUE, fig.width=7, fig.height=5, out.width="80%", fig.scap="(ref:waterfall-chart-s)",fig.cap="(ref:waterfall-chart)"}
 par(mar = c(4, 4, .5, .1))
 plot(auv, xlab = "八月第一周", ylab = "绝对唯一访问次数", type = "n",
   xlim = c(0.5, 7.5), ylim = c(0, max(auv)),
@@ -1392,7 +1395,7 @@ optim(c(-.9, .9), f2, method = "L-BFGS-B",
 
 (ref:gradArrows-s) 梯度下降算法的过程演示
 
-```{r gradArrows,fig.scap="(ref:gradArrows-s)",fig.cap="(ref:gradArrows)",results='hide',dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
+```{r gradArrows,fig.width=6, fig.height=6,fig.scap="(ref:gradArrows-s)",fig.cap="(ref:gradArrows)",results='hide',dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 demo("gradArrows1", package = "MSG")
 ```
 
@@ -1434,7 +1437,9 @@ demo("signSTAT", package = "MSG")
     dev.off()
     ```
 
-1. 彩色图形虽然在外观上很吸引人，但是它的一个局限是可能受客观条件限制而不能被打印出来（例如黑白打印机），我们在选取颜色的时候该如何平衡外观和打印效果？另外，男性和女性的色盲 / 色弱比例各是多少？（可以查阅维基百科：<https://en.wikipedia.org/wiki/Color_blindness>）
+1. 彩色图形虽然在外观上很吸引人，但是它的一个局限是可能受客观条件限制而不能被打印出来（例如黑白打印机），我们在选取颜色的时候该如何平衡外观和打印效果？另外，男性和女性的色盲 / 色弱比例各是多少[^Color_blindness]？
+
+[^Color_blindness]: 可以查阅维基百科：<https://en.wikipedia.org/wiki/Color_blindness>
 
 1. 图 \@ref(fig:point-iris) 在点的样式选取上是否有明显的缺陷？或者说散点图中的点应该如何选取形状以使得各组点之间的外观差异尽量大？第 \@ref(subsec:clear-symbols) 小节会对这个问题有详细评论。
 
@@ -1442,7 +1447,7 @@ demo("signSTAT", package = "MSG")
 
 1. 利用三角形的边长关系画一个指北箭头如下
 
-```{r north-arrow,fig.width=2,fig.height=2.5,echo=FALSE}
+```{r north-arrow,out.width="30%",echo=FALSE}
 north.arrow <- function(x, y, h) {
   polygon(c(x, x, x + h / 2), c(y - h, y, y - (1 + sqrt(3) / 2) *
     h), col = "black", border = NA)
@@ -1460,7 +1465,7 @@ north.arrow(1, 0.8, 0.4)
 
 1. 一些数学上函数可以产生有趣的“心形曲线”，例如在极坐标系下 $r(\theta)=1-\sin(\theta)$ 生成的就是心形的曲线，笛卡尔坐标下方程 $(x^{2}+y^{2}-1)^{3}-x^{2}y^{3}=0$ 对应的解也可以形成心形曲线。这里我们考虑一种简单的心形曲线如下图所示：
 
-```{r heart-curve,fig.width=2,fig.height=2,echo=FALSE}
+```{r heart-curve,out.width="30%",echo=FALSE}
 MSG::heart_curve(col = "red")
 abline(v = 0, h = pi / 2, lty = 2, col = "gray")
 ```
@@ -1469,7 +1474,7 @@ abline(v = 0, h = pi / 2, lty = 2, col = "gray")
 
 1. 温度计形状用来表达比例数据通常很形象，我们可以设定温度计的范围在 $[0,\,1]$ 之间，用汞柱的高度来表达比例。用 R 构造一支“温度计”很简单，如下图：这些温度计实际上由一个灰圆点、一个红圆点、一条灰线段和一条红线段叠加构成，红线段的长度表示比例大小，其它图形元素都只是背景。请尝试用四个图形元素构造温度计，注意这些图形元素的叠加顺序（例如红线必须在灰线之后画，否则会被覆盖）。\@ref(sec:symbols) 小节的符号图中，“符号”的选项之一就是用温度计，但不如这里的温度计形象。对于追求细节完美的用户来说，这里线段末端的样式也值得注意，因为我们实际生活中看到的汞柱末端是弧形的，所以这里要是画成矩形就不合适了；线段末端的三种样式在 \@ref(sec:par) 小节中有介绍。
 
-```{r thermometer-demo,fig.width=4,fig.height=1.5,echo=FALSE}
+```{r thermometer-demo,fig.width=4,fig.height=1.5,out.width="75%",echo=FALSE}
 par(mar = rep(0.5, 4))
 plot.new()
 for (i in c(.2, .5, .8)) {

@@ -97,7 +97,12 @@ pairs(iris[1:4],
 
 **ggplot2** 包所支持的 **GGally** 包可以轻松地给散点图矩阵里添加更为复杂的信息，下面是一个代码示例。你能看懂该段代码绘制的图 \@ref(fig:fig-ggally) 吗？
 
-```{r fig-ggally, echo=TRUE}
+
+(ref:fig-pairs2-s) 鸢尾花数据的散点图矩阵增强版
+
+(ref:fig-pairs2) 鸢尾花数据的散点图矩阵增强版：散点图、直方图、密度曲线图、箱线图的结合
+
+```{r fig-ggally, echo=TRUE, fig.height=10, fig.width=10, fig.cap="(ref:fig-pairs2)", fig.scap="(ref:fig-pairs2-s)"}
 library(ggplot2)
 library(GGally)
 ggpairs(iris, aes_string(colour="Species", alpha=0.5))
@@ -482,7 +487,7 @@ kable2(ChinaPop, "我国 31 省市自治区的人口特征数据")
 
 (ref:fig-symbols-pop) 2005 年中国 31 地区五大国民素质特征分布温度计图
 
-```{r symbols-pop,fig.width=5.8,fig.height=6,results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
+```{r symbols-pop,fig.width=6,fig.height=6,out.width="80%",results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
 demo("ChinaPop", package = "MSG")
 ```
 
@@ -507,7 +512,7 @@ usage2(usage(symbols, output = FALSE))
 
 (ref:fig-symbols) 符号图提供的六种基本符号
 
-```{r symbols,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
+```{r symbols,fig.width=6,fig.height=6,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
 demo("symbols_all", echo = FALSE, package = "MSG")
 ```
 
@@ -988,7 +993,7 @@ kable2(kyphosis, "脊椎矫正手术数据")
 
 (ref:fig-rpart) 脊椎矫正手术结果的分类树图
 
-```{r rpart,fig.width=4,fig.height=3.5,fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
+```{r rpart,fig.width=6,fig.height=4,out.width="80%", fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
 library(rpart)
 fit <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
 par(mar = rep(1, 4), xpd = TRUE)
@@ -1145,7 +1150,7 @@ kable2(trees, "黑莓树数据")
 
 (ref:fig-andrews-curve) 鸢尾花数据和黑莓树数据的调和曲线图：左上为原始鸢尾花数据，右上为调整变量顺序的鸢尾花数据，左下为标准化之后的鸢尾花数据，右下为标准化之后的黑莓树数据调和曲线图
 
-```{r andrews-curve,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)",dev='tikz',fig.showtext=FALSE,fig.process=to_png}
+```{r andrews-curve,fig.width=6,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)",dev='tikz',fig.showtext=FALSE,fig.process=to_png}
 iris.col <- vec2col(iris$Species)
 par(mfrow = c(2, 2))
 par(mar = c(4, 4, 0.2, 0.2))

@@ -101,7 +101,7 @@ plot_grid(p1, p2, ncol = 2)
 
 (ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）
 
-```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
+```{r curve,fig.width=4.8,fig.height=3.6,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
 chippy <- function(x) sin(cos(x) * exp(-x / 2))
 curve(chippy, -8, 7, n = 2008, 
@@ -186,7 +186,7 @@ kable2(iris, "鸢尾花花瓣数据")
 
 (ref:fig-sunflowerplot) 鸢尾花花瓣长和宽的向日葵散点图
 
-```{r sunflowerplot,fig.width=4,fig.height=4,fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
+```{r sunflowerplot,fig.width=4,fig.height=4,out.width="70%", fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
 par(mar = c(4, 4, 0.2, 0.2))
 sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 ```
@@ -265,7 +265,7 @@ sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色浅）
 
-```{r smoothScatter,fig.width=4.5,fig.height=4.5,fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
+```{r smoothScatter,fig.width=4.5,fig.height=4.5,out.width="75%", fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
 library(ggpointdensity)
 ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
   geom_pointdensity(adjust = 0.1) +
@@ -342,7 +342,7 @@ ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
 
 ```{r tab-windrose}
 data(mydata, package = "openair")
-kable2(mydata[, 2:3], "伦敦 Marylebone 1998 年 1 月 1 日到 2005 年 6 月 23 日的风速风向数据")
+kable2(mydata[, 2:3], "伦敦 Marylebone 风速风向数据", insert_txt = "：1998 年 1 月 1 日到 2005 年 6 月 23 日")
 ```
 
 图 \@ref(fig:windrose) 是当地风玫瑰图的示例，各种风速的频率分别用指针的一小节或一个扇环来表示。也就是说，指针的某一小节或者某个扇环的半径越长，表示该风速水平上的刮风次数越多。从图中可以看出，该地区最常刮西南偏南风，因为该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%。
@@ -351,7 +351,7 @@ kable2(mydata[, 2:3], "伦敦 Marylebone 1998 年 1 月 1 日到 2005 年 6 月 
 
 (ref:fig-windrose) 伦敦 Marylebone 的风玫瑰图：将风向分为 12 个（左）或 16 个方向，每个方向用一根“指针”或一个扇形来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮西南偏南风，因为该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%
 
-```{r windrose,fig.width=5.4,fig.height=4.6,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",fig.show='hold', out.width="45%"}
+```{r windrose,fig.width=5.4,fig.height=5.4,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",fig.show='hold', out.width="49%"}
 library(openair)
 windRose(mydata)
 windRose(mydata = mydata, ws = "ws", wd = "wd", 
@@ -465,7 +465,7 @@ kable2(aml, "急性髓细胞白血病病人生存数据")
 
 (ref:fig-survival) 急性髓细胞白血病病人生存函数图
 
-```{r survival,fig.width=4.8,fig.height=3.8,fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
+```{r survival,fig.width=4.8,fig.height=3,out.width="80%", fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
 library(survival)
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 survminer::ggsurvplot(leukemia.surv, data = aml, ggtheme = theme_gray())
@@ -553,7 +553,7 @@ kable2(x, "592 名学生的头发和眼睛的颜色数据", only_head = FALSE)
 
 (ref:fig-assocplot) 眼睛颜色与头发颜色的关联图
 
-```{r assocplot,fig.width=4.8,fig.height=4, fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
+```{r assocplot,fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
 assocplot(x)
 ```
 
@@ -600,11 +600,11 @@ chisq.test(x)$p.value # 卡方检验 P 值
 
 除了 R 的基础绘图函数外，**ggplot2** 包的 `geom_tile()` 也可以展示这种关联信息，如图 \@ref(fig:assocplot2) 所示。将它与图 \@ref(fig:assocplot) 作比较。
 
-(ref:fig-assocplot2-s) 眼睛颜色与头发颜色的关联图
+(ref:fig-assocplot2-s) ggplot2 绘制的眼睛颜色与头发颜色的关联图
 
-(ref:fig-assocplot2) 眼睛颜色与头发颜色的关联图
+(ref:fig-assocplot2) ggplot2 绘制的眼睛颜色与头发颜色的关联图
 
-```{r assocplot2, echo=TRUE,fig.width=4.8,fig.height=4, fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
+```{r assocplot2, echo=TRUE,fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
 x1 <- reshape2::melt(unclass(chisq.test(x)$res), 
                      value.name = "residuals") 
 ggplot(x1, aes(x = Hair, y = Eye)) +
@@ -796,7 +796,7 @@ kable2(fail_temperature, "美国国家航空和宇宙航行局的一批 O 型环
 
 (ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效
 
-```{r cdplot,fig.width=4,fig.height=2.5,results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
+```{r cdplot,fig.width=4.8,fig.height=2.4, out.width="80%",results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
 # ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
 #   geom_density(position = "fill") +
 #   
@@ -904,7 +904,7 @@ ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
 
 (ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 $(60, 75]$ 区间内
 
-```{r spineplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
+```{r spineplot,fig.width=4.8,fig.height=3,out.width="75%",fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
 par(mar = c(4, 4, .5, 2))
 t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
 ```
@@ -1040,7 +1040,9 @@ with(est, {
 knitr::include_graphics("images/disk-usage.png", dpi = NA)
 ```
 
-标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是笔者英文博客（<https://yihui.org/en/>）利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为笔者一直开发 **animation** 包，并研究着 Sweave（后来以此催生了 **knitr**）。
+标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是笔者英文博客[^yihui-en]利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为笔者一直开发 **animation** 包，并研究着 Sweave（后来以此催生了 **knitr**）。
+
+[^yihui-en]: <https://yihui.org/en/>
 
 (ref:fig-yihui-name-wordle-s) 笔者英文博客的标签云
 
