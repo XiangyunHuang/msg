@@ -1,15 +1,18 @@
 # 多变量图 {#cha:gallery3}
 
+本章介绍展示三个或三个以上变量关系的统计图形。其中，比较常见的是散点图矩阵、条件分割图、三维透视图和地图。其它不常见的图形也略作介绍。此外，矩阵和二维联表在形式上是二维结构，但实际上有三个变量，理应归入本章。但是，考虑到矩阵和联表的特殊形式，我们将在第\@ref(cha:gallerymatrix)章再集中介绍。
+
+
 ## 散点图矩阵 {#sec:scatterplot-matrix}
 
 ### 概述 {-}
 
-散点图矩阵（Scatterplot Matrices）是散点图的高维扩展。它的基本构成是普通散点图，只是将多个变量的两两散点图以矩阵的形式排列起来，就构成了所谓的散点图矩阵，通常包含 $p\times p$ 个窗格（$p$ 为变量个数）。散点图矩阵从一定程度上克服了在平面上展示高维数据的困难，对于我们查看变量之间的两两关系非常有用。
+散点图矩阵（Scatterplot Matrices）是散点图的高维扩展。它的基本构成是普通散点图（\@ref(sec:plot-default) 小节），只是将多个变量的两两散点图以矩阵的形式排列起来，就构成了所谓的散点图矩阵，通常包含 $p\times p$ 个窗格（$p$ 为变量个数）。散点图矩阵从一定程度上克服了在平面上展示高维数据的困难，对于我们查看变量之间的两两关系非常有用。
 
 ### 示例 {-}
 
 图 \@ref(fig:pairs)
-是对鸢尾花数据 `iris` 所作的散点图矩阵。除了展示任意两个变量之间的关系外。对角线窗格显示的是直方图，从中我们可以看到四个变量各自的分布情况。上三角窗格中用不同样式的点标记出了鸢尾花的不同类型（回顾图 \@ref(fig:point-iris)
+是对鸢尾花数据（表 \@ref(tab:tab-iris)）所作的散点图矩阵。除了展示任意两个变量之间的关系外。对角线窗格显示的是直方图，从中我们可以看到四个变量各自的分布情况。上三角窗格中用不同样式的点标记出了鸢尾花的不同类型（参考图 \@ref(fig:point-iris)
 ）；下三角窗格中简化了点的样式，但是 添加了一条平滑曲线，对鸢尾花的四个变量两两之间的关系作出了一种非参数概括（散点图平滑技术，参见 @Cleveland79）。
 
 (ref:fig-pairs-s) 鸢尾花数据的散点图矩阵
@@ -95,8 +98,7 @@ pairs(iris[1:4],
 )
 ```
 
-**ggplot2** 包所支持的 **GGally** 包可以轻松地给散点图矩阵里添加更为复杂的信息，下面是一个代码示例。你能看懂该段代码绘制的图 \@ref(fig:fig-ggally) 吗？
-
+**ggplot2** 包所支持的 **GGally** 包给散点图矩阵里添加了更为复杂的信息，下面是一个代码示例。你能看懂该段代码绘制的图 \@ref(fig:fig-ggally) 吗？
 
 (ref:fig-pairs2-s) 鸢尾花数据的散点图矩阵增强版
 
@@ -110,142 +112,184 @@ ggpairs(iris, aes_string(colour="Species", alpha=0.5))
 
 在变量数目较多时，我们不妨将散点图矩阵作为一种探索变量之间相关关系的工具，它比起相关系数矩阵等统计指标来优势在于：散点图矩阵展示了所有原始数据，这样我们可以看到变量之间的任何关系（线性或非线性、离群点），从而避免被单一的统计指标所误导。
 
-## 三维透视图 {#sec:persp}
+## 条件分割图 {#sec:coplot}
 
 ### 概述 {-}
 
-相比其二维平面图形来说，三维透视图（Perspective Plot）可能在视觉上更具有吸引力。三维透视图的数据基础是网格数据（回顾 \@ref(sec:contour) 小节和图 \@ref(fig:contour-grid)），它将一个矩阵中包含的高度数值用曲面连接起来，便形成了我们所看到的三维透视图。前面等高图一节中我们曾经用到过透视图，参见图 \@ref(fig:persp-pop)
-。
+条件分割图（Conditioning Plot）的思想源自于统计学中的条件分布，即：给定某一个（或几个）变量之后看我们所关心的变量的分布情况。在条件分割图中，这种"分布"主要指的是两个变量之间的关系，通常以散点图表示。
+
+条件分割图可以看作是对散点图的进一步深入发掘，它可以以一个或者两个条件变量作为所有数据的划分条件，条件变量在图形的边缘用灰色矩形条标记出变量的取值范围，每个矩形条对应着一幅散点图（严格来说此时应该称作"条件散点图"），这就是条件分割图的基本做法。
 
 ### 示例 {-}
 
-这里展示一张新西兰 Maunga Whau 火山的三维透视图（图 \@ref(fig:persp)）。
+一组斐济岛（Fiji）附近的地震数据包括了地震发生地点的经纬度和震源的深度（表 \@ref(tab:tab-quakes)）。我们想知道该地区在地震深度上分布是否均匀。因此，我们令深度变量为条件变量，绘制了图 \@ref(fig:coplot)，看看在不同条件下地震发生地点（经纬度）是否有变化。
 
-(ref:fig-persp-s) 新西兰 Maunga Whau 火山的三维透视图
-
-(ref:fig-persp) 新西兰 Maunga Whau 火山的三维透视图
-
-```{r persp,fig.height=4,fig.width=7,echo=FALSE,fig.cap="(ref:fig-persp)",fig.scap="(ref:fig-persp-s)"}
-z <- volcano
-x <- 4 * (1:nrow(z))
-y <- 4 * (1:ncol(z))
-par(mar = rep(0, 4))
-persp(x, y, z, theta = 150, phi = 30, col = "green3", ltheta = -120, 
-      shade = 0.75, scale = FALSE, border = NA, box = FALSE)
+```{r tab-quakes}
+data(quakes)
+kable2(quakes, "斐济岛附近的地震数据")
 ```
+
+(ref:fig-coplot-s) 给定震源深图的地震经纬度条件分割图
+
+(ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近
+
+```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
+par(mar = rep(0, 4), mgp = c(2, .5, 0))
+library(maps)
+coplot(lat ~ long | depth,
+  data = quakes, number = 4,
+  ylim = c(-45, -10.72), panel = function(x, y, ...) {
+    map("world2",
+      regions = c("New Zealand", "Fiji"),
+      add = TRUE, lwd = 0.1, fill = TRUE, col = "lightgray"
+    )
+    text(180, -13, "Fiji", adj = 1)
+    text(170, -35, "NZ")
+    points(x, y, col = rgb(0.2, 0.2, 0.2, .5))
+  }
+)
+```
+
+从图中可以清楚看出，随着深度值的增加，地震发生地点逐渐由西向东、由南向北移动，震源较深的地震都发生在离斐济岛很近的东南侧。
 
 ### 绘制方法 {-}
 
-R 中透视图的函数为 `persp()` ，其用法如下：
+R 中条件分割图的函数为 `coplot()`，其用法如下：
 
-```{r persp-usage, results='asis'}
-usage2(usage(graphics:::persp.default, output = FALSE))
+```{r coplot-usage, results='asis'}
+usage2(usage(coplot, output = FALSE))
+usage2(usage(co.intervals, output = FALSE))
+
+```
+\noindent 参数含义：
+ 
+`formula`:
+: 一个公式，形式为 `y ~ x | a`（一个条件变量）或 `y ~ x | a * b`（两个条件变量），"`|`" 后面即为条件变量。
+
+`data`:
+: 数据，其中包含了 `x` 、 `y` 、 `a` 和 `b` 等变量。
+
+`given.values`: 
+: 指定条件变量的取值范围。
+
+`panel`:
+: 该函数的关键参数，它决定了每一幅散点图的画法，默认只是画点，我们可以将其任意扩展为我们需要的图示功能，如添加回归直线等等。
+
+`rows` 和 `columns`:
+: 设定散点图的摆放行数和列数。
+
+`col` 和 `pch`:
+: 分别设定散点图中点的颜色和样式。
+
+`bar.bg`:
+给定条件变量指示条的填充颜色。
+
+`number` 和 `overlap`:
+: 传给 `co.intervals()` 函数，用来计算划分连续变量的区间，前者设定划分段数，后者设定区间之间的重叠比例，如：
+
+```{r co-intervals-demo, echo=TRUE}
+co.intervals(1:10, number = 5, overlap = 0.5)
 ```
 
-透视图函数为泛型函数，主要体现在它的第一个参数既可以是单个 `x` 向量，也可以是一个包含了向量 `x` 和 `y` 的列表，这一点与等高图函数是类似的。
+\noindent 上述代码将数字 `1:10` 划分为了 5 段，每段长度为 2，重叠长度为 1，因此重叠比例为 0.5。条件分割图中散点图的顺序是从左到右、从下到上，分别与条件变量从左到右、从下到上的指示条对应。
+
+图 \@ref(fig:coplot) 的绘制代码为：
+
+```{r, eval=FALSE, echo=TRUE}
+par(mar = rep(0, 4), mgp = c(2, .5, 0))
+library(maps)
+coplot(lat ~ long | depth,
+  data = quakes, number = 4,
+  ylim = c(-45, -10.72), panel = function(x, y, ...) {
+    map("world2",
+      regions = c("New Zealand", "Fiji"),
+      add = TRUE, lwd = 0.1, fill = TRUE, col = "lightgray"
+    )
+    text(180, -13, "Fiji", adj = 1)
+    text(170, -35, "NZ")
+    points(x, y, col = rgb(0.2, 0.2, 0.2, .5))
+  }
+)
+```
+
+这个例子展示了 `panel` 参数的用法。我们借助 **maps** 包 [@maps] 在散点图上添加了新西兰和斐济岛的地图作为辅助信息。关于 R 中地图的使用请参考 \@ref(sec:maps) 小节。
+
+## 符号图 {#sec:symbols}
+
+### 概述 {-}
+
+符号图是用各种符号展示高维数据的图示工具，它的主要思想是将高维数值体现在图形中符号的特征上。因为受到平面的限制，我们对于高维数据的展示方法总是很有限，仅仅是对于二维数据的展示最为方便，对更高维度的如三维、四维甚至五维的数据相对缺乏好的工具。由于符号的存在，使得我们可以将高于二维的数据"寄托"在符号的各种特征上，如：以矩形为散点图的基本符号，那么我们可以用其长宽分别代表两个变量，这样一幅图形中至少可以放置四个变量；类似地，我们可以以圆圈、正方形、多边形、箱线图、温度计等符号为散点图中的"点"，于是散点图就可以被扩展为高维数据的展示工具。
+
+### 示例 {-}
+
+我们以《中国统计年鉴》里我国 31 省市自治区的人口特征数据为例，通过实际数据来看符号图在展示数据时的效果。表 \@ref(tab: ChinaPop-data) 显示了我国 2005 年人口自然增长率、年底人口总数、城镇人口比重、人口预期寿命和高学历人数五个变量，我们以此作为国民素质的刻画指标，绘制了图 \@ref(fig:symbols-pop) [@Xie08]。
+
+```{r ChinaPop-data}
+source(system.file("extdata", "ChinaPop.R", package = "MSG"), encoding = "UTF-8")
+kable2(as.data.frame(ChinaPop), "我国 31 省市自治区的人口特征数据")
+```
+
+
+(ref:fig-symbols-pop-s) 中国 31 地区五大国民素质特征分布温度计图
+
+(ref:fig-symbols-pop) 2005 年中国 31 地区五大国民素质特征分布温度计图
+
+```{r symbols-pop,fig.width=6,fig.height=6,out.width="80%",results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
+demo("ChinaPop", package = "MSG")
+```
+
+这幅图融合了多种图形和图形元素。它的基础是一幅等高图（参见 \@ref(sec:contour) 小节和图 \@ref(fig:contour-pop)），利用人口预期寿命和高学历人数两个变量计算二维密度，画出等高线，便完成了底图的制作。然后，我们通过人口预期寿命和高学历人数两个变量的数值往图中添加温度计符号，温度计宽代表增长率，高代表总人口数，温度代表城镇人口比重。接着，我们将各省市的文本标签添加到图中。
+
+经过这些图形元素的表达，全国 31 省市自治区的五项人口特征便一目了然，例如，通过温度计的高度可以观察出三个人口大省广东、山东、河南（相应的人口总量小的地区如西藏、青海、宁夏等也容易看出），由宽度可以看出西藏、青海、宁夏、新疆等省市自治区的人口自然增长率非常高（而北京、上海、天津等直辖市的增长率则很低）。从温度指示的情况来看，北京、上海和天津三大直辖市的城镇人口比例要远高于其它地区；从整幅散点图来看，人口平均预期寿命与高学历者人数呈比较明显的正相关关系。箱线图和坐标轴须分别刻画了人口平均预期寿命与高学历者人数各自的分布特征。这样，我们就完成了在平面上描述五维变量的任务。
+
+从这幅图，我们可以看出掌握基本图形元素使用的用处和重要性——没有一种统计软件能够提供现成的模块或函数来完成类似的任务。
+
+### 绘制方法 {-}
+
+R 中的符号图函数为 `symbols()`，它提供了六种基本符号：圆、正方形、长方形、星形、温度计和箱线图，分别由相应的参数指定； `symbols()` 的用法如下：
+
+```{r symbols-usage, results='asis'}
+usage2(usage(symbols, output = FALSE))
+```
+
+如前所述，符号图的基础是散点图，因此首先要给出两个参数 `x` 和 `y` 以便作散点图，然后在散点的位置上画出符号。接下来的六个参数分别指定符号的形状。图 \@ref(fig:symbols)
+给出了六种基本符号的形状，注意观察各种符号是如何利用自己的特征将高维数据表达出来的。
+
+(ref:fig-symbols-s) 符号图提供的六种基本符号
+
+(ref:fig-symbols) 符号图提供的六种基本符号
+
+```{r symbols,fig.width=6,fig.height=6,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
+demo("symbols_all", echo = FALSE, package = "MSG")
+```
 
 \noindent 参数含义：
 
-`x` 和 `y`:
-: 分别是两个数值向量。
+circles
+:   圆：一个数值向量，给定圆的半径（实际上是与圆的半径成比例，下同）。
 
-`z`:
-: 一个与前两个参数对应的矩阵。
+squares
+:   正方形：一个数值向量，给定正方形的边长。
 
-`xlim` 、 `ylim` 和 `zlim`:
-: 分别设定三个坐标轴的范围。
+rectangles
+:   长方形：一个矩阵，列数为 2，这两列分别给定长方形的宽和高。
 
-`xlab` 、 `ylab` 和 `zlab`:
-: 分别设定三个坐标轴的标题。
+stars
+:   星形：一个矩阵，列数 $\geq3$，类似雷达图，给定从星星中心向每个方向的射线的长度（严格说是线段），最终这些射线的端点会连接起来形成一个星形，但射线本身不会被画出来；缺失值将被视作 0 （星形在符号图中并不直观，推荐直接使用星状图，见 \@ref(fig:stars) 小节）。
 
-`theta` 和 `phi`:
-: 分别设定立体图形左右方向和上下方向旋转的角度。
+thermometers
+:   温度计：一个矩阵，列数为 3 或 4，前两列分别给定温度计的宽和高；若矩阵为三列，那么第三列为温度计内的"温度"高度，注意这一列的值应该小于 1，否则温度的填充会超过温度计的范围；若矩阵为四列，那么温度将按照第三列与第四列的比率进行填充，同样，这两列的比率需要小于 1。
 
-`r`:
-: 设定眼睛离透视图中心的距离，这个距离的远近会给我们一种从远近看物体的感觉。
+boxplots
+:   箱线图：一个矩阵，列数为 5，前两列分别给定箱子的宽和高，第三、四列分别给定两条线（下线和上线）的长度，第五列与温度计类似，给定箱线图内的中位数标记线在箱子内部的高度比例，因此这一列数据也需要在 $[0,1]$ 范围内；这里只是借用了箱线图的称谓，符号图中的箱线与真正的箱线图之间没有关系。
 
-`d`:
-: 设定立体效果的程度，大于 1 的值会减弱立体程度，反之会增强立体程度。
+不难看出，这六种符号图能展示的数据维度分别为 3、3、4、$\geq5$、5 或 6、7；参数 `inches` 为逻辑值，控制着符号的大小，若为 `TRUE`（默认），那么图中所有符号的最长长度（边长或半径等等）将被设置为 1 英寸（约 2.54 厘米），其它长度按比例缩放，若该参数取一个正数，那么类似地，所有符号的最长长度的英寸值为该正数，因此 `TRUE` 和 1 的效果是相同的，如果 `inches` 为 `FALSE` 那么符号的长度单位取相应坐标轴的单位，例如符号中的 1 长度即为坐标轴上的 1 单位； `add` 为逻辑值，设定是否将符号图添加到现有图形上； `fg` 为符号的前景色； `bg` 为符号的背景色或填充色；其它参数用来添加标题、设定坐标轴范围等。
 
-`scale`:
-: 逻辑值，决定是否对三个坐标进行缩放。若为 `TRUE`，则 `x` 、 `y` 和 `z` 都会被缩放到 $[0, 1]$ 范围内；若为 `FALSE`，那么所有坐标轴都按照数据的原始量纲处理，这样可以得到数据的真实比例。
-
-`expand`:
-: z 轴的缩放因子，决定了 z 轴的长短。
-
-`col`:
-: 组成曲面的所有小方块的颜色。
-
-`border`:
-: 组成曲面的小方块的边框样式，设置为 `NA` 可以去掉边框。
-
-`ltheta` 和 `lphi`:
-: 设置透视图的光源位置。
-
-`shade`:
-: 决定的阴影效果。
-
-`box`:
-: 逻辑值，设定透视图是否需要画外框。
-
-`axes`:
-: 决定是否画坐标轴。
-
-`nticks`:
-: 坐标轴刻度线的数目。
-
-`ticktype`:
-: 设定坐标轴刻度类型：取值 `"simple"` 则简单画箭头表示坐标轴，`"detailed"` 则将详细的刻度标记在坐标轴上。
-
-下面是我们使用这个函数绘制图 \@ref(fig:persp) 的代码：
+利用该函数，可以绘制图 \@ref(fig:symbols-pop)。读者可以运行以下函数来获取代码：
 
 ```{r, eval=FALSE, echo=TRUE}
-z <- volcano
-x <- 4 * (1:nrow(z))
-y <- 4 * (1:ncol(z))
-par(mar = rep(0, 4))
-persp(x, y, z, theta = 150, phi = 30, col = "green3", ltheta = -120, 
-      shade = 0.75, scale = FALSE, border = NA, box = FALSE)
+demo("ChinaPop", package = "MSG")
 ```
-
-我们可以使用其他函数，为三维透视图添加图形元素，如图 \@ref(fig:persp-pop)，展示了新西兰 Maunga Whau 火山的真面目。读者不妨将这幅立体图形与前面章节中的等高图 \@ref(fig:filled-contour) 和颜色图 \@ref(fig:image) 对应起来并分别体会等高图和颜色图是怎样展示三维数据的。
-
-(ref:fig-persp-add-s) 向三维透视图中添加图形元素的展示
-
-(ref:fig-persp-add) 向三维透视图中添加图形元素的展示：`trans3d()` 函数的应用
-
-```{r persp-pop,fig.width=6,fig.height=4,echo=FALSE,fig.cap="(ref:fig-persp-add)",fig.scap="(ref:fig-persp-add-s)"}
-x <- seq(-10, 10, length = 30)
-y <- x
-f <- function(x, y) {
-  r <- sqrt(x^2 + y^2)
-  10 * sin(r) / r
-}
-z <- outer(x, y, f)
-z[is.na(z)] <- 1
-par(mar = c(4, 4, 0.2, 0.2))
-res <- persp(x, y, z,
-  theta = 30, phi = 30, expand = 0.5, col = "lightblue",
-  ltheta = 120, shade = 0.75, ticktype = "detailed",
-  xlab = "X", ylab = "Y", zlab = "Sinc( r )"
-)
-xE <- c(-10, 10)
-xy <- expand.grid(xE, xE)
-points(trans3d(xy[, 1], xy[, 2], 6, pmat = res), col = 2, pch = 16)
-lines(trans3d(x, y = 10, z = 6 + sin(x), pmat = res), col = 3)
-
-phi <- seq(0, 2 * pi, len = 201)
-r1 <- 7.725 # radius of 2nd maximum
-xr <- r1 * cos(phi)
-yr <- r1 * sin(phi)
-lines(trans3d(xr, yr, f(xr, yr), res), col = "pink", lwd = 2)
-```
-
-**grDevices** 包提供了一个相关的三维透视图转换函数 `trans3d()` ，它可以将一个空间的点的三维坐标根据透视图的特征转换为平面坐标，这样我们就可以很方便地使用一般的底层作图函数向立体图中添加图形元素。图 \@ref(fig:persp-pop) 就是这样的一个例子，读者可以参考 `persp()` 帮助文件中的示例。
-
-最后，我们介绍另一个专门的三维图形包：**scatterplot3d**
-[@Ligges03]，这个包提供了更方便且美观的作图函数 `scatterplot3d()` ；在 **lattice** 包 [@Sarkar08] 中也有三维图形函数 `cloud()` 和 `wireframe()` ；此外，**rgl** 包 [@rgl] 也不失为一个非常便利的三维数据探索工具，它基于 OpenGL 系统写成，最大的优势在于它生成的三维图形可以通过鼠标交互操作，例如拖拽旋转等，立体效果非常逼真；**rgl** 系统到后面 \@ref(sec:rgl) 小节我们再详细介绍。
-
 
 
 ## 星状图、蛛网图、雷达图 {#sec:stars}
@@ -263,7 +307,7 @@ data(mtcars)
 kable2(mtcars[, 1:7], "汽车数据")
 ```
 
-我们为这组数据绘制了图 \@ref(fig:stars) 所示的星状图。从图中可以看到各种品牌和型号的汽车在这 7 方面的指标和性能表现。以星状图展示数据可以让我们很快找到一些有突出特征的个体，从而省去了在大批数据中逐个寻找、排序的过程。
+我们为这组数据绘制了图 \@ref(fig:stars) 所示的星状图。从图中可以看到各种品牌和型号的汽车在这七方面的指标和性能表现。以星状图展示数据可以让我们很快找到一些有突出特征的个体，从而省去了在大批数据中逐个寻找、排序的过程。
 
 (ref:fig-stars-s) Motor Trend 杂志 1974 年汽车数据的星状图
 
@@ -285,7 +329,7 @@ R 中星状图的函数为 `stars()` ，其用法如下：
 # usage2(usage(stars, output = FALSE))
 ```
 
-```r
+```{r, eval=FALSE, echo=TRUE}
 stars(x, full = TRUE, scale = TRUE, radius = TRUE, 
     labels = dimnames(x)[[1L]], locations = NULL, nrow = NULL,
     ncol = NULL, len = 1, key.loc = NULL, 
@@ -365,183 +409,6 @@ palette(rainbow(12, s = 0.6, v = 0.75))
 stars(mtcars[, 1:7], len = 0.8, key.loc = c(14, 1.5), ncol = 7, 
       main = "", draw.segments = TRUE)
 palette("default") # 恢复默认调色板
-```
-
-## 马赛克图 {#sec:mosaicplot}
-
-### 概述 {-}
-
-马赛克图（Mosaic Plots）是展示多维列联表数据的工具。前面我们已经提到过两种展示列联表数据的工具（\@ref(sec:assocplot) 和 \@ref(sec:fourfoldplot) 小节），但它们都只能展示低维列联表，而马赛克图对于列联表的维数没有限制。
-
-马赛克图的表现形式为与频数成比例的矩形块，整幅图形看起来就像是若干块马赛克放置在平面上。马赛克图背后的统计理论是对数线性模型（log-linear model），我们先回顾一个最简单的二维列联表的独立模型。
-
-二维列联表的独立性从概率角度来说就是单元格的频率等于边际频率的乘积：
-
-\begin{equation}
-\pi_{ij}=\pi_{i\cdot}\pi_{\cdot j}
-(\#eq:independence)
-\end{equation}
-
-取对数即得：
-
-\begin{equation}
-\mathrm{log}(\pi_{ij})=\mathrm{log}(\pi_{i\cdot})+\mathrm{log}(\pi_{\cdot j})
-(\#eq:logindependence)
-\end{equation}
-
-根据 $\mu_{ij}=n\pi_{ij}$ 进一步写成频数的形式：
-
-\begin{equation}
-\mathrm{log}(\mu_{ij})=\lambda+\lambda_{i}^{r}+\lambda_{j}^{c}
-(\#eq:freqindependence)
-\end{equation}
-
-$\lambda_{i}^{r}$ 和 $\lambda_{j}^{c}$ 分别表示行效应和列效应，$\lambda$ 为常数。 \@ref(eq:freqindependence) 式就是最普通的对数线性模型。通过计算拟合，我们可以得到行列效应的估计值。对数线性模型在马赛克图中的主要表现是单元格的残差，而单元格的残差可以有三种：似然比残差（离差，deviance）$G^{2}$、Pearson $\chi^{2}$ 残差和 Freeman-Tukey 残差，前两种定义如下式：
-
-\begin{equation}
-G^{2}=2\sum n_{ij}\mathrm{log}(\frac{n_{ij}}{\hat{\mu}_{ij}});\;\;\chi^{2}=\sum\frac{\left(n_{ij}-\hat{\mu}_{ij}\right)^{2}}{\hat{\mu}_{ij}}
-(\#eq:loglinearres)
-\end{equation}
-
-残差反映的是某个单元格拟合的好坏。马赛克图用 5 级颜色表达了残差的大小，后面我们结合具体例子说明。
-
-### 示例 {-}
-
-泰坦尼克号乘客生还情况的原始数据见表 \@ref(tab:Titanic-data)。该数据给出了分舱位（一二三等舱和船员舱）、分性别（男女）、分年龄（大人小孩）的生存情况。泰坦尼克号的沉没是一件著名的历史事件，至今仍然有很多人在研究它。我们所关心的问题主要是通过一些比例看出当时救援的侧重性，如：是否头等舱的乘客生还比例最高？"女士和孩子优先" 的原则在各船舱有没有被很好遵守？
-
-```{r Titanic-data}
-data(Titanic)
-kable2(as.data.frame(ftable(Titanic)), "泰坦尼克号乘客生还情况", only_head = FALSE)
-```
-
-(ref:fig-mosaicplot-s) 泰坦尼克号乘客生化数据马赛克图
-
-(ref:fig-mosaicplot) 泰坦尼克号乘客生还数据马赛克图：按性别、年龄和船舱等级划分
-
-```{r mosaicplot,fig=T,fig.width=5.2,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
-par(mar = c(2, 3.5, .1, .1))
-mosaicplot(Titanic, shade = TRUE, main = "")
-```
-
-图 \@ref(fig:mosaicplot) 以马赛克图的形式将这个 $4\times2\times2\times2$ 的列联表数据展示在了同一张图中。通过矩形块（马赛克）的大小，我们可以清楚看出各舱位、不同性别、年龄的人群的生还状况。
-
-例如，对头等舱来说，无论是大人小孩或男女，下方的矩形都比上方的矩形要高（尤其是女性和小孩），这说明头等舱的生还率相对来说都比较高，很可能当时的救援是偏向头等舱的。从年龄来说，头等舱和二等舱中小孩的生存率要远高于大人，但三等舱中小孩的生存率和大人相比差异并不是太显著；但从性别角度来看，各舱位基本上还是将生存机会优先让给女性了，男性的生还率在各舱位来说都相对较低。
-
-类似地，我们还可以从图中挖掘出更多的现象，这里不再深入。另外，图中用不同颜色表示出了个单元格的残差大小，其中虚线框表示残差为负数，我们可以清楚看出哪些单元格的拟合欠佳。
-
-### 绘制方法 {-}
-
-R 中马赛克图的函数为 `mosaicplot()` ，其用法如下：
-
-```{r mosaicplot-usage, results='asis'}
-usage2(usage(graphics:::mosaicplot.default, output = FALSE))
-usage2(usage(graphics:::mosaicplot.formula, output = FALSE))
-```
-
-马赛克图函数是泛型函数，可以直接接受列联表数据或者公式作为参数，这里我们只介绍前一种情况。
-
-\noindent 参数含义：
-
-`x`:
-: 一个列联表数据（可以用函数 `table()` 生成）。
-
-`main` 、 `sub` 、 `xlab` 和 `ylab`:
-: 分别设定主标题、副标题和坐标轴标题。
-
-`sort`:
-: 指定展示变量的顺序。
-
-`dir`:
-: 指定马赛克图的拆分方向（横向拆分或纵向拆分）。
-
-`type`:
-: 给定残差的类型，即如前所述的三种残差。
-
-下面的代码可以绘制泰坦尼克号生还数据的马赛克图：
-
-```{r, eval=FALSE, echo=TRUE}
-data(Titanic)
-par(mar = c(2, 3.5, .1, .1))
-mosaicplot(Titanic, shade = TRUE, main = "")
-```
-
-感兴趣的读者还可以使用 **stats** 包中的 `loglin()` 函数拟合对数线性模型、从统计模型的角度继续分析。
-
-## 符号图 {#sec:symbols}
-
-### 概述 {-}
-
-符号图是用各种符号展示高维数据的图示工具，它的主要思想是将高维数值体现在图形中符号的特征上。因为受到平面的限制，我们对于高维数据的展示方法总是很有限，仅仅是对于二维数据的展示最为方便，对更高维度的如三维、四维甚至五维的数据相对缺乏好的工具。由于符号的存在，使得我们可以将高于二维的数据"寄托"在符号的各种特征上，如：以矩形为散点图的基本符号，那么我们可以用其长宽分别代表两个变量，这样一幅图形中至少可以放置四个变量；类似地，我们可以以圆圈、正方形、多边形、箱线图、温度计等符号为散点图中的"点"，于是散点图就可以被扩展为高维数据的展示工具。
-
-### 示例 {-}
-
-我们以《中国统计年鉴》里我国 31 省市自治区的人口特征数据为例，通过实际数据来看符号图在展示数据时的效果。表 \@ref(tab: ChinaPop-data) 显示了我国 2005 年人口自然增长率、年底人口总数、城镇人口比重、人口预期寿命和高学历人数五个变量，我们以此作为国民素质的刻画指标，绘制了图 \@ref(fig:symbols-pop) [@Xie08]。
-
-```{r ChinaPop-data}
-source(system.file("extdata", "ChinaPop.R", package = "MSG"), encoding = "UTF-8")
-kable2(ChinaPop, "我国 31 省市自治区的人口特征数据")
-```
-
-
-(ref:fig-symbols-pop-s) 中国 31 地区五大国民素质特征分布温度计图
-
-(ref:fig-symbols-pop) 2005 年中国 31 地区五大国民素质特征分布温度计图
-
-```{r symbols-pop,fig.width=6,fig.height=6,out.width="80%",results="hide",fig.cap="(ref:fig-symbols-pop)",fig.scap="(ref:fig-symbols-pop-s)"}
-demo("ChinaPop", package = "MSG")
-```
-
-这幅图融合了多种图形和图形元素。它的基础是一幅等高图（回顾 \@ref(sec:contour) 小节和图 \@ref(fig:contour-pop)），利用人口预期寿命和高学历人数两个变量计算二维密度，画出等高线，便完成了底图的制作。然后，我们通过人口预期寿命和高学历人数两个变量的数值往图中添加温度计符号，温度计宽代表增长率，高代表总人口数，温度代表城镇人口比重。接着，我们将各省市的文本标签添加到图中。
-
-经过这些图形元素的表达，全国 31 省市自治区的五项人口特征便一目了然，例如，通过温度计的高度可以观察出三个人口大省广东、山东、河南（相应的人口总量小的地区如西藏、青海、宁夏等也容易看出），由宽度可以看出西藏、青海、宁夏、新疆等省市自治区的人口自然增长率非常高（而北京、上海、天津等直辖市的增长率则很低）。从温度指示的情况来看，北京、上海和天津三大直辖市的城镇人口比例要远高于其它地区；从整幅散点图来看，人口平均预期寿命与高学历者人数呈比较明显的正相关关系。箱线图和坐标轴须分别刻画了人口平均预期寿命与高学历者人数各自的分布特征。这样，我们就完成了在平面上描述五维变量的任务。
-
-从这幅图，我们可以看出掌握基本图形元素使用的用处和重要性——没有一种统计软件能够提供现成的模块或函数来完成类似的任务。
-
-### 绘制方法 {-}
-
-R 中的符号图函数为 `symbols()`，它提供了六种基本符号：圆、正方形、长方形、星形、温度计和箱线图，分别由相应的参数指定； `symbols()` 的用法如下：
-
-```{r symbols-usage, results='asis'}
-usage2(usage(symbols, output = FALSE))
-```
-
-如前所述，符号图的基础是散点图，因此首先要给出两个参数 `x` 和 `y` 以便作散点图，然后在散点的位置上画出符号。接下来的六个参数分别指定符号的形状。图 \@ref(fig:symbols)
-给出了六种基本符号的形状，注意观察各种符号是如何利用自己的特征将高维数据表达出来的。
-
-(ref:fig-symbols-s) 符号图提供的六种基本符号
-
-(ref:fig-symbols) 符号图提供的六种基本符号
-
-```{r symbols,fig.width=6,fig.height=6,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
-demo("symbols_all", echo = FALSE, package = "MSG")
-```
-
-\noindent 参数含义：
-
-circles
-:   圆：一个数值向量，给定圆的半径（实际上是与圆的半径成比例，下同）。
-
-squares
-:   正方形：一个数值向量，给定正方形的边长。
-
-rectangles
-:   长方形：一个矩阵，列数为 2，这两列分别给定长方形的宽和高。
-
-stars
-:   星形：一个矩阵，列数 $\geq3$，类似雷达图，给定从星星中心向每个方向的射线的长度（严格说是线段），最终这些射线的端点会连接起来形成一个星形，但射线本身不会被画出来；缺失值将被视作 0 （星形在符号图中并不直观，推荐直接使用星状图，见 \@ref(fig:stars) 小节）。
-
-thermometers
-:   温度计：一个矩阵，列数为 3 或 4，前两列分别给定温度计的宽和高；若矩阵为三列，那么第三列为温度计内的"温度"高度，注意这一列的值应该小于 1，否则温度的填充会超过温度计的范围；若矩阵为四列，那么温度将按照第三列与第四列的比率进行填充，同样，这两列的比率需要小于 1。
-
-boxplots
-:   箱线图：一个矩阵，列数为 5，前两列分别给定箱子的宽和高，第三、四列分别给定两条线（下线和上线）的长度，第五列与温度计类似，给定箱线图内的中位数标记线在箱子内部的高度比例，因此这一列数据也需要在 $[0,1]$ 范围内；这里只是借用了箱线图的称谓，符号图中的箱线与真正的箱线图之间没有关系。
-
-不难看出，这六种符号图能展示的数据维度分别为 3、3、4、$\geq5$、5 或 6、7；参数 `inches` 为逻辑值，控制着符号的大小，若为 `TRUE`（默认），那么图中所有符号的最长长度（边长或半径等等）将被设置为 1 英寸（约 2.54 厘米），其它长度按比例缩放，若该参数取一个正数，那么类似地，所有符号的最长长度的英寸值为该正数，因此 `TRUE` 和 1 的效果是相同的，如果 `inches` 为 `FALSE` 那么符号的长度单位取相应坐标轴的单位，例如符号中的 1 长度即为坐标轴上的 1 单位； `add` 为逻辑值，设定是否将符号图添加到现有图形上； `fg` 为符号的前景色； `bg` 为符号的背景色或填充色；其它参数用来添加标题、设定坐标轴范围等。
-
-利用该函数，可以绘制图 \@ref(fig:symbols-pop)。读者可以运行以下函数来获取代码：
-
-```{r, eval=FALSE, echo=TRUE}
-demo("ChinaPop", package = "MSG")
 ```
 
 ## 脸谱图 {#sec:faces}
@@ -644,7 +511,6 @@ faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")],
 
 ### 示例 {-}
 
-
 表 \@ref(tab:murcia-data) 展示了西班牙 Murcia 省土壤样本成分的部分数据。这批数据包含 88 个样本，取自 8 个样地，每个样地随机取 11 处样本。我们关心的问题是，用这些成分数据能否区分出不同的样地？
 
 ```{r murcia-data}
@@ -681,107 +547,106 @@ ternaryplot(murcia[, 2:4], main = "",
 
 本章最后的思考与练习中有对三元图的扩展，读者可以看看四维情况下的三棱锥和这里的三角形的相似之处。
 
-## 条件分割图 {#sec:coplot}
+## 马赛克图 {#sec:mosaicplot}
 
 ### 概述 {-}
 
-条件分割图（Conditioning Plot）的思想源自于统计学中的条件分布，即：给定某一个（或几个）变量之后看我们所关心的变量的分布情况。在条件分割图中，这种"分布"主要指的是两个变量之间的关系，通常以散点图表示。
+马赛克图（Mosaic Plots）是展示多维列联表数据的工具。我们在 \@ref(sec:assocplot) 和 \@ref(sec:fourfoldplot) 小节介绍了两种展示列联表数据的工具，但它们都只能展示低维列联表，而马赛克图对于列联表的维数没有限制。
 
-条件分割图可以看作是对散点图的进一步深入发掘，它可以以一个或者两个条件变量作为所有数据的划分条件，条件变量在图形的边缘用灰色矩形条标记出变量的取值范围，每个矩形条对应着一幅散点图（严格来说此时应该称作"条件散点图"），这就是条件分割图的基本做法。后面我们会结合例子详细说明。
+马赛克图的表现形式为与频数成比例的矩形块，整幅图形看起来就像是若干块马赛克放置在平面上。马赛克图背后的统计理论是对数线性模型（log-linear model），我们先回顾一个最简单的二维列联表的独立模型。
+
+二维列联表的独立性从概率角度来说就是单元格的频率等于边际频率的乘积：
+
+\begin{equation}
+\pi_{ij}=\pi_{i\cdot}\pi_{\cdot j}
+(\#eq:independence)
+\end{equation}
+
+取对数即得：
+
+\begin{equation}
+\mathrm{log}(\pi_{ij})=\mathrm{log}(\pi_{i\cdot})+\mathrm{log}(\pi_{\cdot j})
+(\#eq:logindependence)
+\end{equation}
+
+根据 $\mu_{ij}=n\pi_{ij}$ 进一步写成频数的形式：
+
+\begin{equation}
+\mathrm{log}(\mu_{ij})=\lambda+\lambda_{i}^{r}+\lambda_{j}^{c}
+(\#eq:freqindependence)
+\end{equation}
+
+$\lambda_{i}^{r}$ 和 $\lambda_{j}^{c}$ 分别表示行效应和列效应，$\lambda$ 为常数。 \@ref(eq:freqindependence) 式就是最普通的对数线性模型。通过计算拟合，我们可以得到行列效应的估计值。对数线性模型在马赛克图中的主要表现是单元格的残差，而单元格的残差可以有三种：似然比残差（离差，deviance）$G^{2}$、Pearson $\chi^{2}$ 残差和 Freeman-Tukey 残差，前两种定义如下式：
+
+\begin{equation}
+G^{2}=2\sum n_{ij}\mathrm{log}(\frac{n_{ij}}{\hat{\mu}_{ij}});\;\;\chi^{2}=\sum\frac{\left(n_{ij}-\hat{\mu}_{ij}\right)^{2}}{\hat{\mu}_{ij}}
+(\#eq:loglinearres)
+\end{equation}
+
+残差反映的是某个单元格拟合的好坏。马赛克图用 5 级颜色表达了残差的大小，后面我们结合具体例子说明。
 
 ### 示例 {-}
 
-一组斐济岛（Fiji）附近的地震数据包括了地震发生地点的经纬度和震源的深度（表 \@ref(tab:tab-quakes)）。我们想知道该地区在地震深度上分布是否均匀。因此，我们令深度变量为条件变量，绘制了图 \@ref(fig:coplot)，看看在不同条件下地震发生地点（经纬度）是否有变化。
+泰坦尼克号沉船事件是人类历史上最著名的海难之一，至今仍然有很多人在研究它。这场灾难中乘客生还情况的原始数据见表 \@ref(tab:Titanic-data)。该数据给出了分舱位（一二三等舱和船员舱）、分性别（男女）、分年龄（大人小孩）的生存情况。我们所关心的问题主要是通过一些比例看出当时救援的侧重性，如：是否头等舱的乘客生还比例最高？"女士和孩子优先" 的原则在各船舱有没有被很好遵守？
 
-```{r tab-quakes}
-data(quakes)
-kable2(quakes, "斐济岛附近的地震数据")
+```{r Titanic-data}
+data(Titanic)
+kable2(as.data.frame(ftable(Titanic)), "泰坦尼克号乘客生还情况", only_head = FALSE)
 ```
 
-(ref:fig-coplot-s) 给定震源深图的地震经纬度条件分割图
+(ref:fig-mosaicplot-s) 泰坦尼克号乘客生化数据马赛克图
 
-(ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近
+(ref:fig-mosaicplot) 泰坦尼克号乘客生还数据马赛克图：按性别、年龄和船舱等级划分
 
-```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
-par(mar = rep(0, 4), mgp = c(2, .5, 0))
-library(maps)
-coplot(lat ~ long | depth,
-  data = quakes, number = 4,
-  ylim = c(-45, -10.72), panel = function(x, y, ...) {
-    map("world2",
-      regions = c("New Zealand", "Fiji"),
-      add = TRUE, lwd = 0.1, fill = TRUE, col = "lightgray"
-    )
-    text(180, -13, "Fiji", adj = 1)
-    text(170, -35, "NZ")
-    points(x, y, col = rgb(0.2, 0.2, 0.2, .5))
-  }
-)
+```{r mosaicplot,fig=T,fig.width=5.2,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
+par(mar = c(2, 3.5, .1, .1))
+mosaicplot(Titanic, shade = TRUE, main = "")
 ```
 
-从图中可以清楚看出，随着深度值的增加，地震发生地点逐渐由西向东、由南向北移动，震源较深的地震都发生在离斐济岛很近的东南侧。
+图 \@ref(fig:mosaicplot) 以马赛克图的形式将这个 $4\times2\times2\times2$ 的列联表数据展示在了同一张图中。通过矩形块（马赛克）的大小，我们可以清楚看出各舱位、不同性别、年龄的人群的生还状况。
+
+例如，对头等舱来说，无论是大人小孩或男女，下方的矩形都比上方的矩形要高（尤其是女性和小孩），这说明头等舱的生还率相对来说都比较高，很可能当时的救援是偏向头等舱的。从年龄来说，头等舱和二等舱中小孩的生存率要远高于大人，但三等舱中小孩的生存率和大人相比差异并不是太显著；但从性别角度来看，各舱位基本上还是将生存机会优先让给女性了，男性的生还率在各舱位来说都相对较低。
+
+类似地，我们还可以从图中挖掘出更多的现象，这里不再深入。另外，图中用不同颜色表示出了个单元格的残差大小，其中虚线框表示残差为负数，我们可以清楚看出哪些单元格的拟合欠佳。
 
 ### 绘制方法 {-}
 
-R 中条件分割图的函数为 `coplot()`，其用法如下：
+R 中马赛克图的函数为 `mosaicplot()` ，其用法如下：
 
-```{r coplot-usage, results='asis'}
-usage2(usage(coplot, output = FALSE))
-usage2(usage(co.intervals, output = FALSE))
-
+```{r mosaicplot-usage, results='asis'}
+usage2(usage(graphics:::mosaicplot.default, output = FALSE))
+usage2(usage(graphics:::mosaicplot.formula, output = FALSE))
 ```
+
+马赛克图函数是泛型函数，可以直接接受列联表数据或者公式作为参数，这里我们只介绍前一种情况。
+
 \noindent 参数含义：
- 
-`formula`:
-: 一个公式，形式为 `y ~ x | a`（一个条件变量）或 `y ~ x | a * b`（两个条件变量），"`|`" 后面即为条件变量。
 
-`data`:
-: 数据，其中包含了 `x` 、 `y` 、 `a` 和 `b` 等变量。
+`x`:
+: 一个列联表数据（可以用函数 `table()` 生成）。
 
-`given.values`: 
-: 指定条件变量的取值范围。
+`main` 、 `sub` 、 `xlab` 和 `ylab`:
+: 分别设定主标题、副标题和坐标轴标题。
 
-`panel`:
-: 该函数的关键参数，它决定了每一幅散点图的画法，默认只是画点，我们可以将其任意扩展为我们需要的图示功能，如添加回归直线等等。
+`sort`:
+: 指定展示变量的顺序。
 
-`rows` 和 `columns`:
-: 设定散点图的摆放行数和列数。
+`dir`:
+: 指定马赛克图的拆分方向（横向拆分或纵向拆分）。
 
-`col` 和 `pch`:
-: 分别设定散点图中点的颜色和样式。
+`type`:
+: 给定残差的类型，即如前所述的三种残差。
 
-`bar.bg`:
-给定条件变量指示条的填充颜色。
-
-`number` 和 `overlap`:
-: 传给 `co.intervals()` 函数，用来计算划分连续变量的区间，前者设定划分段数，后者设定区间之间的重叠比例，如：
-
-```{r co-intervals-demo, echo=TRUE}
-co.intervals(1:10, number = 5, overlap = 0.5)
-```
-
-\noindent 上述代码将数字 `1:10` 划分为了 5 段，每段长度为 2，重叠长度为 1，因此重叠比例为 0.5。条件分割图中散点图的顺序是从左到右、从下到上，分别与条件变量从左到右、从下到上的指示条对应。
-
-图 \@ref(fig:coplot) 的绘制代码为：
+下面的代码可以绘制泰坦尼克号生还数据的马赛克图：
 
 ```{r, eval=FALSE, echo=TRUE}
-par(mar = rep(0, 4), mgp = c(2, .5, 0))
-library(maps)
-coplot(lat ~ long | depth,
-  data = quakes, number = 4,
-  ylim = c(-45, -10.72), panel = function(x, y, ...) {
-    map("world2",
-      regions = c("New Zealand", "Fiji"),
-      add = TRUE, lwd = 0.1, fill = TRUE, col = "lightgray"
-    )
-    text(180, -13, "Fiji", adj = 1)
-    text(170, -35, "NZ")
-    points(x, y, col = rgb(0.2, 0.2, 0.2, .5))
-  }
-)
+data(Titanic)
+par(mar = c(2, 3.5, .1, .1))
+mosaicplot(Titanic, shade = TRUE, main = "")
 ```
 
-这个例子展示了 `panel` 参数的用法。我们借助 **maps** 包 [@maps] 在散点图上添加了新西兰和斐济岛的地图作为辅助信息。关于 R 中地图的使用请参考 \@ref(sec:maps) 小节。
+感兴趣的读者还可以使用 **stats** 包中的 `loglin()` 函数拟合对数线性模型、从统计模型的角度继续分析。
+
 
 ## 因素效应图 {#plot-design}
 
@@ -977,7 +842,7 @@ reshape(tbl, timevar = "alcgp", idvar = "agegp",
 
 ### 示例 {-}
 
-一组脊椎矫正手术数据如表 \@ref(tab:tab-kyphosis)所示，包含了一个因变量 `Kyphosis`（术后是否还存在脊椎畸形）和三个自变量 `Age`（年龄，以月计）、`Number`（畸形脊椎的数目）和 `Start`（从上往下数第一段畸形脊椎的位置）。我们希望知道这三个自变量对脊椎矫正手术结果的影响，例如怎样特征的小孩手术容易失败。
+一组脊椎矫正手术数据如表 \@ref(tab:tab-kyphosis) 所示，包含了一个因变量 `Kyphosis`（术后是否还存在脊椎畸形）和三个自变量 `Age`（年龄，以月计）、`Number`（畸形脊椎的数目）和 `Start`（从上往下数第一段畸形脊椎的位置）。我们希望知道这三个自变量对脊椎矫正手术结果的影响，例如怎样特征的小孩手术容易失败。
 
 ```{r tab-kyphosis}
 data(kyphosis, package = "rpart")
@@ -1223,7 +1088,11 @@ andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col,
               xlab = "$t$", ylab = "$f(t)$")
 x <- andrews_curve(scale(trees), n = 50,
                    xlab = "$t$", ylab = "$f(t)$")
-# 离群点是哪行数据？即哪行数据对应的 f(t) 会大于 4？
+```
+
+离群点是哪行数据？即哪行数据对应的 $f(t)$ 会大于 4？很简单：
+
+```{r, echo=TRUE}
 which(apply(x > 4, 1, any))
 ```
 
@@ -1233,12 +1102,41 @@ which(apply(x > 4, 1, any))
 
 ### 概述 {-}
 
-地图毫无疑问是展示地理信息数据时最直观的工具，尤其是当地图和统计量结合时，其功效则会进一步加强。在本书的第\@ref(cha:history)章中曾经提到过 John Snow 的地图，注意图中不仅标示出了霍乱发生的地点，每个地点的死亡人数也用点的数目标示了出来。
+毫无疑问，地图是展示地理信息数据时最直观的工具，尤其是当地图和统计量结合时，其功效则会进一步加强。在本书的第\@ref(cha:history)章中曾经提到过 John Snow 的地图，注意图中不仅标示出了霍乱发生的地点，每个地点的死亡人数也用点的数目标示了出来。
 历史上还有不少类似的使用地图的例子，而在今天，地理信息系统（GIS）已经成为研究空间和地理数据的热门工具，地图的应用也是屡见不鲜。
 
-### 示例和绘制方法 {-}
+### 示例 {-}
 
-地图的本质是多边形（\@ref(sec:polygon) 小节），而多边形的边界则由地理经纬度数据确定。R 中的附加包 **maps** [@maps] 是目前比较完善的地图程序包之一，核心的函数为 `map()` ，它的用法如下：
+表 \@ref(tab:tab-map) 给出了 2005 年世界各国家地区的农业进出口竞争力指标数据 [@Xie07]。其中，我们将竞争力指标简单定义为（出口$-$进口）/（出口$+$进口）。我们将这组数据在图 \@ref(fig:map) 上标示出来。从图中可以看出，阿根廷、巴西等南美国家的农业进出口竞争力较强，而利比亚、阿尔及利亚等北非国家的竞争力较弱。
+
+```{r tab-map}
+source(system.file("extdata", "AgriComp.R", package = "MSG"))
+kable2(AgriComp, "2005 年世界各国农业进出口竞争力")
+```
+
+(ref:fig-map-s) 2005 年世界各国农业进出口竞争力地图
+
+(ref:fig-map) 2005 年各国农业进出口竞争力地图：农业出口强国在南美，弱国在北非
+
+```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)",error=TRUE,results='hide'}
+worldmap <- map_data("world")
+worldmap2 <- dplyr::left_join(worldmap, AgriComp, 
+                              by = c("region" = "Country"))
+ggplot(worldmap2) + 
+  geom_polygon(aes(long,lat, group=group,  fill = Index)) +
+  coord_quickmap() +
+  scale_fill_gradientn(colours = rev(rainbow(5))) +
+  labs(x = "经度", y = "纬度") +
+  geom_rect(data = data.frame(xmin = 72.26818, ymin = -55.8565, 
+                              xmax = 168.93766, ymax =54.589),
+            mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax =ymax), 
+            fill = NA, color = "black", linetype = 2) +
+  geom_hline(yintercept = 0, linetype = 2)
+```
+
+### 绘制方法 {-}
+
+地图的本质是多边形（\@ref(sec:polygon) 小节），而多边形的边界则由地理经纬度数据确定。R 中绘制地图的传统附加包是 **maps** [@maps]，核心的函数为 `map()` ，它的用法如下：
 
 ```{r map-usage, results='asis'}
 library(maps)
@@ -1247,24 +1145,54 @@ usage2(usage(map, output = FALSE))
 
 该函数的两个主要参数为地图数据库 `database` 和地图区域 `region` 。地图数据库中包含了所有区域的经纬度数据以及相应的区域名称。在指定一个数据库和一系列区域名称之后，这些区域的地图便可由 `maps()` 生成。其它参数诸如填充颜色、是否画边界、是否添加到现有图形上等这里就不再介绍，请读者参考帮助文件。
 
-图 \@ref(fig:map)
-展示了 2005 年世界各国家地区的农业进出口竞争力指标数据 [@Xie07]，其中我们将竞争力指标简单定义为（出口$-$进口）/（出口$+$进口）。地图上方我们自行添加了颜色图例。从图中可以看出，阿根廷、巴西等南美国家的农业进出口竞争力较强，而利比亚、阿尔及利亚等北非国家的竞争力较弱。
+运行下面的代码可以将表 \@ref(tab:tab-map) 的数据绘制成地图：
 
-(ref:fig-map-s) 2005 年世界各国农业进出口竞争力地图
-
-(ref:fig-map) 2005 年各国农业进出口竞争力地图：农业出口强国在南美，弱国在北非
-
-```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)",error=TRUE,results='hide'}
+```{r, eval=FALSE, echo=TRUE}
 demo("AgriComp", package = "MSG")
 ```
 
-该地图的大致制作过程为：首先我们用 `world` 数据库作出一幅空白的世界地图，地区边界用灰色线条表示，然后我们根据竞争力数据中的地区名称与地理数据库中地区名称的对应将数据以颜色的形式表示到世界地图中，最后我们在图中添加了赤道线以及东盟国家（ASEAN）的矩形区域，这是由于作为该图出处的会议论文 [@Xie07] 主题是中澳自由贸易区。
+上述代码的大致制作过程为：首先我们用 `world` 数据库作出一幅空白的世界地图，地区边界用灰色线条表示，然后我们根据竞争力数据中的地区名称与地理数据库中地区名称的对应将数据以颜色的形式表示到世界地图中，最后我们在图中添加了赤道线以及东盟国家（ASEAN）的矩形区域，这是由于作为该图出处的会议论文 [@Xie07] 主题是中澳自由贸易区。
 
-在地理区域上标记大量的数值信息会遇到一个显而易见的困难，就是由于各个地理区域的面积不同而导致地图的解读失真或某些重要地理单元难以辨认。例如，我们在画中国省级地图时，北京和上海等直辖市相比其它省份显得面积太小，此时若用颜色来标记某个数值指标（如 GDP）就会使得各个直辖市的颜色几乎无法辨认。还有另一个更有趣的例子来自 08 年美国总统大选。若用红蓝两种颜色对各个州做标记，以表示该州支持麦凯恩或奥巴马，那么有些面积不大但是权重很大的州（如人口众多的加州）就会影响整幅美国地图。从原始地图上看，似乎麦凯恩会赢，因为他赢得了很多中部面积大的州（但人口稀少），整幅地图看起来以红色为主导；若我们保持州的相对地理位置不变，将各个州的形状进行大小的调整，使其面积与权重成正比，此时红蓝两色的局面就发生了逆转，地图以蓝色为主导色，地图传达信息的偏误才得到了纠正。我们把这种保持地理区域的相对位置不变、调整区域面积与某指标成比例的地图成为"变形地图"（Cartogram），详细内容可阅读笔者的博客[^map-prob]。
+**maps**包功能虽然比较完善，但绘制地图的过程仍然有些繁琐。近年来，**ggplot2** 发展迅猛，其地图绘制功能也越来越强大了。图 \@ref(fig:map) 实际是用 **ggplot2** 包绘制多边形的方式作出来的，代码如下：
+
+```{r, eval=FALSE, echo=TRUE}
+worldmap <- map_data("world")
+worldmap2 <- dplyr::left_join(worldmap, AgriComp, 
+                              by = c("region" = "Country"))
+ggplot(worldmap2) + 
+  geom_polygon(aes(long,lat, group = group, fill = Index)) +
+  coord_quickmap() +
+  scale_fill_gradientn(colours = rev(rainbow(5))) +
+  labs(x = "经度", y = "纬度") +
+  geom_rect(data = data.frame(xmin = 72.26818, ymin = -55.8565, 
+                              xmax = 168.93766, ymax =54.589),
+            mapping = aes(xmin = xmin, ymin = ymin, 
+                          xmax = xmax, ymax =ymax), 
+            fill = NA, color = "black", linetype = 2) +
+  geom_hline(yintercept = 0, linetype = 2)
+```
+
+这里，`coord_quickmap()` 函数，专门用作地图坐标，确保地图上的经度和纬度之比符合常用的摩克托投影规则。此外，**ggplot2** 还提供了另外一个坐标转换函数` coord_map()`，功能更复杂一些。如图 \@ref(fig:worldmap) 所示，：上图是平面地图，下图是以北纬 20° 东经 90° 视角看到的球状地图。生成这两幅地图的代码如下：
+
+(ref:fig-worldmap-s) 世界地图
+
+(ref:fig-worldmap) 世界地图：上图是平面地图，下图是以北纬 20° 东经 90° 视角看到的球状地图
+
+```{r worldmap,fig.width=6,fig.height=8,fig.cap="(ref:fig-worldmap)",fig.scap="(ref:fig-worldmap-s)",error=TRUE,results='hide', echo=TRUE, fig.show='hold'}
+m0 <- ggplot() + 
+  geom_polygon(data = worldmap,
+               mapping = aes(long,lat, group=group,  fill = region)) +
+  guides(fill = FALSE)
+m1 <- m0 + coord_quickmap()
+m2 <- m0 + coord_map("ortho", orientation = c(20,90,0))
+m1 / m2
+```
+
+在地理区域上标记大量的数值信息会遇到一个显而易见的困难，就是由于各个地理区域的面积不同而导致地图的解读失真或某些重要地理单元难以辨认。例如，我们在画中国省级地图时，北京和上海等直辖市相比其它省份显得面积太小，此时若用颜色来标记某个数值指标（如 GDP），就会使得各个直辖市的颜色几乎无法辨认。还有另一个更有趣的例子来自 08 年美国总统大选。若用红蓝两种颜色对各个州做标记，以表示该州支持麦凯恩或奥巴马，那么有些面积不大但是权重很大的州（如人口众多的加州）就会影响整幅美国地图。从原始地图上看，似乎麦凯恩会赢，因为他赢得了很多中部面积大的州（但人口稀少），整幅地图看起来以红色为主导；若我们保持州的相对地理位置不变，将各个州的形状进行大小的调整，使其面积与权重成正比，此时红蓝两色的局面就发生了逆转，地图以蓝色为主导色，地图传达信息的偏误才得到了纠正。我们把这种保持地理区域的相对位置不变、调整区域面积与某指标成比例的地图成为"变形地图"（Cartogram），详细内容可阅读笔者的博客[^map-prob]。
 
 [^map-prob]: <https://yihui.org/cn/2009/03/cartogram-as-special-maps/>
 
-有时，由 R 中自带的地图数据绘制的图形显得较为单调。Markus Loecher 就此开发了 **RgoogleMaps** 包 [@RgoogleMaps]，将 Google Maps 提供的（卫星）地图数据引入 R 中，这里简单介绍以下。
+除了 **maps** 包和 **ggplot2** 包之外，R 语言还有更多的地图绘制系统，例如 **RgoogleMaps** 包 [@RgoogleMaps]，将 Google Maps 提供的（卫星）地图数据引入 R 中，这里简单介绍以下。
 
 首先，此包利用 Google Maps API，为 R 提供了一个十分便利的接口，以抓取 Google 服务器上的静态地图；其次，用户可使用获得的地图作为背景，在其上方自由叠加图形元素。对于一般的经纬度坐标数据，此包可计算包含这些数据点的矩形边界，以确定抓取地图的范围。其工作流程概括如下：
 
@@ -1309,31 +1237,7 @@ knitr::include_graphics(path = c(
 
 ## 思考与练习
 
-1.  三元图的思想可以被扩展到四维的情况，但此时的图形就不是平面图了，而是一个三棱锥，它有四个顶点。以下 R 代码先对 \@ref(subsec:music) 小节的 `music` 数据做了一个随机森林模型，然后用这个模型预测原始数据中每个样本的来自每个艺术家的可能性（有四种可能，概率之和为 1，因为有四个艺术家）。通常我们取最大可能的预测为一个样本的因变量预测值，但这样做有时候会显得武断，对数据探索不够，例如四个概率值为 $(0.01,\,0.49,\,0.48,\,0.02)$，那么我们的预测结果一定是第二类吗？显然第三类的概率也很大，那么这个样本究竟有什么异常情况导致预测值在两类上的概率都比较大？此时不妨用 GGobi （\@ref(sec:dynamic-graphics) 小节）看一看这些预测概率的"形状"。图 \@ref(fig:randomForest-music) 就是这样一个四列概率值的三维图形，从这一幅图形可能很难感受到它是棱锥形状的，当我们使用 GGobi 的"二维巡游"模式时就能看清楚了。在三棱锥中间位置上的样本都是有较高不确定性的音乐样本，即：很难判断它们究竟该预测为哪一类。用 GGobi 的刷子识别这些点，看看它们对应的原始变量值是否有什么异常。
-
-```{r,eval=FALSE, echo=TRUE}
-data(music, package = "MSG")
-library(randomForest) # 建立随机森林模型
-fit <- randomForest(artist ~ ., data = music[, -2])
-music.prob <- predict(fit, type = "prob") # 预测四类概率
-library(rggobi)
-g <- ggobi(music.prob)
-music.ggobi <- ggobi_get()$music.prob
-glyph_colour(music.ggobi) <- as.integer(music$artist)
-d <- displays(g)[[1]]
-pmode(d) <- "2D Tour" # 二维巡游模式
-# 保存截图 ggobi_display_save_picture(path = "randomForest-music.png")
-```
-
-(ref:randomForest-music) 音乐数据预测概率的棱锥图：四种颜色表示四个艺术家，点越接近于顶点则预测为该艺术家的概率越大
-
-(ref:randomForest-music-s) 音乐数据预测概率的棱锥图
-
-```{r randomForest-music,fig.cap="(ref:randomForest-music)",fig.scap="(ref:randomForest-music-s)",echo=FALSE}
-knitr::include_graphics(path = "images/randomForest-music.png", dpi = NA)
-```
-
-2.  自行编写一个画三元图的函数，并体会这种从三维到二维的变换。以下是不完整的代码，核心部分已经完成，需要实现控制边长范围和坐标网格线等功能：
+1.  自行编写一个画三元图的函数，并体会这种从三维到二维的变换。以下是不完整的代码，核心部分已经完成，需要实现控制边长范围和坐标网格线等功能：
 
 ```{r triplot-fun, eval=FALSE, echo=TRUE}
 triplot <- function(x, ...) {
@@ -1350,7 +1254,7 @@ triplot(murcia[, 2:4], col = vec2col(murcia$site), pch = 19)
 ```
 
 
-3. **ggplot2** 并没有现成的函数来绘制条件分割图。不过，下面的代码可以做出类似的效果，如图 \@ref(fig:coplot2)。比较一下，这副图与图 \@ref(fig:coplot) 的区别在哪里？能得出相同的结论吗？如何更改这段代码，以做出图 \@ref(fig:coplot)？
+2. **ggplot2** 并没有现成的函数来绘制条件分割图。不过，下面的代码可以做出类似的效果，如图 \@ref(fig:coplot2)。比较一下，这副图与图 \@ref(fig:coplot) 的区别在哪里？能得出相同的结论吗？如何更改这段代码，以做出图 \@ref(fig:coplot)？
 
 (ref:fig-coplot2) 使用 **ggplot2** 包绘制的地震经纬度条件分割图
 
