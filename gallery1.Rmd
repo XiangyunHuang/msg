@@ -5,7 +5,163 @@
 > ——柯南 $\cdot$ 道尔《血字的研究》
 
 
-本章介绍常见的单变量统计图。
+单变量图，指的是用来展示单一变量的统计图形，最常见的就是直方图和箱线图。当然，我们会经常将不同类别的单变量图放在一起比较，例如箱线图、小提琴图、带状图等，严格来讲其实包含了两个或多个变量（如 \@ref(sec:barplot) 小节使用的数据，包含了死亡率、性别和年龄组三个变量），但是为了方便描述，也列在本章。
+
+## 条形图/柱状图 {#sec:barplot}
+
+### 概述 {-}
+
+如同 \@ref(sec:begin) 节中曾经提到的，条形图目前是各种统计图形中应用最广泛的，但条形图所能展示的统计量比较贫乏：它只能以矩形条的长度展示原始数值，对数据没有任何概括或推断。
+
+### 示例 {-}
+
+这里以1940 年弗吉尼亚州分年龄组、分地区和分性别死亡率数据（表 \@ref(tab:vadeaths-data)）为例，介绍一下条形图。
+
+```{r vadeaths-data}
+data(VADeaths)
+kable2(VADeaths, "弗吉尼亚州死亡数据", only_head = FALSE)
+```
+
+图 \@ref(fig:vadeaths-barplot) 展示了各组之间死亡率的差异。其中，堆砌的条形图容易比较各年龄组总死亡率的大小。显然，年龄越高，死亡率越大。而并列的条形图容易比较组内的城乡和性别差异。一般说来，男性死亡率高于女性，农村男性死亡率低于城市男性，但女性的城乡差异没有明显规律。由于人眼对长度比比例更敏感（例如在区分城乡和性别差异时，图 \@ref(fig:vadeaths-barplot) 的上图就不如下图直观），所以我们制图时要考虑清楚我们想展示的是数据的哪一方面，将最关键的信息用最能激发视觉感知的形式表现出来。
+
+(ref:fig-vadeaths-barplot-s) 弗吉尼亚死亡率数据条形图
+
+(ref:fig-vadeaths-barplot) 弗吉尼亚死亡率数据条形图： 堆砌和并列的条形图效果
+
+```{r vadeaths-barplot, fig.width=4.8, fig.height=4.8, fig.cap = "(ref:fig-vadeaths-barplot)", fig.scap="(ref:fig-vadeaths-barplot-s)", fig.show="hold"}
+reshape_VADeaths <- transform(
+  expand.grid(
+    sex = colnames(VADeaths),
+    age = rownames(VADeaths)
+  ),
+  rates = as.vector(t(VADeaths))
+)
+p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
+p1 <- p + geom_col(position = "stack")
+p2 <- p + geom_col(position = "dodge")
+plot_grid(p1, p2, ncol = 1)
+```
+
+### 绘制方法 {-}
+
+R 中条形图的基础作图函数为 `barplot()`，用法如下：
+
+```{r barplot-usage, results='asis'}
+usage2(usage(barplot.default, output = FALSE))
+```
+
+\noindent 参数含义：
+
+`height`:
+: 主要参数，指定了长条的长度。这个参数可以接受一个数值向量或者一个数值矩阵作为参数。前者容易理解，后者稍有些复杂：当传入一个矩阵时，条形图针对矩阵的每一列画图。若 `beside` 为 `FALSE`，则矩阵每一列占据一条的位置，该条由若干矩形堆砌而成，这些矩形的高度对应着矩阵的行数据；若 `beside` 为 `TRUE`，这些矩形则并排排列而非堆砌。
+
+`width`:
+: 设置条的宽度。
+
+`space`:
+: 设置条之间的间距。
+
+`names.arg`:
+: 条形图的标签，即每一条的名称。
+
+`legend.text`:
+: 用来添加图例，在 `height` 为矩阵时比较有用。
+
+`horiz`:
+: 设置条形图的方向（水平或垂直）。
+
+`plot`:
+: 逻辑值，决定是否将条形图添加到现有图形上。
+
+\noindent `density`、`angle` 等参数可以参考矩形的章节（\@ref(sec:polygon) 节）。
+
+我们可以用下面的代码绘制弗吉尼亚死亡数据条形图，这里展示了参数 `beside` 和 `legend.text` 的效果：
+
+```{r, eval=FALSE, echo=TRUE}
+library(RColorBrewer) # 用分类调色板
+par(mfrow = c(2, 1), mar = c(3, 2.5, 0.5, 0.1))
+death <- t(VADeaths)[, 5:1]
+barplot(death, col = brewer.pal(4, "Set1"))
+barplot(death, col = brewer.pal(4, "Set1"), 
+        beside = TRUE, legend.text = TRUE)
+```
+
+\noindent 也可以用 **ggplot2** 包绘制，使用的是 `geom_col()` 函数：
+
+```{r, eval=FALSE, echo=TRUE}
+reshape_VADeaths <- transform(expand.grid(sex = colnames(VADeaths),
+                                          age = rownames(VADeaths)),
+                              rates = as.vector(t(VADeaths)))
+p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
+p1 <- p + geom_col(position = "stack")
+p2 <- p + geom_col(position = "dodge")
+plot_grid(p1, p2, ncol = 1)
+```
+
+## Cleveland 点图 {#sec:dotchart}
+
+### 概述 {-}
+
+在条形图（\@ref(sec:barplot) 小节）和饼图（\@ref(sec:pie) 小节）的介绍中我们提到了点图 [@Cleveland85]，事实上点图和条形图的功能非常类似：条形图通过条的长度表示数值大小，点图通过点的位置表示数值大小，二者几乎可以在任何情况下互换。
+
+### 示例 {-}
+
+图 \@ref(fig:dotchart) 再次以弗吉尼亚死亡率数据为例，给出了点图的展示。对比图 \@ref(fig:vadeaths-barplot) 不难发现点图与条形图的相通之处。相比之下，点图的图形元素更加简洁，制图时不会显得太拥挤，我们可以视情况在这二者选其一作为表达工具。
+
+(ref:fig-dotchart-s) 弗吉尼亚死亡率数据的 Cleveland 点图
+
+(ref:fig-dotchart) 弗吉尼亚死亡率数据的 Cleveland 点图
+
+```{r dotchart,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)"}
+par(mar = c(2, 4, 0.2, 0.2))
+dotchart(t(VADeaths)[, 5:1], col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
+```
+
+### 绘制方法 {-}
+
+R 中绘制点图的基础函数为 `dotchart()`，用法如下：
+
+```{r dotchart-usage, results='asis'}
+usage2(usage(dotchart, output = FALSE))
+```
+
+\noindent 参数含义：
+
+`x`:
+: 与条形图的 `height` 参数相同，为一个数值向量或者矩阵。
+
+`labels`:
+: 数据的标签。
+
+\noindent 其它参数主要用来设置图形的样式如颜色、缩放倍数、点的样式等，此处略去。
+
+下面的代码是一个示例：
+
+```{r, eval=FALSE, echo=TRUE}
+dotchart(t(VADeaths)[, 5:1], 
+         col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
+```
+
+**ggplot2** 包里虽然没有专门的函数绘制点图，然而可以借助散点图 `geom_point()` 完成，代码如下：
+
+(ref:fig-dotchart2-s) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
+
+(ref:fig-dotchart2) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
+
+```{r dotchart2, echo=TRUE,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart2)",fig.scap="(ref:fig-dotchart2-s)"}
+tm <- rownames(VADeaths)
+rownames(VADeaths) <- NULL
+vd <- data.frame(cbind(tm, VADeaths))
+vd <- reshape(vd, direction = "long", varying = names(vd)[2:5],
+        v.name=c("rate"), times = names(vd)[2:5])
+vd$rate <- as.numeric(vd$rate)
+vd$tm <- factor(vd$tm)
+vd$tm <- factor(vd$tm,levels = rev(levels(vd$tm)) )
+ggplot(vd, aes(time, rate, color = time)) + geom_point() + 
+  facet_grid(tm ~ .) + coord_flip() +
+  theme(legend.position = "", axis.title = element_blank())
+```
+
 
 ## 直方图 {#sec:hist}
 
@@ -72,7 +228,9 @@ b_{1}<b_{2}<\cdots<b_{j}<b_{j+1}<\cdots;\;b_{j+1}-b_{j}=h,\,j=1,2,\cdots
 
 ### 示例 {-}
 
-我们以黄石国家公园喷泉数据 `geyser` [@Venables02] （表 \@ref(tab:tab-geyser)）为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。
+我们以黄石国家公园喷泉数据 `geyser` [@Venables02] （表 \@ref(tab:tab-geyser)）为例。图 \@ref(fig:hist-geyser)  展示了喷泉喷发间隔时间的分布情况。（1）和（2）中的直方图看起来形状完全一样，区别仅仅是前者为频数图，后者为密度图。二者在统计量上仅相差一个常数倍，但密度直方图的一个便利之处在于它可以方便地添加密度曲线，用以辅助展示数据的统计分布（图 \@ref(fig:hist-density) 即为一个示例）；（3）和（4）的区别在于区间划分段数，我们可以很清楚看出区间划分的多少对直方图的直接影响。
+
+关于区间划分的一些讨论可以参考 @Venables02，这里我们需要特别指出的是，直方图的理论并非想象中或看起来的那么简单，窗宽也并非可以任意选择，不同的窗宽或区间划分方法会导致不同的估计误差。关于这一点，Excel 的直方图可以说是非常不可靠的，因为它把区间的划分方法完全交给了用户去选择，这样随意制作出来的直方图很可能会导致大的估计误差、掩盖数据的真实分布情况。
 
 ```{r tab-geyser}
 data(geyser, package = "MASS")
@@ -143,7 +301,11 @@ hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting",
 demo("hist_geyser", package = "MSG")
 ```
 
-\noindent 也可以用 **ggplot2** 包，方法如下：
+
+直方图函数 `hist()` 在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上
+（例如图 \@ref(fig:layout-margin)）。
+
+直方图也可以用 **ggplot2** 包的 `geom_histogram()` 函数绘制，方法如下：
 
 ```{r, eval=FALSE,echo=TRUE}
 library(cowplot)
@@ -162,17 +324,15 @@ plot_grid(p1, p2, p3, p4,
 p2 + geom_density(color = "blue", size = 2)
 ```
 
-直方图函数 `hist()` 在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上
-（例如图 \@ref(fig:layout-margin)）。
+另外值得一提的是，R 语言的 **plotrix** 包提供了一个 `histStack()` 函数，可以用来绘制堆叠的直方图，在这里就不详细介绍了。
 
 由于直方图需要对连续型数据做离散分组，因此它有一个明显的缺点，就是它的形状依赖于分组的端点，例如若有好几个相同的数值正好处在分组端点上，那么我们只要稍微向左或向右移动一下分组端点，这些数据点就会被划分入不同的区间，导致矩形条的高度变化。@Scott92 提出了一种解决这种直方图不稳定性问题的办法叫“移动平均直方图”（Average Shifted Histogram，简称 ASH），它的思想是使用一系列移动的区间去划分数据，比如 $(b_1+ih/n,b_2+ih/n,\ldots,b_n+ih/n)$，$i=0,\cdots,n-1$，最后将这 $n$ 种划分方法的频数结果"平均"起来，就得到了 ASH 图，这样有效避免了边界点的归属问题。然而，在核密度估计理论已经非常完备的今天，我们几乎没有必要再用这种技巧去克服原来的问题了，毕竟 ASH 与核密度估计比起来显得还是太粗糙。图 \@ref(fig:hist-density) 的核密度曲线基于函数 `density()` 计算而来，它的参数包括核函数和窗宽等，实际应用中我们可能需要尝试不同的核函数以及窗宽值，@Venables02 第 5.6 小节介绍了一些选择的经验可供参考。
-
 
 ## 茎叶图
 
 ### 概述 {-}
 
-茎叶图（Stem-and-Leaf Plot）与直方图的功能类似，也是展示数据密度的一种工具。相比之下，茎叶图对密度的刻画显得非常粗略，而且对原始数据通常会作舍入处理，它只是在早期计算机尚不发达时对于手工整理数据来说比较方便。
+茎叶图（Stem-and-Leaf Plot）与直方图的功能类似，也是展示数据密度的一种工具。相比之下，茎叶图对密度的刻画显得非常粗略，而且对原始数据通常会作舍入处理，它只是在早期计算机尚不发达时对于手工整理数据来说比较方便，如今鲜有人知。不过，我们不妨了解一下，前人在计算工具落后的情况下，如何利用巧妙的方法来达到表达数据的效果。
 
 茎叶图的整体形状如同植物的茎和叶，对于一个数据，通常取其 $10^n$ 部分为茎（$n$ 视所有数据的数量级而定），剩下的尾数为叶，放置于茎旁，这样每隔 $m10^n$ 就对数据作一次归类汇总，将落入区间 $[km10^{n},\ (k+1)m10^{n}]$ 的数据汇集为叶子（$k,m$ 为整数，$m$ 通常取 1，$k=1,2,3,\cdots$），我们不妨称这种区间为一个“节”，节的长度与直方图的“窗宽”本质上是同样的概念。显然，叶子越长则表明该节上数据频数越高。
 
@@ -187,7 +347,9 @@ names(island2) <- "Area"
 kable2(island2, "世界上各大陆地块的面积", insert_txt = "单位：千平方英里")
 ```
 
-可以看出，以上数据中最大的数量级为 $10^{4}$，而大部分数据的数量级集中在 $10^{1}$，因此茎上的数量级取作 $10^{3}$ 相对比较合适——更大的数量级会导致茎的节数非常少，对分布的刻画过于粗略；而更小的数量级会导致节数过多，使得茎叶图几乎退化为数据的原始表示，这样也难以看出数据的集中趋势。下图展示了 48 块大陆块面积的分布，该茎叶图窗宽为 $2\times10^{3}$，图中注明了原始数据小数点位置在 `|` 后面三位数处，因此我们从图中“还原”原始数据时，需要用（“茎的区间”+“叶”）$\times10^{3}$。
+可以看出，以上数据中最大的数量级为 $10^{4}$，而大部分数据的数量级集中在 $10^{1}$，因此茎上的数量级取作 $10^{3}$ 相对比较合适——更大的数量级会导致茎的节数非常少，对分布的刻画过于粗略；而更小的数量级会导致节数过多，使得茎叶图几乎退化为数据的原始表示，这样也难以看出数据的集中趋势。
+
+图 \@ref(fig:stem-islands) 图展示了 48 块大陆块面积的分布。左图是茎叶图，右图是与之比较的直方图。该茎叶图窗宽为 $2\times10^{3}$，图中注明了原始数据小数点位置在 `|` 后面三位数处，因此我们从图中“还原”原始数据时，需要用（“茎的区间”+“叶”）$\times10^{3}$。
 
 (ref:fig-stem-islands) 本图展示了世界上主要的 48 块大陆面积的分布状况，可以明显看出，这些面积数据是严重右偏的，意即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小
 
@@ -247,7 +409,7 @@ unname(sort(round(islands / 1000, 1)))
 \noindent 然后，从 0 到 $18\times10^{3}$、以 $2\times10^{3}$ 为窗宽，分段整理数据，每一段（节）中依次放置落入该段的数据的小数位，堆砌起来便形成了茎叶图的叶子。例如 $11.5$ 落入了 $[10,12]$ 的区间，我们就将尾数 5 放在 10 的右边；类似地，17.0 在 $[16,18]$ 之间，我们将 0 放在 16 右边；关于茎叶图顶部的一长串 0 的解释此处不再赘述。
 
 
-下图是利用泊松分布（$\lambda=10$）随机数生成的茎叶图，可以看出数据密度在 10 附近最高，这与理论相符。由于窗宽为 1，不存在舍入问题，所以图形可以还原到原始数据，请读者自行对应数据观察茎叶图。
+下图是利用泊松分布（$\lambda=10$）随机数生成的茎叶图和直方图。可以看出，数据密度在 10 附近最高，这与理论相符。由于窗宽为 1，不存在舍入问题，所以图形可以还原到原始数据，请读者自行对应数据观察茎叶图。
 
 ```{r, eval=FALSE, echo=TRUE}
 set.seed(717)
@@ -294,7 +456,7 @@ plot_grid(stem1, stem2, nrow = 1, align = "hv")
 
 ### 示例 {-}
 
-我们使用一组杀虫剂数据为例。该数据有两列，第一列为昆虫数目，第二列为杀虫剂种类（ABCDEF），如表 \@ref(tab:insects-data)所示。
+我们使用一组杀虫剂数据为例。该数据有两列，第一列为昆虫数目，第二列为杀虫剂种类（ABCDEF），如表 \@ref(tab:insects-data) 所示。
 
 ```{r insects-data}
 data(InsectSprays)
@@ -361,7 +523,7 @@ boxplot(count ~ spray, data = InsectSprays,
         col = "lightgray", horizontal = TRUE, pch = 4, varwidth = TRUE)
 ```
 
-\noindent 也可以用 **ggplot2**:
+\noindent 也可以用 **ggplot2** 包专门绘制箱线图的函数 `geom_boxplot()`:
 
 ```{r, eval=FALSE, echo=TRUE}
 ggplot(aes(y = count, x = spray), data = InsectSprays) +
@@ -380,7 +542,7 @@ summary(insects.aov)
 
 最后我们再以一个模拟数据的例子展示箱线图凹槽的功能。
 
-我们分别从正态分布 $\mathrm{N}(0,1)$ 和 $\mathrm{N}(0.5,1)$ 中各自产生 150 和 50 个随机数，然后作箱线图比较两组数据中间位置的差异。用下面的代码得到 图 \@ref(fig:rnorm-boxplot)：
+我们分别从正态分布 $\mathrm{N}(0,1)$ 和 $\mathrm{N}(0.5,1)$ 中各自产生 150 和 50 个随机数，然后作箱线图比较两组数据中间位置的差异。用下面的代码得到图 \@ref(fig:rnorm-boxplot)：
 
 
 (ref:fig-rnorm-boxplot-s) 箱线图的凹槽与统计推断
@@ -397,7 +559,7 @@ ggplot(
   coord_flip()
 ```
 
-\noindent 图中的凹槽表明了两组数据的中位数有显著差异，Wilcoxon 秩和检验也证实了这一结论：
+\noindent 图中的凹槽表明了两组数据的中位数有显著差异。Wilcoxon 秩和检验也证实了这一结论：
 
 ```{r, echo=TRUE}
 wilcox.test(x, y)$p.value
@@ -476,6 +638,7 @@ usage2(usage(vioplot, output = FALSE))
 
 `x, ...`:
 : 一系列数值向量； 
+
 `h`:
 : 传递给 **sm** 包 [@sm] 中的函数 `sm.density()` 用来计算密度。
 
@@ -489,160 +652,6 @@ vioplot(x1, x2, x3,
 
 **lattice** 包中的函数 `panel.violin()` 也提供了类似的小提琴图展示，这里不再赘述。关于小提琴图的理论请参考 @Hintze98。
 
-## 条形图/柱状图 {#sec:barplot}
-
-### 概述 {-}
-
-如同前面 \@ref(sec:begin) 节中曾经提到的，条形图目前是各种统计图形中应用最广泛的，但条形图所能展示的统计量比较贫乏：它只能以矩形条的长度展示原始数值，对数据没有任何概括或推断。
-
-### 示例 {-}
-
-这里以1940 年弗吉尼亚州分年龄组、分地区和分性别死亡率数据（表 \@ref(tab:vadeaths-data)）为例，介绍以下条形图。
-
-```{r vadeaths-data}
-data(VADeaths)
-kable2(VADeaths, "弗吉尼亚州死亡数据", only_head = FALSE)
-```
-
-图 \@ref(fig:vadeaths-barplot) 展示了各组之间死亡率的差异。其中，堆砌的条形图容易比较各年龄组总死亡率的大小。显然，年龄越高，死亡率越大。而并列的条形图容易比较组内的城乡和性别差异。一般说来，男性死亡率高于女性，农村男性死亡率低于城市男性，但女性的城乡差异没有明显规律。由于人眼对长度比比例更敏感（例如在区分城乡和性别差异时，图 \@ref(fig:vadeaths-barplot) 的上图就不如下图直观），所以我们制图时要考虑清楚我们想展示的是数据的哪一方面，将最关键的信息用最能激发视觉感知的形式表现出来。
-
-(ref:fig-vadeaths-barplot-s) 弗吉尼亚死亡率数据条形图
-
-(ref:fig-vadeaths-barplot) 弗吉尼亚死亡率数据条形图： 堆砌和并列的条形图效果
-
-```{r vadeaths-barplot, fig.width=4.8, fig.height=4.8, fig.cap = "(ref:fig-vadeaths-barplot)", fig.scap="(ref:fig-vadeaths-barplot-s)", fig.show="hold"}
-reshape_VADeaths <- transform(
-  expand.grid(
-    sex = colnames(VADeaths),
-    age = rownames(VADeaths)
-  ),
-  rates = as.vector(t(VADeaths))
-)
-p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
-p1 <- p + geom_col(position = "stack")
-p2 <- p + geom_col(position = "dodge")
-plot_grid(p1, p2, ncol = 1)
-```
-
-### 绘制方法 {-}
-
-R 中条形图的基础作图函数为 `barplot()`，用法如下：
-
-```{r barplot-usage, results='asis'}
-usage2(usage(barplot.default, output = FALSE))
-```
-
-\noindent 参数含义：
-
-`height`:
-: 主要参数，指定了长条的长度。这个参数可以接受一个数值向量或者一个数值矩阵作为参数。前者容易理解，后者稍有些复杂：当传入一个矩阵时，条形图针对矩阵的每一列画图。若 `beside` 为 `FALSE`，则矩阵每一列占据一条的位置，该条由若干矩形堆砌而成，这些矩形的高度对应着矩阵的行数据；若 `beside` 为 `TRUE`，这些矩形则并排排列而非堆砌。
-
-`width`:
-: 设置条的宽度。
-
-`space`:
-: 设置条之间的间距。
-
-`names.arg`:
-: 条形图的标签，即每一条的名称。
-
-`legend.text`:
-: 用来添加图例，在 `height` 为矩阵时比较有用。
-
-`horiz`:
-: 设置条形图的方向（水平或垂直）。
-
-`plot`:
-: 逻辑值，决定是否将条形图添加到现有图形上。
-
-\noindent `density`、`angle` 等参数可以参考矩形的章节（\@ref(sec:polygon) 节）。
-
-我们可以用下面的代码绘制弗吉尼亚死亡数据条形图，展示了参数 `beside` 和 `legend.text` 的效果：
-
-```{r, eval=FALSE, echo=TRUE}
-library(RColorBrewer) # 用分类调色板
-par(mfrow = c(2, 1), mar = c(3, 2.5, 0.5, 0.1))
-death <- t(VADeaths)[, 5:1]
-barplot(death, col = brewer.pal(4, "Set1"))
-barplot(death, col = brewer.pal(4, "Set1"), 
-        beside = TRUE, legend.text = TRUE)
-```
-
-\noindent 也可以用 **ggplot2** 包绘制：
-
-```{r, eval=FALSE, echo=TRUE}
-reshape_VADeaths <- transform(expand.grid(sex = colnames(VADeaths),
-                                          age = rownames(VADeaths)),
-                              rates = as.vector(t(VADeaths)))
-p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
-p1 <- p + geom_col(position = "stack")
-p2 <- p + geom_col(position = "dodge")
-plot_grid(p1, p2, ncol = 1)
-```
-
-## Cleveland 点图 {#sec:dotchart}
-
-### 概述 {-}
-
-在前面条形图（\@ref(sec:barplot) 小节）和后面饼图（\@ref(sec:pie) 小节）的章节中我们提到了点图 [@Cleveland85]，事实上点图和条形图的功能非常类似：条形图通过条的长度表示数值大小，点图通过点的位置表示数值大小，二者几乎可以在任何情况下互换。
-
-### 示例 {-}
-
-图 \@ref(fig:dotchart) 再次以弗吉尼亚死亡率数据为例，给出了点图的展示。对比图 \@ref(fig:vadeaths-barplot) 不难发现点图与条形图的相通之处。相比之下，点图的图形元素更加简洁，制图时不会显得太拥挤，我们可以视情况在这二者选其一作为表达工具。
-
-(ref:fig-dotchart-s) 弗吉尼亚死亡率数据的 Cleveland 点图
-
-(ref:fig-dotchart) 弗吉尼亚死亡率数据的 Cleveland 点图
-
-```{r dotchart,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)"}
-par(mar = c(2, 4, 0.2, 0.2))
-dotchart(t(VADeaths)[, 5:1], col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
-```
-
-### 绘制方法 {-}
-
-R 中绘制点图的基础函数为 `dotchart()`，用法如下：
-
-```{r dotchart-usage, results='asis'}
-usage2(usage(dotchart, output = FALSE))
-```
-
-\noindent 参数含义：
-
-`x`:
-: 与条形图的 `height` 参数相同，为一个数值向量或者矩阵。
-
-`labels`:
-: 数据的标签。
-
-\noindent 其它参数主要用来设置图形的样式如颜色、缩放倍数、点的样式等，此处略去。
-
-下面的代码是一个示例：
-
-```{r, eval=FALSE, echo=TRUE}
-dotchart(t(VADeaths)[, 5:1], 
-         col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
-```
-
-**ggplot2** 包里虽然没有函数直接绘制点图，然而可以借助散点图完成，代码如下：
-
-(ref:fig-dotchart2-s) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
-
-(ref:fig-dotchart2) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
-
-```{r dotchart2, echo=TRUE,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart2)",fig.scap="(ref:fig-dotchart-s2)"}
-tm <- rownames(VADeaths)
-rownames(VADeaths) <- NULL
-vd <- data.frame(cbind(tm, VADeaths))
-vd <- reshape(vd, direction = "long", varying = names(vd)[2:5],
-        v.name=c("rate"), times = names(vd)[2:5])
-vd$rate <- as.numeric(vd$rate)
-vd$tm <- factor(vd$tm)
-vd$tm <- factor(vd$tm,levels = rev(levels(vd$tm)) )
-ggplot(vd, aes(time, rate, color = time)) + geom_point() + 
-  facet_grid(tm ~ .) + coord_flip() +
-  theme(legend.position = "", axis.title = element_blank())
-```
 
 ## 坐标轴须 {#sec:rug}
 
@@ -654,7 +663,7 @@ ggplot(vd, aes(time, rate, color = time)) + geom_point() +
 
 ### 示例 {-}
 
-图 \@ref(fig:rug) 为坐标轴须的一个展示。在 \@ref(sec:hist) 小节中我们使用喷泉数据制作了直方图和密度图以便查看间隔时间的分布，这里我们在密度曲线的基础上添加上坐标轴须，以使我们能更清楚了解间隔时间数据的具体位置，而不是仅仅看一条曲线。从坐标轴须的疏密我们也可以知道分布密度的大小，这与密度曲线是相辅相成的。
+图 \@ref(fig:rug) 为坐标轴须的一个示例。在 \@ref(sec:hist) 小节中我们使用喷泉数据制作了直方图和密度图以便查看间隔时间的分布，这里我们在密度曲线的基础上添加上坐标轴须，以使我们能更清楚了解间隔时间数据的具体位置，而不是仅仅看一条曲线。从坐标轴须的疏密我们也可以知道分布密度的大小，这与密度曲线是相辅相成的。
 
 (ref:fig-rug-s) 带坐标轴须的喷泉间隔时间密度曲线图
 
@@ -697,7 +706,7 @@ plot(density(faithful$eruptions), main = "")
 rug(faithful$eruptions)
 ```
 
-当然，也可以用 **ggplot2** 包绘制：
+当然，也可以用 **ggplot2** 包的 `geom_rug()` 函数来绘制：
 
 ```{r, eval=FALSE, echo=TRUE}
 ggplot(faithful, aes(eruptions)) + 
@@ -706,7 +715,7 @@ ggplot(faithful, aes(eruptions)) +
   xlim(c(1, 6))
 ```
 
-严格来说，坐标轴须不能算作是图形，它只是图形的附加物，从 R 基础作图函数 的角度来说，它只是低层作图函数，但由于它在表达数据上的优势，这里我们也将其列入本书的图库中。
+严格来说，坐标轴须不能算作是图形，它只是图形的附加物，从 R 基础作图函数的角度来说，它只是低层作图函数，但由于它在表达数据上的优势，这里我们也将其列入本书的图库中。
 
 ## 带状图 {#sec:stripchart}
 
@@ -776,7 +785,19 @@ stripchart(count ~ spray, data = InsectSprays, method = "stack",
 stripchart(count ~ spray, data = InsectSprays, method = "jitter")
 ```
 
-回顾前面 \@ref(sec:rug) 小节中我们曾经用坐标轴须在坐标轴上标记出原始数据，这与带状图在一条直线上用点表达原始数据的想法有异曲同工之妙，然而坐标轴须本身没有堆砌和随机打乱数据的功能（可以通过函数 `jitter()` 函数实现），所以有时候使用不妨视情况向图中添加带状图作为变量分布的辅助性描述。
+**ggplot2** 包并没有直接绘制带状图堆砌效果的函数。不过，我们可以使用 `geom_jitter()` 函数（其实是 `geom_point(position = "jitter")` 函数的简写）来达到带状图随机打乱的效果，如图 \@ref(fig:stripchart2) 所示。作图代码如下：
+
+(ref:fig-stripchart2) **ggplot2** 包绘制的 各种杀虫剂下昆虫数目的带状图
+
+```{r stripchart2, echo=TRUE,fig.width=4.8,fig.height=2.4,out.width="80%", fig.cap="(ref:fig-stripchart2)"}
+ggplot(InsectSprays, aes(spray, count, color = spray)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_jitter(shape = 0) +
+  theme(legend.position = "") +
+  coord_flip()
+```
+
+回顾前面 \@ref(sec:rug) 小节中我们曾经用坐标轴须在坐标轴上标记出原始数据，这与带状图在一条直线上用点表达原始数据的想法有异曲同工之妙。然而，坐标轴须本身没有堆砌和随机打乱数据的功能（可以通过函数 `jitter()` 函数实现）。所以，有时候不妨视情况向图中添加带状图作为变量分布的辅助性描述。
 
 ## 饼图 {#sec:pie}
 
@@ -850,7 +871,7 @@ usage2(usage(pie, output = FALSE))
 
 \noindent 参数含义：`x` 为一个数值向量， `labels` 为标签，其它参数基本上都是为多边形准备的，因为扇形实际上是多边形所作，例如 `edges` 可以设定圆弧的光滑程度（多边形的边越多则越光滑）， `density` 、 `angle` 等参数参见多边形的章节（\@ref(sec:polygon) 小节）。
 
-下面的代码给出了图 \@ref(fig:pie-chart) 里饼图的作法：
+为馅饼销售数据作饼图，可以使用下面的代码：
 
 ```{r, eval=FALSE, echo=TRUE}
 pie_sales <- data.frame(
@@ -863,7 +884,7 @@ pie_col <- c("purple", "violetred1", "green3",
 pie(pie_sales$ratio, col = pie_col)
 ```
 
-正如前文所说，这并非一种展示数据的好方式。比它更糟糕的，是 三维饼图。在 R 语言里，可以用 **plotrix** 包的 `pie3D()`函数绘制；
+正如前文所说，饼图并非展示数据的好方式；比平面饼图更糟糕的，是三维饼图。在 R 语言里，可以用 **plotrix** 包的 `pie3D()`函数绘制；
 
 ```{r, eval=FALSE, echo=TRUE}
 library(plotrix)
@@ -911,7 +932,7 @@ QQ 图的原理并不复杂：如果一批数据 $x_{1},x_{2},\ldots,x_{n}$ 服�
 
 ### 示例 {-}
 
-图 \@ref(fig:qqnorm) 左图是喷泉间隔时间数据的正态分布 QQ 图（\@ref(sec:hist) 小节的直方图用到过），注意其中的数据经过了标准化，使之均值为 0，方差为 1。
+我们仍以表 \@ref(tab:tab-geyser)）所展示的以黄石国家公园喷泉数据为例。图 \@ref(fig:qqnorm) 左图是喷泉间隔时间数据的正态分布 QQ 图（\@ref(sec:hist) 小节的直方图用到过），注意其中的数据经过了标准化，使之均值为 0，方差为 1。
 
 (ref:fig-qqnorm-s) 喷泉间隔时间的正态分布 QQ 图
 
@@ -920,8 +941,10 @@ QQ 图的原理并不复杂：如果一批数据 $x_{1},x_{2},\ldots,x_{n}$ 服�
 ```{r qqnorm,fig.width=4.8,fig.height=2.4,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
 geyser$waiting_scaled <- scale(geyser$waiting)
 qq1 <- ggplot(data = geyser, mapping = aes(sample = waiting_scaled)) +
-  stat_qq_band() +
-  stat_qq_line() +
+  coord_fixed(ratio = 1, xlim = c(-3, 3), ylim = c(-3,3)) +
+  geom_abline(aes(intercept = 0, slope = 1), color = "blue") +
+  # stat_qq_band() +
+  # stat_qq_line() +
   stat_qq_point() +
   labs(x = "Theoretical Quantiles", y = "Sample Quantiles")
 
@@ -971,8 +994,6 @@ plot(density(geyser$waiting_scaled))
 curve(dnorm, from = -3, to = 3, lty = 2, add = TRUE)
 ```
 
-注意：图 \@ref(fig:qqnorm) 的 QQ 图中我们用了纵横比参数 `asp = 1`，这样使得图中横纵坐标的单位长度表示的数值大小相同，为我们比较点的横纵坐标值大小提供了更好的视觉辅助。
-
 **ggplot2** 包并没有直接绘制 QQ 图的函数。不过，可以安装 **qqplotr**包，加载后就可以绘制了：
 
 ```{r, eval=FALSE, echo=TRUE}
@@ -991,17 +1012,76 @@ qq2 <- ggplot(aes(waiting_scaled), data = geyser) +
 qq1 | qq2
 ```
 
+注意：图 \@ref(fig:qqnorm) 的 QQ 图中我们用了纵横比参数（ 基础作图函数里的 `qqnorm(asp = 1)，或 **ggplot2** 里的 `coord_fixed(ratio = 1)`），这样使得图中横纵坐标的单位长度表示的数值大小相同，为我们比较点的横纵坐标值大小提供了更好的视觉辅助。
+
 QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它也可以推广到检查数据是否来自某个位置参数分布族。例如，若数据来自正态分布 $N(5,1)$，我们拿它和标准正态分布 $N(0,1)$ 画 QQ 图的话，数据点仍然会大致排列在直线上，此时直线的斜率仍然是 1，但截距就不是 0 了，而是 5。正态分布是位置参数分布族中的一种分布：若 $X\sim N(\mu,\sigma^{2})$，那么 $X + \delta \sim \mathrm{N}(\mu+\delta,\sigma^{2})$ 仍然是正态分布。均值 $\mu$ 是位置参数。
 
 ## 思考与练习
 
-1.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性[^cos18521]。
+1.  条形图的横坐标通常是无序的，人们往往根据数据的原始顺序画条形图；比如画各省市的人口总数时，我们总是看到北京在第一位，这可能是因为统计局数据总是把北京放在第一行。条形图横坐标的顺序选取对读图是否有影响？或者说我们应该怎样安排条形图的横坐标？提示：参考 \@ref(subsec:canabalt) 小节。
 
-[^cos18521]: 本题源于统计之都论坛帖子：<https://d.cosx.org/d/18521>。
+2.  在 \@ref(sec:nightingale) 小节，我们介绍了提灯女士的玫瑰图。玫瑰图本质上是条形图，不同之处在于玫瑰图用的是极坐标，这种坐标转换在 R 语言中非常容易。下图是我们使用 R 语言的 **ggplot2** 包对图 \@ref(fig:nightingale-mortality) 进行了重绘。尝试用你熟悉的绘图工具自行绘制这两幅图。提示：克里米亚战争中英军伤亡人数数据收录在 R 语言的 **HistData** 包里。
 
-2.  用 QQ 图评价数据正态性应该注意什么问题？模拟一些正态分布的数据，画出 QQ 图，看看如果数据真的来自正态分布，QQ 图看起来是什么样的。或者参考 **animation** 包中的 `sim.qqnorm()` 函数。
+(ref:nightingale-ggplot2-s) 重新绘制提灯女士的玫瑰图
+
+(ref:nightingale-ggplot2) 重新绘制提灯女士的玫瑰图：请与图 \@ref(fig:nightingale-mortality) 作比较，体会现代作图工具的优势和不足
+
+```{r nightingale-ggplot2, fig.show='hold', out.width= "49%", fig.cap="(ref:nightingale-ggplot2)",fig.scap="(ref:nightingale-ggplot2-s)"}
+require(HistData)
+data(Nightingale)
+
+# For some graphs, it is more convenient to reshape death rates to long format
+#  keep only Date and death rates
+require(reshape)
+Night<- Nightingale[,c(1,8:10)]
+melted <- melt(Night, "Date")
+names(melted) <- c("Date", "Cause", "Deaths")
+melted$Cause <- sub("\\.rate", "", melted$Cause)
+melted$Regime <- ordered( rep(c(rep('Before', 12), rep('After', 12)), 3), 
+                          levels=c('Before', 'After'))
+Night <- melted
+
+# subsets, to facilitate separate plotting
+Night1 <- subset(Night, Date < as.Date("1855-04-01"))
+Night2 <- subset(Night, Date >= as.Date("1855-04-01"))
+
+# sort according to Deaths in decreasing order, so counts are not obscured [thx: Monique Graf]
+Night1 <- Night1[order(Night1$Deaths, decreasing=TRUE),]
+Night2 <- Night2[order(Night2$Deaths, decreasing=TRUE),]
+
+# merge the two sorted files
+Night <- rbind(Night1, Night2)
+
+require(ggplot2)
+
+# After plot
+cxc2 <- ggplot(Night2, aes(x = factor(Date), y=Deaths, fill = Cause)) +
+  geom_bar(width = 1, position="identity", stat="identity", color="black") +
+  scale_y_sqrt()
+cxc2 + coord_polar(start=3*pi/2) +
+  ggtitle("Causes of Mortality in the Army in the East") + 
+  xlab("")
+
+# Before plot
+cxc1 <- ggplot(Night1, aes(x = factor(Date), y=Deaths, fill = Cause)) +
+  # do it as a stacked bar chart first
+  geom_bar(width = 1, position="identity", stat="identity", color="black") +
+  # set scale so area ~ Deaths	
+  scale_y_sqrt() 
+# A coxcomb plot = bar chart + polar coordinates
+cxc1 + coord_polar(start=3*pi/2) + 
+  ggtitle("Causes of Mortality in the Army in the East") + 
+  xlab("")
+
+```
+
+
 
 3.  如果箱线图中出现大量的占据范围很大的离群点，则会导致箱子的主体部分被压得很扁，此时我们很难看清分位数的位置。请问对于这种情况有什么好的解决办法？
 
-4.  条形图的横坐标通常是无序的，人们往往根据数据的原始顺序画条形图；比如画各省市的人口总数时，我们总是看到北京在第一位，这可能是因为统计局数据总是把北京放在第一行。条形图横坐标的顺序选取对读图是否有影响？或者说我们应该怎样安排条形图的横坐标？提示：参考 \@ref(subsec:canabalt) 小节。
+4.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性[^cos18521]。
+
+[^cos18521]: 本题源于统计之都论坛帖子：<https://d.cosx.org/d/18521>。
+
+5.  用 QQ 图评价数据正态性应该注意什么问题？模拟一些正态分布的数据，画出 QQ 图，看看如果数据真的来自正态分布，QQ 图看起来是什么样的。或者参考 **animation** 包中的 `sim.qqnorm()` 函数。
 
