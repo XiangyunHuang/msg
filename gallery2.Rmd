@@ -1,5 +1,9 @@
 # 双变量图 {#cha:gallery2}
 
+本章介绍反映两个变量之间关系的统计图形，即双变量图。
+
+双变量图以我们熟悉的 X-Y 散点图为代表，此外还有一些基于普通散点图的变种。如果两个变量中的一个是分类变量，我们常常使用的是条形图、箱线图、点图等类型，在第\@ref(cha:gallery1)章已有介绍，此处不再赘述。
+
 ## 散点图 {#sec:plot-default}
 
 ### 概述 {-}
@@ -57,7 +61,7 @@ R 中散点图的基础绘图函数为 `plot.default()`，但是很少用。由�
 usage2(usage(plot.default, output = FALSE))
 ```
 
-\noindent 参数含义：若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数均已在 \@ref(sec:plot) 小节中介绍。
+\noindent 参数含义：若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数均已在 \@ref(sec:plot) 小节中介绍（例如设置 `type = "o"` 就会得到折线图）。
 
 使用基础函数绘制图 \@ref(fig:scatter-alpha)的代码如下[^demo-scatter-alpha]：
 
@@ -72,7 +76,7 @@ plot(BinormCircle, col = rgb(1, 0, 0, alpha = .01), axes = FALSE)
 box()
 ```
 
-或者用 **ggplot2** 包：
+**ggplot2** 包中绘制散点图的函数是 `geom_point()`。下面是绘制图 \@ref(fig:scatter-alpha) 的代码：
 
 ```{r, eval=FALSE,echo=TRUE}
 p <- ggplot(BinormCircle, aes(V1, V2)) +
@@ -91,7 +95,7 @@ plot_grid(p1, p2, ncol = 2)
 
 ### 概述 {-}
 
-我们有时候需要绘制给定函数关系 $y=f(x)$ 的曲线图。这可以通过给 $x$ 赋值后计算 $y$ 值，接着绘制散点图得到。
+一元函数曲线图指的是给定函数关系 $y=f(x)$ 的曲线图。这可以通过给 $x$ 赋值后计算 $y$ 值，接着绘制散点图得到。
 
 ### 示例 {-}
 
@@ -149,9 +153,9 @@ curve(sin(x) / x, from = -20, to = 20, n = 200,
       xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
 ```
 
-**ggplot2**包里并没有现成的函数绘制一元函数曲线图。一个变通的方法就是设定一系列 $x$ 值，根据函数关系计算出 $y$ 值，然后绘制折线图即可（图 \@ref(fig:curve2) ）绘制代码如下：
+**ggplot2**包里并没有现成的函数绘制一元函数曲线图。一个变通的方法就是设定一系列 $x$ 值，根据函数关系计算出 $y$ 值，然后绘制折线图即可。绘制代码如下：
 
-```{r curve2, echo=TRUE}
+```{r curve2, eval=FALSE, echo=TRUE}
 df1 <- data.frame(x = seq(-8, 7, by = 0.01))
 p1 <- ggplot(transform(df1, y = chippy(x)), aes(x, y)) + geom_line()
 df2 <- data.frame(x = seq(-20, 20, by = 0.01))
@@ -165,13 +169,13 @@ p1 / p2
 
 ### 概述 {-}
 
-向日葵散点图（Sunflower Scatter Plot）是用来克服散点图中数据点重叠问题的特殊散点图工具。它采用的办法是在有重叠的地方用一朵"向日葵花"的花瓣数目来表示重叠数据的个数，这样我们就很容易看出来散点图中哪些地方的数据有重叠，而且能知道重叠的具体数目。
+向日葵散点图（Sunflower Scatter Plot）是用来克服一般散点图中数据点重叠问题的特殊散点图工具。它采用的办法是在有重叠的地方用一朵"向日葵花"的花瓣数目来表示重叠数据的个数，这样我们就很容易看出来散点图中哪些地方的数据有重叠，而且能知道重叠的具体数目。
 
 向日葵散点图在数据特别密集或者数据类型为分类数据时很有用，因为这两种情况下都容易产生重复的数据点，尤其是后一种情况下，数据几乎必然有重复（除非列联表单元格频数为 1）。
 
 ### 示例 {-}
 
-鸢尾花花瓣数据（表 \@ref(tab:tab-iris)常用来做统计图形的演示。我们将这组数据绘制了 鸢尾花花瓣长和宽的向日葵散点图，
+鸢尾花花瓣数据（表 \@ref(tab:tab-iris)）常用来做统计图形的演示。我们将这组数据绘制了鸢尾花花瓣长和宽的向日葵散点图，
 如图 \@ref(fig:sunflowerplot) 所示。注意左下方和中部都有一些重复数据，通过花瓣数目的多少来体现。
 
 
@@ -253,7 +257,7 @@ sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 
 ### 概述 {-}
 
-平滑散点图的基础是散点图，但它并不直接将散点画出来，而是基于二维核密度估计 [@KernSmooth] 用特定颜色深浅表示某个位置的密度值大小，默认颜色越深说明二维密度值越大，即该处数据点越密集。二维核密度估计的原理和一维情况类似：一维核密度估计是在直线上按照距离远近对每个数据点加权，距离越近则对密度值贡献越大，因此数据点密集的地方的核密度值也相应大，二维情况下只是距离的计算放到了平面上，加权思想相同。
+平滑散点图的基础仍然是散点图，但它并不直接将散点画出来，而是基于二维核密度估计 [@KernSmooth] 用特定颜色深浅表示某个位置的密度值大小，默认颜色越深说明二维密度值越大，即该处数据点越密集。二维核密度估计的原理和一维情况类似：一维核密度估计是在直线上按照距离远近对每个数据点加权，距离越近则对密度值贡献越大，因此数据点密集的地方的核密度值也相应大，二维情况下只是距离的计算放到了平面上，加权思想相同。
 
 由于平滑散点图大致保留了原始数据点的位置，因此两个变量之间的关系仍然可以从图中看出来，这一点和普通的散点图类似。平滑散点图进一步的优势在于它同时还显示了二维变量的密度，从密度中我们也许可以观察到局部的聚类现象（大块的深色）。
 
@@ -263,12 +267,13 @@ sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 
 (ref:fig-smoothScatter-s) BinormCircle 数据的平滑散点图
 
-(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色浅）
+(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）
 
 ```{r smoothScatter,fig.width=4.5,fig.height=4.5,out.width="75%", fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
 library(ggpointdensity)
 ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
   geom_pointdensity(adjust = 0.1) +
+  scale_color_gradient(low="lightblue", high="darkblue") +
   theme(legend.position = "")
 ```
 
@@ -291,8 +296,8 @@ usage2(usage(smoothScatter, output = FALSE))
 `bandwidth`:
 : 计算核密度估计时使用的带宽。
 
-`colramp`：
-： 生成颜色向量的函数，默认生成从白色到蓝色渐变的颜色向量。
+`colramp`:
+: 生成颜色向量的函数，默认生成从白色到蓝色渐变的颜色向量。
 
 `nrpoints`:
 : 需要画出来的点的数目。因为平滑散点图的目的不是画散点，而是画颜色块，但有时候图形中某些地方的密度估计非常低，因此对应颜色也非常浅，导致读者难以察觉那些地方还有数据点的存在，此时不妨直接将这些"离群点"直接画出来，注意画点时按密度值从小到大的顺序画，一直画到第 `nrpoints` 个点。
@@ -306,7 +311,7 @@ par(mar = c(4, 4, 0.3, 0.1))
 smoothScatter(BinormCircle)
 ```
 
-也可以使用基于 **ggplot2** 包的 **ggpointdensity** 包：
+如果想用 **ggplot2** 包来绘制平滑散点图，那么可以先安装 **ggpointdensity** 包，然后使用 `geom_pointdensity()` 函数即可：
 
 ```{r, eval=FALSE, echo=TRUE}
 library(ggpointdensity)
@@ -317,7 +322,7 @@ ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
 
 平滑散点图看起来和图 \@ref(fig:scatter-alpha) 右图比较相似，但前者蕴含了更多的数理统计背景。不过，我们也不必一味追求数学理论，透明色可叠加这一点性质体现出的原理又何尝不是一种密度估计呢？
 
-## 风玫瑰图
+## 风玫瑰图 {#sec:windrose}
 
 <!--
 - 歌曲，电影，以其他浪漫图片为结尾
@@ -334,7 +339,7 @@ ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
 
 风玫瑰图通常用来展示东南西北甚至更多方向上的风力强度和频数，它是观察风力在各个方向上分布的一种直观办法。风玫瑰图的本质是堆叠的直方图，只是绘在了极坐标系中。它通常把水平方向以 0° 到 360°计，并平均分为 16 个风向区间，用 16 个扇形（或指针，或数据点）表示来自这些区间的风，在每一扇形上对各等风速进行频数汇总，最后除以观测时间内的观测次数（包括无风次数），就得到了各种风速在各个风向的频率，用扇环的半径表示出来即可。风玫瑰图在要求不高的时候也可以分 8 个或 12 个方向，也有细分为 32 个方向的。
 
-在一些与气象有关的部门，风玫瑰图有其特殊用处。例如，机场需要参考当地的风向玫瑰图来决定应该以什么样的方向修建飞机跑道。
+在一些与气象有关的部门，风玫瑰图有其特殊用处。例如，机场需要参考当地的风向玫瑰图来决定应该以什么样的方向修建飞机跑道；再如，污染空气的工厂一般要建在城市的下风向，这就要参考风玫瑰图来选址。
 
 ### 示例 {-}
 
@@ -360,13 +365,11 @@ windRose(mydata = mydata, ws = "ws", wd = "wd",
          cex = 3, breaks = c(seq(0,5,1), 21))
 ```
 
-由于顺风对飞机飞行不利，所以飞机在机场起飞和降落最好是能逆风，这样能使飞机在较短距离升空和降落。假定图 \@ref(fig:windrose) 是一个真实的机场的长期风向数据，则机场跑道可能考虑东北偏北-西南偏南方向，刮风频率较高，风力较大。笔者对机场建设了解甚少，这里只是介绍一种考虑的可能性。另外，根据笔者目前掌握的知识，当今的飞机似乎受风向影响已经大大减小了。
-
-
+如果要在这所城市附近修建会造成空气污染的化工厂，那么可以考虑尽量选在城市的东北偏北，这样对城市居民生活的大气环境造成的危害最小。如果图 \@ref(fig:windrose) 是一个机场的长期风向数据，则机场跑道可能考虑东北偏北-西南偏南方向，刮风频率较高，风力较大。由于顺风对飞机飞行不利，所以飞机在机场起飞和降落最好是能逆风，这样能使飞机在较短距离升空和降落。笔者对机场建设了解甚少，这里只是介绍一种考虑的可能性。另外，根据笔者目前掌握的知识，当今的飞机似乎受风向影响已经大大减小了。
 
 ### 绘制方法 {-}
 
-R 语言的 **openr** 包 [@openr] 有专门绘制风玫瑰图的函数 `windRose()`
+R 语言的 **openair** 包 [@openair] 有专门绘制风玫瑰图的函数 `windRose()`
 ，用法如下：
 
 ```{r, results='asis'}
@@ -501,16 +504,17 @@ usage2(usage(survival:::plot.survfit, output = FALSE))
 `mark`:
 : 给出删失标记的样式，即标记点的类型（参见图 \@ref(fig:point-type)）。
 
-下面的代码可以用来实现本节示例数据的生存函数计算和绘图：
+利用 **survival**包绘制本节案例的代码如下：
 
 ```{r, eval=FALSE, echo=TRUE}
 library(survival)
 leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
 plot(leukemia.surv, lty = 1:2, xlab = "time")
-legend("topright", c("Maintenance", "No Maintenance"), lty = 1:2, bty = "n")
+legend("topright", c("Maintenance", "No Maintenance"), 
+       lty = 1:2, bty = "n")
 ```
 
-**ggplot2** 包并没有提供生存函数的作图函数，然而 **survminer** 包的 `ggsurvplot()` 可以胜任：
+**ggplot2** 包并没有提供生存函数的作图函数，然而 **survminer** 包提供了函数 `ggsurvplot()`，可以胜任：
 
 ```{r, eval=FALSE, echo=TRUE}
 survminer::ggsurvplot(leukemia.surv, data = aml)
@@ -522,240 +526,7 @@ survminer::ggsurvplot(leukemia.surv, data = aml)
 survdiff(Surv(time, status) ~ x, data = aml)
 ```
 
-根据 \@ref(sec:plot) 小节和图 \@ref(fig:plot-type)的讲解，读者不难发现，生存函数图实际上就是在生存函数估计值的基础上使用阶梯状参数 `type = "s"` 制成的线图。
-
-## 关联图 {#sec:assocplot}
-
-### 概述 {-}
-
-关联图（Cohen-Friendly Association Plot）是展示二维列联表数据的一种工具 [@Cohen80; @Friendly92]，它主要是基于列联表的独立性检验理论（Pearson $\chi^{2}$ 检验）生成的图形。
-
-我们知道，对于一个 $r\times c$ 列联表，$\chi^{2}$ 统计量的定义为如下平方和形式：
-
-\begin{equation} 
-\chi^{2}=\sum_{i=1}^{r}\sum_{j=1}^{c}d_{ij}^{2};\;\; d_{ij}=\frac{f_{ij}-e_{ij}}{\sqrt{e_{ij}}}
-(\#eq:cap)
-\end{equation} 
-
-\noindent 其中，$f_{ij}$ 为单元格中的观测频数，$e_{ij}$ 为期望频数，二者相差越大，则会导致检验统计量的值越大，说明行变量和列变量越不独立。关联图所展示内容的正是这种差异，它的设计思路是，将图形同样以 $r\times c$ 的形式布局，每一个 "单元格" 中用一个矩形表示观测频数和期望频数的信息，具体来说，矩形的高度与 Pearson 残差 $f_{ij}-e_{ij}$ 成比例，宽度与期望频数 $\sqrt{e_{ij}}$ 成比例。这样一来，矩形的面积便与 $d_{ij}$ 成比例；此外，矩形自身带有方向，朝上表示残差为正，朝下则为负，不同方向的矩形同时也以不同颜色区分开来。
-
-### 示例 {-}
-
-一组来自 Delaware 大学的 592 名学生的受访数据记录了受访者的头发和眼睛的颜色。原始数据为一个三维数组。我们关心的问题是头发颜色与眼睛颜色之间是否存在关联。于是，我们在性别维度上将数据汇总，得到眼睛颜色（棕蓝褐绿）和头发颜色（黑棕红金）人数的列联表（表 \@ref(tab:tab-haireyecolor)）。我们可以通过作假设检验（方法附后），知道零假设（独立）可否被拒绝，但是检验的结果非常单一。所以，我们对该数据绘制了图 \@ref(fig:assocplot)，细致地展示了数据的内部信息。
-
-
-```{r tab-haireyecolor}
-x <- margin.table(HairEyeColor, c(1, 2))
-kable2(x, "592 名学生的头发和眼睛的颜色数据", only_head = FALSE)
-```
-
-(ref:fig-assocplot-s) 眼睛颜色与头发颜色的关联图
-
-(ref:fig-assocplot) 眼睛颜色与头发颜色的关联图
-
-```{r assocplot,fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
-assocplot(x)
-```
-
-从图中我们可以清楚看到，并非所有单元格都与期望频数有很大差异，只是少数几个单元格贡献了较大的 $\chi^{2}$ 值，如金发碧眼、金发棕眼等。
-
-事实上，这批数据为调查数据，眼睛颜色和头发颜色都为受访者自己填写，我们观察到金发碧眼单元格的期望频数和实际频数差异甚大，据说这背后有一则有趣的故事：由于“金发碧眼”是大家公认的美的标准，因此有些学生在填问卷时故意偏向于填写“金发碧眼”，导致“金发碧眼”的实际频数严重偏高[^assocplot-isu]。
-
-[^assocplot-isu]: 笔者在爱荷华州立大学统计系读博士期间，每周统计图形小组有一次讨论，这则消息来自于笔者的一位导师 Heike Hofmann 教授。
-
-### 绘制方法 {-}
-
-R 中关联图的基础绘图函数为 `assocplot()`，用法如下：
-
-```{r assocplot-usage, results='asis'}
-usage2(usage(assocplot, output = FALSE))
-```
-
-\noindent 参数含义：
-
-`x`:
-: 一个列联表数据（或者矩阵）。
-
-`col`:
-: 朝上和朝下矩形的颜色。
-
-`space`:
-: 用来设置矩形之间的间距。
-
-我们用如下代码来加载和处理数据，绘制关联图：
-
-```{r, eval=FALSE, echo=TRUE}
-data(HairEyeColor)
-x <- margin.table(HairEyeColor, c(1, 2))
-assocplot(x)
-```
-
-\noindent 并做卡方检验：
-
-```{r, echo=TRUE}
-chisq.test(x)$p.value # 卡方检验 P 值
-```
-
-从返回的 $\chi^{2}$ 检验结果，我们可以拒绝零假设，眼睛的颜色与头发的颜色并不独立，二者之间存在某种关联关系。然而，这种关联关系是由于生物或遗传原因引起还是受访者有意隐瞒自己的信息，则需要我们进一步斟酌了。
-
-除了 R 的基础绘图函数外，**ggplot2** 包的 `geom_tile()` 也可以展示这种关联信息，如图 \@ref(fig:assocplot2) 所示。将它与图 \@ref(fig:assocplot) 作比较。
-
-(ref:fig-assocplot2-s) ggplot2 绘制的眼睛颜色与头发颜色的关联图
-
-(ref:fig-assocplot2) ggplot2 绘制的眼睛颜色与头发颜色的关联图
-
-```{r assocplot2, echo=TRUE,fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
-x1 <- reshape2::melt(unclass(chisq.test(x)$res), 
-                     value.name = "residuals") 
-ggplot(x1, aes(x = Hair, y = Eye)) +
-  geom_tile(aes(fill = residuals)) +
-  scale_fill_gradient2()
-```
-
-在 **vcd** 包 [@vcd] 中有一个类似的关联图函数 `assoc()`，功能比本节中介绍的函数要更强大，详细介绍参见 @Meyer06;
-@Zeileis07。
-
-
-## 四瓣图 {#sec:fourfoldplot}
-
-### 概述 {-}
-
-四瓣图（Fourfold Plot）是用来查看 $2\times2\times k$ 列联表中两个二分变量之间关联关系的一种图示工具，它主要是基于二维列联表的检验理论而建立起来的 [@Friendly94]。
-
-表 \@ref(tab:contingency) 是一个典型的二维列联表。通常我们想检验的是行变量与列变量是否独立。前面 \@ref(sec:assocplot) 小节中曾经利用 $\chi^{2}$ 检验构造了关联图，这里我们从优比（Odds Ratio，OR）的角度出发对列联表进行检验。
-
-首先我们定义以下二式分别为在因素出现和不出现的情况下事件的发生率（医学上常称为风险）：
-
-\begin{equation} 
-\frac{P_{1}}{P_{1}+P_{3}};\;\;\frac{P_{2}}{P_{2}+P_{4}}
-(\#eq:OR1)
-\end{equation} 
-
-进而我们用这二式之比得到优比：
-
-\begin{equation} 
-\mathrm{OR}\equiv\frac{P_{1}}{P_{1}+P_{3}}/\frac{P_{2}}{P_{2}+P_{4}}=\frac{P_{1}(P_{2}+P_{4})}{P_{2}(P_{1}+P_{3})}
-(\#eq:OR)
-\end{equation} 
-
-Table: (\#tab:contingency) 二维列联表的经典形式
-
-|         |             事件              |               |
-| ------: | :---------------------------: | ------------- |
-|         |       发生　　不发生        |               |
-| 因素 有 |  $P_{1}$　　$P_{3}$   | $P_{1}+P_{3}$ |
-|      无 |  $P_{2}$　　$P_{4}$   | $P_{2}+P_{4}$ |
-|         | $P_{1}+P_{2}$　$P_{3}+P_{4}$ |               |
-
-
-由于通常情况下事件发生的几率都比较小（尤其是医学上的疾病），即 $P_{1}$ 相对 $P_{3}$ 来说较小，$P_{2}$ 相对 $P_{4}$ 来说较小，因此 \@ref(eq:OR) 式可以近似用 \@ref(eq:ORapprox) 式代替：
-
-\begin{equation} 
-\mathrm{OR}\approx\Psi\equiv\frac{P_{1}P_{4}}{P_{2}P_{3}}
-(\#eq:ORapprox)
-\end{equation} 
-
-我们记各单元格的样本实现值分别为 $a,b,c,d$；如果事件和因素相互独立，那么因素是否发生对事件是否发生（或发生率）没有影响，因此在零假设下优比的样本实现值 $ad/bc$ 应该接近于 1。换句话说，如果优比与 1 显著不同，那么很可能行列变量不独立。
-
-四瓣图正是基于这样一个比例来完成制图的，它将优比体现在两个相邻的四分之一圆的半径之比：如果两个扇形半径差异显著，那么说明行列变量不独立，即因素对事件有影响，这便是四瓣图最基本的用法，而背后还有关于优比置信区间的计算，并且这个置信区间也在图中用两道弧线表现了出来。四瓣图最终的读法就是观察两瓣相邻扇形的置信区间弧线是否有重叠，有则说明不能拒绝零假设，反之可以拒绝。这是基于假设检验和区间估计之间的转换关系而得以成立的。
-
-计算置信区间需要用到 $\Psi$ 的方差以及正态性假定。$\Psi$ 的方差并不容易直接计算，但取对数之后就很容易了：
-
-\begin{equation}
-\mathrm{Var}(\mathrm{log}(\Psi))=\frac{1}{a}+\frac{1}{b}+\frac{1}{c}+\frac{1}{d}
-(\#eq:ORlog)
-\end{equation}
-
-其置信区间为：
-
-\begin{equation}
-\mathrm{log}(\Psi)\pm q_{1-\alpha/2}\sqrt{\mathrm{Var}(\mathrm{log}(\Psi))}
-(\#eq:ORconf)
-\end{equation}
-
-通过对 \@ref(eq:ORconf) 取指数即可还原到 $\Psi$ 本身的置信区间。关于四瓣图的数学理论就介绍到这里，感兴趣的读者可以参阅 @Friendly94，或者直接阅读 R 语言的 `fourfoldplot()` 函数的源代码（大约 200 行）。
-
-### 示例 {-}
-
-表 \@ref(tab:tab-UCBAdmissions) 是一组加州伯克利分校（UCB）的录取数据。这批数据为一个 $2\times2\times6$ 的数组，我们可以分系别来看学生的录取是否与性别有关。为此，我们绘制了四瓣图（图 \@ref(fig:fourfoldplot)）。
-
-```{r tab-UCBAdmissions}
-kable_styling(
-    knitr::kable(ftable(UCBAdmissions), "latex", col.names = c("Status", "Gender", "Dept.", "Number"), booktabs = TRUE, caption = "加州伯克利分校（UCB）录取数据", align = "c"),
-    font_size = table_font_size
-)
-```
-
-(ref:fig-fourfoldplot-s) 加州伯克利分校录取数据四瓣图
-
-(ref:fig-fourfoldplot) 加州伯克利分校录取数据四瓣图
-
-```{r fourfoldplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-fourfoldplot)",fig.scap="(ref:fig-fourfoldplot-s)"}
-fourfoldplot(UCBAdmissions, mfcol = c(2, 3)) # 2 行 3 列排版
-```
-
-从图中反映的情况来看，只有 A 系的四瓣图显示出了置信区间弧线不相交的情况，说明 A 系学生的录取与性别不独立，而其它系都不能拒绝零假设"录取与性别无关"。
-
-### 绘制方法 {-}
-
-R 中绘制四瓣图的基础函数是 `fourfoldplot()`，用法如下：
-
-```{r fourfoldplot-usage, results='asis'}
-usage2(usage(fourfoldplot, output = FALSE))
-```
-
-\noindent 参数含义：
-
-`x`:
-: 一个 $2\times2\times k$ 的数组。当 $k=1$ 时，它也可以直接取一个 $2\times2$ 的矩阵。
-
-`color`:
-: 设定四分之一圆的填充颜色，处于同一对角线上的扇形颜色相同，颜色填充的顺序也反映出优比与 1 的大小。
-
-`onf.level`:
-: 置信水平。
-
-`std`:
-: 列联表的标准化方法，决定了标准化时分母所除的数。
-
-当 $k\geq1$ 时，该函数会依次生成 $k$ 幅四瓣图。
-
-举例来说，图 \@ref(fig:fourfoldplot) 的数据加载和绘制代码如下：
-
-```{r, eval=FALSE, echo=TRUE}
-fourfoldplot(UCBAdmissions, mfcol = c(2, 3)) # 2 行 3 列排版
-```
-
-现在我们不妨通过一些简单的 R 语言计算来证实两件事情。
-
-首先是扇形颜色的填充与优比的关系，计算优比的代码如下：
-
-```{r UCB-OR}
-(x <- apply(UCBAdmissions, 3, function(x) (x[1, 1] * x[2, 2]) / (x[1, 2] * x[2, 1])))
-```
-
-C 和 E 系的优比大于 1。观察图 \@ref(fig:fourfoldplot) 可知， `color` 参数的第一个颜色值填充第一、三象限的扇形，而优比小于 1 时，第一个颜色值填充第二、四象限。
-
-其次，我们完全可以将优比的置信区间分别算出来，看它们是否包含数值 1：
-
-```{r UCB-CI}
-y <- qnorm(0.975) * sqrt(apply(UCBAdmissions, 3, 
-                               function(x) {sum(1 / x)}))
-conf <- exp(cbind(log(x) - y, log(x) + y))
-colnames(conf) <- c("2.5%", "97.5%")
-conf
-```
-
-显然，这些置信区间中只有 A 系的不包含 1 在内，因此对于该系来说可以拒绝零假设。这与图形得到的结论完全相符。
-
-这里我们提醒读者注意上面的 R 代码与数学公式的对应关系。很多时候，根据数学公式写 R 代码是非常简单的工作。
-
-最后，我们可以看看卡方检验的 P 值，这些 P 值对应的结论和上面的图形和优比的结论都相同：
-
-```{r UCB-chisq}
-# 对每个系的录取数据进行卡方检验分别得到 P 值
-round(apply(UCBAdmissions, 3, function(x) chisq.test(x)$p.value), 3)
-```
+根据 \@ref(sec:plot) 小节和图 \@ref(fig:plot-type) 的讲解，读者不难发现，生存函数图实际上就是在生存函数估计值的基础上使用阶梯状参数 `type = "s"` 制成的线图。
 
 ## 条件密度图 {#sec:cdplot}
 
@@ -785,7 +556,7 @@ temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
   70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81
 )
 fail_temperature <- data.frame(fail = fail, temperature = temperature)
-kable2(fail_temperature, "美国国家航空和宇宙航行局的一批 O 型环失效数据")
+kable2(fail_temperature, "美国国家航空和宇宙航行局的一批 O 型环失效数据", only_head = FALSE)
 ```
 
 为了探索温度对 O 型环失效的影响，我们可以使用诸如 Logistic 回归之类的统计模型去计算、分析，而这里我们用条件密度图来展示温度的影响，如图 \@ref(fig:cdplot)。
@@ -854,7 +625,7 @@ usage2(usage(graphics:::cdplot.formula, output = FALSE))
 
 \noindent 其它参数诸如标题、坐标轴范围等此处略去。
 
-利用该函数绘制图 \@ref(fig:cdplot) 的代码[^cdplot-code]为：
+利用该函数来为表 \@ref(tab:tab-fail-temperature) 绘制条件密度图的代码为：
 
 [^cdplot-code]: 这段代码可以通过运行 `demo("cdplotDemo", package = "MSG")`获取。
 
@@ -872,7 +643,7 @@ points(temperature, c(0.25, 0.75)[as.integer(fail)],
        col = "blue", bg = "yellow", pch = 21)
 ```
 
-也可以使用 **ggplot2**包绘制：
+也可以使用 **ggplot2**包的 `geom_density()` 函数绘制：
 
 ```{r, eval=FALSE, echo=TRUE}
 fail_temperature <- data.frame(fail = fail, temperature = temperature)
@@ -884,7 +655,7 @@ ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
   theme(legend.position = "")
 ```
 
-这里需要提醒读者注意的是，密度值的计算和估计与数据样本量大小有关系，小的样本量可能会导致密度估计的不精确，进而导致图形的误导性，因此使用条件密度图的时候务必注意样本量的问题。
+这里需要提醒读者注意的是，密度值的计算和估计与数据样本量大小有关系：小的样本量可能会导致密度估计的不精确，进而导致图形的误导性。因此，使用条件密度图的时候，务必注意样本量的问题。
 
 ## 棘状图 {#sec:spineplot}
 
@@ -894,11 +665,11 @@ ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
 
 [^spineplot-spinogram]: 对于连续的自变量则称为 Spine Plot，离散自变量则为 Spinogram，这个单词是仿照 Histogram 而造。
 
-棘状图的原理和条件密度图非常类似，都展示了在给定某个自变量的情况下因变量的概率分布，但是棘状图首先对连续型的自变量进行了离散化处理，然后在离散的区间内计算因变量的条件分布。除此之外，棘状图还兼顾了自变量的分布，在横轴方向上以不同宽度的矩形表示自变量的分布密度。因此，从纵轴方向上看，棘状图用堆砌的矩形块表示因变量的分布密度，这使得它看起来像堆砌的条形图，而从横轴方向上看，棘状图用不同的矩形宽度表示自变量的密度分布，这使得它又像是马赛克图（马赛克图中矩形的长宽和频数成比例）。尤其是自变量为分类变量时，棘状图与马赛克图几乎无异。从概念和定义上来讲，棘状图实际上是用 $P(Y|X)$ 对 $P(X)$ 所作的图。
+棘状图的原理和条件密度图非常类似，都展示了在给定某个自变量的情况下因变量的概率分布。但是，棘状图首先对连续型的自变量进行了离散化处理，然后在离散的区间内计算因变量的条件分布。除此之外，棘状图还兼顾了自变量的分布，在横轴方向上以不同宽度的矩形表示自变量的分布密度。因此，从纵轴方向上看，棘状图用堆砌的矩形块表示因变量的分布密度，这使得它看起来像堆砌的条形图；而从横轴方向上看，棘状图用不同的矩形宽度表示自变量的密度分布，这使得它又像是马赛克图（马赛克图中矩形的长宽和频数成比例）。尤其是自变量为分类变量时，棘状图与马赛克图几乎无异。从概念和定义上来讲，棘状图实际上是用 $P(Y|X)$ 对 $P(X)$ 所作的图。
 
 ### 示例 {-}
 
-图 \@ref(fig:spineplot) 重新使用航天飞机 O 型环失效数据作了棘状图。我们可以看到，自变量温度被分为了 7 个长度为 5 的区间，每个区间内失效的比率都用堆砌的矩形表达。注意棘状图的横坐标轴比较特殊，它对自变量的值来说并不一定是均匀的，因为图中矩形的宽需要表达自变量的密度，所以横坐标的作用仅仅是作为密度值大小的参照物。棘状图会返回一个汇总表，表中给出了自变量的分段情况以及相应的频数。读者可以结合频数表理解棘状图。
+图 \@ref(fig:spineplot) 重新使用航天飞机 O 型环失效数据（表 \@ref(tab:tab-fail-temperature)）作了棘状图。我们可以看到，自变量温度被分为了 7 个长度为 5 的区间，每个区间内失效的比率都用堆砌的矩形表达。注意：棘状图的横坐标轴比较特殊，它对自变量的值来说并不一定是均匀的，因为图中矩形的宽需要表达自变量的密度，所以横坐标的作用仅仅是作为密度值大小的参照物。棘状图会返回一个汇总表，表中给出了自变量的分段情况以及相应的频数。读者可以结合频数表理解棘状图。
 
 (ref:fig-spineplot-s) 航天飞机 O 型环在不同温度下失效的棘状图
 
@@ -937,7 +708,7 @@ usage2(usage(graphics:::spineplot.formula, output = FALSE))
 `col`:
 : 设定不同类别的 `y` 的颜色。
 
-于是，图 \@ref(fig:spineplot) 可以用如下代码绘制：
+图 \@ref(fig:spineplot) 可以用如下代码绘制：
 
 ```{r, eval=FALSE, echo=TRUE}
 par(mar = c(4, 4, .5, 2))
@@ -954,34 +725,38 @@ t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
 
 ### 示例 {-}
 
-一组汽车测试报告记录了车重 `Weight` 和气缸排量 `Disp.`两个变量（表 \@ref(tab:tab-car-test)）。
+*Consumer Reports* 杂志 1990 年四月刊给出了一组汽车测试报告，记录了车重 `Weight` 和气缸排量 `Disp.`两个变量（表 \@ref(tab:tab-car-test)）。
 
 ```{r tab-car-test}
 data(car.test.frame, package = "rpart")
 kable2(car.test.frame, "汽车测试报告数据")
 ```
 
-图 \@ref(fig:bagplot) 左图展示了车重和气缸排量的二维箱线图。图中心有一个米字型的点，代表二维数据的中位数；内层深色袋子包含了一半的数据点（约 30 个）。作为对比，右图从二维核密度估计的角度画出了密度值的等高图，这两幅图可以看作是相通的，左图里层袋子就是右图中密度曲面[^bagplot-surf] 从中心向外积分数值到 0.5 时对应的区域。
+图 \@ref(fig:bagplot) 左图展示了车重和气缸排量的二维箱线图。图中心有一个米字型的点，代表二维数据的中位数；内层深色袋子包含了一半的数据点（约 30 个）。作为对比，右图从二维核密度估计的角度画出了密度值的等高图（见 \@ref(sec:contour) 小节），这两幅图可以看作是相通的：左图里层袋子就是右图中密度曲面[^bagplot-surf] 从中心向外积分数值到 0.5 时对应的区域。
 
 [^bagplot-surf]: 不要忘记：等高图实际上是三维图形！请想象这个“曲面”的形状。
 
-(ref:fig-bagplot-s) Consumer Reports 中汽车数据的二维箱线图和密度等高图
+(ref:fig-bagplot-s) *Consumer Reports* 中汽车数据的二维箱线图和密度等高图
 
-(ref:fig-bagplot) Consumer Reports 中汽车数据的二维箱线图（左）和二维密度等高图（右）
+(ref:fig-bagplot) *Consumer Reports* 中汽车数据的二维箱线图（左）和二维密度等高图（右）
 
 ```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
-library(aplpack, warn.conflicts = FALSE)
-# 数据来自 rpart 包中的 car.test.frame
-par(mfrow = c(1, 2), mar = c(4, 4, 0.1, 0.1), bty = "l")
 car.wd <- with(car.test.frame, cbind(Weight, Disp.))
-bagplot(car.wd, cex = 0.9)
-box()
-library(KernSmooth) # 二维核密度估计并画等高线图
-est <- bkde2D(car.wd, apply(car.wd, 2, dpik))
-with(est, {
-  contour(x1, x2, fhat, xlab = "Weight", ylab = "Disp.",
-          xlim = range(car.wd[, 1]), ylim = range(car.wd[, 2]))
-  points(car.wd, pch = 16, cex = 0.9)})
+bp_median <- apply(data.frame(car.wd), 2, median)
+bp_df <- data.frame(x = bp_median[1], y = bp_median[2])
+bp0 <- ggplot(data.frame(car.wd), aes(Weight, Disp.))
+bp1 <- bp0 + 
+  stat_bag(prop = 1, fill = "blue") +  # enclose all the points
+  stat_bag(prop = 0.5, alpha = 0.5, fill = "blue") + # enclose 50% of points
+  geom_point() +
+  geom_point(data = bp_df, mapping=aes(x = x, y = y), 
+             col = "red", shape = 8, size = 3)
+
+bp2 <- bp0 +
+  stat_density_2d() +
+  geom_point()
+
+bp1 | bp2
 ```
 
 ### 绘制方法 {-}
@@ -989,6 +764,7 @@ with(est, {
 R 中 **aplpack** 包 [@aplpack] 提供了一个函数 `bagplot()` 可以用来画二维箱线图，其用法如下：
 
 ```{r bagplot-usage, results='asis'}
+library(aplpack, warn.conflicts = FALSE)
 usage2(usage(bagplot, output = FALSE))
 ```
 
@@ -1007,11 +783,14 @@ usage2(usage(bagplot, output = FALSE))
 
 其它设置颜色或形状的参数此处略去。
 
-作为示例，下面的代码可以绘制图 \@ref(fig:bagplot)：
+汽车数据车重和气缸排量的二维箱线图和二维密度等高图可以用以下代码来绘制：
 
 ```{r, eval=FALSE, echo=TRUE}
 data(car.test.frame, package = "rpart")
 
+library(aplpack, warn.conflicts = FALSE)
+# 数据来自 rpart 包中的 car.test.frame
+par(mfrow = c(1, 2), mar = c(4, 4, 0.1, 0.1), bty = "l")
 car.wd <- with(car.test.frame, cbind(Weight, Disp.))
 bagplot(car.wd, cex = 0.9)
 box()
@@ -1024,7 +803,26 @@ with(est, {
   points(car.wd, pch = 16, cex = 0.9)})
 ```
 
-得到的二维箱线图里，外层袋子本应包含所有数据点，但由于默认设置有 5 个离群点的存在，所以只包含了 55 个数据点，读者可以将 `factor` 参数设置为 6，便可包含所有数据点。
+\noindent 这样得到的二维箱线图里，外层袋子本应包含所有数据点，但由于默认设置有 5 个离群点的存在，所以只包含了 55 个数据点，读者可以将 `factor` 参数设置为 6，便可包含所有数据点。
+
+**ggplot** 包并没有现成的函数来绘制二维箱线图。为了读者方便，我们的 **MSG** 包里包含了一个函数 `stat_bag()`，可以用来绘制。图 \@ref(fig:bagplot) 的作图代码如下： 
+
+```{r, eval=FALSE, echo=TRUE}
+bp0 <- ggplot(data.frame(car.wd), aes(Weight, Disp.))
+bp1 <- bp0 + 
+  stat_bag(prop = 1, fill = "blue") + 
+  stat_bag(prop = 0.5, alpha = 0.5, fill = "blue") +
+  geom_point() +
+  geom_point(data = bp_df, mapping=aes(x = x, y = y), 
+             col = "red", shape = 8, size = 3)
+
+bp2 <- bp0 +
+  stat_density_2d() +
+  geom_point()
+
+bp1 | bp2
+```
+
 
 ## 思考与练习
 
