@@ -1,0 +1,60 @@
+```{r}
+# 指定数据框 x 和短标题。
+# 如果 only_head TRUE，则标题自动是短标题+原数据行列数，并且表格里自动显示 5 行。否则，短标题按指定短标题，显示全部数据。 
+
+# kable2 <- function(x, x_scap, only_head = TRUE, insert_txt = "", x_cap = ""){
+#   if(only_head) { 
+#     x_cap <- paste0(x_scap, insert_txt, "（部分。原数据为 ", nrow(x), " 行 ", ncol(x), " 列）")
+#     x_head <- head(x, 5)
+#   } else {
+#     x_cap <- paste0(x_scap, insert_txt)
+#     x_head <- x
+#   } 
+#   knitr::kable(x_head, "latex",
+#                booktabs = TRUE,
+#                caption = x_cap,
+#                caption.short = x_scap,
+#                align = 'c') 
+# }
+# 
+# kable3 <- function(x, x_scap, table_font_size = 8, latex_options = "basic", x_cap = ""){
+#   x_head <- head(x, 5)
+#   if(x_cap == "") x_cap <- paste0(x_scap, "（部分。原数据为 ", nrow(x), " 行 ", ncol(x), " 列）")
+#   kableExtra::kable_styling(
+#     knitr::kable(x_head, "latex",
+#                  booktabs = TRUE,
+#                  caption = x_cap,
+#                  caption.short = x_scap,
+#                  align = 'c'),
+#     latex_options = latex_options,
+#     font_size = table_font_size
+#   )
+# }
+
+kable2 <- function(x, x_scap, only_head = TRUE, insert_txt = "", x_cap = "", table_font_size = 8, latex_options = "basic"){
+  if(only_head) { 
+    x_cap <- paste0(x_scap, insert_txt, "（部分。原数据为 ", nrow(x), " 行 ", ncol(x), " 列）")
+    x_head <- head(x, 5)
+  } else {
+    x_cap <- paste0(x_scap, insert_txt)
+    x_head <- x
+  }
+  kableExtra::kable_styling(
+    
+    knitr::kable(x_head, "latex",
+                 booktabs = TRUE,
+                 caption = x_cap,
+                 caption.short = x_scap,
+                 align = 'c') ,
+    latex_options = latex_options,
+    font_size = table_font_size
+  )
+}
+
+# kableExtra::kable_styling(
+#   knitr::kable(t(pie_sales), "latex",
+#                booktabs = TRUE,
+#                caption = "各种馅饼销售份额",
+#                align = 'c') ,
+#   latex_options = "scale_down")
+```
