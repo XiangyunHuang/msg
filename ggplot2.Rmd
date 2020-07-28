@@ -9,7 +9,7 @@
 > ——柯南 $\cdot$ 道尔《巴斯克维尔的猎犬》  
 
 
-基础图形系统虽然灵活，但它无穷无尽的选项往往让用户感到迷茫，后面的 **lattice** 系统也有同样的问题（甚至更严重）。**ggplot2** 包 [@ggplot2] 从易用性出发，结合了基础图形系统的简便以及 **grid** 和 **lattice** 的灵活，并以 *The Grammar of Graphics*一书 [@Wilkinson05] 的理论为支撑，构建了一套易用、实用而且美观的图形系统。
+基础图形系统虽然灵活，但它无穷无尽的选项往往让用户感到迷茫， **lattice** 系统（见 \@ref(sec:lattice) 小节）也有同样的问题（甚至更严重）。**ggplot2** 包 [@ggplot2] 从易用性出发，结合了基础图形系统的简便以及 **grid** 和 **lattice** 的灵活，并以 *The Grammar of Graphics*一书 [@Wilkinson05] 的理论为支撑，构建了一套易用、实用而且美观的图形系统。
 
 ## 快速体验
 
@@ -57,7 +57,7 @@ qplot(x = V1, y = V2, data = BinormCircle)
 ```{r qplot,fig.width=7, fig.height=3.5, fig.scap="(ref:qplot-s)",fig.cap="(ref:qplot)"}
 data(geyser, package = "MASS")
 data(BinormCircle, package = "MSG")
-qplot(x = waiting, data = geyser) | qplot(x = V1, y = V2, data = BinormCircle)
+qplot(x = waiting, data = geyser) | qplot(x = V1, y = V2, data = BinormCircle, alpha = I(0.01))
 ```
 
 虽然 `qplot()` 使用起来方便快捷，但是我们并不推荐，原因正如前面所述，它并不符合 **ggplot2** 作图的习惯，仅供体验，不宜过度依赖。读者若想深入了解 **ggplot2** 作图的魅力，最好还是从它的基本框架入手。
@@ -81,6 +81,9 @@ ggplot() + geom_xxx() +
 
 \noindent 即：`数据映射+几何形状+可选项(即坐标系+切片结构+主题+其他附加属性)`。每个 `+` 两侧都是图层。
 
+
+对于这个框架，我们在第二部分给出了很多实例。读者也可以参考第\@ref(cha:tools)章的结尾用 **ggplot2**绘制的拿破仑远征图，这个例子很好地展示了 **ggplot2** 图层叠加的作图特点。
+ 
 加号`+`本身实际上是一个函数。我们平时看到的加法可以写成函数调用的形式：
 
 ```{r plus-generic, echo=TRUE, eval=FALSE}
@@ -105,11 +108,19 @@ p + geom_smooth(method = "loess") # 用散点图加上平滑层
 
 ### 几何形状
 
-在 **ggplot2** 中，几何形状简称 geom （Geometric objects），这些形状包括：点、条、线、箱线图和文本等。实际上，它们就是第\@ref(cha:elements)章介绍的图形元素，但是 **ggplot2** 在这些元素上做了更多工作。例如，箱线图并非基础图形元素，但它在 **ggplot2** 中的地位也是基础形状；还有平滑曲线和平滑带，背后都涉及到大量的统计计算。而 **ggplot2** 对它打包之后，用户用起来就简单多了，否则我们需要手工建立平滑模型（可能是线性回归，可能是 LOWESS，或是分位数回归等），然后取一系列 x 值并拟合 y 值。
+在 **ggplot2** 中，几何形状简称 geom （Geometric objects），这些形状包括：
+
+- 点（`geom_point()`）、
+- 条（`geom_bar()`、`geom_col()`）、
+- 线（`geom_line()`、`geom_abline()`）、
+- 箱线图（`geom_boxplot()`）、
+- 文本（`geom_text()`、`geom_label()`）
+
+\noindent 等等。实际上，它们就是第\@ref(cha:elements)章介绍的图形元素，但是 **ggplot2** 在这些元素上做了更多工作。例如，箱线图并非基础图形元素，但它在 **ggplot2** 中的地位也是基础形状；还有平滑曲线和平滑带，背后都涉及到大量的统计计算。而 **ggplot2** 对它打包之后，用户用起来就简单多了，否则我们需要手工建立平滑模型（可能是线性回归，可能是 LOWESS，或是分位数回归等），然后取一系列 x 值并拟合 y 值。
 
 几何形状通常和统计量紧密相关。因为要画出几何形状，必须计算一些坐标值（例如箱线图中的分位数、条形图的高度），所以我们必须要知道对数据做什么样的统计变换或汇总。
 
-图 \@ref(fig:mtcars-smooth) 展示了 \@ref(sec:stars) 小节曾经提到过的汽车数据。从图中我们可以看到，随着汽车马力增大，每加仑汽油能行驶的英里数在降低，但并非直线下降，而是在逐渐变缓。这也符合常识——不可能有哪种汽车的马力大到无法开动的程度。图中的平滑曲线基于 LOWESS 生成，它是散点图的重要辅助工具，后面 \@ref(subsec:percentage) 小节和 \@ref(subsec:lowess) 小节还会详细介绍。
+图 \@ref(fig:mtcars-smooth) 展示了 \@ref(sec:stars) 小节曾经提到过的汽车数据。从图中我们可以看到，随着汽车马力增大，每加仑汽油能行驶的英里数在降低，但并非直线下降，而是在逐渐变缓。这也符合常识——不可能有哪种汽车的马力大到无法开动的程度。图中的平滑曲线基于 LOWESS 生成，它是散点图的重要辅助工具，在 \@ref(subsec:percentage) 小节和 \@ref(subsec:lowess) 小节有详细介绍。
 
 (ref:mtcars-smooth-s) 汽车马力与每加仑汽油行驶里程的关系
 
@@ -195,7 +206,7 @@ p
 p + coord_flip()
 ```
 
-图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，这一点在 \@ref(subsec:china-vs-us) 小节中我们还会再举例说明，请读者慎用。
+图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，这一点在 \@ref(subsec:china-vs-us) 小节 和 \@ref(sec:covid) 小节中有举例说明，请读者慎用。
 
 (ref:diamonds-polar-s) 钻石雕琢水平的极坐标条形图
 
@@ -229,7 +240,7 @@ ggplot(aes(x = carat), data = diamonds) +
 
 位置调整主要针对条形图中的矩形条的位置摆放。在 \@ref(sec:barplot) 小节中，我们讲到了基础图形系统中的条形图，里面有个 `beside` 参数可以指定矩形条是并排排列还是堆砌排列。**ggplot2** 系统中的位置调整也类似。
 
-当然，不仅条形图中有矩形条，直方图中也有，所以我们同样可以画堆砌直方图。另外，在散点图中也有一类重要的位置调整，即随机打乱，这一点在 \@ref(sec:stripchart) 小节和图 \@ref(fig:discrete-var) 中都提到过。略微随机打乱散点图中的点的位置，能减轻图的重叠程度，尤其是有很多个点都在同一个位置上时，由于重叠的原因，我们可能会被误导（以为该处只有 1 个点）。随机打乱也可以作为一种几何形状添加到图中，如图 \@ref(fig:ggplot2-theme)所示。
+当然，不仅条形图中有矩形条，直方图中也有，所以我们同样可以画堆砌直方图。另外，在散点图中也有一类重要的位置调整，即随机打乱，这一点在 \@ref(sec:stripchart) 小节和图 \@ref(fig:discrete-var) 中都提到过。略微随机打乱散点图中的点的位置，能减轻图的重叠程度，尤其是有很多个点都在同一个位置上时，由于重叠的原因，我们可能会被误导（以为该处只有 1 个点）。随机打乱也可以作为一种几何形状添加到图中，如图 \@ref(fig:ggplot2-theme) 所示。
 
 (ref:geom-jitter-demo) 随机打乱散点图中的点的位置，能减轻图的重叠程度 
 
@@ -298,6 +309,8 @@ p3 <- p + geom_density2d() # 散点图上加上二维核密度估计层
      p3 + labs(title = "p + geom_density2d()"))
 ```
 
-本节对 **ggplot2** 系统的介绍非常粗略，详细内容可以阅读 @ggplot2， 该系统的作者也提供了配套的网站示例[^ggplot2-web]，这个网站也是笔者经常参考的资源。
+限于篇幅，本章对 **ggplot2** 系统的介绍非常有限。事实上，除了 **ggplot2** 包本身，R 语言中还有很多基于 **ggplot2** 开发的附加包，例如 \@ref(sec:scatterplot-matrix) 小节介绍的 **GGally** 包、第二章频繁使用的 **patchwork** 包等。这些附加包，以 **ggplot2** 包为核心，已经成长为一套优雅而强大的作图系统。
+
+关于这套作图系统，更多的应用实例请参看本书第二部分。更为详细内容可以阅读 @ggplot2， 该系统的作者也提供了配套的网站示例[^ggplot2-web]，这个网站也是笔者经常参考的资源。
 
 [^ggplot2-web]: <https://ggplot2.tidyverse.org/>
