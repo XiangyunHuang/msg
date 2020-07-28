@@ -16,8 +16,8 @@ output:
     citation_package: natbib
     template: tex/template.tex
     pandoc_args:  --top-level-division=chapter
-    toc_depth: 3
-    toc_unnumbered: no
+    toc_depth: 2
+    toc_unnumbered: yes
     toc_appendix: yes
     quote_footer: ["\\begin{flushright}", "\\end{flushright}"]
 bibliography:
@@ -54,68 +54,72 @@ url: 'https\://bookdown.org/xiangyun/msg/'
 ---
 
 ```{r, include=FALSE}
-Sys.setlocale("LC_CTYPE", "Chinese")
+options(width = 70, bookdown.render.file_scope = FALSE, knitr.kable.NA = '', knitr.table.format = "latex")
 
-options(width = 55)
-options(bookdown.render.file_scope = FALSE)
+pkgs <- c("formatR", 
+          "ggplot2", "MSG", "grid", "magrittr", "ncovr", "kableExtra", "knitr", "patchwork", "RColorBrewer", "cowplot", "qqplotr")
 
-# 安装本书需要的 R 包，按字母排序
-lapply(c(
-  "alphahull", "animation", "aplpack", "bookdown",
-  "corrplot", "cowplot", "formatR", "fun",
-  "GGally", "gganimate", "ggplot2", "igraph",
-  "magick", "maps", "maptools", "MSG", "mvtnorm",
-  "pdftools", "plot3D", "plotrix",
-  "randomForest", "rgeos", "rggobi", "rgl",
-  "scatterplot3d", "showtext", "sna", "sp", "survminer", "svglite",
-  "TeachingDemos", "tikzDevice", "vcd", "vioplot"
-), function(pkg) {
-  if (system.file(package = pkg) == "") install.packages(pkg)
-})
-
-# automatically create a bib database for R packages
-bib <- knitr::write_bib(
-  x = c(
-    .packages(),
-    "alphahull", "aplpack", "corrplot",
-    "formatR", "fun", "KernSmooth",
-    "GGally", "ggpointdensity",
-    "hexbin", "htmlwidgets", "heatmaply",
-    "iplots", "leaflet",
-    "MSG", "maps", "Matrix",
-    "quantreg",
-    "rggobi", "rgl", "rpart", "RColorBrewer",
-    "sm", "survival",
-    "TeachingDemos", "tikzDevice", "tuneR",
-    "vcd", "vioplot"
-  ), file = NULL, prefix = ""
-)
-bib <- unlist(bib)
-# remove the ugly single quotes required by CRAN policy
-bib <- gsub("(\\\n)", " ", bib)
-bib <- gsub("'(Htmlwidgets|iframes|TeX Live|LaTeX|ggplot2|plotly|Leaflet|GGobi)'", "\\1", bib)
-xfun::write_utf8(bib, "bib/MSG-packages.bib")
-
-
+lapply(pkgs, require,character.only = TRUE)
 
 # convert pdf to png
 to_png <- function(fig_path) {
   png_path <- sub("\\.pdf$", ".png", fig_path)
-  magick::image_write(magick::image_read_pdf(fig_path), format = "png", path = png_path, 
-                      density = 300, quality = 100)
+  magick::image_write(
+    magick::image_read_pdf(fig_path), 
+    format = "png", 
+    path = png_path, 
+    density = 300, 
+    quality = 100)
   return(png_path)
 }
 
-library(formatR)
+# show the usage of a function
+## example: usage2(usage(text.default, output = FALSE))
+usage2 <- function(txt){
+  cat("```r", 
+      txt, 
+      "```", sep = '\n')
+}
+
+table_font_size <- 8
+
+# 这段代码必须放在其他 .Rmd （part1.Rmd） 文件里才能不出现乱码。奇怪。而且，当 caption.short 为中文时，放在 kable_styling 里就会出现乱码。
+# kable3 <- function(x, x_scap, table_font_size = 8, latex_options = "basic", x_cap = ""){
+#   x_head <- head(x, 5)
+#   if(x_cap == "") x_cap <- paste0(x_scap, "（部分。原数据为 ", nrow(x), " 行 ", ncol(x), " 列）")
+#   kableExtra::kable_styling(
+#     knitr::kable(x_head, "latex",
+#                  booktabs = TRUE,
+#                  caption = x_cap,
+#                  caption.short = x_scap,
+#                  align = 'c'),
+#     latex_options = latex_options,
+#     font_size = table_font_size
+#   )
+# }
 
 is_latex <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "latex")
 is_html <- identical(knitr::opts_knit$get("rmarkdown.pandoc.to"), "html")
 
+
+def.chunk.hook  <- knitr::knit_hooks$get("chunk")
+knitr::knit_hooks$set()
+
 knitr::knit_hooks$set(
+  chunk = function(x, options) {
+  x <- def.chunk.hook(x, options)
+  ifelse(options$size != "normalsize", paste0("\n \\", options$size,"\n\n", x, "\n\n \\normalsize"), x)
+},
   optipng = knitr::hook_optipng,
   pdfcrop = knitr::hook_pdfcrop,
   small.mar = function(before, options, envir) {
-    if (before) par(mar = c(4, 4, .1, .1), cex.lab = .95, cex.axis = .9, mgp = c(2, .7, 0), tcl = -.3) # smaller margin on top and right
+    if (before) {
+      par(mar = c(4, 4, .1, .1), 
+          cex.lab = .95, 
+          cex.axis = .9, 
+          mgp = c(2, .7, 0), 
+          tcl = -.3) # smaller margin on top and right
+      }
   },
   font.cn = function(before, options, envir) {
     if (before) pdf.options(family = "GB1")
@@ -125,7 +129,8 @@ knitr::knit_hooks$set(
   }
 )
 
-knitr::opts_chunk$set(
+knitr::opts_chunk$set(eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE, error = FALSE,
+  size="small",
   fig.align = "center",
   cache = TRUE,
   small.mar = TRUE,
@@ -135,8 +140,116 @@ knitr::opts_chunk$set(
 
 if (is_latex) {
   knitr::opts_chunk$set(
-    out.width = "70%"
+    out.width = "100%"
   )
 }
 
+plot_ggmap <- function(x,
+                       col_name = 'confirmedCount',
+                       province_language = 'chinese',
+                       show_capitials = TRUE,
+                       add_title = NA){
+  load(system.file('ProvinceMapDatas.Rda', package = 'ncovr'))
+  city_position <- readr::read_csv(
+    system.file("city_position.csv", package = 'ncovr')
+  )
+  x$value <- x[, col_name]
+  
+  china_map_virus = dplyr::left_join(
+    df_China, x[, c('provinceShortName', 'value')],
+    by = c("NAME" = "provinceShortName")
+  )
+  
+  p <-
+    ggplot() +
+    geom_polygon(
+      data = china_map_virus,
+      aes(x = long, y = lat, group = interaction(class, group), fill = value),
+      colour = "black",
+      size = 0.25
+    ) +
+    geom_rect(
+      aes(xmin = 124, xmax = 124 + 9.3, ymin = 16 - 0.3, ymax = 16 + 9),
+      fill = NA,
+      colour = "black",
+      size = 0.25
+    ) +
+    geom_line(
+      data = df_NanHaiLine,
+      aes(x = long, y = lat, group = ID),
+      colour = "grey40",
+      size = 1
+    ) +
+    scale_fill_gradient(
+      low = "white",
+      high = "darkred",
+      na.value = "white",
+      trans = "log",
+      limits = c(1, 10^3),
+      breaks = 10 ^(0:3),
+      labels = c('1', '10', '100', '1,000')
+    )  +
+    coord_map() +
+    ylim(14, 54) +
+    theme(
+      axis.title = element_blank(),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.background = element_blank(),
+      legend.position = c(0.85, 0.4),
+      legend.title = element_blank(),
+      legend.background = element_blank(),
+      plot.title = element_text(
+        hjust = 0.5,
+        size = 16,
+        face = "bold",
+        color = "black"
+      )
+    )
+  
+  if (!is.na(add_title)) {
+    p <- p +
+      geom_text(
+        data = data.frame(long = 105, lat = 50),
+        aes(x = long, y = lat, label = add_title),
+        colour = "black",
+        size = 5
+      )
+  }
+  
+  if (show_capitials){
+    p <- p +
+      geom_point(
+        data = city_position,
+        aes(x = long, y = lat),
+        colour = "black",
+        size = 1
+      )
+  }
+  
+  if (!is.na(province_language)){
+    if (province_language == 'english') {
+      dic_city <-  readr::read_csv(
+        system.file('china_city_list.csv', package = 'ncovr')
+      )
+      city_position$province <- dic_city$Province_EN[
+        match(city_position$province, dic_city$Province)
+      ]
+    }
+    p <- p +
+      geom_text(
+        data = city_position,
+        aes(x = long, y = lat, label = province),
+        colour = "black",
+        size = 3,
+        vjust = 0,
+        nudge_y = 0.5
+      )
+  }
+  
+  p
+}
+tables <- list()
+
+Sys.setlocale("LC_CTYPE", "Chinese")
 ```
