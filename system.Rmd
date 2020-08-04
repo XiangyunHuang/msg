@@ -21,7 +21,7 @@
 (ref:grid-subplot) 用 **grid** 包实现的图形局部放大效果：将大图的局部区域放大显示在空白处
 
 ```{r grid-subplot,fig.scap="(ref:grid-subplot-s)",fig.cap="(ref:grid-subplot)",results='hide',message=FALSE}
-demo("subplot", package = "MSG")
+msg_graph("grid-subplot")
 ```
 
 在 **grid** 包中，创建视图区的命令是 `viewport()`，函数的参数包括视图区的位置、大小、度量单位、坐标尺度等信息。需要注意的是，`viewport()` 函数只是创建了一个视图区对象，而并没有把它应用到图形设备上，如果要完成这一过程，则需要使用 `popViewport()` 函数。此外，**grid** 包还提供了 `upViewport()`，`popViewport()` 和 `downViewport()` 等函数来对视图区进行进一步的操作，这些函数可以参考 **grid** 包自带的帮助文档来学习使用。
@@ -30,16 +30,16 @@ demo("subplot", package = "MSG")
 
 图形的旋转是网格图形的一大特色。**grid** 包自带的帮助文档中给出了一个简单的例子，如图 \@ref(fig:grid-rotate) 的代码和图形所示。从程序代码中可以看出，控制图形旋转的实际上就是创建视图区时 `viewport()` 函数的 `angle` 参数，其数值表示图形逆时针旋转的角度。因此，在网格图形系统中旋转图形元素是非常方便的，只需先创建一个新的视图区，并在其中指定 `angle` 参数，然后在这个视图区中绘制图形即可。
 
+```{r, results='asis'}
+msg_code("grid-rotate")
+```
+
 (ref:grid-rotate-s) grid 系统中旋转的视图区
 
 (ref:grid-rotate) grid 系统中旋转的视图区：倾斜 $15\,^{\circ}$ 的图形
 
 ```{r grid-rotate, echo=TRUE, fig.scap="(ref:grid-rotate-s)",fig.cap="(ref:grid-rotate)"}
-library(grid)
-grid.newpage()
-pushViewport(viewport(h = 0.8, w = 0.8, angle = 15))
-grid.multipanel(newpage = FALSE)
-popViewport()
+msg_graph("grid-rotate")
 ```
 
 图 \@ref(fig:grid-princomp) 是对网格图形旋转功能的一个应用，其中涉及了主成分分析的相关知识。图中首先绘制了两个变量之间的散点图，然后通过主成分分析找到了这两个主成分的方向，在图中是用红色的坐标轴表示的。散点图中的每一个点在红色轴线上的坐标就是它在两个主成分上的得分。
@@ -49,7 +49,7 @@ popViewport()
 (ref:grid-princomp-s) 基于旋转坐标系的主成分分析示意图
 
 ```{r grid-princomp,results='hide',fig.scap="(ref:grid-princomp-s)",fig.cap="(ref:grid-princomp)"}
-demo("princomp", package = "MSG")
+msg_graph("grid-princomp")
 ```
 
 根据主成分分析的相关理论，我们知道主成分实际上就是原始变量的一个线性组合，而且每个主成分彼此之间是相互正交的，这在图形中反映就是一套经过平移和旋转的坐标系，其中坐标系的原点定位在原始变量的重心，而 x 轴则是原始变量方差最大的那个方向。
@@ -95,6 +95,7 @@ lattice 这个单词是格子、格子状的意思。和它意义相近的还有
 ```{r load-lattice, echo=TRUE}
 library(lattice) # 默认 lattice 包不随 R 启动，须手动载入
 ```
+
 ```{r lattice-usage,eval=FALSE}
 x <- hist(iris$Sepal.Length) # 图形立刻显示出来
 y <- histogram(~Sepal.Length, data = iris) # 图形不显示
@@ -124,12 +125,16 @@ grid 和 trellis 是 **lattice** 的最基础的特点，除此之外它还有�
 
 我们先看一个条件作图的例子：`iris` 数据中有五个变量，四个数值变量分别代表了花的四个部位的属性，一个分类变量表示花的种类。假设现在我们想观察一下三种花的花萼长度的分布情况，并且把它们作一个对比。如果只使用基础图形的方法，无外乎有两种方案：一是分别对每类花的花萼长度画一张直方图，前后总共画三张图。这个方法显得冗繁，而且不易于图形间的对比观察。二是在同一画布上划分出三个区域，把三张图画到同一画布上。这个方法虽然易于图形间的对比，但是仍然显得有些复杂。那么有没有更为简单的方法呢？当然有，在 **lattice** 中往往只需一条简单的语句就能解决这个问题:
 
+```{r, results='asis'}
+msg_code("lattice-iris-hist")
+```
+
 (ref:lattice-iris-hist) 三种鸢尾花各自的花萼长度直方图：作图区域被拆分为三个面板分别放置各类的直方图
 
 (ref:lattice-iris-hist-s) 三种鸢尾花各自的花萼长度直方图
 
-```{r lattice-iris-hist,fig.width=6, fig.height=3, echo=TRUE, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)"}
-histogram(~ Sepal.Length | Species, layout = c(3, 1), data = iris)
+```{r lattice-iris-hist,fig.width=6, fig.height=3, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)"}
+msg_graph("lattice-iris-hist")
 ```
 
 图 \@ref(fig:lattice-iris-hist) 就是由 **lattice** 包中的 `histogram()` 函数生成的分类直方图。观察作图语句，两个逗号把括号里的内容分为了三部分，第一部分是公式，第二部分是选项，第三部分是数据。实际上，还有隐藏的第四部分——面板函数。本节的内容也将按照公式、选项、数据的顺序来对 **lattice** 系统做介绍。
@@ -159,10 +164,7 @@ $$\text{纵坐标变量}\sim\text{横坐标变量}|\text{条件变量}$$
 (ref:lattice-vadeaths-s) 弗吉尼亚死亡率数据在 **lattice** 中的点图
 
 ```{r lattice-vadeaths,echo=TRUE, fig.scap="(ref:lattice-vadeaths-s)",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8}
-dotplot(VADeaths,
-  groups = FALSE, aspect = 0.3, type = c("p", "h"),
-  layout = c(2, 2), between = list(x = 0.5)
-)
+msg_graph("lattice-vadeaths")
 ```
 
 首先从全图来看，整个图被分割成了四部分，每一部分被称为一个面板，每个面板的顶部被称为分类条（strip），里面显示了分类的名称。以下是各个选项的说明：
@@ -208,18 +210,16 @@ str(comp)
 
 我们以图 \@ref(fig:lattice-data-par) 的上图为例。读者可能会认为图中的蓝色线条太细，并且颜色也不够醒目，想将线条修改为红色并且加粗，则可以按图 \@ref(fig:lattice-data-par) 下图中的步骤来完成，其中省略了我们可以随时用 `trellis.par.get()` 来观察当前的参数取值情况；实际这是一个经验积累的过程，当有一定的作图经验后，就可以大概知道参数中都有什么样的取值。
 
+```{r, results='asis'}
+msg_code("lattice-data-par")
+```
+
 (ref:lattice-data-par-s) 制作 **lattice** 需要的数据框以及修改 **lattice** 的图形参数
 
 (ref:lattice-data-par) 制作 **lattice** 需要的数据框以及修改 **lattice** 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点
 
-```{r lattice-data-par,echo=TRUE, fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.2, out.width="80%", fig.show='hold'}
-print(bxp0 <- bwplot(which ~ data, data = comp, horizontal = TRUE))
-trellis.par.set(
-  plot.symbol = list(pch = 19, col = "black"),
-  box.rectangle = list(lwd = 4, col = "red"),
-  box.umbrella = list(lwd = 4, col = "red")
-)
-print(bxp0) # 这里的 bxp0 对象来自前一幅图，可重用
+```{r lattice-data-par, fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.2, out.width="80%", fig.show='hold'}
+msg_graph("lattice-data-par")
 ```
 
 ### 面板
@@ -252,17 +252,7 @@ histogram(~ Sepal.Length | Species,
 (ref:lattice-panel-function-s) **lattice** 中添加了密度曲线的直方图
 
 ```{r lattice-panel-function,fig.width=6, fig.height=3, fig.scap="(ref:lattice-panel-function-s)",fig.cap="(ref:lattice-panel-function)"}
-iris.panel <- histogram(~ Sepal.Length | Species,
-  layout = c(3, 1), data = iris, type = "density",
-  panel = function(x, ...) {
-    panel.histogram(x, ...)
-    panel.mathdensity(
-      dmath = dnorm, col = "red",
-      lwd = 2, args = list(mean = mean(x), sd = sd(x))
-    )
-  }
-)
-print(iris.panel)
+msg_graph("lattice-panel-function")
 ```
 
 这只是面板函数的一个最简单的应用，相信读者在熟悉了更多的面板函数之后，一定能够作出更加有说服力的、简洁而美观的统计图形。
@@ -564,6 +554,7 @@ htmlwidgets::saveWidget(gg, "faithful.html",
 将文件 `faithful.html` 随同目录 `lib/` 一起移动到文件夹 `interactives/` 下
 
 -->
+
 ## rgl 三维图形 {#sec:rgl}
 
 **rgl** 是 R 的一个附加包（名字来自 R 和 [OpenGL](https://www.opengl.org/)），利用它可以在 R 中绘制可交互的三维图形，即用户通过鼠标的点击拖拽和滚轮滚动可以对图形进行旋转和缩放等操作。
@@ -583,17 +574,8 @@ usage2(usage(plot3d, "default", output = FALSE))
 
 图 \@ref(fig:rgl-ch4) 提供了一个简单的示例，即模拟甲烷分子（$\mathrm{CH_{4}}$）的构造。
 
-```{r rgl-ch4-html,eval=FALSE, echo=TRUE}
-x <- c(0, 0, 1, 1, 0.5)
-y <- c(1, 0, 1, 0, 0.5)
-z <- c(1, 0, 0, 1, 0.5)
-plot3d(x, y, z,
-  type = "s", xlab = "", ylab = "", zlab = "",
-  box = FALSE, axes = FALSE, radius = c(rep(0.2, 4), 0.4),
-  col = c(rep("blue", 4), "black")
-)
-ind <- c(5, 1, 5, 2, 5, 3, 5, 4)
-lines3d(x[ind], y[ind], z[ind], lwd = 2)
+```{r rgl-ch4-html, results='asis'}
+msg_code("rgl-ch4")
 ```
 
 (ref:rgl-ch4-s) 用 **rgl** 包画出来的甲烷分子立体结构
@@ -608,10 +590,8 @@ knitr::include_graphics(path = "images/rgl-ch4.png", dpi = NA)
 
 三维透视图对于探索二元函数的形状非常有帮助。在基础图形系统中，已经有 `persp()` 函数可以绘制三维透视图，但其视角是固定的，无法进行交互。**rgl** 包中提供了类似的函数 `persp3d()`，它支持对图形进行旋转和缩放，因此可以方便地观察图形的每个细节。
 
-```{r rgl-beta-html,eval=FALSE, echo=TRUE}
-x <- y <- seq(1, 5, .1)
-m <- outer(x, y, function(a, b) beta(a, b))
-persp3d(x, y, m, col = "green3", zlab = "Beta(x, y)")
+```{r rgl-beta-html,results='asis'}
+msg_code("rgl-beta")
 ```
 
 函数中 `x` 和 `y` 都是一个向量，`z` 是一个矩阵，它第 $i$ 行第 $j$ 列的元素就是函数在 `x[i]` 和 `y[j]` 上的取值；`z` 矩阵一般可以通过 `outer()` 函数生成，但其中的 `FUN` 参数必须是向量化的函数。
@@ -628,15 +608,8 @@ knitr::include_graphics(path = "images/rgl-beta.png", dpi = NA)
 
 `persp3d()` 还有一些有趣的应用，例如图 \@ref(fig:rgl-china-map) 绘制出了中国及周边地区的地势图，图中可以很清楚看见青藏高原、塔里木盆地、四川盆地等我们熟悉的地区。为了更好地显示 3D 效果，高度在图中按比例调整过。
 
-```{r rgl-china-map-html,eval=FALSE, echo=TRUE}
-# 读入地势数据
-mat <- as.matrix(read.csv(
-  system.file("extdata", "ChinaGeoMap.csv", package = "MSG")))
-x <- 20 * (1:nrow(mat))
-y <- 20 * (1:ncol(mat))
-z <- 0.05 * mat
-persp3d(x, y, z, xlab = "", ylab = "", zlab = "",
-  col = "green", aspect = "iso", axes = FALSE, box = FALSE)
+```{r rgl-china-map-html, results='asis'}
+msg_code("rgl-china-map")
 ```
 
 (ref:rgl-china-map-s) 基于 **rgl** 包绘制的中国地势图
@@ -801,8 +774,8 @@ knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 - `demo("flowers")` 展示了从网络上下载图片并转化为动画；
 - `demo("CLEvsLAL")` 是一场 NBA 球赛的“回放”。
 
-```{r,eval=FALSE, echo=TRUE}
-demo("rgl_animation", package = "animation")
+```{r, results='asis'}
+msg_code("animation-pollen")
 ```
 
 (ref:animation-pollen-s) pollen 数据中暗藏的特征

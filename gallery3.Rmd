@@ -20,23 +20,7 @@
 (ref:fig-pairs) 鸢尾花数据的散点图矩阵：上三角区域为不同样式的点，对应着不同种类的鸢尾花，对角线的直方图展示了花瓣花萼长宽的一维分布，下三角区域用平滑曲线显示了变量之间的关系
 
 ```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
-# 观察如何使用 hist() 做计算并用 rect() 画图
-panel.hist <- function(x, ...) {
-  usr <- par("usr")
-  on.exit(par(usr))
-  par(usr = c(usr[1:2], 0, 1.5))
-  h <- hist(x, plot = FALSE)
-  nB <- length(breaks <- h$breaks)
-  y <- h$counts / max(h$counts)
-  rect(breaks[-nB], 0, breaks[-1], y, col = "beige")
-}
-idx <- as.integer(iris[["Species"]])
-pairs(iris[1:4],
-      upper.panel = function(x, y, ...)
-        points(x, y, pch = c(17, 16, 6)[idx], col = idx),
-      pch = 20, oma = c(2, 2, 2, 2),
-      lower.panel = panel.smooth, diag.panel = panel.hist
-)
+msg_graph("pairs")
 ```
 
 ### 绘制方法 {-}
@@ -78,36 +62,22 @@ usage2(usage(graphics:::pairs.formula, output = FALSE))
 
 图 \@ref(fig:pairs) 的绘制代码如下（注意其中的上三角和下三角作图函数是如何定义的）：
 
-```{r, eval=FALSE, echo=TRUE}
-# 观察如何使用 hist() 做计算并用 rect() 画图
-panel.hist <- function(x, ...) {
-  usr <- par("usr")
-  on.exit(par(usr))
-  par(usr = c(usr[1:2], 0, 1.5))
-  h <- hist(x, plot = FALSE)
-  nB <- length(breaks <- h$breaks)
-  y <- h$counts / max(h$counts)
-  rect(breaks[-nB], 0, breaks[-1], y, col = "beige")
-}
-idx <- as.integer(iris[["Species"]])
-pairs(iris[1:4],
-      upper.panel = function(x, y, ...)
-        points(x, y, pch = c(17, 16, 6)[idx], col = idx),
-      pch = 20, oma = c(2, 2, 2, 2),
-      lower.panel = panel.smooth, diag.panel = panel.hist
-)
+```{r, results='asis'}
+msg_code("pairs")
 ```
 
 **ggplot2** 包所支持的 **GGally** 包给散点图矩阵里添加了更为复杂的信息，下面是一个代码示例。你能看懂该段代码绘制的图 \@ref(fig:fig-ggally) 吗？
+
+```{r, results='asis'}
+msg_code("pairs2")
+```
 
 (ref:fig-pairs2-s) 鸢尾花数据的散点图矩阵增强版
 
 (ref:fig-pairs2) 鸢尾花数据的散点图矩阵增强版：散点图、直方图、密度曲线图、箱线图的结合
 
 ```{r fig-ggally, echo=TRUE, fig.height=10, fig.width=10, fig.cap="(ref:fig-pairs2)", fig.scap="(ref:fig-pairs2-s)"}
-library(ggplot2)
-library(GGally)
-ggpairs(iris, aes_string(colour="Species", alpha=0.5))
+msg_graph("pairs2")
 ```
 
 在变量数目较多时，我们不妨将散点图矩阵作为一种探索变量之间相关关系的工具，它比起相关系数矩阵等统计指标来优势在于：散点图矩阵展示了所有原始数据，这样我们可以看到变量之间的任何关系（线性或非线性、离群点），从而避免被单一的统计指标所误导。
@@ -134,20 +104,7 @@ kable2(quakes, "斐济岛附近的地震数据")
 (ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近
 
 ```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
-par(mar = rep(0, 4), mgp = c(2, .5, 0))
-library(maps)
-coplot(lat ~ long | depth,
-  data = quakes, number = 4,
-  ylim = c(-45, -10.72), panel = function(x, y, ...) {
-    map("world2",
-      regions = c("New Zealand", "Fiji"),
-      add = TRUE, lwd = 0.1, fill = TRUE, col = "lightgray"
-    )
-    text(180, -13, "Fiji", adj = 1)
-    text(170, -35, "NZ")
-    points(x, y, col = rgb(0.2, 0.2, 0.2, .5))
-  }
-)
+msg_graph("coplot")
 ```
 
 从图中可以清楚看出，随着深度值的增加，地震发生地点逐渐由西向东、由南向北移动，震源较深的地震都发生在离斐济岛很近的东南侧。
@@ -195,21 +152,8 @@ co.intervals(1:10, number = 5, overlap = 0.5)
 
 图 \@ref(fig:coplot) 的绘制代码为：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mar = rep(0, 4), mgp = c(2, .5, 0))
-library(maps)
-coplot(lat ~ long | depth,
-  data = quakes, number = 4,
-  ylim = c(-45, -10.72), panel = function(x, y, ...) {
-    map("world2",
-      regions = c("New Zealand", "Fiji"),
-      add = TRUE, lwd = 0.1, fill = TRUE, col = "lightgray"
-    )
-    text(180, -13, "Fiji", adj = 1)
-    text(170, -35, "NZ")
-    points(x, y, col = rgb(0.2, 0.2, 0.2, .5))
-  }
-)
+```{r, results='asis'}
+msg_code("coplot")
 ```
 
 这个例子展示了 `panel` 参数的用法。我们借助 **maps** 包 [@maps] 在散点图上添加了新西兰和斐济岛的地图作为辅助信息。关于 R 中地图的使用请参考 \@ref(sec:maps) 小节。
@@ -309,16 +253,12 @@ kable2(mtcars[, 1:7], "汽车数据")
 
 我们为这组数据绘制了图 \@ref(fig:stars) 所示的星状图。从图中可以看到各种品牌和型号的汽车在这七方面的指标和性能表现。以星状图展示数据可以让我们很快找到一些有突出特征的个体，从而省去了在大批数据中逐个寻找、排序的过程。
 
-(ref:fig-stars-s) Motor Trend 杂志 1974 年汽车数据的星状图
+(ref:fig-stars-s) *Motor Trend* 杂志 1974 年汽车数据的星状图
 
-(ref:fig-stars) Motor Trend 杂志 1974 年汽车数据的星状图
+(ref:fig-stars) *Motor Trend* 杂志 1974 年汽车数据的星状图
 
 ```{r stars,fig.width=5,fig.height=4.8,fig.cap="(ref:fig-stars)",fig.scap="(ref:fig-stars-s)"}
-# 预设调色板，stars() 默认用整数来表示颜色
-palette(rainbow(12, s = 0.6, v = 0.75))
-stars(mtcars[, 1:7], len = 0.8, key.loc = c(14, 1.5), ncol = 7, 
-      main = "", draw.segments = TRUE)
-palette("default") # 恢复默认调色板
+msg_graph("stars")
 ```
 
 ### 绘制方法 {-}
@@ -403,12 +343,8 @@ stars(x, full = TRUE, scale = TRUE, radius = TRUE,
 
 下面是绘制汽车数据星状图的代码示例：
 
-```{r, eval=FALSE, echo=TRUE}
-# 预设调色板，stars() 默认用整数来表示颜色
-palette(rainbow(12, s = 0.6, v = 0.75))
-stars(mtcars[, 1:7], len = 0.8, key.loc = c(14, 1.5), ncol = 7, 
-      main = "", draw.segments = TRUE)
-palette("default") # 恢复默认调色板
+```{r, results='asis'}
+msg_code("stars")
 ```
 
 ## 脸谱图 {#sec:faces}
@@ -426,8 +362,7 @@ palette("default") # 恢复默认调色板
 (ref:fig-faces2) 部分汽车数据的脸谱图：谁的脸宽？谁的鼻子长？谁的眼睛大？
 
 ```{r faces2,fig.width=5.8,fig.height=6.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
-library(TeachingDemos)
-faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], which = c(14, 9, 11, 6, 5))
+msg_graph("faces2")
 ```
 
 这幅汽车脸谱图的解读方式是：眼睛瞪得越大，说明该车型的马力越大；嘴越宽则气缸排量越大；两眼距离越大则越省油（每加仑汽油跑得越远）；鼻子越长则说明跑得越快；脸越宽则说明车越重。那么，我们很容易看出，Maserati Bora 马力最强（大眼睛），Lincoln Continental 等车气缸排量较大（宽嘴），Honda Civic 等车比较省油（眼距大），Merc 230 跑得最快（鼻子长），Lincoln Continental 等车最重（脸胖）。
@@ -494,9 +429,8 @@ faces2(mat, which = 1:ncol(mat), labels = rownames(mat),
 
 下面的代码可以绘制汽车数据的脸谱图：
 
-```{r, eval=FALSE, echo=TRUE}
-faces2(mtcars[, c("hp", "disp", "mpg", "qsec", "wt")], 
-       which = c(14, 9, 11, 6, 5))
+```{r, results='asis'}
+msg_code("face2")
 ```
 
 这里，我们设置参数 `which = c(14, 9, 11, 6, 5)`，是为了尽量将这几个汽车性能指标形象化到合适的脸部特征上（如瞪着大眼睛表示马力大）。读者在遇到具体的案例数据时，不妨也仔细考虑一下指标的实际意义以及安排它们到哪个面部表情上。很多人都知道宏基施振荣的"微笑曲线"并且对之印象深刻，其原因何尝不是因为这条曲线形象而且直观呢？
@@ -523,9 +457,7 @@ kable2(murcia, "西班牙 Murcia 省土壤样本成分")
 (ref:murcia-ternary-s) 西班牙 Murcia 省的土壤样本三元图
 
 ```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="(ref:murcia-ternary-s)"}
-data(murcia, package = "MSG")
-library(vcd)
-ternaryplot(murcia[, 2:4], main = "", col = vec2col(murcia$site), cex = .5)
+msg_graph("murcia-ternary")
 ```
 
 图 \@ref(fig:murcia-ternary) 是这批数据的三元图。三元图的思想是把每一行数据以一个点的形式放在等边三角形中，它越靠近三角形的某个顶点则说明对应的成分数值越大。显然，如果一个点完全处在某个顶点上，那么说明这个点对应的样本在某个成分上取值为 100%，在另外两个成分上取值为 0%。图 \@ref(fig:murcia-ternary) 中 8 个样地分别用不同颜色标记，可以看出，每个样地的三种成分有所区别，比如左下角的一批样本（绿点）的沙土成分较大，而右上角的样本（蓝点）沙土成分很小。
@@ -534,11 +466,8 @@ ternaryplot(murcia[, 2:4], main = "", col = vec2col(murcia$site), cex = .5)
 
 本案例的三元图是用 **vcd** 包中的 `ternaryplot()` 函数所作的。数据加载和三元图绘制的 R 代码如下：
 
-```{r, eval=FALSE, echo=FALSE}
-data(murcia, package = "MSG")
-library(vcd)
-ternaryplot(murcia[, 2:4], main = "", 
-            col = vec2col(murcia$site), cex = .5)
+```{r, results='asis'}
+msg_code("murcia-ternary")
 ```
 
 由于数据中的成分数值差异不是太极端，所以图中的点都聚在一起，不太容易观察。感兴趣的读者可以自行编写函数实现设置坐标轴范围的功能，例如本例的图可以通过缩小坐标轴范围来放大点与点之间的差异。
@@ -599,8 +528,7 @@ kable2(as.data.frame(ftable(Titanic)), "泰坦尼克号乘客生还情况", only
 (ref:fig-mosaicplot) 泰坦尼克号乘客生还数据马赛克图：按性别、年龄和船舱等级划分
 
 ```{r mosaicplot,fig=T,fig.width=5.2,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
-par(mar = c(2, 3.5, .1, .1))
-mosaicplot(Titanic, shade = TRUE, main = "")
+msg_graph("mosaicplot")
 ```
 
 图 \@ref(fig:mosaicplot) 以马赛克图的形式将这个 $4\times2\times2\times2$ 的列联表数据展示在了同一张图中。通过矩形块（马赛克）的大小，我们可以清楚看出各舱位、不同性别、年龄的人群的生还状况。
@@ -639,10 +567,8 @@ usage2(usage(graphics:::mosaicplot.formula, output = FALSE))
 
 下面的代码可以绘制泰坦尼克号生还数据的马赛克图：
 
-```{r, eval=FALSE, echo=TRUE}
-data(Titanic)
-par(mar = c(2, 3.5, .1, .1))
-mosaicplot(Titanic, shade = TRUE, main = "")
+```{r, results='asis'}
+msg_code("mosaicplot")
 ```
 
 感兴趣的读者还可以使用 **stats** 包中的 `loglin()` 函数拟合对数线性模型、从统计模型的角度继续分析。
@@ -669,10 +595,7 @@ kable2(warpbreaks, "经纱断裂数据")
 (ref:fig-plot-design) 经纱断裂数据的因素效应图：每种羊毛（A、B）和拉力强度（L、M、H）下断裂数目的均值（上图）和中位数（下图）
 
 ```{r plot-design,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)"}
-par(mfrow = c(2, 1))
-par(mar = c(4.5, 4, 0.2, 0.2))
-plot.design(warpbreaks, col = "blue")
-plot.design(warpbreaks, fun = median, col = "blue")
+msg_graph("plot-design")
 ```
 
 上图中的刻度线展示出了不同羊毛种类和拉力强度下断裂根数的均值，下图展示的是中位数，两幅图有一定差异，说明数据的分布不对称（中位数和均值不相等）。
@@ -703,11 +626,8 @@ usage2(usage(plot.design, output = FALSE))
 
 图 \@ref(fig:plot-design) 的绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mfrow = c(2, 1))
-par(mar = c(4.5, 4, 0.2, 0.2))
-plot.design(warpbreaks, col = "blue")
-plot.design(warpbreaks, fun = median, col = "blue")
+```{r, results='asis'}
+msg_code("plot-design")
 ```
 
 我们也可以通过方差分析模型查看这两种因素的影响：
@@ -761,11 +681,7 @@ kable2(esoph, "法国食道癌数据")
 (ref:fig-interaction-plot) 法国食道癌数据的交互效应图：各饮酒组的折线走势大致一样，说明交互作用很微弱
 
 ```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)"}
-par(mar = c(4, 4, 0.2, 0.2))
-with(esoph, {
-  interaction.plot(agegp, alcgp, ncases / (ncases + ncontrols), trace.label = "alcohol",
-                   fixed = TRUE, xlab = "Age", ylab = "Cancer Proportion")
-})
+msg_graph("interaction-plot")
 ```
 
 图 \@ref(fig:interaction-plot) 是我们为此绘制的交互效应图。该图对问题的回答大致是肯定的，因为图中各条折线的增长趋势是差不多的。也就是说，不管人群属于哪种饮酒量水平，年龄对患食道癌概率的影响关系都大致一样。但是，其中也有一些微小的差异。例如年龄组从 35-44 岁 到 45-54 岁，患食道癌的概率在饮酒量大于 40 克/天的人群中会增长大约 20 %；但饮酒量小于 40 克/天的人群中，患食道癌的概率反而略微有所下降，在这里我们可以看到一点交互总用。但总体来说，各饮酒组中，年龄对食道癌的影响方向还是大致一致的。
@@ -802,15 +718,9 @@ usage2(usage(interaction.plot, output = FALSE))
 
 图 \@ref(fig:interaction-plot) 的绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mar = c(4, 4, 0.2, 0.2))
-with(esoph, {
-  interaction.plot(agegp, alcgp, ncases / (ncases + ncontrols), 
-                   trace.label = "alcohol", fixed = TRUE, 
-                   xlab = "Age", ylab = "Cancer Proportion")
-})
+```{r, results='asis'}
+msg_code("interaction-plot")
 ```
-
 
 图中显示的那种似有似无的交互作用可以用方差分析来检验：
 
@@ -859,11 +769,7 @@ kable2(kyphosis, "脊椎矫正手术数据")
 (ref:fig-rpart) 脊椎矫正手术结果的分类树图
 
 ```{r rpart,fig.width=6,fig.height=4,out.width="80%", fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
-library(rpart)
-fit <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
-par(mar = rep(1, 4), xpd = TRUE)
-plot(fit, branch = 0.7)
-text(fit, use.n = TRUE, digits = 7)
+msg_graph("rpart")
 ```
 
 从图 \@ref(fig:rpart) 中可以看出，`Start` 小于 8.5 的小孩的矫正手术容易失败（右边叶节点上有 11 例失败和 8 例成功），而对于 `Start` 大于等于 8.5 的小孩来说，手术结果则需要继续按照自变量拆分：`Start` 大于等于 14.5 的 29 名小孩中，所有小孩的手术均获成功，这表明手术成败的重要因素是小孩的第一段畸形脊椎的位置，这个位置越靠下，则手术越易成功；若前面的条件不满足，则继续向右拆分，下一个拆分变量为年龄，从下面的几个叶节点来看，年龄越大则手术越不容易成功。
@@ -894,11 +800,7 @@ usage2(usage(rpart:::plot.rpart, output = FALSE))
 图 \@ref(fig:rpart) 的绘制代码如下：
 
 ```{r, eval=FALSE, echo=TRUE}
-data(kyphosis, package = "rpart")
-fit <- rpart(Kyphosis ~ Age + Number + Start, data = kyphosis)
-par(mar = rep(1, 4), xpd = TRUE)
-plot(fit, branch = 0.7)
-text(fit, use.n = TRUE, digits = 7)
+msg_code("rpart")
 ```
 
 在该图的基础上，我们还可以将叶节点的信息进一步扩充展示。例如，对于连续型因变量，我们可以将每个叶节点上的样本因变量分布用箱线图或直方图或任何其它展示密度的工具在另一幅图上对应表达出来；对于离散型因变量，则可以利用条形图等工具将样本因变量的频数表达出来。图形的布局可以利用 `layout()` 函数（\@ref(sec:multipage) 小节）等一页多图的方法来实现。关于这样的例子，读者可以参考 @Everitt06 或 @Xie07 等。
@@ -922,10 +824,8 @@ text(fit, use.n = TRUE, digits = 7)
 (ref:fig-ggparcoord) 鸢尾花数据的平行坐标图：花萼长宽和花瓣长宽以及花的种类
 
 ```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)"}
-ggparcoord(iris, columns = 1:4, groupColumn = 5, scale = "uniminmax") + 
-  geom_line(size = 1.2)
+msg_graph("ggparcoord")
 ```
-
 
 从图中我们可以看出，setosa 这种花的花瓣较小，而另外两种花的花瓣都较大；但 setosa 的花萼特别宽；versicolor 这种花总体来说和 virginica 比较像，只是相对来说尺寸小一些。
 
@@ -961,8 +861,7 @@ usage2(usage(ggparcoord, output = FALSE))
 图 \@ref(fig:ggparcoord) 的绘制代码如下：
 
 ```{r, eval=FALSE, echo=TRUE}
-ggparcoord(iris, columns = 1:4, groupColumn = 5, scale = "uniminmax") + 
-  geom_line(size = 1.2)
+msg_code("ggparcoord")
 ```
 
 上文我们从图中得到的结论可以用数值方式验证：
@@ -1016,17 +915,7 @@ kable2(trees, "黑莓树数据")
 (ref:fig-andrews-curve) 鸢尾花数据和黑莓树数据的调和曲线图：左上为原始鸢尾花数据，右上为调整变量顺序的鸢尾花数据，左下为标准化之后的鸢尾花数据，右下为标准化之后的黑莓树数据调和曲线图
 
 ```{r andrews-curve,fig.width=6,fig.height=4.8,fig.cap="(ref:fig-andrews-curve)",fig.scap="(ref:fig-andrews-curve-s)",dev='tikz',fig.showtext=FALSE,fig.process=to_png}
-iris.col <- vec2col(iris$Species)
-par(mfrow = c(2, 2))
-par(mar = c(4, 4, 0.2, 0.2))
-andrews_curve(iris[, 1:4], n = 50, col = iris.col, 
-              xlab = "$t$", ylab = "$f(t)$")
-andrews_curve(iris[, c(3, 4, 2, 1)], n = 50, col = iris.col,
-              xlab = "$t$", ylab = "$f(t)$")
-andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col,
-              xlab = "$t$", ylab = "$f(t)$")
-x <- andrews_curve(scale(trees), n = 50,
-                   xlab = "$t$", ylab = "$f(t)$")
+msg_graph("andrews-curve-tikz")
 ```
 
 左上图为原始鸢尾花数据的前四列，并根据鸢尾花的种类对曲线进行了颜色标注。可以看出，setosa 这一类花的曲线"拧"成了一股，说明这些花之间的距离比较近，也就是我们至少可以观察到这一类的聚类现象。右上图调整了四列的顺序，将花瓣长和花瓣宽两个变量放在了前面，这样做的原因我们后面再解释。
@@ -1077,17 +966,8 @@ usage2(usage(andrews_curve, output = FALSE))
 
 图 \@ref(fig:andrews-curve) 的绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mfrow = c(2, 2))
-par(mar = c(4, 4, 0.2, 0.2))
-andrews_curve(iris[, 1:4], n = 50, col = iris.col, 
-              xlab = "$t$", ylab = "$f(t)$")
-andrews_curve(iris[, c(3, 4, 2, 1)], n = 50, col = iris.col,
-              xlab = "$t$", ylab = "$f(t)$")
-andrews_curve(scale(iris[, 1:4]), n = 50, col = iris.col,
-              xlab = "$t$", ylab = "$f(t)$")
-x <- andrews_curve(scale(trees), n = 50,
-                   xlab = "$t$", ylab = "$f(t)$")
+```{r, results='asis'}
+msg_code("andrews-curve")
 ```
 
 离群点是哪行数据？即哪行数据对应的 $f(t)$ 会大于 4？很简单：
@@ -1119,19 +999,7 @@ kable2(AgriComp, "2005 年世界各国农业进出口竞争力")
 (ref:fig-map) 2005 年各国农业进出口竞争力地图：农业出口强国在南美，弱国在北非
 
 ```{r map,fig.width=6,fig.height=4,fig.cap="(ref:fig-map)",fig.scap="(ref:fig-map-s)",error=TRUE,results='hide'}
-worldmap <- map_data("world")
-worldmap2 <- dplyr::left_join(worldmap, AgriComp, 
-                              by = c("region" = "Country"))
-ggplot(worldmap2) + 
-  geom_polygon(aes(long,lat, group=group,  fill = Index)) +
-  coord_quickmap() +
-  scale_fill_gradientn(colours = rev(rainbow(5))) +
-  labs(x = "经度", y = "纬度") +
-  geom_rect(data = data.frame(xmin = 72.26818, ymin = -55.8565, 
-                              xmax = 168.93766, ymax =54.589),
-            mapping = aes(xmin = xmin, ymin = ymin, xmax = xmax, ymax =ymax), 
-            fill = NA, color = "black", linetype = 2) +
-  geom_hline(yintercept = 0, linetype = 2)
+msg_graph("map2")
 ```
 
 ### 绘制方法 {-}
@@ -1147,45 +1015,30 @@ usage2(usage(map, output = FALSE))
 
 运行下面的代码可以将表 \@ref(tab:tab-map) 的数据绘制成地图：
 
-```{r, eval=FALSE, echo=TRUE}
-demo("AgriComp", package = "MSG")
+```{r, results='asis'}
+msg_code("map")
 ```
 
 上述代码的大致制作过程为：首先我们用 `world` 数据库作出一幅空白的世界地图，地区边界用灰色线条表示，然后我们根据竞争力数据中的地区名称与地理数据库中地区名称的对应将数据以颜色的形式表示到世界地图中，最后我们在图中添加了赤道线以及东盟国家（ASEAN）的矩形区域，这是由于作为该图出处的会议论文 [@Xie07] 主题是中澳自由贸易区。
 
 **maps**包功能虽然比较完善，但绘制地图的过程仍然有些繁琐。近年来，**ggplot2** 发展迅猛，其地图绘制功能也越来越强大了。图 \@ref(fig:map) 实际是用 **ggplot2** 包绘制多边形的方式作出来的，代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-worldmap <- map_data("world")
-worldmap2 <- dplyr::left_join(worldmap, AgriComp, 
-                              by = c("region" = "Country"))
-ggplot(worldmap2) + 
-  geom_polygon(aes(long,lat, group = group, fill = Index)) +
-  coord_quickmap() +
-  scale_fill_gradientn(colours = rev(rainbow(5))) +
-  labs(x = "经度", y = "纬度") +
-  geom_rect(data = data.frame(xmin = 72.26818, ymin = -55.8565, 
-                              xmax = 168.93766, ymax =54.589),
-            mapping = aes(xmin = xmin, ymin = ymin, 
-                          xmax = xmax, ymax =ymax), 
-            fill = NA, color = "black", linetype = 2) +
-  geom_hline(yintercept = 0, linetype = 2)
+```{r, results='asis'}
+msg_code("map2")
 ```
 
 这里，`coord_quickmap()` 函数，专门用作地图坐标，确保地图上的经度和纬度之比符合常用的摩克托投影规则。此外，**ggplot2** 还提供了另外一个坐标转换函数` coord_map()`，功能更复杂一些。如图 \@ref(fig:worldmap) 所示，：上图是平面地图，下图是以北纬 20° 东经 90° 视角看到的球状地图。生成这两幅地图的代码如下：
 
-(ref:fig-worldmap-s) 世界地图
+```{r, results='asis'}
+msg_code("worldmap")
+```
 
-(ref:fig-worldmap) 世界地图：上图是平面地图，下图是以北纬 20° 东经 90° 视角看到的球状地图
+(ref:fig-worldmap-s) 世界地图的两个视角
+
+(ref:fig-worldmap) 世界地图的两个视角：上图是平面地图，下图是以北纬 20° 东经 90° 视角看到的球状地图
 
 ```{r worldmap,fig.width=6,fig.height=8,fig.cap="(ref:fig-worldmap)",fig.scap="(ref:fig-worldmap-s)",error=TRUE,results='hide', echo=TRUE, fig.show='hold'}
-m0 <- ggplot() + 
-  geom_polygon(data = worldmap,
-               mapping = aes(long,lat, group=group,  fill = region)) +
-  guides(fill = FALSE)
-m1 <- m0 + coord_quickmap()
-m2 <- m0 + coord_map("ortho", orientation = c(20,90,0))
-m1 / m2
+msg_graph("worldmap")
 ```
 
 在地理区域上标记大量的数值信息会遇到一个显而易见的困难，就是由于各个地理区域的面积不同而导致地图的解读失真或某些重要地理单元难以辨认。例如，我们在画中国省级地图时，北京和上海等直辖市相比其它省份显得面积太小，此时若用颜色来标记某个数值指标（如 GDP），就会使得各个直辖市的颜色几乎无法辨认。还有另一个更有趣的例子来自 08 年美国总统大选。若用红蓝两种颜色对各个州做标记，以表示该州支持麦凯恩或奥巴马，那么有些面积不大但是权重很大的州（如人口众多的加州）就会影响整幅美国地图。从原始地图上看，似乎麦凯恩会赢，因为他赢得了很多中部面积大的州（但人口稀少），整幅地图看起来以红色为主导；若我们保持州的相对地理位置不变，将各个州的形状进行大小的调整，使其面积与权重成正比，此时红蓝两色的局面就发生了逆转，地图以蓝色为主导色，地图传达信息的偏误才得到了纠正。我们把这种保持地理区域的相对位置不变、调整区域面积与某指标成比例的地图成为"变形地图"（Cartogram），详细内容可阅读笔者的博客[^map-prob]。
@@ -1214,8 +1067,8 @@ kable2(eq2010, "四川地区地震数据")
 
 本节具体的代码参见 `eqMaps` 演示：
 
-```{r eqMaps-demo,eval=FALSE, echo=TRUE}
-demo("eqMaps", package = "MSG")
+```{r eqMaps-demo,results='asis'}
+msg_code("eqMaps-demo")
 ```
 
 ```{r RgoogleMaps,fig.cap="(ref:RgoogleMaps)",fig.scap="(ref:RgoogleMaps-s)",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
@@ -1256,15 +1109,12 @@ triplot(murcia[, 2:4], col = vec2col(murcia$site), pch = 19)
 
 2. **ggplot2** 并没有现成的函数来绘制条件分割图。不过，下面的代码可以做出类似的效果，如图 \@ref(fig:coplot2)。比较一下，这副图与图 \@ref(fig:coplot) 的区别在哪里？能得出相同的结论吗？如何更改这段代码，以做出图 \@ref(fig:coplot)？
 
+```{r, results='asis'}
+msg_code("coplot2")
+```
+
 (ref:fig-coplot2) 使用 **ggplot2** 包绘制的地震经纬度条件分割图
 
-```{r coplot2, echo=TRUE, fig.cap="(ref:fig-coplot2)"}
-ggplot(transform(quakes, depth_group = cut(depth, breaks = 4))) +
-  geom_polygon(
-    data = map_data("world", region = c("New Zealand", "Fiji")),
-    mapping = aes(long, lat, group = group, fill = region)) +
-  geom_point(aes(long, lat), alpha = 0.1) +
-  facet_wrap(~depth_group) + 
-  xlim(160, 190) +
-  theme(legend.position = "")
+```{r coplot2, fig.cap="(ref:fig-coplot2)"}
+msg_graph("coplot2")
 ```

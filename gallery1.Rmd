@@ -29,17 +29,7 @@ kable2(VADeaths, "弗吉尼亚州死亡数据", only_head = FALSE)
 (ref:fig-vadeaths-barplot) 弗吉尼亚死亡率数据条形图： 堆砌和并列的条形图效果
 
 ```{r vadeaths-barplot, fig.width=4.8, fig.height=4.8, fig.cap = "(ref:fig-vadeaths-barplot)", fig.scap="(ref:fig-vadeaths-barplot-s)", fig.show="hold"}
-reshape_VADeaths <- transform(
-  expand.grid(
-    sex = colnames(VADeaths),
-    age = rownames(VADeaths)
-  ),
-  rates = as.vector(t(VADeaths))
-)
-p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
-p1 <- p + geom_col(position = "stack")
-p2 <- p + geom_col(position = "dodge")
-plot_grid(p1, p2, ncol = 1)
+msg_graph("vadeaths-barplot2")
 ```
 
 ### 绘制方法 {-}
@@ -77,25 +67,14 @@ usage2(usage(barplot.default, output = FALSE))
 
 我们可以用下面的代码绘制弗吉尼亚死亡数据条形图，这里展示了参数 `beside` 和 `legend.text` 的效果：
 
-```{r, eval=FALSE, echo=TRUE}
-library(RColorBrewer) # 用分类调色板
-par(mfrow = c(2, 1), mar = c(3, 2.5, 0.5, 0.1))
-death <- t(VADeaths)[, 5:1]
-barplot(death, col = brewer.pal(4, "Set1"))
-barplot(death, col = brewer.pal(4, "Set1"), 
-        beside = TRUE, legend.text = TRUE)
+```{r, results='asis'}
+msg_code("vadeaths-barplot")
 ```
 
 \noindent 也可以用 **ggplot2** 包绘制，使用的是 `geom_col()` 函数：
 
-```{r, eval=FALSE, echo=TRUE}
-reshape_VADeaths <- transform(expand.grid(sex = colnames(VADeaths),
-                                          age = rownames(VADeaths)),
-                              rates = as.vector(t(VADeaths)))
-p <- ggplot(data = reshape_VADeaths, aes(x = age, y = rates, fill = sex))
-p1 <- p + geom_col(position = "stack")
-p2 <- p + geom_col(position = "dodge")
-plot_grid(p1, p2, ncol = 1)
+```{r, results='asis'}
+msg_code("vadeaths-barplot2")
 ```
 
 ## Cleveland 点图 {#sec:dotchart}
@@ -113,8 +92,7 @@ plot_grid(p1, p2, ncol = 1)
 (ref:fig-dotchart) 弗吉尼亚死亡率数据的 Cleveland 点图
 
 ```{r dotchart,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)"}
-par(mar = c(2, 4, 0.2, 0.2))
-dotchart(t(VADeaths)[, 5:1], col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
+msg_graph("dotchart")
 ```
 
 ### 绘制方法 {-}
@@ -137,31 +115,23 @@ usage2(usage(dotchart, output = FALSE))
 
 下面的代码是一个示例：
 
-```{r, eval=FALSE, echo=TRUE}
-dotchart(t(VADeaths)[, 5:1], 
-         col = brewer.pal(4, "Set1"), pch = 19, cex = .65)
+```{r, results='asis'}
+msg_code("dotchart")
 ```
 
 **ggplot2** 包里虽然没有专门的函数绘制点图，然而可以借助散点图 `geom_point()` 完成，代码如下：
+
+```{r, results='asis'}
+msg_code("dotchart2")
+```
 
 (ref:fig-dotchart2-s) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
 
 (ref:fig-dotchart2) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
 
-```{r dotchart2, echo=TRUE,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart2)",fig.scap="(ref:fig-dotchart2-s)"}
-tm <- rownames(VADeaths)
-rownames(VADeaths) <- NULL
-vd <- data.frame(cbind(tm, VADeaths))
-vd <- reshape(vd, direction = "long", varying = names(vd)[2:5],
-        v.name=c("rate"), times = names(vd)[2:5])
-vd$rate <- as.numeric(vd$rate)
-vd$tm <- factor(vd$tm)
-vd$tm <- factor(vd$tm,levels = rev(levels(vd$tm)) )
-ggplot(vd, aes(time, rate, color = time)) + geom_point() + 
-  facet_grid(tm ~ .) + coord_flip() +
-  theme(legend.position = "", axis.title = element_blank())
+```{r dotchart2, fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart2)",fig.scap="(ref:fig-dotchart2-s)"}
+msg_graph("dotchart2")
 ```
-
 
 ## 直方图 {#sec:hist}
 
@@ -177,15 +147,7 @@ ggplot(vd, aes(time, rate, color = time)) + geom_point() +
 
 
 ```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE,out.width="100%"}
-data(geyser, package = "MASS")
-p <- ggplot(aes(waiting), data = geyser)
-p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
-p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
-p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
-p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
-plot_grid(p1, p2, p3, p4, ncol = 2, label_size = 10,
-          labels = c("(1) freq = TRUE", "(2) freq = FALSE", 
-                     "(3) breaks = 5","(4) breaks = 40"))
+msg_graph("hist-geyser2")
 ```
 
 我们知道，对于连续随机变量来说，其密度函数即为分布函数的导数：
@@ -245,20 +207,7 @@ kable2(geyser, "黄石国家公园喷泉数据")
 (ref:fig-hist-density) 直方图与密度曲线的结合：借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中
 
 ```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="70%"}
-# d = density(geyser$waiting)
-# ht = NULL
-# brk = seq(40, 110, 5)
-# for (i in brk) ht = c(ht, d$y[which.min(abs(d$x - i))])
-
-# df <- data.frame(
-#   x = seq(40, 110, 5), y = 0,
-#   xend = seq(40, 110, 5), yend = ht
-# )
-p2 + geom_density(color = "blue", size = 1.2)
-# p2 + geom_density(fill = "lightgray", color = "black") +
-#   geom_segment(aes(x = x, y = y, xend = xend, yend = yend),
-#     data = df, lty = 3
-#   )
+msg_graph("hist-density2")
 ```
 
 ### 绘制方法 {-}
@@ -287,41 +236,17 @@ usage2(usage(hist.default, output = FALSE))
 
 图 \@ref(fig:hist-geyser) 与图 \@ref(fig:hist-density) 可以用 `hist()` 函数绘制，代码是：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mfrow = c(2, 2), mar = c(2, 3, 2, .5), mgp = c(2, .5, 0))
-
-hist(geyser$waiting, main = "(1) freq = TRUE", xlab = "waiting")
-hist(geyser$waiting, freq = FALSE, xlab = "waiting", 
-     main = "(2) freq = FALSE")
-hist(geyser$waiting, breaks = 5, density = 10, xlab = "waiting", 
-     main = "(3) breaks = 5")
-hist(geyser$waiting, breaks = 40, col = "red", xlab = "waiting", 
-     main = "(4) breaks = 40")
-
-demo("hist_geyser", package = "MSG")
+```{r, results='asis'}
+msg_code("hist-density")
 ```
-
 
 直方图函数 `hist()` 在作图完毕之后会有一些计算返回值，这些值对于进一步的作图或者分析很有用，例如区间划分端点、频数（或密度）、区间中点等等，这些信息可以被灵活应用在图形定制上
 （例如图 \@ref(fig:layout-margin)）。
 
 直方图也可以用 **ggplot2** 包的 `geom_histogram()` 函数绘制，方法如下：
 
-```{r, eval=FALSE,echo=TRUE}
-library(cowplot)
-p <- ggplot(aes(waiting), data = geyser)
-p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
-p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), 
-                         aes(y = ..density..))
-p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
-p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), 
-                         fill = "red", color = "black")
-plot_grid(p1, p2, p3, p4, 
-          labels = c("(1) freq = TRUE", "(2) freq = FALSE",
-                     "(3) breaks = 5", "(4) breaks = 40"), 
-          ncol = 2)
-
-p2 + geom_density(color = "blue", size = 2)
+```{r, results='asis'}
+msg_code("hist-density2")
 ```
 
 另外值得一提的是，R 语言的 **plotrix** 包提供了一个 `histStack()` 函数，可以用来绘制堆叠的直方图，在这里就不详细介绍了。
@@ -363,22 +288,7 @@ kable2(island2, "世界上各大陆地块的面积", insert_txt = "单位：千�
 # # stem_txt <- readLines("Stem.txt")
 # stem_txt <- readLines("clipboard")
 # # unlink("stem.txt")
-
-stem_txt <- readLines("temp/stem-islands.txt")
-x <- islands
-stem1 <- ggplot(as.data.frame(x)) +
-  geom_histogram(aes(x / 1000), binwidth = 2, fill = "white") +
-  coord_flip(xlim = c(18, -6)) +
-  theme(panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank()) +
-  theme_void() +
-  annotate("text", x = seq(-6, 18, 2), y = 0, hjust = 0, label = stem_txt)
-  
-stem2 <- ggplot(as.data.frame(x)) +
-  geom_histogram(aes(x / 1000), binwidth = 2) +
-  coord_flip(xlim = c(18, -6))
-  
-plot_grid(stem1, stem2, nrow = 1, align = "hv")
+msg_graph("stem-islands")
 ```
 
 可以明显看出，这些面积数据是严重右偏的，即：少数陆地块的面积非常大，而大多数陆地块的面积相对来说都很小。事实上，主要是七大洲的大陆块面积非常大，而其它岛屿诸如海南岛、帝汶岛、九洲岛等面积都相对较小。
@@ -408,6 +318,12 @@ unname(sort(round(islands / 1000, 1)))
 
 \noindent 然后，从 0 到 $18\times10^{3}$、以 $2\times10^{3}$ 为窗宽，分段整理数据，每一段（节）中依次放置落入该段的数据的小数位，堆砌起来便形成了茎叶图的叶子。例如 $11.5$ 落入了 $[10,12]$ 的区间，我们就将尾数 5 放在 10 的右边；类似地，17.0 在 $[16,18]$ 之间，我们将 0 放在 16 右边；关于茎叶图顶部的一长串 0 的解释此处不再赘述。
 
+图 \@ref(fig:stem-islands) 中的茎叶图绘制方法是：
+
+```{r, eval=FALSE, echo=TRUE}
+stem(islands)
+```
+
 
 下图是利用泊松分布（$\lambda=10$）随机数生成的茎叶图和直方图。可以看出，数据密度在 10 附近最高，这与理论相符。由于窗宽为 1，不存在舍入问题，所以图形可以还原到原始数据，请读者自行对应数据观察茎叶图。
 
@@ -417,30 +333,13 @@ x <- rpois(80, lambda = 10)
 stem(x, scale = 2)
 ```
 
-(ref:fig-stem-poisson) $\lambda = 10$ 的泊松分布随机数茎叶图：可以看出数据密度在 10 附近最高，这与
-理论相符。注意这幅图可以完全还原到原始数据
+(ref:fig-stem-poisson) $\lambda = 10$ 的泊松分布随机数茎叶图（左）和直方图（右）：可以看出数据密度在 10 附近最高，这与
+理论相符。注意茎叶图可以完全还原到原始数据
 
-(ref:fig-stem-poisson-s) 泊松分布随机数茎叶图
+(ref:fig-stem-poisson-s) 泊松分布随机数茎叶图和直方图
 
 ```{r stem-poisson, fig.cap="(ref:fig-stem-poisson)", fig.scap="(ref:fig-stem-poisson-s)", fig.height=5}
-# 均值 lambda 为 10 的泊松分布随机数
-set.seed(717)
-x <- rpois(80, lambda = 10)
-stem_txt <- readLines("temp/stem-poisson.txt")
-
-stem1 <- ggplot(as.data.frame(x)) +
-  geom_histogram(aes(x), binwidth = 2, fill = "white") +
-  coord_flip(xlim = c(17, 1)) +
-  theme(panel.grid.major=element_blank(),
-        panel.grid.minor=element_blank()) +
-  theme_void() +
-  annotate("text", x = seq(1, 17, 1), y = 0, hjust = 0, label = stem_txt)
-  
-stem2 <- ggplot(as.data.frame(x)) +
-  geom_histogram(aes(x), binwidth = 2) +
-  coord_flip(xlim = c(17, 1))
-  
-plot_grid(stem1, stem2, nrow = 1, align = "hv")
+msg_graph("stem-poisson")
 ```
 
 
@@ -470,9 +369,7 @@ kable2(InsectSprays, "各种杀虫剂下昆虫的数目")
 (ref:fig-insects-boxplot) 昆虫数目箱线图：六种杀虫剂下昆虫的数目分布
 
 ```{r insects-boxplot, fig.width=4.8, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1}
-ggplot(aes(y = count, x = spray), data = InsectSprays) +
-  geom_boxplot(outlier.shape = 4) +
-  coord_flip()
+msg_graph("insects-boxplot2")
 ```
 
 ### 绘制方法 {-}
@@ -517,18 +414,14 @@ usage2(usage(graphics:::boxplot.formula, output = FALSE))
 
 表 \@ref(tab:insects-data) 的数据实际上来自 R 语言的 **datasets** 包。我们可以用以下代码来对这个数据绘制箱线图：
 
-```{r, eval=FALSE, echo=TRUE}
-data(InsectSprays)
-boxplot(count ~ spray, data = InsectSprays,
-        col = "lightgray", horizontal = TRUE, pch = 4, varwidth = TRUE)
+```{r, results='asis'}
+msg_code("insects-boxplot")
 ```
 
 \noindent 也可以用 **ggplot2** 包专门绘制箱线图的函数 `geom_boxplot()`:
 
-```{r, eval=FALSE, echo=TRUE}
-ggplot(aes(y = count, x = spray), data = InsectSprays) +
-  geom_boxplot(outlier.shape = 4) +
-  coord_flip()
+```{r, results='asis'}
+msg_code("insects-boxplot")
 ```
 
 事实上，我们可以对这个数据作方差分析，检验杀虫剂类型对昆虫数目是否有显著影响：
@@ -544,19 +437,17 @@ summary(insects.aov)
 
 我们分别从正态分布 $\mathrm{N}(0,1)$ 和 $\mathrm{N}(0.5,1)$ 中各自产生 150 和 50 个随机数，然后作箱线图比较两组数据中间位置的差异。用下面的代码得到图 \@ref(fig:rnorm-boxplot)：
 
+```{r, results='asis'}
+msg_code("rnorm-boxplot2")
+```
+
 
 (ref:fig-rnorm-boxplot-s) 箱线图的凹槽与统计推断
 
 (ref:fig-rnorm-boxplot) 箱线图的凹槽与统计推断：从凹槽不交叠的情况来看，两样本中位数有显著差异
 
 ```{r rnorm-boxplot,fig.width=4.8,fig.height=1.6, tidy=FALSE, fig.cap="(ref:fig-rnorm-boxplot)", fig.scap="(ref:fig-rnorm-boxplot-s)", fig.ncol=1, fig.show='hold'}
-x <- rnorm(150)
-y <- rnorm(50, 0.8)
-ggplot(
-  data = data.frame(num = c(x, y),
-                    idx = c(rep("x", 150), rep("y", 50)))) +
-  geom_boxplot(aes(x = idx, y = num, fill = idx), notch = TRUE) +
-  coord_flip()
+msg_graph("rnorm-boxplot2")
 ```
 
 \noindent 图中的凹槽表明了两组数据的中位数有显著差异。Wilcoxon 秩和检验也证实了这一结论：
@@ -568,10 +459,7 @@ wilcox.test(x, y)$p.value
 该图也可以用 R 基础函数绘制：
 
 ```{r, eval=FALSE, echo=TRUE}
-x <- rnorm(150)
-y <- rnorm(50, 0.8)
-boxplot(list(x, y),names = c("x", "y"), horizontal = TRUE,
-  col = 2:3, notch = TRUE, varwidth = TRUE)
+msg_code("rnorm-boxplot")
 ```
 
 \noindent 这里使用了  `varwidth`  参数以表明两组数据样本量的大小不同。
@@ -595,35 +483,15 @@ boxplot(list(x, y),names = c("x", "y"), horizontal = TRUE,
 (ref:fig-vioplot) 三组双峰数据的小提琴图比较
 
 ```{r vioplot,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-vioplot)",fig.scap="(ref:fig-vioplot-s)"}
-f <- function(mu1, mu2) c(rnorm(300, mu1, 0.5), rnorm(200, mu2, 0.5))
-x1 <- f(0, 2)
-x2 <- f(2, 3.5)
-x3 <- f(0.5, 2)
-df <- reshape(data.frame(A = x1, B = x2, C = x3),
-        direction = "long", varying = c("A", "B", "C"),
-        v.name=c("value"), times=c("A", "B", "C"))
-ggplot(df, aes(value, time)) + 
-  geom_violin(fill = "bisque") + 
-  geom_boxplot(width = .1) +
-  labs(x = "", y = "")
+msg_graph("vioplot2")
 ```
 
 ### 绘制方法 {-}
 
 我们可以用 **ggplot2** 包绘制小提琴图：
 
-```{r, eval=FALSE, echo=TRUE}
-f <- function(mu1, mu2) c(rnorm(300, mu1, 0.5), rnorm(200, mu2, 0.5))
-x1 <- f(0, 2)
-x2 <- f(2, 3.5)
-x3 <- f(0.5, 2)
-df <- reshape(data.frame(A = x1, B = x2, C = x3),
-        direction = "long", varying = c("A", "B", "C"),
-        v.name=c("value"), times=c("A", "B", "C"))
-ggplot(df, aes(value, time)) + 
-  geom_violin(fill = "bisque") + 
-  geom_boxplot(width = .1) +
-  labs(x = "", y = "")
+```{r, results='asis'}
+msg_code("vioplot2")
 ```
 
 \noindent 或者使用 **vioplot** 包 [@vioplot] 的 `vioplot()` 函数，用法如下：
@@ -645,9 +513,8 @@ usage2(usage(vioplot, output = FALSE))
 \noindent 至于颜色、方向、边线等样式等参数，这里就不再介绍。具体实例如下：
 
 
-```{r, eval=FALSE, echo=TRUE}
-vioplot(x1, x2, x3, 
-        horizontal = TRUE, col = "bisque", names = LETTERS[1:3])
+```{r, results='asis'}
+msg_code("vioplot")
 ```
 
 **lattice** 包中的函数 `panel.violin()` 也提供了类似的小提琴图展示，这里不再赘述。关于小提琴图的理论请参考 @Hintze98。
@@ -670,10 +537,7 @@ vioplot(x1, x2, x3,
 (ref:fig-rug) 带坐标轴须的喷泉间隔时间密度曲线图
 
 ```{r rug,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)"}
-ggplot(faithful, aes(eruptions)) + 
-  geom_line(stat = "density") + 
-  geom_rug() + 
-  xlim(c(1, 6))
+msg_graph("rug2")
 ```
 
 ### 绘制方法 {-}
@@ -700,19 +564,14 @@ usage2(usage(rug, output = FALSE))
 
 下面这段代码，给喷泉间隔时间密度曲线图添加了坐标须：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mar = c(3, 4, 0.4, 0.1))
-plot(density(faithful$eruptions), main = "")
-rug(faithful$eruptions)
+```{r, results='asis'}
+msg_code("rug")
 ```
 
 当然，也可以用 **ggplot2** 包的 `geom_rug()` 函数来绘制：
 
-```{r, eval=FALSE, echo=TRUE}
-ggplot(faithful, aes(eruptions)) + 
-  geom_line(stat = "density") + 
-  geom_rug() + 
-  xlim(c(1, 6))
+```{r, results='asis'}
+msg_code("rug2")
 ```
 
 严格来说，坐标轴须不能算作是图形，它只是图形的附加物，从 R 基础作图函数的角度来说，它只是低层作图函数，但由于它在表达数据上的优势，这里我们也将其列入本书的图库中。
@@ -735,12 +594,7 @@ ggplot(faithful, aes(eruptions)) +
 
 ```{r stripchart,fig.width=4.8,fig.height=4.8,out.width="80%", fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)"}
 layout(matrix(1:2, 2), height = c(1, 1))
-par(mar = c(4, 4, 0.2, 0.2))
-boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, 
-        border = "red", col = "lightgreen", at = 1:6 - 0.3)
-stripchart(count ~ spray, data = InsectSprays, method = "stack", 
-           add = TRUE)
-stripchart(count ~ spray, data = InsectSprays, method = "jitter")
+msg_graph("stripchart")
 ```
 
 
@@ -775,26 +629,20 @@ usage2(usage(graphics:::stripchart.formula, output = FALSE))
 
 下面这段代码可以做出图 \@ref(fig:stripchart)：
 
-```{r, eval=FALSE, echo=TRUE}
-layout(matrix(1:2, 2), height = c(1, 1))
-par(mar = c(4, 4, 0.2, 0.2))
-boxplot(count ~ spray, data = InsectSprays, horizontal = TRUE, 
-        border = "red", col = "lightgreen", at = 1:6 - 0.3)
-stripchart(count ~ spray, data = InsectSprays, method = "stack", 
-           add = TRUE)
-stripchart(count ~ spray, data = InsectSprays, method = "jitter")
+```{r, results='asis'}
+msg_code("stripchart")
 ```
 
 **ggplot2** 包并没有直接绘制带状图堆砌效果的函数。不过，我们可以使用 `geom_jitter()` 函数（其实是 `geom_point(position = "jitter")` 函数的简写）来达到带状图随机打乱的效果，如图 \@ref(fig:stripchart2) 所示。作图代码如下：
 
+```{r, results='asis'}
+msg_code("stripchart2")
+```
+
 (ref:fig-stripchart2) **ggplot2** 包绘制的 各种杀虫剂下昆虫数目的带状图
 
 ```{r stripchart2, echo=TRUE,fig.width=4.8,fig.height=2.4,out.width="80%", fig.cap="(ref:fig-stripchart2)"}
-ggplot(InsectSprays, aes(spray, count, color = spray)) +
-  geom_boxplot(outlier.shape = NA) +
-  geom_jitter(shape = 0) +
-  theme(legend.position = "") +
-  coord_flip()
+msg_graph("stripchart2")
 ```
 
 回顾前面 \@ref(sec:rug) 小节中我们曾经用坐标轴须在坐标轴上标记出原始数据，这与带状图在一条直线上用点表达原始数据的想法有异曲同工之妙。然而，坐标轴须本身没有堆砌和随机打乱数据的功能（可以通过函数 `jitter()` 函数实现）。所以，有时候不妨视情况向图中添加带状图作为变量分布的辅助性描述。
@@ -837,28 +685,7 @@ kableExtra::kable_styling(
 (ref:fig-pie-chart) 各类馅饼销售数据的饼图：对比上面的饼图和下面的点图以及条形图，人眼对角度或比例的感知能力是否弱于对长度的感知能力？
 
 ```{r pie-chart,fig.width=6,fig.height=8,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)"}
-pie_sales <- data.frame(
-  ratio = c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12),
-  name = c("Blueberry", "Cherry", "Apple", 
-           "Boston Cream", "Other", "Vanilla Cream"))
-pie_sales <- pie_sales[order(-pie_sales$ratio), ]
-pie_sales$name <- factor(pie_sales$name, levels = pie_sales$name[order(pie_sales$ratio)])
-pie1 <- ggplot(pie_sales, aes(x = "", y = ratio, fill = name)) +
-  geom_bar(width = 1, stat = "identity", color = "white") +
-  coord_polar("y", start = 0)+
-  theme_void() +
-  theme(legend.position = "", axis.title = element_blank())
-
-pie2 <- ggplot(pie_sales, aes(name, ratio, color = name)) + geom_point() + 
-  coord_flip() +
-  theme(legend.position = "", axis.title = element_blank())
-
-pie3 <- ggplot(pie_sales, aes(name, ratio, fill = name)) +
-  geom_col() +
-  coord_flip() +
-  theme(legend.position = "", axis.title = element_blank())
-
-pie1 / pie2 / pie3
+msg_graph("pie-chart2")
 ```
 
 ### 绘制方法 {-}
@@ -871,17 +698,10 @@ usage2(usage(pie, output = FALSE))
 
 \noindent 参数含义：`x` 为一个数值向量， `labels` 为标签，其它参数基本上都是为多边形准备的，因为扇形实际上是多边形所作，例如 `edges` 可以设定圆弧的光滑程度（多边形的边越多则越光滑）， `density` 、 `angle` 等参数参见多边形的章节（\@ref(sec:polygon) 小节）。
 
-为馅饼销售数据作饼图，可以使用下面的代码：
+为馅饼销售数据作饼图、点图和条形图，可以使用下面的代码：
 
-```{r, eval=FALSE, echo=TRUE}
-pie_sales <- data.frame(
-  ratio = c(0.12, 0.3, 0.26, 0.16, 0.04, 0.12),
-  name = c("Blueberry", "Cherry", "Apple", 
-           "Boston Cream", "Other", "Vanilla Cream"))
-pie_sales <- pie_sales[order(-pie_sales$ratio), ]
-pie_col <- c("purple", "violetred1", "green3", 
-             "cornflowerblue", "cyan", "white")
-pie(pie_sales$ratio, col = pie_col)
+```{r, results='asis'}
+msg_code("pie-chart")
 ```
 
 正如前文所说，饼图并非展示数据的好方式；比平面饼图更糟糕的，是三维饼图。在 R 语言里，可以用 **plotrix** 包的 `pie3D()`函数绘制；
@@ -893,18 +713,10 @@ pie3D(pie_sales$ratio, labels = pie_sales$name, col = pie_col,
 ```
 \noindent 感兴趣的读者可以自己查阅其帮助信息。
 
+**ggplot2** 包里并没有直接做饼图的函数。不过，通过坐标旋转和柱状图结合的方式，也可以做出饼图来.图 \@ref(fig:pie-chart) 的绘制代码如下：
 
-**ggplot2** 包里并没有直接做饼图的函数。不过，通过坐标旋转和柱状图结合的方式，也可以做出饼图来，代码如下：
-
-```{r, eval=FALSE, echo=TRUE}
-pie_sales$name <- factor(
-  pie_sales$name,
-  levels = pie_sales$name[order(pie_sales$ratio)])
-ggplot(pie_sales, aes(x = "", y = ratio, fill = name)) +
-  geom_bar(width = 1, stat = "identity", color = "white") +
-  coord_polar("y", start = 0)+
-  theme_void() +
-  theme(legend.position = "", axis.title = element_blank())
+```{r, results='asis'}
+msg_code("pie-chart2")
 ```
 
 尽管我们一直批评饼图在表达数据上的弱势，但在某些极端情况下，饼图也未必糟糕得无可救药。试想如果一幅饼图只分为两份或三份，也许我们可以准确识别各个角度的大小。另外，有时候我们也许要比较多组比例的分布情况，例如在空间中表示各个地点的某个变量构成（性别比例、年龄结构等），此时在多个位置分别画饼图也许能让我们很容易比较各个位置上的比例构成。
@@ -917,7 +729,7 @@ ggplot(pie_sales, aes(x = "", y = ratio, fill = name)) +
 (ref:fig-floating-pie) 在同一幅图的多个位置放置饼图：这是个人造的“质量测试”，颜色深的成份太大会导致饼图“沉下去”
 
 ```{r floating-pie,fig.width=4.8,fig.height=3.6,out.width="75%", results="hide",fig.cap="(ref:fig-floating-pie)",fig.scap="(ref:fig-floating-pie-s)"}
-demo("float_pie", package = "MSG")
+msg_graph("floating-pie")
 ```
 
 这种浮动饼图是可以将饼图作为一个基本的图形元素安排在任意位置，一幅图中可以有多幅饼图分散在不同位置。这种饼图可以使用 **plotrix** 包的 `floating.pie()` 绘制，此处不再详述。
@@ -939,23 +751,7 @@ QQ 图的原理并不复杂：如果一批数据 $x_{1},x_{2},\ldots,x_{n}$ 服�
 (ref:fig-qqnorm) 喷泉间隔时间的正态分布 QQ 图（左图）及数据密度曲线和实际正态分布密度曲线（右图）
 
 ```{r qqnorm,fig.width=4.8,fig.height=2.4,fig.cap="(ref:fig-qqnorm)",fig.scap="(ref:fig-qqnorm-s)"}
-geyser$waiting_scaled <- scale(geyser$waiting)
-qq1 <- ggplot(data = geyser, mapping = aes(sample = waiting_scaled)) +
-  coord_fixed(ratio = 1, xlim = c(-3, 3), ylim = c(-3,3)) +
-  geom_abline(aes(intercept = 0, slope = 1), color = "blue") +
-  # stat_qq_band() +
-  # stat_qq_line() +
-  stat_qq_point() +
-  labs(x = "Theoretical Quantiles", y = "Sample Quantiles")
-
-qq2 <- ggplot(aes(waiting_scaled), data = geyser) + 
-  geom_density() +
-  stat_function(mapping = aes(x), data = data.frame(x = c(-3, 3)), 
-                fun = dnorm, n = 101, args = list(mean = 0, sd = 1),
-                linetype = 2) + 
-  ylab("Density")
-
-qq1 | qq2
+msg_graph("qqnorm2")
 ```
 
 可以看出，数据点并不呈直线分布，这说明（标准化后的）数据的分布和标准正态分布有所差异，那么具体是何种差异呢？图的左边有一部分点偏离在直线上方，说明实际分位数大于理论分位数。从密度曲线的角度来说，也就是实际数据的分布曲线更偏右一些，理论分布曲线左边的尾巴向左伸得更远，而图的右边又有一些点在直线下方，说明此处实际分布曲线偏左，即实际分位数偏小。右图画出了数据的核密度估计曲线（实线）和真正的标准正态分布密度曲线（虚线），读者可以将二者的对比结合左图来理解 QQ 图中数据点偏离直线的方向与分布曲线的偏向关系。
@@ -985,38 +781,21 @@ usage2(usage(qqline, output = FALSE))
 
 利用 `qqnorm()` 函数可以绘制图 \@ref(fig:qqnorm) ：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mfrow = c(1, 2), mar = c(4, 4, 0.2, 0.2))
-geyser$waiting_scaled <- scale(geyser$waiting)
-qqnorm(geyser$waiting_scaled, cex = 0.7, asp = 1, main = "")
-abline(0, 1)
-plot(density(geyser$waiting_scaled))
-curve(dnorm, from = -3, to = 3, lty = 2, add = TRUE)
+```{r, results='asis'}
+msg_code("qqnorm")
 ```
 
 **ggplot2** 包并没有直接绘制 QQ 图的函数。不过，可以安装 **qqplotr**包，加载后就可以绘制了：
 
-```{r, eval=FALSE, echo=TRUE}
-library(qqplotr)
-qq1 <- ggplot(data = geyser, mapping = aes(sample = waiting_scaled)) +
-  stat_qq_band() +
-  stat_qq_line() +
-  stat_qq_point() +
-  labs(x = "Theoretical Quantiles", y = "Sample Quantiles")
-qq2 <- ggplot(aes(waiting_scaled), data = geyser) + 
-  geom_density() +
-  stat_function(mapping = aes(x), data = data.frame(x = c(-3, 3)), 
-                fun = dnorm, n = 101, args = list(mean = 0, sd = 1),
-                linetype = 2) + 
-  ylab("Density")
-qq1 | qq2
+```{r, results='asis'}
+msg_code("qqnorm2")
 ```
 
 注意：图 \@ref(fig:qqnorm) 的 QQ 图中我们用了纵横比参数（ 基础作图函数里的 `qqnorm(asp = 1)，或 **ggplot2** 里的 `coord_fixed(ratio = 1)`），这样使得图中横纵坐标的单位长度表示的数值大小相同，为我们比较点的横纵坐标值大小提供了更好的视觉辅助。
 
+## 思考与练习
 QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它也可以推广到检查数据是否来自某个位置参数分布族。例如，若数据来自正态分布 $N(5,1)$，我们拿它和标准正态分布 $N(0,1)$ 画 QQ 图的话，数据点仍然会大致排列在直线上，此时直线的斜率仍然是 1，但截距就不是 0 了，而是 5。正态分布是位置参数分布族中的一种分布：若 $X\sim N(\mu,\sigma^{2})$，那么 $X + \delta \sim \mathrm{N}(\mu+\delta,\sigma^{2})$ 仍然是正态分布。均值 $\mu$ 是位置参数。
 
-## 思考与练习
 
 1.  条形图的横坐标通常是无序的，人们往往根据数据的原始顺序画条形图；比如画各省市的人口总数时，我们总是看到北京在第一位，这可能是因为统计局数据总是把北京放在第一行。条形图横坐标的顺序选取对读图是否有影响？或者说我们应该怎样安排条形图的横坐标？提示：参考 \@ref(subsec:canabalt) 小节。
 
@@ -1026,53 +805,8 @@ QQ 图的用途不仅在检查数据是否服从某种特定理论分布，它�
 
 (ref:nightingale-ggplot2) 重新绘制提灯女士的玫瑰图：请与图 \@ref(fig:nightingale-mortality) 作比较，体会现代作图工具的优势和不足
 
-```{r nightingale-ggplot2, fig.show='hold', out.width= "49%", fig.cap="(ref:nightingale-ggplot2)",fig.scap="(ref:nightingale-ggplot2-s)"}
-require(HistData)
-data(Nightingale)
-
-# For some graphs, it is more convenient to reshape death rates to long format
-#  keep only Date and death rates
-require(reshape)
-Night<- Nightingale[,c(1,8:10)]
-melted <- melt(Night, "Date")
-names(melted) <- c("Date", "Cause", "Deaths")
-melted$Cause <- sub("\\.rate", "", melted$Cause)
-melted$Regime <- ordered( rep(c(rep('Before', 12), rep('After', 12)), 3), 
-                          levels=c('Before', 'After'))
-Night <- melted
-
-# subsets, to facilitate separate plotting
-Night1 <- subset(Night, Date < as.Date("1855-04-01"))
-Night2 <- subset(Night, Date >= as.Date("1855-04-01"))
-
-# sort according to Deaths in decreasing order, so counts are not obscured [thx: Monique Graf]
-Night1 <- Night1[order(Night1$Deaths, decreasing=TRUE),]
-Night2 <- Night2[order(Night2$Deaths, decreasing=TRUE),]
-
-# merge the two sorted files
-Night <- rbind(Night1, Night2)
-
-require(ggplot2)
-
-# After plot
-cxc2 <- ggplot(Night2, aes(x = factor(Date), y=Deaths, fill = Cause)) +
-  geom_bar(width = 1, position="identity", stat="identity", color="black") +
-  scale_y_sqrt()
-cxc2 + coord_polar(start=3*pi/2) +
-  ggtitle("Causes of Mortality in the Army in the East") + 
-  xlab("")
-
-# Before plot
-cxc1 <- ggplot(Night1, aes(x = factor(Date), y=Deaths, fill = Cause)) +
-  # do it as a stacked bar chart first
-  geom_bar(width = 1, position="identity", stat="identity", color="black") +
-  # set scale so area ~ Deaths	
-  scale_y_sqrt() 
-# A coxcomb plot = bar chart + polar coordinates
-cxc1 + coord_polar(start=3*pi/2) + 
-  ggtitle("Causes of Mortality in the Army in the East") + 
-  xlab("")
-
+```{r nightingale-ggplot2, fig.width=10, fig.cap="(ref:nightingale-ggplot2)",fig.scap="(ref:nightingale-ggplot2-s)"}
+msg_graph("nightingale-ggplot2")
 ```
 
 

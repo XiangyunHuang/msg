@@ -40,20 +40,7 @@ kable2(tables$pork, "2006 到 2011 年猪肉价格", only_head = FALSE, latex_op
 (ref:pork-price-s) 更新后的猪肉价格走势图
 
 ```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)"}
-pork_price <- data.frame(
-  year = c(2006, 2007, 2008, 2009, 2010 + c(1, 4, 7, 10, 13) / 12),
-  price = c(12.11, 18.80, 22.09, 18.39, 
-            19.86, 14.89, 16.68, 18.76, 19.57)
-)
-p <- ggplot(pork_price, mapping = aes(year, price))
-p1 <- p + geom_bar(stat = "identity")
-p2 <- p + 
-  geom_bar(mapping = aes(year, price - 12), stat = "identity") + 
-  scale_y_continuous(labels = function(y) y + 12)
-p3 <- p + geom_line() + geom_point()
-p4 <- p3 + ylim(c(0, max(pork_price$price)))
-
-(p1 | p2) / (p4 | p3)
+msg_graph("pork-price2")
 ```
 
 
@@ -64,31 +51,12 @@ p4 <- p3 + ylim(c(0, max(pork_price$price)))
 本案例使用了条形图（详见 \@ref(sec:barplot) 小节）和折线图（详见 \@ref(sec:plot-default) 小节）。
 图 \@ref(fig:pork-price) 可以用 **ggplot2** 包绘制，也可以用 R 基础函数绘制。读者只需用 R 来运行下面的代码即可：
 
-```{r pork-price2,eval=FALSE,echo=TRUE}
-library(ggplot2)
+```{r pork-price2, results='asis'}
+msg_code("pork-price")
+```
 
-# 准备数据：
-year <- c(2006, 2007, 2008, 2009, 2010 + c(1, 4, 7, 10, 13) / 12),
-price <- c(12.11, 18.80, 22.09, 18.39, 
-           19.86, 14.89, 16.68, 18.76, 19.57)
-pork_price <- data.frame(year = year, price = price)
-
-# ggplot2 作图：
-p <- ggplot(pork_price, mapping = aes(year, price))
-p + geom_bar(stat = "identity")
-p + geom_bar(mapping = aes(year, price - 12), stat = "identity") + 
-  scale_y_continuous(labels = function(y) y + 12)
-(p3 <- p + geom_line() + geom_point())
-p3 + ylim(c(0, max(pork_price$price)))
-
-# 基础函数作图：
-par(mfrow = c(2, 2), mar = c(4, 4, 0.5, 0.5))
-plot(year, price, type = "h", lwd = 5, lend = 1, 
-     ylim = c(0, max(price) + 1), yaxs = "i")
-plot(year, price, type = "h", lwd = 5, lend = 1)
-plot(year, price, type = "o", 
-     ylim = c(0, max(price) + 1), yaxs = "i")
-plot(year, price, type = "o")
+```{r, results='asis'}
+msg_code("pork-price2")
 ```
 
 ## 中美对比 {#subsec:china-vs-us}
@@ -125,9 +93,8 @@ kable2(cn_vs_us[, 1:4], "中美国力数据", only_head = FALSE)
 
 (ref:cn-us-redraw-s) 2010 年中美国力对比条形图
 
-```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)", fig.height=10}
-ggplot(data = cn_vs_us, aes(x = country, y = value, fill = country)) +
-  geom_col() + facet_wrap(~metric, scales = "free_y", ncol = 3)
+```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)", fig.width=10, fig.height=6}
+msg_graph("cn-us-redraw")
 ```
 
 
@@ -137,13 +104,10 @@ ggplot(data = cn_vs_us, aes(x = country, y = value, fill = country)) +
 
 ### 探案工具 {-}
 
-本案例使用了条形图（详见 \@ref(sec:barplot) 小节）和玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节），所使用的数据收集在 **MSG** 包中。加载数据、查看帮助和图形的绘制代码如下：
+本案例使用了条形图（详见 \@ref(sec:barplot) 小节）和玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节），所使用的数据收集在 **MSG** 包中。加载数据和图形的绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-data(cn_vs_us)
-help("cn_vs_us")
-ggplot(cn_vs_us, aes(x = country, y = value, fill = country)) +
-  geom_col() + facet_wrap(~metric, scales = "free_y", ncol = 3)
+```{r, results='asis'}
+msg_code("cn-us-redraw")
 ```
 
 
@@ -170,12 +134,12 @@ include_graphics("images/ncov-jiangsu.jpeg")
 (ref:covid-19-world-s) 世界各国新冠疫情的鹦鹉螺图
 
 ```{r covid-19, fig.cap="(ref:covid-19-world)", fig.scap="(ref:covid-19-world-s)"}
-knitr::include_graphics("images/covid2.jpg")
+knitr::include_graphics("images/covidcountries.jpg")
 ```
 
 ### 探案过程 {-}
 
-对于第一个关于疫情地图的问题，笔者获取了当天（1 月 22 日）以及前一天（1 月 21 日）的疫情数据。这是为了避免数据统计时间的不同而出现与图 \@ref(fig:covid-19) 在统计数字上的差异。在这些数据的基础上，笔者绘制了这两天的疫情地图，如图 \@ref(fig:covid-19-map) 所示。
+对于第一个关于疫情地图的问题，笔者获取了当天（1 月 22 日）以及前一天（1 月 21 日）的疫情数据。这是为了避免数据统计时间的不同而出现与图 \@ref(fig:covid-19) 在统计数字上的差异。在这些数据的基础上，笔者绘制了这两天的疫情地图，如图 \@ref(fig:covidchina) 所示。
 
 ```{r tab-ncovr}
 covid_china <- readRDS(system.file("extdata", "covidchina.rds", package = "MSG"))
@@ -188,19 +152,12 @@ kable2(covid_china2, "全国省级行政区新冠肺炎确诊人数", only_head 
 
 从图中可以看出，江苏跟周边省份差别并不是很大：1 月 21 日，除了浙江 5 例确诊（浅红色）外，江苏和安徽无确诊，山东只有一例，在地图上都是白色或接近白色；而 1 月 22 日，浙江共 10 例，而江苏、安徽、山东各增加一例，均是极浅的浅红色。
 
-(ref:fig-covid-19-map) 新冠疫情中国地图。图中用红色的深浅来表示确诊病例的多少。由于各省确诊病例数量极差较大，数量跨三个数量级，使用对数坐标来显示低值之间的差异
+(ref:covidchina) 新冠疫情中国地图。图中用红色的深浅来表示确诊病例的多少。由于各省确诊病例数量极差较大，数量跨三个数量级，使用对数坐标来显示低值之间的差异
 
-(ref:fig-covid-19-map-s) 新冠疫情中国地图
+(ref:covidchina-s) 新冠疫情中国地图
 
-```{r covid-19-map, fig.show='hold', out.width="49%", fig.cap="(ref:fig-covid-19-map)", fig.scap="(ref:fig-covid-19-map-s)"}
-# library(dplyr)
-# library(scales)
-# for (choose_date in c("2020-01-21", "2020-01-22")){
-#   x <- ncov$area[ncov$area$date <= as.Date(choose_date), ]
-#   x <- x[!duplicated(x$provinceName), ]
-#   print(plot_ggmap(x, show_capitials = FALSE, province_language = NA, add_title = choose_date))
-# }
-msg("covidchina", show_code = FALSE)
+```{r covidchina, fig.show='hold', out.width="49%", fig.cap="(ref:covidchina)", fig.scap="(ref:covidchina-s)"}
+msg_graph("covidchina")
 ```
 
 其实，我们可以看到，在图 \@ref(fig:ncov-jiangsu) 中，很多省份其实只有 1 例确诊，却涂上了跟几百例确诊的省份同样的颜色，夸大了江苏和其他省份的差别。当然，笔者作图的角度是比较各省确诊病例的数量级；如果是为了区分“零确诊”与“有确诊”，那就另当别论了。在这个案例里，颜色的选择和图例的重要性可见一斑。
@@ -215,38 +172,34 @@ msg("covidchina", show_code = FALSE)
 
 那么，有没有可能是将确诊数量取了对数之后作图呢？让我们来看一下：以美国、德国和英国为例，美国确诊病例是德国的大约 2 倍，而德国确诊病例是英国的大约 4 倍。假定是以扇形半径来表示确诊病例的对数，那么德英两国的扇形半径差应该是美德两国扇形半径差的 2 倍，但图 \@ref(fig:covid-19) 显然不是这样，甚至相反：德英两国的扇形半径差大约只有美德两国的一半。
 
-为了一探究竟，笔者获取了当天的全球疫情数据，自行绘制了一张类似的鹦鹉螺图，如图 \@ref(fig:covid2) 的上图所示，以扇形的半径来表示确诊病例的对数。图中的统计数字略有出入，可能是数据更新的当天时刻有不同，这不影响我们的对比。半透明的环状带标示了病例为 10、100、1000 和 10000 的位置。
+为了一探究竟，笔者获取了当天的全球疫情数据，自行绘制了一张类似的鹦鹉螺图，如图 \@ref(fig:covidcountries) 的上图所示，以扇形的半径来表示确诊病例的对数。图中的统计数字略有出入，可能是数据更新的当天时刻有不同，这不影响我们的对比。半透明的环状带标示了病例为 10、100、1000 和 10000 的位置。
 
 
-(ref:covid2) 对数坐标表示的世界各国新冠疫情的鹦鹉螺图（上）和点图（下）：上图用不同颜色的扇环来代表不同国家，半透明的环状带标示了病例为 10、100、1000 和 10000 的位置
+(ref:covidcountries) 对数坐标表示的世界各国新冠疫情的鹦鹉螺图（上）和点图（下）：上图用不同颜色的扇形来代表不同国家，半透明的环状带自内向外标示了病例为 10、100、1000 和 10000
 
-(ref:covid2-s) 对数坐标表示的世界各国新冠疫情的鹦鹉螺图和点图
+(ref:covidcountries-s) 对数坐标表示的世界各国新冠疫情的鹦鹉螺图和点图
 
-```{r covid2, fig.width=7, fig.height=8, fig.cap="(ref:covid2)", fig.scap="(ref:covid2-s)"}
-msg("covid2", show_code = FALSE)
+```{r covidcountries, fig.width=7, fig.height=8, fig.cap="(ref:covidcountries)", fig.scap="(ref:covidcountries-s)"}
+msg_graph("covidcountries")
 ```
 
 从图中可以看出，鹦鹉螺图用对数来展示确诊病例之后，相邻两个扇形的半径差别就没有那么大了。虽然视觉冲击力小了很多，然而我们可以清晰地从图中看出哪些国家的确诊病例是属于同一个数量级（即处于同一环状带），以及任意两国的病例数对比关系。例如韩国在最外围的半透明带边缘，而俄罗斯位于自外向内第二个半透明带的边缘，即使不看数字，也能知道两者是 10 倍的关系；类似的，美国跟韩国也是大约 10 倍的关系。而图 \@ref(fig:covid-19) 的扇形半径跟确诊病例数有何种换算关系，以及中心的白色半透明圆环表示的是什么意义，我们就不得而知了。
 
-作为对比，笔者将同一组数据做了一张点图，见图 \@ref(fig:covid2) 下图。与极坐标相比，在笛卡尔坐标系中，用不均匀的网格来表示对数坐标就会更容易理解。同时，读者可以很直观地从图中获取病例数的大概数值，以便做进一步的比较，这显然比鹦鹉螺图更有意义。例如，前文所述，在对数坐标下，德英两国确诊病例之差应该是美德两国之差的 2 倍，在点状图上一目了然。注意：这张点图里，点的颜色其实是多余的元素；因为点的 $x$ 坐标已经表达了其确诊病例数的数值。笔者在这里仍然标识了颜色，仅仅是为了视觉上的美观而已。
+作为对比，笔者将同一组数据做了一张点图，见图 \@ref(fig:covidcountries) 下图。与极坐标相比，在笛卡尔坐标系中，用不均匀的网格来表示对数坐标就会更容易理解。同时，读者可以很直观地从图中获取病例数的大概数值，以便做进一步的比较，这显然比鹦鹉螺图更有意义。例如，前文所述，在对数坐标下，德英两国确诊病例之差应该是美德两国之差的 2 倍，在点状图上一目了然。注意：这张点图里，点的颜色其实是多余的元素；因为点的 $x$ 坐标已经表达了其确诊病例数的数值。笔者在这里仍然标识了颜色，仅仅是为了视觉上的美观而已。
 
 关于笔者参与的有关新冠疫情的进一步研究工作，参见 @zou2020。
 
 ### 探案工具 {-}
 
-本案例使用了玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）、点图（详见 \@ref(sec:dotchart) 小节）和地图（详见 \@ref(sec:maps) 小节）。用于绘制图 \@ref(fig:covid-19-map) 的 R 语言代码为：
+本案例使用了玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）、点图（详见 \@ref(sec:dotchart) 小节）和地图（详见 \@ref(sec:maps) 小节）。用于绘制图 \@ref(fig:covidchina) 的 R 语言代码为：
 
 ```{r, results='asis'}
-cat("```r\n")
-msg("covidchina", show_code = TRUE, print_plot = FALSE)
-cat("```\n")
+msg_code("covidchina")
 ```
-\noindent 用于绘制图 \@ref(fig:covid2) 的 代码为：
+\noindent 用于绘制图 \@ref(fig:covidcountries) 的代码为：
 
 ```{r, results='asis'}
-cat("```r\n")
-msg("covid2", show_code = TRUE, print_plot = FALSE)
-cat("```\n")
+msg_code("covidcountries")
 ```
 
 ## 末日狂奔 {#subsec:canabalt}
@@ -276,51 +229,26 @@ kable2(canabalt, "“末日狂奔”游戏得分消息")
 
 这都是基于离散变量的连续变量比较，一个自然而然的选择就是对离散变量的每一分类分别画图。图 \@ref(fig:canabalt-boxplot) 是基于离散变量的不同分类的箱线图。从图中可以看出，iPad 玩家的平均得分较高，这可能是因为 iPad 相比起 iPhone 或者 iPod touch 来说屏幕较大，玩家易于控制，也可能是因为 iPad 需要专门开机，不像另外两个平台随时都能打开玩，因此 iPad 玩家玩起来会更集中精力。至于死因，由于作者对这款游戏并不在行，玩了几次，得到的结果都是因为跳得不够高而撞墙坠落摔死，最多能跑几百米，因此不了解其它死因的场景。因为撞墙摔死的玩家中有很多人得分超高，看来这种障碍的难度并不小。注意我们画箱线图时，对死因做了重新排序——按照得分的中位数排序，这样能方便读者阅读这幅图，否则，读者需要额外花费功夫用眼睛对箱线图排序，对读者来说是不必要的阅读负担。按照原始数据的顺序画图尤其是条形图和饼图中常见的问题，其实排序对于制图者只是举手之劳，对读者却能带来很大的方便。
 
-(ref:canabalt-boxplot) 游戏得分在不同游戏平台以及死因下的比较：iPad 玩家的分数平均较高，得分最高的人最终是因为"错过另一扇窗"而死
+(ref:canabalt-boxplot) “末日狂奔”游戏得分在不同游戏平台以及死因下的比较：iPad 玩家的分数平均较高，得分最高的人最终是因为"错过另一扇窗"而死
 
-(ref:canabalt-boxplot-s) 游戏得分在不同游戏平台以及死因下的比较
+(ref:canabalt-boxplot-s) “末日狂奔”游戏得分在不同游戏平台以及死因下的比较
 
 ```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)"}
-data(canabalt)
-canabalt_g1 <- ggplot(canabalt) + 
-  geom_boxplot(aes(device, score)) +
-  coord_flip()
-canabalt_g2 <- ggplot(canabalt) +
-  geom_boxplot(aes(reorder(death, score, median), score)) +
-  xlab("death") +
-  coord_flip()
-canabalt_g1 / canabalt_g2
+msg_graph("canabalt-boxplot2")
 ```
 
 ### 探案工具 {-}
 
-本案例使用了箱线图（详见 \@ref(sec:boxplot) 小节）。数据集收在了我们的 **MSG** 包里。运行下面的代码，可以加载这个数据集：
+本案例使用了箱线图（详见 \@ref(sec:boxplot) 小节）。数据集收在了我们的 **MSG** 包里。运行下面的代码，可以加载这个数据集并做出图 \@ref(fig:canabalt-boxplot)：
 
-```{r canabalt-data, eval=FALSE, echo=TRUE}
-library(MSG)
-data(canabalt)
+```{r, results='asis'}
+msg_code("canabalt-boxplot2")
 ```
 
 在 `canabalt` 数据的帮助文档中有这批数据的来源以及收集方式，对抓取网络数据感兴趣的读者不妨看看原作者是如何用 Python 等工具获得数据的:
 
 ```{r, eval=FALSE, echo=TRUE}
 help("canabalt")
-```
-
-加载数据后，我们一般会先对数据运行 `summary()`函数，掌握数据的概况：
-
-```{r, eval=TRUE, echo=TRUE}
-summary(canabalt)
-```
-
-然后，就可以用 **ggplot2** 包做出图 \@ref(fig:canabalt-boxplot)：
-
-```{r, echo=TRUE, eval=FALSE}
-ggplot(canabalt) + geom_boxplot(aes(device, score)) + coord_flip()
-ggplot(canabalt) + 
-  geom_boxplot(aes(reorder(death, score, median), score)) +
-  xlab("death") +
-  coord_flip()
 ```
 
 ## 论坛热度 {#sec:rchive}
@@ -374,9 +302,9 @@ R-help 邮件列表里的热门话题涉及 R 包的安装、文本操作、R �
 
 ### 探案工具 {-}
 
-Rchive 是使用 R 语言的 shiny 包制作的，主要使用了直方图（详见 \@ref(sec:hist) 小节）、玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）和动态时间序列图。这个工具制作的过程和部分源代码可以参看统计之都论坛的讨论[^rchive]。
+Rchive 是使用 R 语言的 shiny 包制作的，主要使用了直方图（详见 \@ref(sec:hist) 小节）、玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）和动态时间序列图。这个工具制作的过程和部分源代码可以参看统计之都论坛的讨论[^rchive-source]。
 
-[^rchive]: <https://d.cosx.org/d/420739>
+[^rchive-source]: <https://d.cosx.org/d/420739>
 
 ## 绝望主妇 {#subsec:tvearn}
 
@@ -408,29 +336,16 @@ aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 
 \noindent 可以看出女演员平均薪酬比男演员略高。
 
-(ref:tvearn) 最高收入的男女演员的薪酬直方图（上）：薪酬呈右偏，女演员平均薪酬略高。IMDB 评分与薪酬的关系非线性
-
-(ref:tvearn-s) 演员的薪酬直方图及薪酬与电视剧评分的散点图
-
 图 \@ref(fig:tvearn) 上图为男女演员各自薪酬的直方图，可以看出直方图呈右偏趋势，这是由少数演员的薪酬极高造成的；下图为 IMDB 评分与薪酬的关系，我们将电视剧类别用不同颜色标注出来，发现不同类别之间的电视剧薪酬随着评分的变化关系并不相同。图中曲线为 LOWESS 曲线（\@ref(subsec:lowess) 小节）。对正剧而言， IMDB 评分与演员薪酬似乎没有关系，曲线几乎为一条水平线；对喜剧而言，这个关系并非直线关系，评分在 7.9 附近的薪酬最高，此前的薪酬随着评分上升而增加，此后的薪酬则大多回落到 20 万美元以下并再次呈上升趋势。
 
 为了理解这些现象背后的原因，我们有必要研究一下 IMDB 的评分机制。据笔者的初步了解，IMDB 网站并非简单将用户的打分平均，而是综合考虑诸多用户背景信息而加权得到的评分。为何评分高的喜剧不如评分低的喜剧中的演员薪酬高？是制片公司的问题还是 IMDB 评分的问题？笔者并非美剧迷，对这个问题的探索就到此为止，感兴趣的读者可以继续利用数据中的其它变量进一步分析。
 
+(ref:tvearn) 最高收入的男女演员的薪酬直方图（上）：薪酬呈右偏，女演员平均薪酬略高。IMDB 评分与薪酬的关系非线性
+
+(ref:tvearn-s) 演员的薪酬直方图及薪酬与电视剧评分的散点图
+
 ```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10}
-dh1 <- ggplot(aes(x = pay), data = tvearn) +
-  geom_histogram(binwidth = 20000) +
-  facet_grid(gender ~ .)
-
-dh2 <- ggplot(aes(x = rating, y = pay, color = type), data = tvearn) +
-  geom_jitter() +
-  geom_smooth(method = "loess") +
-  scale_y_continuous(
-    labels = scales::unit_format(unit = "w", scale = 1e-4),
-    breaks = seq(0, 125, 15) * 10^4
-  ) +
-  theme(legend.background = element_blank(), legend.position = c(0.1, 0.9))
-
-dh1 / dh2
+msg_graph("tvearn")
 ```
 
 当我们对两组直方图进行比较时（实际上是比较两个分布），我们应该如何排列这两幅直方图？图 \@ref(fig:tvearn) 中的直方图为上下排列，原因是这样可以很方便比较分布的各个特征，如最小值、最大值、众数、中位数等；如果我们将直方图左右排列，那么这些比较都将变得困难，因为此时眼睛仅仅上下移动是不够的，我们必须先分别看左右横轴的数字，记住数字之后再在脑中对比数字大小。另外，当我们在画散点图的时候，如果能加上某些平滑曲线或回归直线，那么图中的趋势也将变得更加明显，因为谁都无法用眼睛做回归模型或局部平滑。仅凭眼睛去看，容易被各个孤立的点分散注意力。
@@ -439,18 +354,8 @@ dh1 / dh2
 
 本案例使用了直方图（详见 \@ref(sec:hist) 小节）和散点图（详见 \@ref(sec:plot-default) 小节），图示可以用下面的代码绘制：
 
-```{r, eval=FALSE, echo=TRUE}
-ggplot(aes(x = pay), data = tvearn) +
-  geom_histogram(binwidth = 20000) +
-  facet_grid(gender ~ .)
-
-ggplot(aes(x = rating, y = pay, color = type), data = tvearn) +
-  geom_jitter() +
-  geom_smooth(method = "loess") +
-  scale_y_continuous(
-    labels = scales::unit_format(unit = "w", scale = 1e-4),
-    breaks = seq(0, 125, 15) * 10^4
-  )
+```{r, results='asis'}
+msg_code("tvearn")
 ```
 
 
@@ -477,16 +382,7 @@ kable2(music[, 1:5], "音乐曲目数据")
 (ref:music-andrews-s) 音乐曲目左声道频率的调和曲线图
 
 ```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=6,fig.height=2.8,dev='tikz',fig.process=to_png,fig.showtext=FALSE}
-par(mfrow = c(1, 2), mar = c(4.1, 4.1, 0.5, 0.5))
-andrews_curve(scale(music[, 4:6]), xlab = "$t$", ylab = "$f(t)$",
-              n = 50, col = 1)
-with(
-  music,
-  andrews_curve(scale(music[, 4:6]),
-    n = 50, xlab = "$t$", ylab = "$f(t)$",
-    col = artist, lty = as.integer(type)
-  )
-)
+msg_graph("music-andrews-tikz")
 ```
 
 图 \@ref(fig:music-andrews) 为三个变量的调和曲线图。为了不把预期中的聚类现象强加于我们脑中，首先我们不使用任何方式标注分类信息，统一用黑色，如左图所示，这些曲线的走势是否有扎堆现象？这里我们不想故意引导读者，请读者自行观察。某种程度上，标记和不标记分类变量会对一幅图形产生很大的影响，比如即使一幅图中本来没有聚类现象，但由于我们使用了颜色或其它手段将图形元素分了组，这时我们的眼睛很容易引导我们认为图中存在聚类。看完左图之后再看右图，你的结论有变化吗？右图中虚线表示摇滚，实线表示古典；红色为 Eels，黑色为 Abba，蓝色为维瓦尔第，绿色为莫扎特。从"事后诸葛亮"的角度来说，这些曲目似乎确实存在差异。
@@ -498,16 +394,7 @@ with(
 (ref:music-3d-pcp-s) 音乐曲目左声道频率的三维散点图与平行坐标图
 
 ```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8, out.width="70%"}
-library(scatterplot3d)
-with(
-  music,
-  scatterplot3d(lave, lmax, lvar / 1e6,
-    pch = 19,
-    color = as.integer(type), mar = c(2.5, 3, .1, 2)
-  )
-)
-library(GGally)
-ggparcoord(music, columns = c(4, 5, 3), groupColumn = "type")
+msg_graph("music-3d-pcp")
 ```
 
 尽管三维散点图有种种劣势，但在本例中有一点可以肯定，那就是古典乐和摇滚乐在频率上是有差异的，因为我们可以看到图中的散点并没有混杂在一起，而是有着较好的分隔（请再考虑一下这是否是"事后诸葛亮"的结论）。为了看清具体的数值上的差异，我们可以使用平行坐标图如 \@ref(fig:music-3d-pcp) 下图。古典乐左声道的频率均值相对较高，但最大值相对较低，而且方差非常小，这说明古典乐的演奏频率相对固定在较高的水平上；而摇滚乐的平均频率相对较低，但最大值和方差都很大，这说明摇滚乐的频率波动幅度较大，高方差也可能是因为最大值太大引起的，这似乎让我们不由联想到嘶吼的摇滚歌手。读者若有兴趣，可以用 R 语言的 **tuneR** 包 [@tuneR] 读入信乐团的《离歌》做分析，看是否能看到"低均值高方差"的特征。
@@ -522,20 +409,12 @@ data(music)
 
 \noindent 然后，就可以用以下代码做出图 \@ref(fig:music-andrews) 与图 \@ref(fig:music-3d-pcp)——记得先安装 **scatterplot3d** 和 **GGally** 包：
 
-```{r, eval=FALSE, echo=TRUE}
-andrews_curve(scale(music[, 4:6]), xlab = "t", ylab = "f(t)",
-              n = 50, col = 1)
+```{r, results='asis'}
+msg_code("music-andrews")
+```
 
-andrews_curve(scale(music[, 4:6]),
-              n = 50, xlab = "t", ylab = "f(t)",
-              col = music$artist, lty = as.integer(music$type))
-
-library(scatterplot3d)
-scatterplot3d(music$lave, music$lmax, music$lvar / 1e6,
-    pch = 19,
-    color = as.integer(music$type), mar = c(2.5, 3, .1, 2))
-library(GGally)
-ggparcoord(music, columns = c(4, 5, 3), groupColumn = "type")
+```{r, results='asis'}
+msg_code("music-3d-pcp")
 ```
 
 ## 灌篮高手
@@ -567,10 +446,7 @@ kable2(CLELAL09, "一场篮球比赛的球员坐标")
 (ref:assists-sna-s) 骑士与湖人比赛的助攻网络图
 
 ```{r assists-sna,fig.cap="(ref:assists-sna)",fig.scap=" (ref:assists-sna-s)",message=FALSE}
-library(sna, warn.conflicts = FALSE)
-par(xpd = TRUE, mar = c(0, 2.4, 0, 3.2))
-set.seed(2011) # 元素位置是随机安排的，设定种子固定它们
-gplot(assists, displaylabels = TRUE, label.cex = .7)
+msg_graph("assists-sna")
 ```
 
 我们将表 \@ref(tab:assists-data) 的数据绘制成了助攻网络图（图 \@ref(fig:assists-sna)）。其中，West 为 Varejao、Hickson 和 James 各助攻 1 次，James 为 Parker 和 West 各助攻一次。数据中一共有 22 位球员，因此完整数据矩阵维数为 $22\times22$。网络图能让我们很快看出比赛中的助攻关系，图中两个"聚类"显然分别是骑士和湖人的队员。总体来看，骑士队内部助攻次数较多，助攻网比较大，但也有些特立独行的球员如"大鲨鱼"奥尼尔（中锋），他在这场比赛里没有为任何人助攻。湖人队依然是以科比为中心，这一点想必没有读者会觉得惊讶。据说因为莫 $\cdot$ 威廉姆斯在雄鹿队的时候不爱给易建联传球，所以中国球迷给他取名"莫不传"，实际上这场比赛中他也是有助攻的。
@@ -585,7 +461,7 @@ gplot(assists, displaylabels = TRUE, label.cex = .7)
 (ref:CLEvsLAL09-s) 投篮坐标与结果的平滑散点图
 
 ```{r CLEvsLAL09,results='hide',fig.cap="(ref:CLEvsLAL09)",fig.scap="(ref:CLEvsLAL09-s)",message=FALSE}
-demo("basketball", package = "MSG")
+msg_graph("basketball")
 ```
 
 笔者对篮球纯属外行，这里提出的问题也许很愚蠢，不过我们还是对地点进行了左右划分，看从篮筐左侧和右侧投篮和是否进球有没有关系，也许有些球员在篮筐某一侧的进球率较高。首先我们去掉在中轴线上的数据（即 realy 不是 25 的数据），然后看左右侧和是否进球的列联表，并作出相应的四瓣图，如图 \@ref(fig:basketball-fourfold)。
@@ -595,19 +471,7 @@ demo("basketball", package = "MSG")
 (ref:basketball-fourfold-s) 球场左右侧投篮命中的四瓣图
 
 ```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)"}
-fourfoldplot(
-  with(
-    subset(CLELAL09, realy != 25),
-    table(result,
-      location = ifelse(
-        (realy > 25 & team == "CLE") | (realy < 25 & team == "LAL"),
-        "left", "right"
-      ),
-      team = droplevels(team)
-    )
-  ),
-  mfrow = c(1, 2)
-)
+msg_graph("basketball-fourfold")
 ```
 
 骑士在左侧投篮 21 次，进球 7 个；右侧投篮 22 次，进球 11 个；湖人的数据可类似解读。图中扇形环都有重叠区域，所以无论是骑士还是湖人，在篮筐左右侧投篮和结果之间并没有显著关联。仅从数字上看，两队都在右侧进球的几率更高（右上角的扇形半径更长）。
@@ -616,29 +480,16 @@ fourfoldplot(
 
 本案例使用了网络图、平滑散点图（详见 \@ref(sec:smoothScatter) 小节）、四瓣图（详见 \@ref(sec:fourfoldplot) 小节），用到的坐标数据收录在 **animation** 包里，而助攻数据收录在 **MSG** 包里。下面的代码可以依次绘制本案例的图示：
 
-```{r, eval=FALSE, echo=TRUE}
-data(CLELAL09, package = "animation")
-demo("basketball", package = "MSG")
+```{r, results='asis'}
+msg_code("assists-sna")
+```
 
-data(assists, package = "MSG")
-library(sna, warn.conflicts = FALSE)
-par(xpd = TRUE, mar = c(0, 2.4, 0, 3.2))
-set.seed(2011) # 元素位置是随机安排的，设定种子固定它们
-gplot(assists, displaylabels = TRUE, label.cex = .7)
+```{r, results='asis'}
+msg_code("basketball")
+```
 
-fourfoldplot(
-  with(
-    subset(CLELAL09, realy != 25),
-    table(result,
-      location = ifelse(
-        (realy > 25 & team == "CLE") | (realy < 25 & team == "LAL"),
-        "left", "right"
-      ),
-      team = droplevels(team)
-    )
-  ),
-  mfrow = c(1, 2)
-)
+```{r, results='asis'}
+msg_code("basketball-fourfold")
 ```
 
 本例的数据比前面的例子都大，所以不适合把每一条数据的细节都展示出来，我们需要想办法尽量展示数据的某种概要信息。篮球场平滑散点图实际上是用 R 语言的低层作图函数和三角函数按照尺寸一点一点勾画出来，在上面叠上一层平滑散点图，让这幅图既能紧扣故事主题，又能展示数据中的信息。**sna** 包中的 `gplot()` 函数可以基于给定的相互关系矩阵很方便作出网络图，而助攻网络图让我们一眼就能看清球员之间的助攻关系，每个人的贡献都在网络图中显示了出来。四瓣图是对列联表的一种代替，它同时显示了列联表数据和相应的统计推断，避免只是基于数据草率得出结论。
@@ -684,84 +535,19 @@ kable2(gov.cn.pct, "中国政府网站中的百分比数据")
 (ref:gov-cn-pct-s) 中国政府网站中的百分比数据 LOWESS 图
 
 ```{r gov-cn-pct,fig.cap="(ref:gov-cn-pct)",fig.scap="(ref:gov-cn-pct-s)",results='hide',fig.keep="first"}
-library(scales)
-p1 <- ggplot(gov.cn.pct) + 
-  geom_line(aes(percentage,count))
-
-p2 <- p1 + xlim(c(9.9,11.1))
-
-p3 <- ggplot(gov.cn.pct, aes(percentage, count, group = round0, color = round0)) + 
-  geom_point(size = 0.1, alpha = 0.3) +
-  geom_smooth(aes(group = round0)) +
-  scale_y_log10(breaks = 10^(2:6),
-                labels = trans_format("log10", math_format(10^.x)),
-                minor_breaks = as.vector(sapply(2:10, function(x) x * 10^(2:6)))) +
-  theme(legend.position = c(0.8, 0.8), legend.background = element_blank())
-
-p4 <-
-  ggplot(gov.cn.pct, aes(percentage, count, color = round1)) + 
-  geom_point(size = 0.1, alpha = 0.3) +
-  geom_smooth(aes(group = round1)) +
-  scale_y_log10(breaks = 10^(2:6),
-                labels = trans_format("log10", math_format(10^.x)),
-                minor_breaks = as.vector(sapply(2:10, function(x) x * 10^(2:6)))) +
-  theme(legend.position = c(0.8, 0.8), legend.background = element_blank())
-
-(p1 | p2) / (p3 | p4)
+msg_graph("gov-cn-pct2")
 ```
 
 ### 探案工具 {-}
 
 本案例使用了散点图（详见 \@ref(sec:plot-default) 小节），数据收录在 **MSG** 包中，可以用以下代码加载。这里，我们提供了 R 基础作图和 ggplot2 作图两种方法，来绘制图 \@ref(fig:gov-cn-pct)：
 
-```{r, eval=FALSE, echo=TRUE}
-# 加载数据：
-data(gov.cn.pct, package = "MSG")
+```{r, results='asis'}
+msg_code("gov-cn-pct")
+```
 
-# ggplot2 作图：
-(p1 <- ggplot(gov.cn.pct) + 
-  geom_line(aes(percentage,count)))
-
-(p2 <- p1 + xlim(c(9.9,11.1)))
-
-ggplot(gov.cn.pct, 
-       aes(percentage, count, group = round0, color = round0)) + 
-  geom_point(size = 0.1, alpha = 0.3) +
-  geom_smooth(aes(group = round0)) +
-  scale_y_log10(
-    breaks = 10^(2:6),
-    labels = trans_format("log10", math_format(10^.x)),
-    minor_breaks = as.vector(sapply(2:10, function(x) x *10^(2:6)))) +
-  theme(legend.position = c(0.8, 0.8), 
-        legend.background = element_blank())
-
-ggplot(gov.cn.pct, aes(percentage, count, color = round1)) + 
-  geom_point(size = 0.1, alpha = 0.3) +
-  geom_smooth(aes(group = round1)) +
-  scale_y_log10(
-    breaks = 10^(2:6),
-    labels = trans_format("log10", math_format(10^.x)),
-    minor_breaks = as.vector(sapply(2:10, function(x) x *10^(2:6)))) +
-  theme(legend.position = c(0.8, 0.8), 
-        legend.background = element_blank())
-
-# 基础作图:
-pct.lowess = function(cond) {
-    with(gov.cn.pct, {
-        plot(count ~ percentage, pch = ifelse(cond, 4, 20), 
-             col = rgb(0:1, 0, 0, c(0.04, 0.5))[cond + 1], log = "y")
-        lines(lowess(gov.cn.pct[cond, 1:2], f = 1/3),col = 2, lwd = 2)
-        lines(lowess(gov.cn.pct[!cond, 1:2],f = 1/3),col = 1, lwd = 2)
-    })
-}
-par(mar = c(3.5, 3.5, 1, 0.2), mfrow = c(2, 2))
-with(gov.cn.pct, {
-  plot(percentage, count, type = "l", panel.first = grid())
-  plot(percentage, count, type = "l", panel.first = grid(), 
-       xlim = c(10, 11))
-  pct.lowess(round0)
-  pct.lowess(round1)
-})
+```{r, results='asis'}
+msg_code("gov-cn-pct2")
 ```
 
 类似的建模前的探索性分析还可以在 @Cook07 中找到（小费数据的分析）。这种分析结果很难用数值的方式从数学模型中得到，因此在统计模型应用中，若能事先辅之以统计图形之类的探索，则可能会发现意想不到的信息。
@@ -793,27 +579,7 @@ kable2(PlantCounts, "植物物种数目与海拔高度")
 (ref:PlantCounts-s) 海拔高度与物种数目的 LOWESS 曲线
 
 ```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)"}
-set.seed(717)
-gg_plant <-
-  ggplot(PlantCounts, aes(altitude, counts)) + 
-    geom_point(color = rgb(0, 0, 0, 0.3))
-
-gg_plant1 <- gg_plant
-for (i in seq(0.02, 1, length = 70)) {
-  gg_plant1 <- gg_plant1 +
-    geom_smooth(se = FALSE, span = i, color = rgb(0.4, i, 0.4))
-}
-
-gg_plant2 <- gg_plant
-for (i in 1:200) {
-  # 有放回抽取 200 个样本序号
-  idx <- sample(nrow(PlantCounts), 300, TRUE)
-  gg_plant2 <- gg_plant2 +
-    geom_smooth(data = PlantCounts[idx, ], se = FALSE, color = rgb(0, 0, 0, 0.1))
-  
-}
-gg_plant1 | gg_plant2
-
+msg_graph("PlantCounts2")
 ```
 
 图 \@ref(fig:PlantCounts) 用 LOWESS 曲线对这批数据进行了初步探索。左图中，曲线颜色越浅表示所取数据比例越大。不难看出中部浅色的曲线几乎已呈直线状，而深色的线则波动较大，总体看来，图中大致有四处海拔上的物种数目偏离回归直线较严重：450 米（偏低）、550 米（偏高）、650 米（偏高）和 700 米（偏低）附近。若研究者的问题是"多高海拔处的物种数最多"，那么答案应该是在 650 米附近。从图中的曲线族来看，物种数目在过了 650 米高度之后有下降趋势，所以从这批数据来看，我们的结论将是物种数目在 650 米海拔处达到最大值。
@@ -826,51 +592,12 @@ gg_plant1 | gg_plant2
 
 本案例使用了散点图（详见 \@ref(sec:plot-default) 小节），数据加载和图形绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-# 加载数据
-data(PlantCounts, package = "MSG")
+```{r, results='asis'}
+msg_code("PlantCounts")
+```
 
-# 基础作图：
-par(mar = c(4.5, 4.5, .1, 0.2), mfrow = c(1, 2), pch = 20)
-with(PlantCounts, {
-  plot(altitude, counts, 
-       panel.first = grid(), col = rgb(0, 0, 0, 0.3))
-  for (i in seq(0.01, 1, length = 70)) {
-    lines(lowess(altitude, counts, f = i), col = rgb(
-      0.4,
-      i, 0.4
-    ), lwd = 1.5) # 改变 LOWESS 的范围参数 f
-  }
-  plot(altitude, counts, col = rgb(0, 0, 0, 0.3))
-  for (i in 1:200) {
-    # 有放回抽取 300 个样本序号
-    idx <- sample(nrow(PlantCounts), 300, TRUE)
-    lines(lowess(altitude[idx], counts[idx]), col = rgb(0, 0, 0, 0.1),
-          lwd = 1.5)
-  }
-})
-
-# ggplot2 作图：
-gg_plant <-
-  ggplot(PlantCounts, aes(altitude, counts)) + 
-    geom_point(color = rgb(0, 0, 0, 0.3))
-
-gg_plant1 <- gg_plant
-for (i in seq(0.02, 1, length = 70)) {
-  gg_plant1 <- gg_plant1 +
-    geom_smooth(se = FALSE, span = i, color = rgb(0.4, i, 0.4))
-}
-gg_plant1
-
-gg_plant2 <- gg_plant
-for (i in 1:200) {
-  # 有放回抽取 200 个样本序号
-  idx <- sample(nrow(PlantCounts), 300, TRUE)
-  gg_plant2 <- gg_plant2 +
-    geom_smooth(se = FALSE, color = rgb(0, 0, 0, 0.1),
-                data = PlantCounts[idx, ])
-}
-gg_plant2
+```{r, results='asis'}
+msg_code("PlantCounts2")
 ```
 
 ## 统计词话 {#subsec:cluster}
@@ -914,11 +641,7 @@ usage2(usage(hclust, output = FALSE))
 (ref:song-words-hclust-s) 宋词作者层次聚类谱系图
 
 ```{r song-words-hclust, fig.cap="(ref:song-words-hclust)",fig.scap="(ref:song-words-hclust-s)"}
-SongCorr <- cor(SongWords) # 词风相关矩阵
-song.hc <- hclust(as.dist(1 - SongCorr))
-par(mar = c(0.5, 4, .2, 0.1))
-plot(song.hc, main = "", cex = .8)
-rect.hclust(song.hc, k = 4, border = "red")
+msg_graph("song-words-hclust")
 ```
 
 图 \@ref(fig:song-words-hclust) 背后的距离矩阵是 $1-\text{相关系数矩阵}$，意即：若两位词人之间的相关系数为 1 （完全正相关），那么他们的距离为 $1-1=0$；若相关系数 $-1$（完全负相关），那么他们之间的距离为 $1-(-1)=2$。我们知道，相关系数取值在 $-1$ 到 1 之间。所以，这里的距离矩阵确实能体现作者之间的"距离" --- 距离越大，则相关系数越低。图中我们可以看到，所有作者中，马钰和谭处端最先聚为一类，这是因为他们之间的距离最小；接下来，苏轼和黄庭坚聚为一类，他们的距离次之；后面不断有新的作者聚为一类，如晏几道和欧阳修；也有一些作者直接加入现有的类，如王处一加入马钰和谭处端。我们可以根据这幅谱系图将作者划分为任意数量的类，只需在图的纵轴上以一条横线将这棵倒挂的"树"切割为"树枝"即可（读者若愿意，将它想象成吊着的葡萄枝也未尝不可）。图 \@ref(fig:song-words-hclust) 中的红色矩形框是将作者分为 4 类的结果，我们也可以将他们分为 2 类（结果将是道家作者和其他作者）或者更多类。
@@ -930,9 +653,7 @@ rect.hclust(song.hc, k = 4, border = "red")
 (ref:song-words-corr-s) 宋词作者词风相关矩阵图
 
 ```{r song-words-corr,fig.cap="(ref:song-words-corr)",fig.scap="(ref:song-words-corr-s)",message=FALSE}
-# 做系统聚类并根据聚类结果将作者分为 4 类
-library(corrplot)
-corrplot(SongCorr, order = "hc", diag = FALSE, addrect = 4, tl.cex = 0.75)
+msg_graph("song-words-corr")
 ```
 
 观察图 \@ref(fig:song-words-corr) 可以一目了然地看到词人之间风格的相似程度。词人被划分为四类，如图中方框所示。可以看出，全真四子的词风非常接近，和其他词人风格差别较大； 而全真四子中，只有丘处机和苏轼、辛弃疾、黄庭坚等人的词呈正相关，而其他三子和另外 12 位作者相关系数都为负数。金庸武侠小说中写到，丘处机侠骨热肠，多行走江湖，而他的师兄弟们则执着于道；从这里词风分析来看，亦有相似的结果。李煜、晏殊、姜夔、辛弃疾、黄庭坚、苏轼、秦观、周邦彦、欧阳修、晏几道属于第二类，该类中李煜和其他作者的关系系数较小，其他九位之间的相关系数都较大，尤其是辛弃疾、黄庭坚、苏轼之间，苏辛都是豪放派词人的代表，而黄庭坚是苏轼的第一弟子。第三类只包含了李清照一人，她和其他 15 位词人的关系都很弱，从图中看她是最为独特的词人。 实际上，李清照词的与众不同是广为人知的。她的名作《词论》中，就对很多词人进行了评价：
@@ -959,32 +680,7 @@ $$R_{i,j}=\frac{\mbox{同时出现高频词}i\mbox{和}{j}\mbox{的词的数目}
 (ref:song-high-freq-s) 宋词前 100 高频词的关系网络图
 
 ```{r song-high-freq,fig.cap="(ref:song-high-freq)",fig.scap="(ref:song-high-freq-s)"}
-library(igraph, warn.conflicts = FALSE)
-load(system.file("extdata", "HighFreq100.rda", package = "MSG"))
-g <- graph.adjacency((HighFreq100 > 0.05) * HighFreq100,
-  mode = "undirected", weighted = TRUE, diag = FALSE
-)
-cg <- clusters(g)
-colbar <- as.numeric(as.factor(cg$csize[cg$membership + 1]))
-V(g)$color <- rev(heat.colors(9))[colbar]
-
-ff <- as.numeric(cut(E(g)$weight, breaks = c(0.05, 0.1, 0.2, 0.3, 0.4)), right = FALSE)
-E(g)$width <- 2 * (1:4)[ff]
-
-col <- c("greenyellow", "cadetblue1", "cornflowerblue", "blue", "darkblue")
-E(g)$color <- col[ff]
-par(mar = c(0, 0, 0, 0))
-set.seed(2011)
-L.sc <- layout.fruchterman.reingold(g, niter = 500)
-plot(g,
-  layout = L.sc, vertex.frame.color = NA,
-  vertex.label = attr(V(g), "names"), vertex.label.cex = 0.6,
-  vertex.label.color = grey(0.1),
-  vertex.size = 8, vertex.label.family = "wqy-microhei"
-)
-legend(0.9, -0.5, c("[0.05,0.10)", "[0.10,0.20)", "[0.20,0.30)", "[0.30,0.40)"),
-  col = col, lwd = sort(unique(E(g)$width)), cex = 0.8, bty = "n"
-)
+msg_graph("song-high-freq")
 ```
 
 观察图 \@ref(fig:song-high-freq)，可以发现，这一百个高频词被划分为多个类。有些类包含多个节点，是个大家族；而有些类仅有一个节点。将包含两个节点以上的类整理如下：
@@ -1014,45 +710,16 @@ legend(0.9, -0.5, c("[0.05,0.10)", "[0.10,0.20)", "[0.20,0.30)", "[0.30,0.40)"),
 
 本案例使用了层次聚类谱系图、相关矩阵图和关系网络图，数据加载和图形绘制的代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-load(system.file("extdata", "SongWords.rda", package = "MSG"))
+```{r, results='asis'}
+msg_code("song-words-hclust")
+```
 
-SongCorr <- cor(SongWords) # 词风相关矩阵
-song.hc <- hclust(as.dist(1 - SongCorr))
-par(mar = c(0.5, 4, .2, 0.1))
-plot(song.hc, main = "", cex = .8)
-rect.hclust(song.hc, k = 4, border = "red")
+```{r, results='asis'}
+msg_code("song-words-corr")
+```
 
-# 做系统聚类并根据聚类结果将作者分为 4 类
-library(corrplot)
-corrplot(SongCorr, order = "hc", diag = FALSE, 
-         addrect = 4, tl.cex = 0.75)
-
-library(igraph, warn.conflicts = FALSE)
-load(system.file("extdata", "HighFreq100.rda", package = "MSG"))
-g <- graph.adjacency((HighFreq100 > 0.05) * HighFreq100,
-                     mode = "undirected", weighted=TRUE, diag = FALSE)
-cg <- clusters(g)
-colbar <- as.numeric(as.factor(cg$csize[cg$membership + 1]))
-V(g)$color <- rev(heat.colors(9))[colbar]
-
-ff <- as.numeric(
-  cut(E(g)$weight, breaks = c(0.05, 0.1, 0.2, 0.3, 0.4)), right=FALSE)
-E(g)$width <- 2 * (1:4)[ff]
-
-col <- c("greenyellow", "cadetblue1", "cornflowerblue", 
-         "blue", "darkblue")
-E(g)$color <- col[ff]
-par(mar = c(0, 0, 0, 0))
-set.seed(2011)
-L.sc <- layout.fruchterman.reingold(g, niter = 500)
-plot(g, layout = L.sc, vertex.frame.color = NA,
-     vertex.label = attr(V(g), "names"), vertex.label.cex = 0.6,
-     vertex.label.color = grey(0.1),
-     vertex.size = 8, vertex.label.family = "wqy-microhei")
-legend(0.7, -0.8, 
-       c("[0.05,0.10)", "[0.10,0.20)", "[0.20,0.30)", "[0.30,0.40)"),
-       col = col, lwd = sort(unique(E(g)$width)), cex = 0.8)
+```{r, results='asis'}
+msg_code("song-high-freq")
 ```
 
 需要说明的是，这里仅仅用设定阈值的粗糙方法来划分高词频的类。**igraph** 包中提供了很多算法对网络进行聚类，比如 fastgreedy、walktrap、spinglass 等方法，读者可以自行尝试。
@@ -1090,41 +757,17 @@ coef(summary(lm(y ~ x + z)))
 (ref:multireg-scatter-s) 控制变量 $z$ 之后 $y$ 与 $x$ 的关系
 
 ```{r multireg-scatter, fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)",fig.width=7,fig.height=3.5}
-df <- data.frame(x = x, y = y, z = factor(z))
-gg_xy1 <- ggplot(df, aes(x, y)) +
-  geom_point() + 
-  geom_smooth(method = "lm")
-
-gg_xy2 <- ggplot(df, aes(x, y, group = z, color = z)) +
-  geom_point() + 
-  geom_smooth(method = "lm") +
-  theme(legend.background = element_blank())
-
-gg_xy1 | gg_xy2
+msg_graph("multireg-scatter2")
 ```
 
 这里给出图 \@ref(fig:multireg-scatter) 的两种作图代码：
 
-```{r, eval=FALSE, echo=TRUE}
-# 基础作图：
-par(mar = c(4.5, 4.5, .1, 0.5), mfrow = c(1, 2))
-plot(x, y)
-abline(lm(y ~ x), col = "red")
-plot(x, y, pch = z, col = rainbow(5)[z + 1])
-# 对每一组 z 的取值，分别拿相应的 x 和 y 回归并画回归直线
-for (i in z) abline(lm(y ~ x, subset = z == i), col = "darkgray")
+```{r, results='asis'}
+msg_code("multireg-scatter")
+```
 
-# ggplot2 作图：
-df <- data.frame(x = x, y = y, z = factor(z))
-ggplot(df, aes(x, y)) +
-  geom_point() + 
-  geom_smooth(method = "lm")
-
-ggplot(df, aes(x, y, group = z, color = z)) +
-  geom_point() + 
-  geom_smooth(method = "lm") +
-  theme(legend.background = element_blank(), 
-        legend.position = c(0.9, 0.1))
+```{r, results='asis'}
+msg_code("multireg-scatter2")
 ```
 
 然后我们考虑"交互作用"：交互作用仅存在于模型中有多个变量时的情形，它的含义是一个自变量对因变量的影响系数受另一个自变量的取值水平影响，其基本数学形式为（以二元回归为例）：
@@ -1153,24 +796,12 @@ y &= 2+x+0.5z+\epsilon (\#eq:nointeraction)
 
 (ref:interaction-bubble) 连续型自变量的交互作用气泡图：左图中 $x$ 与 $z$ 有交互效应，右图无交互效应。气泡图中，气泡的大小与真实的 $y$ 值大小成正比，所以如果我们要查看自变量对 $y$ 的影响，只需要看自变量对气泡大小的影响即可。以左图为例：例如分别给定 $x=1$ 和 $x=10$，随着 $z$ 的增大（从下向上看），$y$ 值在增大，但 $x=1$ 和 $x=10$ 处的增大速度明显不一样（后者快），也就是说，$z$ 对 $y$ 的影响大小受 $x$ 的取值水平影响。同理可以看右图，任意给定 $x$ 值，$y$ 随着 $z$ 的增大速度都一样，说明 $x$ 与 $z$ 之间没有交互效应
 
-```{r interaction-bubble, echo=TRUE, fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png,fig.width=7,fig.height=3.5,fig.showtext=FALSE,small.mar=FALSE}
-par(mar = c(4.5, 4.5, 2, 0.2), mfrow = c(1, 2), cex.main = 1)
-sq <- 1:10
-x <- rep(sq, 10)
-z <- rep(sq, each = 10) 
-# 有交互效应:
-y <- c(outer(sq, sq, 
-             function(x, z) 2 + x + 0.5 * z + 0.5 * x * z + runif(1)))
-symbols(x, z, y, xlab = "$x$", ylab = "$z$",
-  bg = rgb(0, 1, 0, 0.3), fg = "blue", inches = 0.4,
-  main = "$y = 2 + x + 0.5 z + 0.5 x z + \\epsilon$"
-)
-# 无交互效应:
-y <- c(outer(sq, sq, function(x, z) 2 + x + 0.5 * z + runif(1))) 
-symbols(x, z, y,
-  bg = rgb(0, 1, 0, 0.3), fg = "blue", xlab = "$x$", ylab = "$z$",
-  main = "$y = 2 + x + 0.5 z + \\epsilon$", inches = 0.2
-)
+```{r interaction-bubble,  fig.cap="(ref:interaction-bubble)",fig.scap="(ref:interaction-bubble-s)",dev='tikz',fig.process=to_png,fig.width=7,fig.height=3.5,fig.showtext=FALSE,small.mar=FALSE}
+msg_graph("interaction-bubble-tikz")
+```
+
+```{r, results='asis'}
+msg_code("interaction-bubble")
 ```
 
 ### 稳健回归
@@ -1220,30 +851,21 @@ y2 <- c(y, jitter(rep(mean(y), 500), 10))
 
 (ref:OLS-LMS-s) LMS 回归的稳健性及其缺点
 
-```{r OLS-LMS,echo=TRUE, fig.width=7,fig.height=3.5,fig.cap="(ref:OLS-LMS)",fig.scap="(ref:OLS-LMS-s)"}
-gg_olsLms(data.frame(x = x1, y = y1)) | 
-  gg_olsLms(data.frame(x = x2, y = y2))
+```{r OLS-LMS, fig.width=7,fig.height=3.5,fig.cap="(ref:OLS-LMS)",fig.scap="(ref:OLS-LMS-s)"}
+msg_graph("OLS-LMS2")
 ```
 
 图 \@ref(fig:OLS-LMS) 中的两幅散点图及其回归直线表明了 LMS 回归对离群点的稳健性和对中心数据的敏感性。左图中 OLS 回归直线的斜率明显被右上角的离群点"拉"大，但 LMS 回归并没有受离群点影响，它的斜率反映了大部分数据所体现的规律；右图中 OLS 回归直线斜率反映了所有数据的趋势，而 LMS 回归的斜率则明显违背了数据的趋势。通过模拟和图形，LMS 回归的优缺点一目了然。
 
 
-图 \@ref(fig:outlier-resample) 也可以用 R 基础函数作出：
+这里给出图 \@ref(fig:outlier-resample) 用 R 基础函数和 **ggplot2** 包的作法：
 
-```{r, eval=FALSE, echo=TRUE}
-olsLms <- function(x, y, l.col = c("red", "blue"),
-                   l.lty = c(1, 2), ...) {
-  plot(x, y, ...)
-  abline(lm(y ~ x), col = l.col[1], lty = l.lty[1])
-  abline(lqs(y ~ x, method = "lqs"), col = l.col[2], lty = l.lty[2])
-  legend("topleft",
-    legend = c("OLS", "LMS"), col = l.col,
-    lty = l.lty, bty = "n"
-  )
-}
-par(mar = c(4.5, 4.5, 1, 0.2), mfrow = c(1, 2), pch = 20)
-olsLms(x1, y1)
-olsLms(x2, y2, cex = c(rep(1, 50), rep(0.1, 500)))
+```{r, results='asis'}
+msg_code("OLS-LMS")
+```
+
+```{r, results='asis'}
+msg_code("OLS-LMS2")
 ```
 
 ### 离群检测
@@ -1258,47 +880,8 @@ olsLms(x2, y2, cex = c(rep(1, 50), rep(0.1, 500)))
 
 (ref:outlier-resample-s) 用部分抽样方法诊断多个离群点
 
-```{r outlier-resample,echo=TRUE, fig.cap="(ref:outlier-resample)",fig.scap="(ref:outlier-resample-s)",dev='tikz',fig.process=to_png,fig.width=4,fig.height=4,fig.showtext=FALSE,small.mar=FALSE}
-set.seed(123)
-# 生成随机数并插入两个离群点
-x <- c(rnorm(100), 20, 21)
-y <- c(rnorm(100), 20, 24)
-fit <- lm(y ~ x) # y 对 x 做回归
-
-# 对数据抽样 100 次，分别回归并记录斜率
-betaSim <- numeric(100)
-for (i in 1:100) {
-  idx <- sample(c(TRUE, FALSE), length(x), replace = TRUE, 
-                prob = c(0.6, 0.4))
-  betaSim[i] <- coef(update(fit, subset = idx))[2]
-}
-
-df <- data.frame(x, y)
-oc1 <- 
-  ggplot(df, aes(x, y)) +
-    geom_point() +
-    geom_smooth(method = "lm", fullrange = TRUE)
-  
-df2 <- data.frame(y = cooks.distance(lm(y ~ x)))
-df2$Index <- 1:nrow(df2)
-oc2 <- 
-  ggplot(df2, aes(Index, y)) + 
-  geom_point() +
-  ylab("Cook's distance")
-
-oc3 <- 
-  ggplot() +
-  geom_point(aes(x, y), df) +
-  geom_smooth(aes(x, y), df[1:60, ], method = "lm", fullrange = TRUE)
-
-df4 <- data.frame(y = betaSim)
-df4$Index <- 1:nrow(df4)
-oc4 <- 
-  ggplot(df4, aes(Index, y)) + 
-  geom_point() +
-  ylab("betaSim")
-
-(oc1 | oc2) / (oc3 | oc4)
+```{r outlier-resample, fig.cap="(ref:outlier-resample)",fig.scap="(ref:outlier-resample-s)",dev='tikz',fig.process=to_png,fig.width=4,fig.height=4,fig.showtext=FALSE,small.mar=FALSE}
+msg_graph("outlier-resample2")
 ```
 
 图 \@ref(fig:outlier-resample) 展示了传统诊断方法与这里提出的抽样诊断方法的比较。左上图显示普通线性回归受离群点影响严重：理论上回归直线应该是水平的（斜率为 0），但右上角的两个离群点将回归直线拉起；右上图画出了这个回归模型中每个样本点的 Cook 距离，从图中可以看到，只有最后一条数据是离群点，而事实上倒数第二条数据也是离群点，只是删除这一条数据之后回归模型不会有太大变化（受最后一条数据掩盖），所以它不能被 Cook 距离识别出来；左下图显示了一种抽样的可能性：我们抽取数据的前 60 条（图中用实心点表示），去掉数据的后 42 条（空心点表示），然后重新建立回归模型，并画出回归直线，此时我们可以看到，由于去掉了两个离群点，回归直线的斜率大致为 0，与理论相符了；基于这种抽样的想法，我们将这个步骤重复 100 次，每次重新随机抽取一部分数据（可能包含离群点，也可能不包含），并重新计算回归系数，最终把 100 次的斜率都记录下来并画在右下图中，可以看出，这些斜率大致分为三群，这种"多群"的特征反映出原数据中有不止一个离群点（否则 100 个斜率只会分为两群：包含或不包含一个离群点的结果），靠近 0 的斜率是抽样不包含两个离群点的结果，而靠近 1 的斜率是包含两个离群点的结果，中间一层斜率是包含一个离群点的结果（可能是最后一条数据，也可能是倒数第二条）。这样我们就成功诊断出传统方法找不出来或者找不完全的离群点现象。这个模拟的动画版本可以在线[^multiple-outliers-detection]观看。
@@ -1307,23 +890,15 @@ oc4 <-
 
 本例仅仅是以模拟的方法提供了一种离群点诊断新思路，沿着这种想法，我们可以继续发展新的理论，来弥补传统理论的不足。
 
+这里我们给出图 \@ref(fig:outlier-resample) 的 R 基础作图代码和 **ggplot2** 包作图代码：
 
-图 \@ref(fig:outlier-resample) 也可以用 R 基础作图作出：
-
-```{r, eval=FALSE, echo=TRUE}
-fit <- lm(y ~ x) # y 对 x 做回归
-# 仅用前 60 条数据做回归
-fit1 <- update(fit, subset = 1:60)
-par(mar = c(4.1, 4.1, 0.5, 0.5), mfrow = c(2, 2), pch = 20)
-plot(x, y, col = rgb(0, 0, 0, 0.5), xlab = "$x$", ylab = "$y$")
-abline(fit)
-plot(cooks.distance(fit), ylab = "Cook's distance")
-plot(x, y, xlab = "$x$", ylab = "$y$", 
-     col = rgb(0, 0, 0, 0.5), pch = rep(20:21, c(60, 42)))
-abline(fit1) # 部分抽样：前 60 条数据
-plot(betaSim, ylab = "$\\beta_1$")
+```{r, results='asis'}
+msg_code("outlier-resample")
 ```
 
+```{r, results='asis'}
+msg_code("outlier-resample2")
+```
 
 ## 思考与练习
 

@@ -35,12 +35,7 @@ R 中最普通的作图函数就是 `plot()` 函数。它是一个泛型函数�
 (ref:plot-type) `plot()` 作图的九种样式类型：点、线、点线（不相接）、擦掉点的线、点线（相接）、垂线、阶梯（水平起步）、阶梯（垂直起步）、无
 
 ```{r plot-type,fig.cap="(ref:plot-type)",fig.scap="(ref:plot-type-s)"}
-par(mfrow = c(3, 3), mar = c(2, 2.5, 3, 2))
-for (i in c("p", "l", "b", "c", "o", "h", "s", "S", "n")) {
-  plot(c(1:5, 5:1), xlab = "", type = i,
-    main = paste("Plot type: \"", i, "\"", sep = "")
-  )
-}
+msg_graph("plot-type")
 ```
 
 `main`、`sub`、`xlab`、`ylab`:
@@ -114,42 +109,7 @@ par(mar = c(4, 4, 1, .5), bg = "yellow")
 (ref:par1) 左上：`adj` 用于字符相对位置的调整，“+”表示真实坐标点的位置，通过一个长度为 2 的向量 `c(x, y)` 可以分别调整字符在横纵坐标上相对平移的位置；右上：坐标轴元素的边界距离，参数 `mgp` 的三个数值分别控制了坐标轴标题、坐标轴刻度数字以及坐标轴线到图形的距离；左下：`tcl` 控制了坐标轴刻度线的方向和长度，`srt` 控制了字符串的旋转角度；右下：线条相交处的样式
 
 ```{r par1,fig.height= 7, fig.width=7,  fig.cap="(ref:par1)",fig.scap="(ref:par1-s)",echo=FALSE}
-layout(matrix(c(1, 3, 4, 2), 2))
-par(mar = rep(1, 4))
-plot(1:5,
-  type = "n", xlab = "", ylab = "",
-  xaxt = "n", yaxt = "n", xlim = c(.5, 5.5)
-)
-grid(col = "gray")
-text(2, 2, "adj=c(1, 1)", adj = c(1, 1), cex = 1.3, col = "gray30")
-points(2, 2, pch = 3, cex = 5, lwd = 2)
-text(2, 4, "adj=c(1, 0)", adj = c(1, 0), cex = 1.3, col = "gray30")
-points(2, 4, pch = 3, cex = 5, lwd = 2)
-text(3, 3, "adj=c(0.5, 0.5)", adj = c(.5, .5), cex = 1.3, col = "gray30")
-points(3, 3, pch = 3, cex = 5, lwd = 2)
-text(4, 2, "adj=c(0, 1)", adj = c(0, 1), cex = 1.3, col = "gray30")
-points(4, 2, pch = 3, cex = 5, lwd = 2)
-text(4, 4, "adj=c(0, 0)", adj = c(0, 0), cex = 1.3, col = "gray30")
-points(4, 4, pch = 3, cex = 5, lwd = 2)
-plot(1,
-  type = "n", xlim = c(.5, 4.5), ylim = c(.5, 3.5),
-  xaxt = "n", yaxt = "n", ann = F
-)
-box()
-for (i in 0:2) {
-  lines(c(1 + i, 2 + i, 1 + i), c(1, 2, 3),
-    ljoin = i, lwd = 30, col = "darkgray"
-  )
-  points(2 + i, 2, pch = 19, cex = 1.2)
-}
-text(2.5, .7, "ljoin = 0, 1, 2", cex = 1.2)
-par(tcl = 0.5, mar = c(5, 5, 4, 1))
-plot(1:10, xlab = "", ylab = "", main = "tcl = 1")
-text(3, 8, "srt = 30", srt = 30, cex = 1.2)
-text(8, 3, "srt = 120", srt = 120, cex = 1.2)
-par(mgp = c(5, 3, 1), mar = c(6, 6, 4, 1), tcl = -.5)
-plot(1:10, xlab = "X title", ylab = "Y title", 
-     main = "mgp = c(5, 3, 1)")
+msg_graph("par1")
 ```
 
 `ask`
@@ -166,35 +126,7 @@ plot(1:10, xlab = "X title", ylab = "Y title",
 (ref:par2) 四幅图形演示了不同的图形边框（上右开、上右闭、右开和上开）、字体样式（正常、粗体、斜体和粗斜体）、字体族（衬线、无衬线、等宽、符号）、坐标轴标签样式、点样式（圆圈、方框、菱形、三角）、线末端样式和线样式（实线、虚线、点线、点划线）
 
 ```{r par2,fig.height=7, fig.width=7, fig.cap="(ref:par2)",fig.scap="(ref:par2-s)",echo=FALSE}
-par(mfrow = c(2, 2), mar = c(3, 3, 3, 2))
-btype <- c("l", "7", "c", "u")
-fml <- c("serif", "sans", "mono", "symbol")
-for (i in 0:3) {
-  plot(1:10,
-    font.main = i + 1, las = i, pch = NA, bty = btype[i + 1],
-    main = paste("font.main = ", i + 1, "; las = ", i, "; bty = \"", btype[i + 1], "\"", sep = "")
-  )
-  if (i < 3) {
-    text(5, 8, paste("family = \"", fml[i + 1], "\"", sep = ""),
-      cex = 1.4, family = fml[i + 1], col = "gray40"
-    )
-  }
-  text(1, 6, paste("pch = ", i + 21, sep = ""),
-    adj = c(0, .5), col = "gray40", cex = 1.3
-  )
-  points(5:10, rep(6, 6), pch = i + 21, cex = 2)
-  if (i < 3) {
-    text(1, 4, paste("lend = ", i, sep = ""),
-      adj = c(0, .5), col = "gray40", cex = 1.3
-    )
-    segments(5, 4, 10, 4, lwd = 20, lend = i, col = "darkgray")
-    points(c(5, 10), c(4, 4), pch = 19, )
-  }
-  text(1, 2, paste("lty = ", i + 1, sep = ""),
-    adj = c(0, .5), col = "gray40", cex = 1.3
-  )
-  segments(5, 2, 10, 2, lwd = 2, lty = i + 1, col = "darkgray")
-}
+msg_graph("par2")
 ```
 
 `cex`
@@ -320,35 +252,7 @@ for (i in 0:3) {
 (ref:plot-region) 图形的各种区域和边界说明：作图区域（当前作图区域）、图形区域和设备区域；图形边界和外边界
 
 ```{r plot-region,fig.width=7, fig.height=3.5, echo=FALSE,fig.cap="(ref:plot-region)",fig.scap="(ref:plot-region-s)"}
-par(mar = c(0, 0, 0, 0), mfrow = c(1, 2))
-plot.new()
-rect(0, 0, 1, 1, col = "lightgray", border = NA)
-rect(.1, .1, .9, .9, col = "white")
-rect(.1 + .08, .1 + .1, .9 - .04, .9 - .08, 
-     col = "lightgray", lty = 2)
-text(.5, .95, "Outer Margin")
-text(.5, .86, "Figure Region")
-text(.5, .5, "Plot Region")
-par(cex = .7)
-text(.05, .55, "oma[2]")
-text(.95, .5, "oma[4]")
-text(.5, .05, "oma[1]")
-text(.14, .45, "mar[2]")
-text(.5, .15, "mar[1]")
-par(cex = 1)
-plot.new()
-rect(0, 0, 1, 1, col = "lightgray", border = NA)
-rect(.1, .1, .5, .9, col = "white")
-rect(.5, .1, .9, .9, col = "white")
-rect(.1 + .08, .1 + .1, .5 - .04, .9 - .08, 
-     col = "lightgray", lty = 2)
-# rect(.5+.08,.1+.1,.9-.04,.9-.08,col="lightgray",lty=2)
-text(.5, .95, "Outer Margin")
-text(.31, .7, "Figure 1")
-text(.31, .5, "Current
- Plot Region", cex = .7)
-text(.72, .75, "Figure 2")
-text(.5, .05, "oma[1]", cex = .7)
+msg_graph("plot-region")
 ```
 
 
@@ -513,11 +417,7 @@ brewer.pal(9, "Blues")
 (ref:ColorBrewer-all-s) RColorBrewer 包中所有调色板颜色的演示
 
 ```{r ColorBrewer-all,fig.width=6, fig.height= 8, fig.scap="(ref:ColorBrewer-all-s)",fig.cap="(ref:ColorBrewer-all)"}
-layout(matrix(1:3, 3), heights = c(2, 1, 1))
-par(mar = c(0, 4, 0, 0))
-display.brewer.all(type = "seq") # 连续型：18 种
-display.brewer.all(type = "div") # 极端化：9 种
-display.brewer.all(type = "qual") # 离散型：8 种
+msg_graph("ColorBrewer-all")
 ```
 
 
@@ -544,16 +444,7 @@ display.brewer.all(type = "qual") # 离散型：8 种
 (ref:grad-color-s) New Haven 地区的年均气温（1912~1971 年）
 
 ```{r grad-color, echo=TRUE, fig.scap="(ref:grad-color-s)",fig.cap="(ref:grad-color)"}
-xx <- c(1912, 1912:1971, 1971)
-yy <- c(min(nhtemp), nhtemp, min(nhtemp))
-plot(xx, yy, type = "n", xlab = "Year", ylab = "Temperatures")
-for (i in seq(255, 0, -3)) {
-  # rgb() 中的绿色成分逐渐变小:
-  yy <- c(45, nhtemp - (nhtemp - min(nhtemp)) * (1 - i / 255), 45) 
-  polygon(xx, yy, col = rgb(1, i / 255, 0), border = NA)
-  # 读者可以在这里加上 Sys.sleep(0.05) 以便看清作图过程
-}
-box() # 补齐边框
+msg_graph("grad-color")
 ```
 
 ### 点 {#sec:points}
@@ -571,7 +462,7 @@ usage2(usage(points.default, output = FALSE))
 (ref:point-type) 点的类型：`pch` 参数取值从 1 到 25 及其它符号。注意：21\~25 的点可以填充背景颜色
 
 ```{r point-type, fig.width=7, fig.height=3.5, out.width="80%", results='hide',fig.scap="(ref:point-type-s)",fig.cap="(ref:point-type)"}
-demo("pointTypes", package = "MSG")
+msg_graph("point-type")
 ```
 
 本节不再赘述参数的含义（读者可以自行查阅帮助），但有三点仍需特别说明一下：
@@ -593,16 +484,7 @@ demo("pointTypes", package = "MSG")
 (ref:point-iris-s) 鸢尾花的花瓣长宽散点图
 
 ```{r point-iris, out.width="80%", echo=TRUE,fig.scap="(ref:point-iris-s)",fig.cap="(ref:point-iris)"}
-# 先将鸢尾花的类型转化为整数 1、2、3，便于使用向量
-idx <- as.integer(iris[["Species"]])
-plot(iris[, 3:4],
-  pch = c(24, 21, 25)[idx],
-  col = c("black", "red", "blue")[idx], panel.first = grid()
-)
-legend("topleft",
-  legend = levels(iris[["Species"]]),
-  col = c("black", "red", "blue"), pch = c(24, 21, 25), bty = "n"
-)
+msg_graph("point-iris")
 ```
 
 图 \@ref(fig:point-random) 为本书的一例“彩蛋”：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果可以观看演示 `demo("pointArts", package = "MSG")`[^art-of-points-in-r]。若读者感兴趣，甚至可以用 R 为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。
@@ -610,19 +492,7 @@ legend("topleft",
 [^art-of-points-in-r]:  <https://yihui.org/cn/2010/08/art-of-points-in-r/>
 
 ```{r point-random,echo=TRUE, fig.scap="(ref:point-random-s)",fig.cap="(ref:point-random)"}
-par(mar = c(0.2, 0.2, 0.2, 0.2), mfrow = c(2, 2))
-for (n in c(63, 60, 76, 74)) {
-  set.seed(711)
-  plot.new()
-  box()
-  size <- c(replicate(n, 1 / rbeta(2, 1.5, 4)))
-  center <- t(replicate(n, runif(2)))[rep(1:n, each = 2), ]
-  color <- paste("#", apply(
-    replicate(2 * n, sample(c(0:9, LETTERS[1:6]), 8, TRUE)), 2, paste,
-    collapse = ""
-  ), sep = "")
-  points(center, cex = size, pch = rep(20:21, n), col = color)
-}
+msg_graph("point-random")
 ```
 
 (ref:point-random-s) 点的随机艺术作品
@@ -640,17 +510,7 @@ R 中可以实现几乎无数种线条样式，因为它的 `lty` 参数相当�
 (ref:lines-demo) 曲线、直线、直线段、箭头的展示说明
 
 ```{r lines-demo,echo=TRUE, fig.cap="(ref:lines-demo)"}
-# 不作图，只画出框架，且指定坐标轴范围
-plot(1:10, type = "n", xlim = c(0, 10), ylim = c(0, 10))
-lines(1:10, abs(rnorm(10))) # 10 个正态随机数绝对值的波动线
-abline(a = 0, b = 1, col = "gray") # 不同的直线
-abline(v = 2, h = 2, lty = 2)
-text(8, 3, "abline(a = 0, b = 1)") # 添加文本
-arrows(8, 3.5, 6, 5.7, angle = 40) # 添加箭头
-# 参数用了向量：不同灰度的线段
-segments(rep(3, 4), 6:9, rep(5, 4), 6:9, 
-         col = gray(seq(0.2, 0.8, length = 4)))
-text(4, 9.8, "segments")
+msg_graph("lines-demo")
 ```
 
 关于直线，我们在平面坐标系中只需要确定两个因素就可以确定它的位置：斜率和截距。函数 `abline()` 就是用来添加直线的，参数同样可以使用向量（这一点在低层函数中几乎普遍适用，下文不再重复说明）。函数用法如下：
@@ -725,7 +585,7 @@ usage2(usage(xspline, output = FALSE))
 (ref:xspline-demo) X-样条各种形状的展示：观察 `shape` 参数的取值（图中标注的数字）与样条形状的对应关系
 
 ```{r xspline-demo,results='hide',fig.scap="(ref:xspline-demo-s)",fig.cap="(ref:xspline-demo)"}
-demo("xsplineDemo", package = "MSG")
+msg_graph("xspline-demo")
 ```
 
 ### 箭头、误差线 {#sec:arrow}
@@ -800,7 +660,7 @@ usage2(usage(polygon, output = FALSE))
 (ref:polygon-kaleidoscope-s) 用多边形生成的“万花筒”
 
 ```{r polygon-kaleidoscope,fig.scap="(ref:polygon-kaleidoscope-s)",fig.cap="(ref:polygon-kaleidoscope)",results='hide'}
-demo("kaleidoscope", package = "MSG")
+msg_graph("polygon-kaleidoscope")
 ```
 
 图 \@ref(fig:polygon-kaleidoscope) 是利用含有缺失值的数据画出来的多边形，它看起来与万花筒图案有些相似（本例为“彩蛋”）。这幅图的生成过程是：随机生成 3 个标准正态分布随机数，然后插入一个缺失值 NA，下一次再以上一批随机数的最后一个为均值生成 3 个随机数，依此类推生成若干组“三个随机数加上一个 NA”这样的数据，这样最后画多边形的时候，得到的就是若干个独立的三角形。我们将这一组三角形分别向右、向上和向下平移，得到四组三角形，也就是不太精确地模仿了万花筒的原理。该演示收录在 **MSG** 包中，读者可用 `demo("kaleidoscope", package = "MSG")` 查看源代码。
@@ -813,15 +673,7 @@ demo("kaleidoscope", package = "MSG")
 (ref:polygon-demo) 多边形和矩形结合使用的一个巧妙图示：将 0 上下的数值分别用不同颜色填充。本图也可以利用 `clip()` 函数更方便地完成，请读者自行查阅帮助
 
 ```{r polygon-demo,echo=TRUE, fig.scap="(ref:polygon-demo-s)",fig.cap="(ref:polygon-demo)"}
-x <- rnorm(40) # 产生 40 个正态随机数
-plot(x, xlab = "", type = "l") # 画线图
-# 请思考为什么坐标值要这样设置：多边形的连线路径
-polygon(c(1, 1:40, 40), c(0, x, 0), col = "gray")
-xy <- par("usr") # 获取当前图形区域坐标范围，以便下用
-# 用白色矩形挡住了 0 以下的部分
-rect(xy[1], xy[3], xy[2], 0, col = "white")
-lines(x) # 重画一遍 x 的线条
-abline(h = 0, col = "lightgray") # 添加水平线
+msg_graph("polygon-demo")
 ```
 
 这幅图的目的在于只填充 y 值在 0 以上的部分，0 以下的部分留空。采取的手段是：先用多边形整体填充颜色，然后根据当前图形的坐标范围（用 `par("usr")` 获得（或者等价使用 `par()$usr`），参见 \@ref(sec:par) 小节）画一个白色的矩形覆盖 0 以下的图形部分，此时下面部分的线条也被覆盖了，因此接着我们必须再次画线，将所有线条补充完整，最后，添加一条高度为 0 的水平线，即完成本图。 
@@ -902,28 +754,7 @@ usage2(usage(mtext, output = FALSE))
 (ref:text) 添加标题、任意文本和周边文本的一个演示
 
 ```{r text,fig.cap="(ref:text)"}
-par(mar = c(4, 4, 4, 3))
-plot(0:10, type = "n", xlab = "", ylab = "", xlim = c(0, 12))
-grid(col = "gray")
-title(
-  main = "Demonstration of text in R Graphics",
-  xlab = "X-axis title", ylab = "Y-axis title"
-)
-mtext("Here is \"side = 4\"", side = 4, line = 1)
-x <- c(6, 4, 6, 8)
-y <- c(8, 5, 2, 5)
-s <- c(0, 90, 180, 270)
-for (i in 1:4) {
-  text(x[i], y[i], sprintf("srt = %d", s[i]), srt = s[i])
-}
-segments(c(6, 0, 6, 12), c(10, 5, 0, 5), c(0, 6, 12, 6),
-  c(5, 0, 5, 10),
-  lty = c(2, 1, 1, 2)
-)
-legend(-0.2, 9.8, c("Upper", "Lower"),
-  lty = 2:1, cex = 0.8,
-  bty = "n"
-)
+msg_graph("text")
 ```
 
 ### 图例 {#sec:legend}
@@ -1006,26 +837,7 @@ kable2(x = Export.USCN, "1999~2004 年中美两国的出口贸易总额数据", 
 (ref:axis-demo-s) 中美出口额双坐标轴图示
 
 ```{r axis-demo, echo=TRUE,fig.width=7, fig.height=4, out.width="80%", fig.scap="(ref:axis-demo-s)",fig.cap="(ref:axis-demo)",dev='tikz',fig.process=to_png}
-data(Export.USCN, package = "MSG")
-par(mar = c(4, 4.5, .1, 4.5))
-# 看似条形图，实为粗线条，宽度 lwd = 10
-plot(1:13, Export.USCN$Export,
-  xlab = "Year / Country",
-  ylab = "US Dollars ($10^{16}$)", xaxt = "n", type = "h",
-  lwd = 10, col = c(rep(2, 6), NA, rep(4, 6)), lend = 1,
-  panel.first = grid()
-)
-# 设置 x 轴的刻度标记：\n 的意思是换行符
-xlabel <- paste(Export.USCN$Year, "\n", Export.USCN$Country)
-xlabel[7] <- ""
-abline(v = 7, lty = 2) # 添加一条分隔线
-# 使用带有换行符的刻度标记
-axis(1, 1:13, labels = xlabel, tick = FALSE, cex.axis = 0.75)
-# 换算为人民币再计算另一个坐标轴刻度（汇率 8.27）
-ylabel <- pretty(Export.USCN$Export * 8.27)
-axis(4, at = ylabel / 8.27, labels = ylabel)
-mtext("Chinese RMB ($10^{16}$)", side = 4, line = 2)
-box()
+msg_graph("axis-demo")
 ```
 
 这组数据可以通过以下代码获取：
@@ -1039,25 +851,13 @@ Export.USCN
 
 ```{r plotmath1,eval=FALSE}
 # 本代码为“伪代码”，下图由 tikzDevice 生成
-plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), type = "l", xlab = "x", ylab = expression(phi(x)))
-text(-3, 0.37, adj = c(0, 1), cex = 1.2, 
-     expression(phi(x) == frac(1, sqrt(2 * pi)) ~ e^-frac(x^2, 2)))
-arrows(-2, 0.27, -1.3, dnorm(-1.3) + 0.02)
-abline(v = qnorm(0.95), lty = 2)
-text(0, dnorm(qnorm(0.95)), expression(integral(phi(x) * dx, -infinity, 1.65) %~~% 0.95))
+msg_code("plotmath")
 ```
 
 (ref:plotmath) 正态分布密度函数公式的表示
 
 ```{r plotmath,echo=FALSE,fig.width=4.8, fig.height=3.6, out.width="80%", fig.cap="(ref:plotmath)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
-plot(seq(-3, 3, 0.1), dnorm(seq(-3, 3, 0.1)), 
-     type = "l", xlab = "$x$", ylab = "$\\phi(x)$")
-text(-3, 0.37, adj = c(0, 1), 
-     "$\\phi(x) = \\frac{1}{\\sqrt{2 \\pi}} \\exp(-\\frac{x^2}{2})$", cex = 1.2)
-arrows(-2, 0.27, -1.3, dnorm(-1.3) + 0.02)
-abline(v = qnorm(0.95), lty = 2)
-text(0, dnorm(qnorm(0.95)),
-     "$\\int_{-\\infty}^{1.65} \\phi(x) dx \\approx 0.95$")
+msg_graph("plotmath-tikz")
 ```
 
 由于统计理论中经常需要用到数学符号，所以向统计图形中添加一些数学说明不仅会使得图形看起来更专业，对图形背后的理论也是一种重要补充。
@@ -1132,8 +932,7 @@ matrix(c(1, 2, 1, 3), 2)
 (ref:layout) 函数 `layout()` 的版面设置示意图
 
 ```{r layout,fig.width=7, fig.height=2, out.width="80%", fig.cap="(ref:layout)"}
-layout(matrix(c(1, 2, 1, 3), 2), c(1, 3), c(1, 2))
-layout.show(2)
+msg_graph("layout")
 ```
 
 图 \@ref(sec:pie) 和 \@ref(sec:stripchart) 曾经使用该函数设置了图形版面，使得不同方格中的图形长宽不一样。图 \@ref(fig:layout-margin) 用 `layout()` 安排展示了二元变量的边际分布以及回归直线。
@@ -1143,7 +942,7 @@ layout.show(2)
 (ref:layout-margin-s) 回归模型中边际分布的展示
 
 ```{r layout-margin,fig.cap="(ref:layout-margin)",fig.scap="(ref:layout-margin-s)",results='hide'}
-demo("layout_margin", package = "MSG")
+msg_graph("layout-margin")
 ```
 
 ### 拆分设备屏幕
@@ -1179,22 +978,17 @@ usage2(usage(close.screen, output = FALSE))
 assign("par.list", setdiff(get("par.list", graphics:::.SSenv), "mfg"), graphics:::.SSenv)
 ```
 
-```{r split-screen, echo=TRUE, fig.cap="(ref:split-screen)",fig.scap="(ref:split-screen-s)",results='hide'}
-split.screen(mat_scr)
-for (i in 1:4) {
-  screen(i)
-  par(mar = c(0, 0, 0, 0), mgp = c(0, 0, 0), cex.axis = 0.7)
-  plot(sort(runif(30)), sort(runif(30)), col = i, 
-       pch = c(19, 21, 22, 24)[i], ann = FALSE, axes = FALSE)
-  box(col = "gray")
-  axis(1, tcl = 0.3, labels = NA)
-  axis(2, tcl = 0.3, labels = NA)
-}
+```{r, results='asis'}
+msg_code("split-screen")
 ```
 
 (ref:split-screen) 拆分作图设备屏幕区域的示例：本图展示了如何用一个矩阵参数控制作图区域在屏幕上的的位置。
 
 (ref:split-screen-s) 拆分作图设备屏幕区域的示例
+
+```{r split-screen, fig.cap="(ref:split-screen)",fig.scap="(ref:split-screen-s)",results='hide'}
+msg_graph("split-screen")
+```
 
 ## 交互操作 {#sec:interaction}
 
@@ -1256,7 +1050,7 @@ usage2(usage(getGraphicsEvent, output = FALSE))
 (ref:graphicsEvent) 鼠标在图形窗口中移动的效果图
 
 ```{r graphicsEvent,out.width="80%", fig.cap="(ref:graphicsEvent)",results='hide'}
-demo("mouse_move", package="MSG")
+msg_graph("graphicsEvent")
 ```
 
 图 \@ref(fig:graphicsEvent) 演示了鼠标移动的效果：我们在黑色背景的窗口中画了一批数据点，然后通过鼠标的移动在鼠标周围生成一个矩形框，框内的点变成黄色且放大的样式，而框外的点为红色的小点。随着鼠标的移动，矩形框也会在屏幕上移动，从而会框住不同的点。
@@ -1312,19 +1106,16 @@ diff(auv)
 
 图 \@ref(fig:waterfall-chart) 给出了 R 代码和瀑布图结果，其中核心代码只有最后一句，前面的代码仅以布局和美观为目的。
 
+```{r, results='asis'}
+msg_code("waterfall-chart")
+```
+
 (ref:waterfall-chart-s) “统计之都”网站八月第一周访问数据瀑布图
 
 (ref:waterfall-chart) “统计之都”网站八月第一周访问数据瀑布图：周一访问量为 939， 周二上升，周三开始下降（红色矩形表示访问量下降），直到周末降到最低。这个规律在其它星期都存在，也许它反映了大众普遍的劳累和忙碌规律？
 
-```{r waterfall-chart,echo=TRUE, fig.width=7, fig.height=5, out.width="80%", fig.scap="(ref:waterfall-chart-s)",fig.cap="(ref:waterfall-chart)"}
-par(mar = c(4, 4, .5, .1))
-plot(auv, xlab = "八月第一周", ylab = "绝对唯一访问次数", type = "n",
-  xlim = c(0.5, 7.5), ylim = c(0, max(auv)),
-  xaxt = "n", panel.first = grid())
-axis(1, 1:7, 
-     sprintf("周%s", c("一", "二", "三", "四", "五", "六", "日")))
-rect(1:7 - 0.3, c(0, auv[1:6]), 1:7 + 0.3, auv,
-     col = c(NA, ifelse(diff(auv) < 0, "red", NA)))
+```{r waterfall-chart,fig.width=7, fig.height=5, out.width="80%", fig.scap="(ref:waterfall-chart-s)",fig.cap="(ref:waterfall-chart)"}
+msg_graph("waterfall-chart")
 ```
 
 从代码可以看到，我们用低层作图函数 `rect()` 来画瀑布图是非常直观的：前四个参数给定了矩形的位置坐标，而这些位置经过简单的逻辑思考很容易得到。所有任务只是画矩形而已。在缺少对图形元素充分支持的软件包中，我们付出了不必要的代价。
@@ -1399,7 +1190,7 @@ optim(c(-.9, .9), f2, method = "L-BFGS-B",
 (ref:gradArrows-s) 梯度下降算法的过程演示
 
 ```{r gradArrows,fig.width=6, fig.height=6,fig.scap="(ref:gradArrows-s)",fig.cap="(ref:gradArrows)",results='hide',dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
-demo("gradArrows1", package = "MSG")
+msg_graph("gradArrows")
 ```
 
 (ref:sign-stat) 在统计学的轨道中（彩蛋）：本图综合运用了折线、多边形、箭头、文本和圆圈等元素，它原本是笔者于 2007 年为中国人民大学统计学院 06 级硕士班设计的一件班徽作品，但后来很多同学认为该图应重命名为“美人鱼图”。笔者初衷是将“STAT”四个字母抽象表达为一些图形元素，例如图中一系列圆圈代表“S”，两端的箭头代表“T”，中间的正态分布曲线以及阴影部分代表“A”
@@ -1413,7 +1204,7 @@ demo("gradArrows1", package = "MSG")
 (ref:sign-stat-s) 在统计学的轨道中（彩蛋）
 
 ```{r sign-stat,fig.scap="(ref:sign-stat-s)",fig.cap="(ref:sign-stat)", results='hide'}
-demo("signSTAT", package = "MSG")
+msg_graph("sign-stat")
 ```
 
 ## 思考与练习

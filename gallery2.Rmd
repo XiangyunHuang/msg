@@ -37,14 +37,7 @@ coef(summary(lm(V2 ~ V1, BinormCircle)))
 (ref:fig-scatter-alpha) 半透明散点图中的规律：左图是一幅普通的散点图，图中几乎看不出数据有任何异常特征；右图中对点使用了透明度为 0.01 的红色，图中立即显示出一个深色的圆圈，表明该圆圈上集中了大量数据点
 
 ```{r scatter-alpha, fig.width=4,fig.height=2, dev='png', dev.args=list(type = "cairo"), fig.cap="(ref:fig-scatter-alpha)", fig.scap="(ref:fig-scatter-alpha-s)",results='hide', fig.show="hold"}
-p <- ggplot(BinormCircle, aes(V1, V2)) +
-  # theme_void() +
-  theme(axis.ticks = element_blank(), axis.text = element_blank(),
-        # plot.background = element_rect(linetype = "solid",color = "black"),
-        axis.title = element_blank())
-p1 <- p + geom_point(color = rgb(1,0,0)) + theme_void()
-p2 <- p + geom_point(color = rgb(1,0,0), alpha = 0.01) + theme_void()
-plot_grid(p1, p2, ncol = 2)
+msg_graph("scatter-alpha2")
 ```
 
 我们在网页[^binorm]上给出了其它五种不同的解决方案，都可以从图形的角度反映出这种规律。本章 \@ref(sec:smoothScatter) 小节也将以平滑散点图的方式回顾这批数据。
@@ -67,28 +60,14 @@ usage2(usage(plot.default, output = FALSE))
 
 [^demo-scatter-alpha]: 可以运行 `demo("alphaDemo", package = "MSG")`获取。
 
-```{r, eval=FALSE, echo=TRUE}
-data(BinormCircle, package = "MSG")
-par(mfrow = c(1, 2), pch = 20, ann = FALSE, mar = rep(.05, 4))
-plot(BinormCircle, col = rgb(1, 0, 0), axes = FALSE)
-box()
-plot(BinormCircle, col = rgb(1, 0, 0, alpha = .01), axes = FALSE)
-box()
+```{r, results='asis'}
+msg_code("scatter-alpha")
 ```
 
 **ggplot2** 包中绘制散点图的函数是 `geom_point()`。下面是绘制图 \@ref(fig:scatter-alpha) 的代码：
 
-```{r, eval=FALSE,echo=TRUE}
-p <- ggplot(BinormCircle, aes(V1, V2)) +
-  theme_void() +
-  theme(axis.ticks = element_blank(), 
-    axis.text = element_blank(),
-    axis.title = element_blank(),
-    plot.background = element_rect(linetype = "solid",color = "black")
-  )
-p1 <- p + geom_point(color = rgb(1, 0, 0))
-p2 <- p + geom_point(color = rgb(1, 0, 0), alpha = 0.01)
-plot_grid(p1, p2, ncol = 2)
+```{r, results='asis'}
+msg_code("scatter-alpha2")
 ```
 
 ## 一元函数曲线图 {#sec:curve}
@@ -106,12 +85,7 @@ plot_grid(p1, p2, ncol = 2)
 (ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）
 
 ```{r curve,fig.width=4.8,fig.height=3.6,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
-par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
-chippy <- function(x) sin(cos(x) * exp(-x / 2))
-curve(chippy, -8, 7, n = 2008, 
-      xlab = "$x$", ylab = "$\\mathrm{chippy}(x)$")
-curve(sin(x) / x, from = -20, to = 20, n = 200, 
-      xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
+msg_graph("curve-tikz")
 ```
 
 ### 绘制方法 {-}
@@ -145,22 +119,14 @@ usage2(usage(curve, output = FALSE))
 
 利用该函数绘制图 \@ref(fig:curve) 的代码是：
 
-```{r, eval=FALSE, echo=TRUE}
-chippy <- function(x) sin(cos(x) * exp(-x / 2))
-curve(chippy, -8, 7, n = 2008, 
-      xlab = "$x$", ylab = "$\\mathrm{chippy}(x)$")
-curve(sin(x) / x, from = -20, to = 20, n = 200, 
-      xlab = "$t$", ylab = "$\\varphi_{X}(t)$")
+```{r, results='asis'}
+msg_code("curve")
 ```
 
 **ggplot2**包里并没有现成的函数绘制一元函数曲线图。一个变通的方法就是设定一系列 $x$ 值，根据函数关系计算出 $y$ 值，然后绘制折线图即可。绘制代码如下：
 
-```{r curve2, eval=FALSE, echo=TRUE}
-df1 <- data.frame(x = seq(-8, 7, by = 0.01))
-p1 <- ggplot(transform(df1, y = chippy(x)), aes(x, y)) + geom_line()
-df2 <- data.frame(x = seq(-20, 20, by = 0.01))
-p2 <- ggplot(transform(df2, y = sin(x)/x), aes(x, y)) + geom_line()
-p1 / p2
+```{r, results='asis'}
+msg_graph("curve2")
 ```
 
 由于这种曲线图与数据分析关系不甚密切，我们在此只是粗略介绍一下。
@@ -191,8 +157,7 @@ kable2(iris, "鸢尾花花瓣数据")
 (ref:fig-sunflowerplot) 鸢尾花花瓣长和宽的向日葵散点图
 
 ```{r sunflowerplot,fig.width=4,fig.height=4,out.width="70%", fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
-par(mar = c(4, 4, 0.2, 0.2))
-sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
+msg_graph("sunflowerplot")
 ```
 
 ### 绘制方法 {-}
@@ -247,8 +212,8 @@ usage2(usage(graphics:::sunflowerplot.default, output = FALSE))
 下面这句代码将绘制 
 图 \@ref(fig:sunflowerplot)：
 
-```{r, eval=FALSE, echo=TRUE}
-sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
+```{r, results='asis'}
+msg_code("sunflowerplot")
 ```
 
 这幅图的颜色用的是金色 `"gold"`，目的是为了使向日葵散点图看起来与其名称相符，不过似乎使用鸢尾花的颜色更符合数据的背景，读者不妨试试看。
@@ -270,11 +235,7 @@ sunflowerplot(iris[, 3:4], col = "gold", seg.col = "gold")
 (ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）
 
 ```{r smoothScatter,fig.width=4.5,fig.height=4.5,out.width="75%", fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
-library(ggpointdensity)
-ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
-  geom_pointdensity(adjust = 0.1) +
-  scale_color_gradient(low="lightblue", high="darkblue") +
-  theme(legend.position = "")
+msg_graph("smoothScatter2")
 ```
 
 ### 绘制方法 {-}
@@ -306,18 +267,14 @@ usage2(usage(smoothScatter, output = FALSE))
 
 该函数的一个示例如下：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mar = c(4, 4, 0.3, 0.1))
-smoothScatter(BinormCircle)
+```{r, results='asis'}
+msg_code("smoothScatter")
 ```
 
 如果想用 **ggplot2** 包来绘制平滑散点图，那么可以先安装 **ggpointdensity** 包，然后使用 `geom_pointdensity()` 函数即可：
 
-```{r, eval=FALSE, echo=TRUE}
-library(ggpointdensity)
-ggplot(data = BinormCircle, aes(x = V1, y = V2)) +
-  geom_pointdensity(adjust = 0.1) +
-  theme(legend.position = "")
+```{r, results='asis'}
+msg_code("smoothScatter2")
 ```
 
 平滑散点图看起来和图 \@ref(fig:scatter-alpha) 右图比较相似，但前者蕴含了更多的数理统计背景。不过，我们也不必一味追求数学理论，透明色可叠加这一点性质体现出的原理又何尝不是一种密度估计呢？
@@ -357,12 +314,7 @@ kable2(mydata[, 2:3], "伦敦 Marylebone 风速风向数据", insert_txt = "：1
 (ref:fig-windrose) 伦敦 Marylebone 的风玫瑰图：将风向分为 12 个（左）或 16 个方向，每个方向用一根“指针”或一个扇形来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮西南偏南风，因为该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%
 
 ```{r windrose,fig.width=5.4,fig.height=5.4,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",fig.show='hold', out.width="49%"}
-library(openair)
-windRose(mydata)
-windRose(mydata = mydata, ws = "ws", wd = "wd", 
-         key.position = "right", paddle = FALSE, seg = 0.9, 
-         angle = 22.5, ws.int = 0.5, 
-         cex = 3, breaks = c(seq(0,5,1), 21))
+msg_graph("windrose")
 ```
 
 如果要在这所城市附近修建会造成空气污染的化工厂，那么可以考虑尽量选在城市的东北偏北，这样对城市居民生活的大气环境造成的危害最小。如果图 \@ref(fig:windrose) 是一个机场的长期风向数据，则机场跑道可能考虑东北偏北-西南偏南方向，刮风频率较高，风力较大。由于顺风对飞机飞行不利，所以飞机在机场起飞和降落最好是能逆风，这样能使飞机在较短距离升空和降落。笔者对机场建设了解甚少，这里只是介绍一种考虑的可能性。另外，根据笔者目前掌握的知识，当今的飞机似乎受风向影响已经大大减小了。
@@ -415,13 +367,8 @@ usage2(usage(windRose, output = FALSE))
 
 图 \@ref(fig:windrose) 所用的数据加载和图形绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-library(openair)
-windRose(mydata)
-windRose(mydata = mydata, ws = "ws", wd = "wd", 
-         key.position = "right", paddle = FALSE, seg = 0.9, 
-         angle = 22.5, ws.int = 0.5, 
-         cex = 3, breaks = c(seq(0,5,1), 21))
+```{r, results='asis'}
+msg_code("windrose")
 ```
 
 <!--
@@ -469,9 +416,7 @@ kable2(aml, "急性髓细胞白血病病人生存数据")
 (ref:fig-survival) 急性髓细胞白血病病人生存函数图
 
 ```{r survival,fig.width=4.8,fig.height=3,out.width="80%", fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
-library(survival)
-leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
-survminer::ggsurvplot(leukemia.surv, data = aml, ggtheme = theme_gray())
+msg_graph("survival2")
 ```
 
 ### 绘制方法 {-}
@@ -506,18 +451,14 @@ usage2(usage(survival:::plot.survfit, output = FALSE))
 
 利用 **survival**包绘制本节案例的代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
-library(survival)
-leukemia.surv <- survfit(Surv(time, status) ~ x, data = aml)
-plot(leukemia.surv, lty = 1:2, xlab = "time")
-legend("topright", c("Maintenance", "No Maintenance"), 
-       lty = 1:2, bty = "n")
+```{r, results='asis'}
+msg_code("survival")
 ```
 
 **ggplot2** 包并没有提供生存函数的作图函数，然而 **survminer** 包提供了函数 `ggsurvplot()`，可以胜任：
 
-```{r, eval=FALSE, echo=TRUE}
-survminer::ggsurvplot(leukemia.surv, data = aml)
+```{r, results='asis'}
+msg_code("survival2")
 ```
 
 进一步，我们可以用对数秩检验知道这两组病人的生存时间在 10\% 的显著水平下有显著差异：
@@ -568,25 +509,7 @@ kable2(fail_temperature, "美国国家航空和宇宙航行局的一批 O 型环
 (ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效
 
 ```{r cdplot,fig.width=4.8,fig.height=2.4, out.width="80%",results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
-# ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
-#   geom_density(position = "fill") +
-#   
-#   geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)]),
-#     shape = 21, colour = "blue", fill = "yellow") +
-#   scale_x_continuous(expand = c(0, 0)) +
-#   scale_y_continuous("fail", expand = c(0, 0), breaks = c(0.25, 0.75), 
-#     labels = c("no", "yes"),
-#     sec.axis = dup_axis(name = NULL, breaks = seq(0, 1, 0.2), 
-#                         labels = c(0, "", 0.4, "", 0.8, ""))) +
-#   scale_fill_manual(values = c("red", "lightblue")) +
-#   theme_classic() +
-#   theme(legend.position = "none")
-ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
-  geom_density(position = "fill") +
-  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)])) +
-    scale_y_continuous("fail", breaks = c(0.25, 0.75), 
-                       labels = c("no", "yes")) +
-  theme(legend.position = "")
+msg_graph("cdplot2")
 ```
 
 ### 绘制方法 {-}
@@ -627,32 +550,14 @@ usage2(usage(graphics:::cdplot.formula, output = FALSE))
 
 利用该函数来为表 \@ref(tab:tab-fail-temperature) 绘制条件密度图的代码为：
 
-[^cdplot-code]: 这段代码可以通过运行 `demo("cdplotDemo", package = "MSG")`获取。
-
-```{r, eval=FALSE, echo=TRUE}
-fail <-  factor(c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1,
-                  2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1),
-                levels = 2:1, 
-                labels = c("yes", "no"))
-temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
-                70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81)
-
-par(mar = c(4, 4, .5, 2))
-cdplot(fail ~ temperature, col = c("lightblue", "red"))
-points(temperature, c(0.25, 0.75)[as.integer(fail)], 
-       col = "blue", bg = "yellow", pch = 21)
+```{r, results='asis'}
+msg_code("cdplot")
 ```
 
 也可以使用 **ggplot2**包的 `geom_density()` 函数绘制：
 
-```{r, eval=FALSE, echo=TRUE}
-fail_temperature <- data.frame(fail = fail, temperature = temperature)
-ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
-  geom_density(position = "fill") +
-  geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)])) +
-    scale_y_continuous("fail", breaks = c(0.25, 0.75), 
-                       labels = c("no", "yes")) +
-  theme(legend.position = "")
+```{r, results='asis'}
+msg_code("cdplot2")
 ```
 
 这里需要提醒读者注意的是，密度值的计算和估计与数据样本量大小有关系：小的样本量可能会导致密度估计的不精确，进而导致图形的误导性。因此，使用条件密度图的时候，务必注意样本量的问题。
@@ -676,8 +581,7 @@ ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
 (ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 $(60, 75]$ 区间内
 
 ```{r spineplot,fig.width=4.8,fig.height=3,out.width="75%",fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
-par(mar = c(4, 4, .5, 2))
-t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
+msg_graph("spineplot")
 ```
 
 ### 绘制方法 {-}
@@ -710,9 +614,8 @@ usage2(usage(graphics:::spineplot.formula, output = FALSE))
 
 图 \@ref(fig:spineplot) 可以用如下代码绘制：
 
-```{r, eval=FALSE, echo=TRUE}
-par(mar = c(4, 4, .5, 2))
-t(x <- spineplot(fail ~ temperature, col = c("lightblue", "red")))
+```{r, results='asis'}
+msg_code("spineplot")
 ```
 
 ## 二维箱线图 {#sec:bagplot}
@@ -741,22 +644,7 @@ kable2(car.test.frame, "汽车测试报告数据")
 (ref:fig-bagplot) *Consumer Reports* 中汽车数据的二维箱线图（左）和二维密度等高图（右）
 
 ```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
-car.wd <- with(car.test.frame, cbind(Weight, Disp.))
-bp_median <- apply(data.frame(car.wd), 2, median)
-bp_df <- data.frame(x = bp_median[1], y = bp_median[2])
-bp0 <- ggplot(data.frame(car.wd), aes(Weight, Disp.))
-bp1 <- bp0 + 
-  stat_bag(prop = 1, fill = "blue") +  # enclose all the points
-  stat_bag(prop = 0.5, alpha = 0.5, fill = "blue") + # enclose 50% of points
-  geom_point() +
-  geom_point(data = bp_df, mapping=aes(x = x, y = y), 
-             col = "red", shape = 8, size = 3)
-
-bp2 <- bp0 +
-  stat_density_2d() +
-  geom_point()
-
-bp1 | bp2
+msg_graph("bagplot2")
 ```
 
 ### 绘制方法 {-}
@@ -785,42 +673,16 @@ usage2(usage(bagplot, output = FALSE))
 
 汽车数据车重和气缸排量的二维箱线图和二维密度等高图可以用以下代码来绘制：
 
-```{r, eval=FALSE, echo=TRUE}
-data(car.test.frame, package = "rpart")
-
-library(aplpack, warn.conflicts = FALSE)
-# 数据来自 rpart 包中的 car.test.frame
-par(mfrow = c(1, 2), mar = c(4, 4, 0.1, 0.1), bty = "l")
-car.wd <- with(car.test.frame, cbind(Weight, Disp.))
-bagplot(car.wd, cex = 0.9)
-box()
-
-library(KernSmooth) # 二维核密度估计并画等高线图
-est <- bkde2D(car.wd, apply(car.wd, 2, dpik))
-with(est, {
-  contour(x1, x2, fhat, xlab = "Weight", ylab = "Disp.",
-          xlim = range(car.wd[, 1]), ylim = range(car.wd[, 2]))
-  points(car.wd, pch = 16, cex = 0.9)})
+```{r, results='asis'}
+msg_code("bagplot")
 ```
 
 \noindent 这样得到的二维箱线图里，外层袋子本应包含所有数据点，但由于默认设置有 5 个离群点的存在，所以只包含了 55 个数据点，读者可以将 `factor` 参数设置为 6，便可包含所有数据点。
 
 **ggplot** 包并没有现成的函数来绘制二维箱线图。为了读者方便，我们的 **MSG** 包里包含了一个函数 `stat_bag()`，可以用来绘制。图 \@ref(fig:bagplot) 的作图代码如下： 
 
-```{r, eval=FALSE, echo=TRUE}
-bp0 <- ggplot(data.frame(car.wd), aes(Weight, Disp.))
-bp1 <- bp0 + 
-  stat_bag(prop = 1, fill = "blue") + 
-  stat_bag(prop = 0.5, alpha = 0.5, fill = "blue") +
-  geom_point() +
-  geom_point(data = bp_df, mapping=aes(x = x, y = y), 
-             col = "red", shape = 8, size = 3)
-
-bp2 <- bp0 +
-  stat_density_2d() +
-  geom_point()
-
-bp1 | bp2
+```{r, results='asis'}
+msg_code("bagplot2")
 ```
 
 
