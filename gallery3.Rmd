@@ -19,7 +19,7 @@
 
 (ref:fig-pairs) 鸢尾花数据的散点图矩阵：上三角区域为不同样式的点，对应着不同种类的鸢尾花，对角线的直方图展示了花瓣花萼长宽的一维分布，下三角区域用平滑曲线显示了变量之间的关系
 
-```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
+```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("pairs")
 ```
 
@@ -37,13 +37,13 @@ usage2(usage(graphics:::pairs.formula, output = FALSE))
 \noindent 参数含义：
 
 `x`:
-： 一个矩阵或数据框，包含了要作散点图的那些变量。
+: 一个矩阵或数据框，包含了要作散点图的那些变量。
 
 `labels`:
 : 变量名称（标签）。
 
 `panel`:
-: 给定一个画散点图的函数，这个函数将应用在每一格图形中；有时候我们并不需要统一的散点图函数，这时可以利用 `lower.panel` 和 `upper.panel` 来分别指定上三角窗格和下三角窗格中的作图函数，也就意味着上三角和下三角窗格中的图形（不一定非得是散点图）可以不一样； `diag.panel` 和 `text.panel` 分别指定对角线窗格上的作图函数和添加文本标签的函数。
+: 给定一个画散点图的函数，这个函数将应用在每一格图形中。有时候我们并不需要统一的散点图函数，这时可以利用 `lower.panel` 和 `upper.panel` 来分别指定上三角窗格和下三角窗格中的作图函数，也就意味着上三角和下三角窗格中的图形（不一定非得是散点图）可以不一样； `diag.panel` 和 `text.panel` 分别指定对角线窗格上的作图函数和添加文本标签的函数。
 
 `label.pos`:
 : 指定文本标签的位置。
@@ -76,7 +76,7 @@ msg_code("pairs2")
 
 (ref:fig-pairs2) 鸢尾花数据的散点图矩阵增强版：散点图、直方图、密度曲线图、箱线图的结合
 
-```{r fig-ggally, echo=TRUE, fig.height=10, fig.width=10, fig.cap="(ref:fig-pairs2)", fig.scap="(ref:fig-pairs2-s)"}
+```{r fig-ggally, fig.height=10, fig.width=10, fig.cap="(ref:fig-pairs2)", fig.scap="(ref:fig-pairs2-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("pairs2")
 ```
 
@@ -103,7 +103,7 @@ kable2(quakes, "斐济岛附近的地震数据")
 
 (ref:fig-coplot) 给定震源深图的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近
 
-```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
+```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("coplot")
 ```
 
@@ -139,7 +139,7 @@ usage2(usage(co.intervals, output = FALSE))
 : 分别设定散点图中点的颜色和样式。
 
 `bar.bg`:
-给定条件变量指示条的填充颜色。
+: 给定条件变量指示条的填充颜色。
 
 `number` 和 `overlap`:
 : 传给 `co.intervals()` 函数，用来计算划分连续变量的区间，前者设定划分段数，后者设定区间之间的重叠比例，如：
@@ -166,7 +166,7 @@ msg_code("coplot")
 
 ### 示例 {-}
 
-我们以《中国统计年鉴》里我国 31 省市自治区的人口特征数据为例，通过实际数据来看符号图在展示数据时的效果。表 \@ref(tab: ChinaPop-data) 显示了我国 2005 年人口自然增长率、年底人口总数、城镇人口比重、人口预期寿命和高学历人数五个变量，我们以此作为国民素质的刻画指标，绘制了图 \@ref(fig:symbols-pop) [@Xie08]。
+我们以《中国统计年鉴》里我国 31 省市自治区的人口特征数据为例，通过实际数据来看符号图在展示数据时的效果。表 \@ref(tab:ChinaPop-data) 显示了我国 2005 年人口自然增长率、年底人口总数、城镇人口比重、人口预期寿命和高学历人数五个变量。我们以此作为国民素质的刻画指标，绘制了图 \@ref(fig:symbols-pop) [@Xie08]。
 
 ```{r ChinaPop-data}
 source(system.file("extdata", "ChinaPop.R", package = "MSG"), encoding = "UTF-8")
@@ -203,7 +203,7 @@ usage2(usage(symbols, output = FALSE))
 
 (ref:fig-symbols) 符号图提供的六种基本符号
 
-```{r symbols,fig.width=6,fig.height=6,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
+```{r symbols,fig.width=6,fig.height=6,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)", dev='tikz', fig.showtext = FALSE}
 demo("symbols_all", echo = FALSE, package = "MSG")
 ```
 
@@ -244,20 +244,24 @@ demo("ChinaPop", package = "MSG")
 
 ### 示例 {-}
 
-一组汽车数据如表 \@ref(tab:mtcars-data) 所示，记录了 7 个变量：`mpg` 为每加仑汽油可行驶英里数，`cyl` 为汽缸数，`disp` 为汽缸排量，`hp` 为马力，`drat` 为背齿轮比，`wt` 为车重，`qsec` 为行驶 $1/4$ 英里的时间。
+1974 年，*Motor Trend* 杂志给出了一组汽车数据（表 \@ref(tab:mtcars-data)），记录了 7 个变量：`mpg` 为每加仑汽油可行驶英里数，`cyl` 为汽缸数，`disp` 为汽缸排量，`hp` 为马力，`drat` 为背齿轮比，`wt` 为车重，`qsec` 为行驶 $1/4$ 英里的时间。
+
+(ref:tab-mtcars) 1974 年 Motor Trend 杂志的一组汽车数据
+
+(ref:tab-mtcars-s) 1974 年 *Motor Trend* 杂志的一组汽车数据
 
 ```{r mtcars-data}
 data(mtcars)
-kable2(mtcars[, 1:7], "汽车数据")
+kable2(mtcars[, 1:7], "(ref:tab-mtcars)", x_scap2 = "(ref:tab-mtcars-s)")
 ```
 
 我们为这组数据绘制了图 \@ref(fig:stars) 所示的星状图。从图中可以看到各种品牌和型号的汽车在这七方面的指标和性能表现。以星状图展示数据可以让我们很快找到一些有突出特征的个体，从而省去了在大批数据中逐个寻找、排序的过程。
 
 (ref:fig-stars-s) *Motor Trend* 杂志 1974 年汽车数据的星状图
 
-(ref:fig-stars) *Motor Trend* 杂志 1974 年汽车数据的星状图
+(ref:fig-stars) Motor Trend 杂志 1974 年汽车数据的星状图
 
-```{r stars,fig.width=5,fig.height=4.8,fig.cap="(ref:fig-stars)",fig.scap="(ref:fig-stars-s)"}
+```{r stars,fig.width=5,fig.height=4.8,fig.cap="(ref:fig-stars)",fig.scap="(ref:fig-stars-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("stars")
 ```
 
@@ -361,7 +365,7 @@ msg_code("stars")
 
 (ref:fig-faces2) 部分汽车数据的脸谱图：谁的脸宽？谁的鼻子长？谁的眼睛大？
 
-```{r faces2,fig.width=5.8,fig.height=6.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)"}
+```{r faces2,fig.width=5.8,fig.height=6.2,fig.cap="(ref:fig-faces2)",fig.scap="(ref:fig-faces2-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("faces2")
 ```
 
@@ -425,12 +429,12 @@ faces2(mat, which = 1:ncol(mat), labels = rownames(mat),
 : 决定如何标准化数据，默认对列标准化使之取值在 $[0, 1]$ 上；若数据不足 18 列，那么 fill 参数中的值就会补充不足的列的取值。
 
 ...:
-: 传给 `text()` 函数往图中加标签（默认是行名）。
+: 传给 `text()` 函数，往图中加标签（默认是行名）。
 
 下面的代码可以绘制汽车数据的脸谱图：
 
 ```{r, results='asis'}
-msg_code("face2")
+msg_code("faces2")
 ```
 
 这里，我们设置参数 `which = c(14, 9, 11, 6, 5)`，是为了尽量将这几个汽车性能指标形象化到合适的脸部特征上（如瞪着大眼睛表示马力大）。读者在遇到具体的案例数据时，不妨也仔细考虑一下指标的实际意义以及安排它们到哪个面部表情上。很多人都知道宏基施振荣的"微笑曲线"并且对之印象深刻，其原因何尝不是因为这条曲线形象而且直观呢？
@@ -456,7 +460,7 @@ kable2(murcia, "西班牙 Murcia 省土壤样本成分")
 
 (ref:murcia-ternary-s) 西班牙 Murcia 省的土壤样本三元图
 
-```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="(ref:murcia-ternary-s)"}
+```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="(ref:murcia-ternary-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("murcia-ternary")
 ```
 
@@ -473,8 +477,6 @@ msg_code("murcia-ternary")
 由于数据中的成分数值差异不是太极端，所以图中的点都聚在一起，不太容易观察。感兴趣的读者可以自行编写函数实现设置坐标轴范围的功能，例如本例的图可以通过缩小坐标轴范围来放大点与点之间的差异。
 
 实际上这个图形的核心计算部分非常简单：假设原始数据是 $(a,\,b,\,c)$ 且 $a+b+c=1$，那么在三元图中的坐标就是 $(b+c/2,\,\sqrt{3}c/2)$，也就是说三元图本质上就是散点图。这个坐标变换的原理是物理学中的质心概念：首先我们知道等边三角形三个顶点的坐标分别为 $(0,\,0)$，$(1,\,0)$ 和 $(1/2,\,\sqrt{3}/2)$，如果以一条数据的三个成分为权重对这三个顶点坐标加权平均的话，得到的就是该条数据对应的坐标，实际上也就是认为三个顶点上的质量都为 1，以成分为权重求质心的位置，即 $(0a+1b+c/2,\,0a+0b+\sqrt{3}c/2)$。
-
-本章最后的思考与练习中有对三元图的扩展，读者可以看看四维情况下的三棱锥和这里的三角形的相似之处。
 
 ## 马赛克图 {#sec:mosaicplot}
 
@@ -523,11 +525,11 @@ data(Titanic)
 kable2(as.data.frame(ftable(Titanic)), "泰坦尼克号乘客生还情况", only_head = FALSE)
 ```
 
-(ref:fig-mosaicplot-s) 泰坦尼克号乘客生化数据马赛克图
+(ref:fig-mosaicplot-s) 泰坦尼克号乘客生还数据马赛克图
 
 (ref:fig-mosaicplot) 泰坦尼克号乘客生还数据马赛克图：按性别、年龄和船舱等级划分
 
-```{r mosaicplot,fig=T,fig.width=5.2,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)"}
+```{r mosaicplot,fig=T,fig.width=5.2,fig.height=5,fig.cap="(ref:fig-mosaicplot)",fig.scap="(ref:fig-mosaicplot-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("mosaicplot")
 ```
 
@@ -578,7 +580,7 @@ msg_code("mosaicplot")
 
 ### 概述 {-}
 
-方差分析是很常见的统计模型，它的目的是比较不同组别之间的因变量均值是否有显著差异。因素效应图所展现的就是各种分组条件下因变量的水平，这里的水平可以由任何统计函数定义，例如均值、中位数等。
+方差分析是很常见的统计模型，其目的是比较不同组别之间的因变量均值是否有显著差异。因素效应图所展现的就是各种分组条件下因变量的水平，这里的水平可以由任何统计函数定义，例如均值、中位数等。
 
 ### 示例 {-}
 
@@ -589,12 +591,12 @@ msg_code("mosaicplot")
 data(warpbreaks)
 kable2(warpbreaks, "经纱断裂数据")
 ```
-。
+
 (ref:fig-plot-design-s) 经纱断裂数据的因素效应图
 
 (ref:fig-plot-design) 经纱断裂数据的因素效应图：每种羊毛（A、B）和拉力强度（L、M、H）下断裂数目的均值（上图）和中位数（下图）
 
-```{r plot-design,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)"}
+```{r plot-design,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("plot-design")
 ```
 
@@ -638,7 +640,7 @@ summary(aov(breaks ~ wool + tension, data = warpbreaks))
 
 从以上结果中可以看出，拉力强度对经纱断裂根数有显著影响，而羊毛种类则不太显著。
 
-总的来说，因素效应图是一种非常初级的统计图形，在数据的探索性分析中可能会起到一定作用。有时我们完全可以用一些分类汇总函数去计算各因素的效应（各组均值），例如分别按羊毛种类和拉力强度计算断裂数目的均值：
+总地来说，因素效应图是一种非常初级的统计图形，在数据的探索性分析中可能会起到一定作用。有时我们完全可以用一些分类汇总函数去计算各因素的效应（各组均值），例如分别按羊毛种类和拉力强度计算断裂数目的均值：
 
 ```{r warpbreaks-mean, echo=TRUE}
 with(warpbreaks, tapply(breaks, wool, mean))
@@ -680,7 +682,7 @@ kable2(esoph, "法国食道癌数据")
 
 (ref:fig-interaction-plot) 法国食道癌数据的交互效应图：各饮酒组的折线走势大致一样，说明交互作用很微弱
 
-```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)"}
+```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("interaction-plot")
 ```
 
@@ -737,9 +739,9 @@ with(esoph, {
 我们也可以计算一下每种分组组合下的因变量均值，辅助理解图 \@ref(fig:interaction-plot)：
 
 ```{r esoph-mean, echo=TRUE}
-tbl <- aggregate(ncases / (ncases + ncontrols) ~ agegp * alcgp, 
+tbl = aggregate(ncases / (ncases + ncontrols) ~ agegp * alcgp, 
                  data = esoph, mean)
-colnames(tbl) <- c("agegp", "alcgp", "mean")
+colnames(tbl) = c("agegp", "alcgp", "mean")
 reshape(tbl, timevar = "alcgp", idvar = "agegp", 
         direction = "wide", sep = "_")
 ```
@@ -768,7 +770,7 @@ kable2(kyphosis, "脊椎矫正手术数据")
 
 (ref:fig-rpart) 脊椎矫正手术结果的分类树图
 
-```{r rpart,fig.width=6,fig.height=4,out.width="80%", fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)"}
+```{r rpart,fig.width=6,fig.height=4,out.width="80%", fig.cap="(ref:fig-rpart)",fig.scap="(ref:fig-rpart-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("rpart")
 ```
 
@@ -799,7 +801,7 @@ usage2(usage(rpart:::plot.rpart, output = FALSE))
 
 图 \@ref(fig:rpart) 的绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, results='asis'}
 msg_code("rpart")
 ```
 
@@ -817,13 +819,13 @@ msg_code("rpart")
 
 ### 示例 {-}
 
-图 \@ref(fig:ggparcoord) 是鸢尾花数据的平行坐标图，数据经过了默认的标准化，取值都在 $[0,1]$ 区间上；其中每条折线代表一朵花。
+图 \@ref(fig:ggparcoord) 是鸢尾花数据（表 \@ref(tab:tab-iris)）的平行坐标图，数据经过了默认的标准化，取值都在 $[0,1]$ 区间上；其中每条折线代表一朵花。
 
 (ref:fig-ggparcoord-s) 鸢尾花数据的平行坐标图
 
 (ref:fig-ggparcoord) 鸢尾花数据的平行坐标图：花萼长宽和花瓣长宽以及花的种类
 
-```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)"}
+```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("ggparcoord")
 ```
 
@@ -860,7 +862,7 @@ usage2(usage(ggparcoord, output = FALSE))
 
 图 \@ref(fig:ggparcoord) 的绘制代码如下：
 
-```{r, eval=FALSE, echo=TRUE}
+```{r, results='asis'}
 msg_code("ggparcoord")
 ```
 
@@ -879,7 +881,9 @@ cor(subset(iris, Species == "setosa", 1:2))
 
 ### 概述 {-}
 
-调和曲线图由 @Andrews72 提出，它是一种巧妙展示多元数据的技术。我们先介绍一下它的数学原理，然后再说明它为何巧妙。对于一个数据矩阵 $X_{n\times p}$，我们把其中每一行 $X_{i}=\left(X_{i,1},\ldots,X_{i,p}\right)$ 转化为一条曲线：
+调和曲线图由 @Andrews72 提出，它是一种巧妙展示多元数据的技术。我们先介绍一下它的数学原理，然后再说明它为何巧妙。
+
+对于一个数据矩阵 $X_{n\times p}$，我们把其中每一行 $X_{i}=\left(X_{i,1},\ldots,X_{i,p}\right)$ 转化为一条曲线：
 
 \begin{equation}
 f_{i}(t)=\begin{cases}
@@ -903,11 +907,11 @@ f_{i}(t)=\begin{cases}
 ### 示例 {-}
 
 图 \@ref(fig:andrews-curve)
-展示了鸢尾花数据和黑莓树数据（表）这两个多维数据的调和曲线图。前者见表\@ref(tab:tab-iris)；后者见表 \@ref(tab:tab-trees)，数据包含 3 列：周长、高和体积。
+展示了鸢尾花数据（表 \@ref(tab:tab-iris)）和黑莓树数据（表 \@ref(tab:tab-trees)）这两个多维数据的调和曲线图。前者在 \@ref(sec:sunflowerplot) 小节已有介绍；后者是 31 种黑莓树的周长、高度和体积数据。
 
 ```{r tab-trees}
 data(trees)
-kable2(trees, "黑莓树数据")
+kable2(trees, "31 种黑莓树的周长、高度和体积数据")
 ```
 
 (ref:fig-andrews-curve-s) 鸢尾花数据和黑莓树数据的调和曲线图
@@ -947,7 +951,7 @@ print(rpart(Species ~ ., iris), digits = 2)
 
 ### 绘制方法 {-}
 
-我们自行编写的 **MSG** 包 [@MSG] 中的 `andrews_curve()`，可以用来绘制调和曲线图。它的用法如下：
+我们自行编写的 **MSG** 包中的 `andrews_curve()` 函数可以用来绘制调和曲线图。它的用法如下：
 
 ```{r andrews-curve-usage, results='asis'}
 library(MSG)
@@ -1037,13 +1041,23 @@ msg_code("worldmap")
 
 (ref:fig-worldmap) 世界地图的两个视角：上图是平面地图，下图是以北纬 20° 东经 90° 视角看到的球状地图
 
-```{r worldmap,fig.width=6,fig.height=8,fig.cap="(ref:fig-worldmap)",fig.scap="(ref:fig-worldmap-s)",error=TRUE,results='hide', echo=TRUE, fig.show='hold'}
+```{r worldmap,fig.width=6,fig.height=8,fig.cap="(ref:fig-worldmap)",fig.scap="(ref:fig-worldmap-s)",error=TRUE,results='hide', fig.show='hold'}
 msg_graph("worldmap")
 ```
 
-在地理区域上标记大量的数值信息会遇到一个显而易见的困难，就是由于各个地理区域的面积不同而导致地图的解读失真或某些重要地理单元难以辨认。例如，我们在画中国省级地图时，北京和上海等直辖市相比其它省份显得面积太小，此时若用颜色来标记某个数值指标（如 GDP），就会使得各个直辖市的颜色几乎无法辨认。还有另一个更有趣的例子来自 08 年美国总统大选。若用红蓝两种颜色对各个州做标记，以表示该州支持麦凯恩或奥巴马，那么有些面积不大但是权重很大的州（如人口众多的加州）就会影响整幅美国地图。从原始地图上看，似乎麦凯恩会赢，因为他赢得了很多中部面积大的州（但人口稀少），整幅地图看起来以红色为主导；若我们保持州的相对地理位置不变，将各个州的形状进行大小的调整，使其面积与权重成正比，此时红蓝两色的局面就发生了逆转，地图以蓝色为主导色，地图传达信息的偏误才得到了纠正。我们把这种保持地理区域的相对位置不变、调整区域面积与某指标成比例的地图成为"变形地图"（Cartogram），详细内容可阅读笔者的博客[^map-prob]。
+在地理区域上标记大量的数值信息会遇到一个显而易见的困难，就是由于各个地理区域的面积不同而导致地图的解读失真或某些重要地理单元难以辨认。例如，我们在画中国省级地图时，北京和上海等直辖市相比其它省份显得面积太小，此时若用颜色来标记某个数值指标（如 GDP），就会使得各个直辖市的颜色几乎无法辨认。
+
+一个更有趣的例子来自 2008 年美国总统大选，如图 \@ref(fig:state-map)。若用红蓝两种颜色对各个州做标记，以表示该州支持麦凯恩或奥巴马，那么有些面积不大但是权重很大的州（如人口众多的加州）就会影响整幅美国地图。从原始地图上看，似乎麦凯恩会赢，因为他赢得了很多中部面积大的州（但人口稀少），整幅地图看起来以红色为主导；若我们保持州的相对地理位置不变，将各个州的形状进行大小的调整，使其面积与权重成正比，此时红蓝两色的局面就发生了逆转，地图以蓝色为主导色，地图传达信息的偏误才得到了纠正。我们把这种保持地理区域的相对位置不变、调整区域面积与某指标成比例的地图成为"变形地图"（Cartogram），详细内容可阅读笔者的博客[^map-prob]。
 
 [^map-prob]: <https://yihui.org/cn/2009/03/cartogram-as-special-maps/>
+
+(ref:state-map) 2008 年美国总统大选各州投票情况：红蓝两种颜色分别表示该州支持麦凯恩或奥巴马。左图是正常地图，麦凯恩赢得了很多中部面积大的州（但人口稀少），整幅地图看起来以红色为主导；右图为变形地图，保持了地理区域的相对位置不变而调整区域面积与权重成比例，地图以蓝色为主导色
+
+(ref:state-map-s) 2008 年美国总统大选各州投票情况
+
+```{r state-map, out.width="49%",fig.cap="(ref:state-map)", fig.scap="(ref:state-map-s)", fig.show='hold'}
+knitr::include_graphics(c("images/statemapredbluer1024.png", "images/statepopredblue1024.png"))
+```
 
 除了 **maps** 包和 **ggplot2** 包之外，R 语言还有更多的地图绘制系统，例如 **RgoogleMaps** 包 [@RgoogleMaps]，将 Google Maps 提供的（卫星）地图数据引入 R 中，这里简单介绍以下。
 
@@ -1082,7 +1096,7 @@ knitr::include_graphics(path = c(
 
 (ref:RgoogleMaps-s) 在卫星地图上标记地震发生的地点和震级
 
-**RgoogleMaps** 包的潜力仍尚待挖掘。一方面，它可以展示空间分布信息，例如在 2010 年的 ggplot2 案例分析竞赛中，David Kahle 利用 **RgoogleMaps** 包和公开的犯罪信息数据，展示了休斯顿地区暴力犯罪的分布情况 [^4]；另一方面，如果数据包含时间属性，那么我们可以固定住抓取图片的边界，并保证叠加元素的坐标对应正确，便能制作出有用的动画。读者可以发挥想象力，拓展更多的应用情境。
+**RgoogleMaps** 包的潜力仍尚待挖掘。一方面，它可以展示空间分布信息，例如在 2010 年的 **ggplot2** 案例分析竞赛中，David Kahle 利用 **RgoogleMaps** 包和公开的犯罪信息数据，展示了休斯顿地区暴力犯罪的分布情况[^4]；另一方面，如果数据包含时间属性，那么我们可以固定住抓取图片的边界，并保证叠加元素的坐标对应正确，便能制作出有用的动画。读者可以发挥想象力，拓展更多的应用情境。
 
 [^4]: <http://1t.click/Ksb>
 
@@ -1093,9 +1107,9 @@ knitr::include_graphics(path = c(
 1.  自行编写一个画三元图的函数，并体会这种从三维到二维的变换。以下是不完整的代码，核心部分已经完成，需要实现控制边长范围和坐标网格线等功能：
 
 ```{r triplot-fun, eval=FALSE, echo=TRUE}
-triplot <- function(x, ...) {
-  x <- as.matrix(x)
-  x <- x / rowSums(x) # 将行之和标准化到 1
+triplot = function(x, ...) {
+  x = as.matrix(x)
+  x = x / rowSums(x) # 将行之和标准化到 1
   plot(x[, 2] + x[, 3] / 2, x[, 3] * sqrt(3) / 2, asp = 1, 
         ann = FALSE, axes = FALSE, xlim = c(0, 1), 
         ylim = c(0, sqrt(3) / 2), ...)
@@ -1115,6 +1129,6 @@ msg_code("coplot2")
 
 (ref:fig-coplot2) 使用 **ggplot2** 包绘制的地震经纬度条件分割图
 
-```{r coplot2, fig.cap="(ref:fig-coplot2)"}
+```{r coplot2, fig.cap="(ref:fig-coplot2)", dev='tikz', fig.showtext = FALSE}
 msg_graph("coplot2")
 ```

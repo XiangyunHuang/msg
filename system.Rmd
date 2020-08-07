@@ -6,7 +6,7 @@
 
 ## 网格图形系统 {#sec:grid}
 
-网格图形（grid graphics）是与基础图形（base graphics）相平行的一套图形系统，在 R 中由 **grid** 包实现。相对于基础图形而言，网格图形具有更高的可控度和灵活性，但其本身只提供了非常底层的绘图命令，如果要绘制较复杂的图形，则可以考虑使用第 \@ref(sec:lattice) 节介绍的 **lattice** 和 第 \@ref(cha:ggplot2) 章介绍的 **ggplot2** 图形系统。这两个图形系统都是基于网格图形构建的。
+网格图形（grid graphics）是与基础图形（base graphics）相平行的一套图形系统，在 R 中由 **grid** 包实现。相对于基础图形而言，网格图形具有更高的可控度和灵活性，但其本身只提供了非常底层的绘图命令，如果要绘制较复杂的图形，则可以考虑使用第 \@ref(sec:lattice) 节介绍的 **lattice** 和 第\@ref(cha:ggplot2)章介绍的 **ggplot2** 图形系统。这两个图形系统都是基于网格图形构建的。
 
 和基础图形系统相比，网格图形有三个非常突出的特性：对绘图区域的灵活控制，支持图形的旋转，以及图形元素的动态编辑。下面本节就从这三个方面对网格图形进行简要的介绍。需要指出的是，由于 **grid** 包主要的作用是提供底层的绘图支持，因此本节不会涉及具体的绘图细节，而是着重介绍其特性和优势所在。这将有助于我们理解 **ggplot2** 包和 **lattice** 包的运行原理。
 
@@ -20,27 +20,31 @@
 
 (ref:grid-subplot) 用 **grid** 包实现的图形局部放大效果：将大图的局部区域放大显示在空白处
 
-```{r grid-subplot,fig.scap="(ref:grid-subplot-s)",fig.cap="(ref:grid-subplot)",results='hide',message=FALSE}
-msg_graph("grid-subplot")
+```{r grid-subplot,fig.scap="(ref:grid-subplot-s)",fig.cap="(ref:grid-subplot)",results='hide',message=FALSE, dev='tikz', fig.showtext = FALSE}
+msg_graph("grid-subplot-tikz")
 ```
 
-在 **grid** 包中，创建视图区的命令是 `viewport()`，函数的参数包括视图区的位置、大小、度量单位、坐标尺度等信息。需要注意的是，`viewport()` 函数只是创建了一个视图区对象，而并没有把它应用到图形设备上，如果要完成这一过程，则需要使用 `popViewport()` 函数。此外，**grid** 包还提供了 `upViewport()`，`popViewport()` 和 `downViewport()` 等函数来对视图区进行进一步的操作，这些函数可以参考 **grid** 包自带的帮助文档来学习使用。
+在 **grid** 包中，创建视图区的命令是 `viewport()`，函数的参数包括视图区的位置、大小、度量单位、坐标尺度等信息。需要注意的是，`viewport()` 函数只是创建了一个视图区对象，并没有把它应用到图形设备上，如果要完成这一过程，则需要使用 `popViewport()` 函数。此外，**grid** 包还提供了 `upViewport()` 和 `downViewport()` 等函数来对视图区进行进一步的操作，这些函数可以参考 **grid** 包自带的帮助文档来学习使用。
 
 ### 旋转
 
-图形的旋转是网格图形的一大特色。**grid** 包自带的帮助文档中给出了一个简单的例子，如图 \@ref(fig:grid-rotate) 的代码和图形所示。从程序代码中可以看出，控制图形旋转的实际上就是创建视图区时 `viewport()` 函数的 `angle` 参数，其数值表示图形逆时针旋转的角度。因此，在网格图形系统中旋转图形元素是非常方便的，只需先创建一个新的视图区，并在其中指定 `angle` 参数，然后在这个视图区中绘制图形即可。
+图形的旋转是网格图形的一大特色。**grid** 包自带的帮助文档中给出了一个简单的例子，如图 \@ref(fig:grid-rotate) 所示。
+
+(ref:grid-rotate-s) **grid** 系统中旋转的视图区
+
+(ref:grid-rotate) **grid** 系统中旋转的视图区：倾斜 $15\,^{\circ}$ 的图形
+
+```{r grid-rotate, fig.scap="(ref:grid-rotate-s)",fig.cap="(ref:grid-rotate)"}
+msg_graph("grid-rotate")
+```
+
+该图的绘图代码如下：
 
 ```{r, results='asis'}
 msg_code("grid-rotate")
 ```
 
-(ref:grid-rotate-s) grid 系统中旋转的视图区
-
-(ref:grid-rotate) grid 系统中旋转的视图区：倾斜 $15\,^{\circ}$ 的图形
-
-```{r grid-rotate, echo=TRUE, fig.scap="(ref:grid-rotate-s)",fig.cap="(ref:grid-rotate)"}
-msg_graph("grid-rotate")
-```
+从程序代码中可以看出，控制图形旋转的实际上就是创建视图区时 `viewport()` 函数的 `angle` 参数，其数值表示图形逆时针旋转的角度。因此，在网格图形系统中旋转图形元素是非常方便的，只需先创建一个新的视图区，并在其中指定 `angle` 参数，然后在这个视图区中绘制图形即可。
 
 图 \@ref(fig:grid-princomp) 是对网格图形旋转功能的一个应用，其中涉及了主成分分析的相关知识。图中首先绘制了两个变量之间的散点图，然后通过主成分分析找到了这两个主成分的方向，在图中是用红色的坐标轴表示的。散点图中的每一个点在红色轴线上的坐标就是它在两个主成分上的得分。
 
@@ -48,20 +52,19 @@ msg_graph("grid-rotate")
 
 (ref:grid-princomp-s) 基于旋转坐标系的主成分分析示意图
 
-```{r grid-princomp,results='hide',fig.scap="(ref:grid-princomp-s)",fig.cap="(ref:grid-princomp)"}
+```{r grid-princomp,results='hide',fig.scap="(ref:grid-princomp-s)",fig.cap="(ref:grid-princomp)", dev='tikz', fig.showtext = FALSE}
 msg_graph("grid-princomp")
 ```
 
-根据主成分分析的相关理论，我们知道主成分实际上就是原始变量的一个线性组合，而且每个主成分彼此之间是相互正交的，这在图形中反映就是一套经过平移和旋转的坐标系，其中坐标系的原点定位在原始变量的重心，而 x 轴则是原始变量方差最大的那个方向。
+根据主成分分析的相关理论，我们知道主成分实际上就是原始变量的一个线性组合，而且每个主成分彼此之间是相互正交的，这反映在图形中就是一套经过平移和旋转的坐标系，其中坐标系的原点定位在原始变量的重心，而 x 轴则是原始变量方差最大的那个方向。
 
 ### 图形对象
 
 图形对象的动态编辑是网格图形系统的另一大优势。在基础图形系统中，图形元素一旦被绘制到设备上，就无法再对其进行编辑，除非采取覆盖的办法将图形重新绘制一遍。而在网格图形系统中，图形元素会以对象的形式保存在内存中，在需要的时候可以对其进行更改，例如修改颜色、大小等。
 
-下面的例子展示了编辑图形对象的方法：
+下面的例子展示了编辑图形对象的方法[^editRect]：
 
 ```{r grid-edit-rect,eval=FALSE, echo=TRUE}
-# 参见 demo("editRect", package = "MSG", ask = FALSE)
 library(grid)
 grid.rect(x = 0, y = 0, width = 0.1, height = 0.1,
           gp = gpar(col = NA, fill = "red"), name = "rect0")
@@ -74,11 +77,13 @@ for (i in 1:100) {
 }
 ```
 
+[^editRect]: 参见 `demo("editRect", package = "MSG", ask = FALSE)`。
+
 如果在电脑屏幕上运行这段代码，应该会看到一个静止的正方形（“rect1”）和一个移动的正方形（“rect0”）。rect0 的位置和颜色会在循环语句中不断被修改，而 rect1 则保持不变。
 
 以上介绍的内容只是网格图形系统中非常小的一部分，感兴趣的读者可以自行阅读 **grid** 包附带的帮助文档，来进一步认识和了解网格图形的全貌。当然，在大部分的情况下，读者无需花费太多的时间来研究 **grid** 包的细节，因为以它为基础的 **lattice** 包和 **ggplot2** 包已经可以完成大部分的绘图任务。
 
-## lattice 网格图形 {#sec:lattice}
+## **lattice** 网格图形 {#sec:lattice}
 
 **lattice** [@Sarkar08] 是基于 **grid** 包的一套统计图形系统，它的图形设计理念来自于 @Cleveland93 的 Trellis 图形[^trellis]，其主要特征是根据特定变量（往往是分类变量）将数据分解为若干子集，并对每个子集画图。就像数理统计中的条件期望、条件概率一样，**lattice** 的图形也是一种“条件作图”。
 
@@ -92,20 +97,17 @@ lattice 这个单词是格子、格子状的意思。和它意义相近的还有
 
 **lattice** 的另一显著特点就是面向对象的思想，这是 **lattice** 区别于 R 传统作图的重要特点。在 R 的传统作图中，运行一个高级作图函数，通常会直接生成一幅可见的图形。而在 **lattice** 里，高层作图函数返回结果的是一个 trellis 对象，要想显示图形，必须使用对象的 `print()` 方法才可以。我们通过下面的一个小例子来说明这一点：
 
-```{r load-lattice, echo=TRUE}
+```{r lattice-usage,eval=FALSE, echo=TRUE}
 library(lattice) # 默认 lattice 包不随 R 启动，须手动载入
+x = hist(iris$Sepal.Length) # 图形立刻显示出来
+y = histogram(~Sepal.Length, data = iris) # 图形不显示
 ```
 
-```{r lattice-usage,eval=FALSE}
-x <- hist(iris$Sepal.Length) # 图形立刻显示出来
-y <- histogram(~Sepal.Length, data = iris) # 图形不显示
-```
-
-这两条语句分别调用了基础图形中的 `hist()` 函数和 **lattice** 中的 `histogram()` 函数，将运行的结果分别赋予了变量 x 和 y。这时，如果我们调用 `str()` 函数，分别观察 `str(x)` 和 `str(y)` 结果，就会发现 x 中只是保存了作图所需的一些通过计算得出的数据，而 y 中的内容则要更加丰富，有 45 条之多。仔细观察 y 中的条目，描述的都是作图的细节，比如图片的标题，座标轴的属性等等。这时，我们再分别运行 `print(x)` 和 `print(y)`，x 的输出结果保持不变，而 y 的输出结果则成为了图形。如果我们想对 y 生成的图形作一些微调，那么只须调用 `update()` 函数修改相应的选项即可。例如 `update(y, main = "Hello Lattice!")`，这条语句就为图片增加了一个标题。当我们写自定义函数的时候，也应当特别注意 **lattice** 的这一特点。比如自定义一个函数：
+这两条语句分别调用了基础图形中的 `hist()` 函数和 **lattice** 中的 `histogram()` 函数，将运行的结果分别赋予了变量 x 和 y。这时，如果我们调用 `str()` 函数，分别观察 `str(x)` 和 `str(y)` 结果，就会发现 x 中只是保存了作图所需的一些通过计算得出的数据，而 y 中的内容则要更加丰富，有 45 条之多。仔细观察 y 中的条目，描述的都是作图的细节，比如图片的标题，坐标轴的属性等等。这时，我们再分别运行 `print(x)` 和 `print(y)`，x 的输出结果保持不变，而 y 的输出结果则成为了图形。如果我们想对 y 生成的图形作一些微调，那么只须调用 `update()` 函数修改相应的选项即可。例如 `update(y, main = "Hello Lattice!")`，这条语句就为图片增加了一个标题。当我们写自定义函数的时候，也应当特别注意 **lattice** 的这一特点。比如自定义一个函数：
 
 ```{r lattice-custom-fun,eval=FALSE, echo=TRUE}
-custom_iris <- function() {
-  z <- histogram(~Sepal.Length, data = iris)
+custom_iris = function() {
+  z = histogram(~Sepal.Length, data = iris)
   return(z)
 }
 ```
@@ -113,17 +115,20 @@ custom_iris <- function() {
 运行它似乎不会有任何输出内容；只有在函数中加上一句 `print(z)` 或者对函数返回的结果进行 `print()` 之后，才能顺利地输出图形。
 
 ```{r lattice-custom-out,eval=FALSE, echo=TRUE}
-iris.hist <- custom_iris() # 没有任何图形输出
+iris.hist = custom_iris() # 没有任何图形输出
 print(iris.hist) # 此时才有图形输出
 ```
-```{r lattice-padding,echo=FALSE, echo=TRUE}
+
+**ggplot2** 包也具有类似的特点。因此，在本书和 **MSG** 包给出的代码示例中，凡是 **ggplot2** 作出的图形，我们都使用了 `print()` 函数来确保图形的输出。
+
+```{r lattice-padding,echo=FALSE}
 lattice.options(
   layout.heights = list(top.padding = list(x = 0, units = "inches")))
 ```
 
-grid 和 trellis 是 **lattice** 的最基础的特点，除此之外它还有两个最直观的特点，一个是所谓“条件作图”，另一个就是稍显复杂的选项系统。
+grid 和 trellis 是 **lattice** 的最基础的特点。除此之外，它还有两个最直观的特点：一个是所谓“条件作图”，另一个就是稍显复杂的选项系统。
 
-我们先看一个条件作图的例子：`iris` 数据中有五个变量，四个数值变量分别代表了花的四个部位的属性，一个分类变量表示花的种类。假设现在我们想观察一下三种花的花萼长度的分布情况，并且把它们作一个对比。如果只使用基础图形的方法，无外乎有两种方案：一是分别对每类花的花萼长度画一张直方图，前后总共画三张图。这个方法显得冗繁，而且不易于图形间的对比观察。二是在同一画布上划分出三个区域，把三张图画到同一画布上。这个方法虽然易于图形间的对比，但是仍然显得有些复杂。那么有没有更为简单的方法呢？当然有，在 **lattice** 中往往只需一条简单的语句就能解决这个问题:
+我们先看一个条件作图的例子：`iris` 数据中有五个变量（表 \@ref(tab:tab-iris)），四个数值变量分别代表了花的四个部位的属性，一个分类变量表示花的种类。假设现在我们想观察一下三种花的花萼长度的分布情况，并且把它们作一个对比。如果只使用基础图形的方法，无外乎有两种方案：一是分别对每类花的花萼长度画一张直方图，前后总共画三张图。这个方法显得冗繁，而且不易于图形间的对比观察。二是在同一画布上划分出三个区域，把三张图画到同一画布上。这个方法虽然易于图形间的对比，但是仍然显得有些复杂。那么有没有更为简单的方法呢？当然有，在 **lattice** 中往往只需一条简单的语句就能解决这个问题:
 
 ```{r, results='asis'}
 msg_code("lattice-iris-hist")
@@ -133,7 +138,7 @@ msg_code("lattice-iris-hist")
 
 (ref:lattice-iris-hist-s) 三种鸢尾花各自的花萼长度直方图
 
-```{r lattice-iris-hist,fig.width=6, fig.height=3, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)"}
+```{r lattice-iris-hist,fig.width=6, fig.height=3, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("lattice-iris-hist")
 ```
 
@@ -147,9 +152,11 @@ msg_graph("lattice-iris-hist")
 
 $$\text{纵坐标变量}\sim\text{横坐标变量}|\text{条件变量}$$
 
-在上节中，我们已经遇到了一个公式，但是由于分析是单变量的性质，因此公式的纵座标变量是缺失的。另一个分析单变量性质的函数 `densityplot()`，它与 `histogram()` 有着相似的特点，因此这两个函数共享一个帮助页面。除此之外，我们还会遇到 `xyplot()`、`dotplot()` 等函数，它们都被用来分析两个变量之间的关系，同样也共享一个帮助页面。这意味着，这些函数的选项和参数几乎相同，读者可以举一反三、触类旁通。
+在上节中，我们已经遇到了一个公式，但是由于分析是单变量的性质，因此公式的纵坐标变量是缺失的。
 
-横纵座标的变量类型要根据具体情况而定，并没有严格的要求，而条件变量则要求变量类型必须是分类型变量。如果用户想将数值型变量作为条件变量，那就需要利用 **lattice** 中的一种特殊的数据类型——重叠区间（Shingles）。Shingles 的本意是一种由交叠的瓦片搭成的屋顶，在 **lattice** 系统中对它最直观的理解就是，将数值型变量“砍”为 N 段，形成一个类数为 N 的分类型变量，每一段作为分类变量的一类，而且这些区间段之间可能有重叠。为了实现这个“砍”的过程，**base** 包和 **lattice** 包都提供了一些函数，常见的有 `cut()` 和 `equal.count()`。一般情况下，我们不提倡将连续型数据当作分类数据来处理，因为这样会造成源数据信息的丢失，但偶尔将连续数据离散化也有助于我们观察数据随着这个连续变量取值水平变化而发生的变化。
+另一个分析单变量性质的函数 `densityplot()`，它与 `histogram()` 有着相似的特点，因此这两个函数共享一个帮助页面。除此之外，我们还会遇到 `xyplot()`、`dotplot()` 等函数，它们都被用来分析两个变量之间的关系，同样也共享一个帮助页面。这意味着，这些函数的选项和参数几乎相同，读者可以举一反三、触类旁通。
+
+横纵坐标的变量类型要根据具体情况而定，并没有严格的要求，而条件变量则要求变量类型必须是分类型变量。如果用户想将数值型变量作为条件变量，那就需要利用 **lattice** 中的一种特殊的数据类型——重叠区间（Shingles）。Shingles 的本意是一种由交叠的瓦片搭成的屋顶，在 **lattice** 系统中对它最直观的理解就是，将数值型变量“砍”为 N 段，形成一个类数为 N 的分类型变量，每一段作为分类变量的一类，而且这些区间段之间可能有重叠。为了实现这个“砍”的过程，**base** 包和 **lattice** 包都提供了一些函数，常见的有 `cut()` 和 `equal.count()`。一般情况下，我们不提倡将连续型数据当作分类数据来处理，因为这样会造成源数据信息的丢失，但偶尔将连续数据离散化也有助于我们观察数据随着这个连续变量取值水平变化而发生的变化。
 
 条件变量可以包含多个具体的变量，假设我们有 a、b 两个分类型变量，a 包括三类，b 包含四类。公式 `y ~ x | a + b` 就表示这幅图一共有 $3\times4=12$ 个小格，格的数量等于两个分类变量分类数的乘积。
 
@@ -157,13 +164,17 @@ $$\text{纵坐标变量}\sim\text{横坐标变量}|\text{条件变量}$$
 
 从上两节的例子来看，**lattice** 的入门很容易，只要把数据整理成既定格式，用公式一套就能出结果，配色、线型等细节问题统统不用考虑。然而，画图的工作往往不能一蹴而就，总会有不满意或者不合适的地方需要改进，默认的配置常常不能满足用户的个性化要求。要想实现这些改进，就需要对 **lattice** 系统的选项系统有一个比较深入的了解，这样才能对症下药，取得到自己想要的效果。
 
-下面我们以图 \@ref(fig:lattice-vadeaths) 为例，介绍一些常用的选项。
+图 \@ref(fig:lattice-vadeaths) 是基于表 \@ref(tab:vadeaths-data) 而绘制的点图。我们以此为例，介绍一些常用的选项。
+
+```{r, results='asis'}
+msg_code("lattice-vadeaths")
+```
 
 (ref:lattice-vadeaths) 弗吉尼亚死亡率数据在 **lattice** 中的点图：四种人群组合各自的死亡率
 
 (ref:lattice-vadeaths-s) 弗吉尼亚死亡率数据在 **lattice** 中的点图
 
-```{r lattice-vadeaths,echo=TRUE, fig.scap="(ref:lattice-vadeaths-s)",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8}
+```{r lattice-vadeaths, fig.scap="(ref:lattice-vadeaths-s)",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8, dev='tikz', fig.showtext = FALSE}
 msg_graph("lattice-vadeaths")
 ```
 
@@ -188,19 +199,19 @@ msg_graph("lattice-vadeaths")
 
 ### 数据
 
-图形的基础是数据，对于大部分人来说，图形常常是简洁美妙的，而数据的整理工作却非常枯燥。使用 **lattice** 作图，要求数据的结构必须要满足既定的形式。然而理想的数据有时候并非直接存在，因此需要使用函数，将数据整理成要求的形式。本节的主要内容是 **lattice** 作图，所以我们只看 **lattice** 包中提供的函数 `make.groups()`。从名称上看，这个函数是用来制造“组”的，具体的用法如下例： 
+图形的基础是数据。对于大部分人来说，图形常常是简洁美妙的，而数据的整理工作却非常枯燥。使用 **lattice** 作图，要求数据的结构必须要满足既定的形式。然而，理想的数据有时候并非直接存在，因此需要使用函数，将数据整理成要求的形式。本节的主要内容是 **lattice** 作图，所以我们只看 **lattice** 包中提供的函数 `make.groups()`。从名称上看，这个函数是用来制造“组”的，具体的用法如下例： 
 
 ```{r make-groups-usage, echo=TRUE}
 set.seed(100) 
 # 首先生成三个向量数据
-x <- runif(100, 0, 10)
-y <- rnorm(100)
-z <- rchisq(100, 2)
-comp <- make.groups(x, y, z) # 将三个向量合并到同一数据框中
+x = runif (100, 0, 10)
+y = rnorm(100)
+z = rchisq(100, 2)
+comp = make.groups(x, y, z) # 将三个向量合并到同一数据框中
 str(comp)
 ```
 
-此时数据框中包括两列数据，第一列是 data，即 x、y、z 三个向量的 300 个数，第二列是 which，表示各个数据分别来自哪个向量，取值是 100 个 1、100 个 2 和 100 个 3，即前 100 个数来自于 x，中间 100 个来自于 y，最后 100 个来自于 z。我们可以在新的数据基础上画原来三个变量的箱线图如图 \@ref(fig:lattice-data-par) 的上图。
+此时数据框中包括两列数据：第一列是 `data`，即 `x`、`y`、`z` 三个向量的 300 个数；第二列是 `which`，表示各个数据分别来自哪个向量，取值是 100 个 1、100 个 2 和 100 个 3，即前 100 个数来自于 `x`，中间 100 个来自于 `y`，最后 100 个来自于 `z`。我们可以在新的数据基础上画原来三个变量的箱线图如图 \@ref(fig:lattice-data-par) 的上图。
 
 这只是数据整理的“冰山一角”，真正复杂的工作还需要结合 R 自身的函数来完成，常用的函数有 `apply()` 系列函数，`reshape()`、`xtabs()` 和 `subset()` 等等。
 
@@ -218,8 +229,8 @@ msg_code("lattice-data-par")
 
 (ref:lattice-data-par) 制作 **lattice** 需要的数据框以及修改 **lattice** 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点
 
-```{r lattice-data-par, fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.2, out.width="80%", fig.show='hold'}
-msg_graph("lattice-data-par")
+```{r lattice-data-par, fig.scap="(ref:lattice-data-par-s)",fig.cap="(ref:lattice-data-par)",fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.2, out.width="80%", fig.align='center', fig.show='hold', dev='tikz', fig.showtext = FALSE}
+msg_graph("lattice-data-par-tikz")
 ```
 
 ### 面板
@@ -235,23 +246,27 @@ histogram(~ Sepal.Length | Species, layout = c(3, 1), data = iris)
 这条语句还有另一版本，二者的作图结果是一样的：
 
 ```{r lattice-iris-hist2,eval=FALSE, echo=TRUE}
-histogram(~ Sepal.Length | Species,
-  layout = c(3, 1), data = iris,
-  panel = function(x, ...) {
-    panel.histogram(x, ...)
-  }
+histogram(~ Sepal.Length | Species, layout = c(3, 1), data = iris,
+          panel = function(x, ...) {
+            panel.histogram(x, ...)
+          }
 )
 ```
 
 尽管结果一样，但是第二个版本更好地说明了 **lattice** 的画图过程。这里有两点值得注意：第一，高级作图函数 `histogram()` 是管理层人士，它设定了整个程序的框架和一些必要的参数，真正的画图任务是由“打工人员”面板函数来完成的；第二，`histogram()` 函数有很多的参数，有一部分参数因为取了默认值，因而没有在程序代码中显示出来，但是这些参数需要传递给面板函数。这时，使用者不必知道这些参数具体是什么，只需要在面板函数的参数栏中输入 ...，就相当于把所有必需的参数传递给了面板函数。
 
-明白了 **lattice** 的作图过程后，我们就可以利用自定义面板函数，来自定义图形的显示；还是以图 \@ref(fig:lattice-iris-hist) 为例，假设我们现在想要对比一下，各类数据的分布和对应同均值方差正态分布的差别，就可以利用自定义面板函数，来为图中添加正态分布的曲线，如图 \@ref(fig:lattice-panel-function) 所示。
+明白了 **lattice** 的作图过程后，我们就可以利用自定义面板函数，来自定义图形的显示；还是以图 \@ref(fig:lattice-iris-hist) 为例，假设我们现在想要对比一下，各类数据的分布和对应同均值方差正态分布的差别，就可以利用自定义面板函数，来为图中添加正态分布的曲线，如图 \@ref(fig:lattice-panel-function) 所示。代码如下：
+
+```{r, results='asis'}
+msg_code("lattice-panel-function")
+```
+
 
 (ref:lattice-panel-function) **lattice** 中添加了密度曲线的直方图：通过自定义面板函数添加密度曲线。
 
 (ref:lattice-panel-function-s) **lattice** 中添加了密度曲线的直方图
 
-```{r lattice-panel-function,fig.width=6, fig.height=3, fig.scap="(ref:lattice-panel-function-s)",fig.cap="(ref:lattice-panel-function)"}
+```{r lattice-panel-function,fig.width=6, fig.height=3, fig.scap="(ref:lattice-panel-function-s)",fig.cap="(ref:lattice-panel-function)", dev='tikz', fig.showtext = FALSE}
 msg_graph("lattice-panel-function")
 ```
 
@@ -396,16 +411,16 @@ library(plotly, warn.conflicts = FALSE)
 
 ```{r,eval=FALSE}
 # 生成一些随机数
-days <- abs(rnorm(1000, 80, 125))
-p1 <- plot_ly(as.data.frame(days), x = ~days) %>% 
+days = abs(rnorm(1000, 80, 125))
+p1 = plot_ly(as.data.frame(days), x = ~days) %>% 
   add_histogram(name = "plotly.js")
 # hist 的默认方法是 Sturges
-price_hist <- function(method = "FD") {
-  h <- hist(diamonds$price, breaks = method, plot = FALSE)
+price_hist = function(method = "FD") {
+  h = hist(diamonds$price, breaks = method, plot = FALSE)
   plot_ly(x = h$mids, y = h$counts) %>%
     add_bars(name = method)
 }
-s <- subplot(
+s = subplot(
   p1, price_hist(), price_hist("Sturges"),  
   price_hist("Scott"),
   nrows = 4, shareX = TRUE
@@ -433,14 +448,14 @@ plotly 同时提供了自己的一套图层语法，其实是管道操作
 
 ```{r,eval=FALSE}
 data(geyser, package = "MASS")
-den <- MASS::kde2d(geyser$waiting, geyser$duration)
+den = MASS::kde2d(geyser$waiting, geyser$duration)
 # 热力图
-d1 <- plot_ly(x = den$x, y = den$y, z = den$z) %>%
+d1 = plot_ly(x = den$x, y = den$y, z = den$z) %>%
   add_heatmap()
 # 等高线图
-d2 <-  plot_ly(x = den$x, y = den$y, z = den$z) %>%
+d2 =  plot_ly(x = den$x, y = den$y, z = den$z) %>%
   add_contour()
-d3 <- subplot(
+d3 = subplot(
   d1, d2,
   nrows = 1, shareY = TRUE
 )
@@ -494,7 +509,7 @@ heatmaply(mtcars,
 heatmaply 是基于 plotly 的，所以可以用同样的方式导出 SVG 格式图片，即先将 heatmaply 绘制的图形保存为 plotly 对象，然后调用 orca 工具导出
 
 ```{r,eval=FALSE}
-h <- heatmaply(mtcars, k_row = 3, k_col = 2)
+h = heatmaply(mtcars, k_row = 3, k_col = 2)
 htmlwidgets::saveWidget(h, "heatmaply.html",
   title = "heatmaply",
   selfcontained = F, libdir = "lib"
@@ -528,11 +543,11 @@ knitr::include_graphics(path = "interactives/plotly-china-map.pdf")
 函数 `ggplotly` 可以直接将 ggplot2 对象转化为 plotly 对象
 
 ```{r,eval=FALSE}
-g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
+g = ggplot(faithful, aes(x = eruptions, y = waiting)) +
   stat_density_2d(aes(fill = ..level..), geom = "polygon") +
   xlim(1, 6) + ylim(40, 100)
 g
-gg <- ggplotly(g)
+gg = ggplotly(g)
 ```
 ```{r faithful,fig.cap="交互式图形",echo=FALSE}
 knitr::include_graphics(path = "interactives/faithful.pdf")
@@ -555,7 +570,7 @@ htmlwidgets::saveWidget(gg, "faithful.html",
 
 -->
 
-## rgl 三维图形 {#sec:rgl}
+## **rgl** 三维图形 {#sec:rgl}
 
 **rgl** 是 R 的一个附加包（名字来自 R 和 [OpenGL](https://www.opengl.org/)），利用它可以在 R 中绘制可交互的三维图形，即用户通过鼠标的点击拖拽和滚轮滚动可以对图形进行旋转和缩放等操作。
 
@@ -572,7 +587,7 @@ usage2(usage(plot3d, "default", output = FALSE))
 
 此外，`plot3d()` 函数还提供了 `type` 参数，用来指定图形的形式，其可能的取值有 `"p"`、`"s"`、`"l"` 和 `"h"`，分别表示绘制点、球体、折线和到零点的垂线。如果要在已有的图形中加上新的点或线，则可以使用 `points3d()` 和 `lines3d()` 函数，其用法与 `plot3d()` 类似。
 
-图 \@ref(fig:rgl-ch4) 提供了一个简单的示例，即模拟甲烷分子（$\mathrm{CH_{4}}$）的构造。
+图 \@ref(fig:rgl-ch4) 提供了一个简单的示例，即模拟甲烷分子（$\mathrm{CH_{4}}$）的构造，代码如下：
 
 ```{r rgl-ch4-html, results='asis'}
 msg_code("rgl-ch4")
@@ -582,7 +597,7 @@ msg_code("rgl-ch4")
 
 (ref:rgl-ch4) 用 **rgl** 包画出来的甲烷分子立体结构：四个氢原子和一个碳原子
 
-```{r rgl-ch4,out.width="30%", fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE}
+```{r rgl-ch4,out.width="20%", fig.cap="(ref:rgl-ch4)",fig.scap="(ref:rgl-ch4-s)",echo=FALSE}
 knitr::include_graphics(path = "images/rgl-ch4.png", dpi = NA)
 ```
 
@@ -641,13 +656,13 @@ movie3d(spin3d(), duration = 5, convert = FALSE, dir = ".")
 
 笔者的个人兴趣之一是统计学动画。这里简要介绍一下动画的基本原理以及它与统计学理论的内在联系。
 
-**animation** 包 [@animation] 利用 R 基础图形系统生成了一系列统计学动画；从这个附加包的展示中，读者可以更加深刻认识到对图形元素的控制是一门具有广泛意义的艺术。我们在 \@ref(sec:covid) 小节介绍的新冠疫情地图动画就是使用这个包绘制的。
+**animation** 包 [@animation] 利用 R 基础图形系统生成了一系列统计学动画。从这个附加包的展示中，读者可以更加深刻认识到对图形元素的控制是一门具有广泛意义的艺术。我们在 \@ref(sec:covid) 小节介绍的新冠疫情地图动画就是使用这个包绘制的。
 
-动画的基本原理很简单，即快速连续展示一幅幅静态图形，利用人眼的视觉错觉功能造成动态效果；下文中我们把一幅静态图形称为动画的一帧。在 R 中我们可以快速生成一系列的静态图片并播放出来，这样就可以构成基本的动画了。整个动画包的代码设计方案如下：
+动画的基本原理很简单，即快速连续展示一幅幅静态图形，利用人眼的视觉错觉功能造成动态效果。下文中，我们把一幅静态图形称为动画的一帧。在 R 中我们可以快速生成一系列的静态图片并播放出来，这样就可以构成基本的动画了。整个动画包的代码设计方案如下：
 
 ```{r animation-schema,eval=FALSE, echo=TRUE}
 library(animation)
-oopt <- ani.options(interval = 0.2, nmax = 10) # 设置动画选项
+oopt = ani.options(interval = 0.2, nmax = 10) # 设置动画选项
 # 用一个循环不断创建静态图形
 for (i in 1:ani.options("nmax")) {
   draw_plot() # 画图
@@ -687,7 +702,7 @@ cat("```\n")
 : HTML 格式：将所有的帧用图形设备（\@ref(sec:device) 小节）记录为图片文件，并生成一个 HTML 页面，其中用 JavaScript 调用这些静态图片逐个显示形成动画。这个 HTML 页面的界面就像一个影音播放器，有开始/停止/前进/后退等功能。特别值得一提的是，这个函数会把制作动画的 R 代码也写入 HTML 页面；这样，观看动画的用户也能知道页面内的动画是如何生成的。
 
 `saveLatex()`
-: PDF 格式：同样用图形设备记录所有帧并写入一个 $\LaTeX$ 文件，然后基于 $\LaTeX$ 宏包 animate 将这些帧编译为 PDF 文件中的动画，可以用 Adobe Reader 在页面内直接观看动画（其它 PDF 阅读器无法观看）。实际上，这里的动画也是用 JavaScript 驱动的。注意： `saveLatex()` 函数可以结合 Sweave 实时生成动画，这样我们可以将动画动态嵌入 $\LaTeX$ 文档。
+: PDF 格式：同样用图形设备记录所有帧并写入一个 $\LaTeX$ 文件，然后基于 $\LaTeX$ 宏包 animate 将这些帧编译为 PDF 文件中的动画，可以用 Adobe Reader 在页面内直接观看动画（其它 PDF 阅读器可能无法观看）。实际上，这里的动画也是用 JavaScript 驱动的。注意： `saveLatex()` 函数可以结合 Sweave 实时生成动画，这样我们可以将动画动态嵌入 $\LaTeX$ 文档。
 
 `saveGIF()`
 : GIF 动画格式：GIF 是一种最常见的动画图片格式。这个函数调用的是第三方软件 [ImageMagick](https://imagemagick.org/) 或者 [GraphicsMagick](http://www.graphicsmagick.org)，将 R 的图片转化为 GIF 动画。因此，用户必须安装这两个软件中的一种（都是免费开源软件）。
@@ -717,7 +732,7 @@ usage2(usage(saveVideo, output = FALSE))
 
 所有函数的第一个参数都是 `expr`，它通常是一段用花括号括起来的 R 代码。
 
-下面的代码是一个导出布朗运动动画为 HTML 页面的例子。其中，`img.name` 设定了图片的基础文件名，即所有图片将以 bm-plot1、bm-plot2、……、bm-plot50 依次命名（扩展名默认为 `.png`）；`title` 指定了 HTML 页面的标题；`description` 是对动画的一个描述，将会被以 R 注释的形式写入 HTML 页面；`ani.height` 和 `ani.width` 分别设定动画的高度和宽度，单位默认为像素。
+下面的代码是一个导出布朗运动动画为 HTML 页面的例子。其中，`img.name` 设定了图片的基础文件名，即所有图片将以 bm-plot1、bm-plot2、……、bm-plot50 依次命名（扩展名默认为 `.png`）；`title` 指定了 HTML 页面的标题；`description` 是对动画的一个描述，将会以 R 注释的形式写入 HTML 页面；`ani.height` 和 `ani.width` 分别设定动画的高度和宽度，单位默认为像素。
 
 ```{r,eval=FALSE, echo=TRUE}
 saveHTML({
@@ -761,7 +776,7 @@ knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 动态趋势
 : 动画最直观的应用可能就是动态趋势。这也最符合人们通常概念上的“动画”，如卡通动画片就是人物的运动。在统计学中（尤其是数据分析中），我们也经常需要展示某个统计量随着时间的变化或随着另一个变量的变化。例如，时序图本身是静态图形，但如果我们不断取一个时间区间上的数据并画图，那么随着这个区间的推进，这些静态图形也可以构成动画。
 
-从版本 2.6 开始，**animation** 包已经收录了大约 30 个统计学主题相关的函数，函数主题包括布朗运动、布丰投针、大数定律、中心极限定理、牛顿法求根、二分法求根、梯度下降法、抛硬币、置信区间、交叉验证、K-Means 聚类、k 近邻方法、最小二乘法、蒙特卡罗、豌豆机和抽样方法等。感兴趣的读者可以访问其网站[^animation-examples]看在线演示。
+从版本 2.6 开始，**animation** 包已经收录了大约 30 个统计学主题相关的函数，函数主题包括布朗运动、布丰投针、大数定律、中心极限定理、牛顿法求根、二分法求根、梯度下降法、抛硬币、置信区间、交叉验证、K-Means 聚类、k 近邻方法、最小二乘法、蒙特卡罗、豌豆机和抽样方法等。感兴趣的读者可以访问其网站[^animation-examples]观看在线演示。
 
 [^animation-examples]: <https://yihui.org/animation/examples/>
 
@@ -778,9 +793,9 @@ knitr::include_graphics(path = "images/html-interface.png", dpi = NA)
 msg_code("animation-pollen")
 ```
 
-(ref:animation-pollen-s) pollen 数据中暗藏的特征
+(ref:animation-pollen-s) **pollen** 数据中暗藏的特征
 
-(ref:animation-pollen) pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧
+(ref:animation-pollen) **pollen** 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧
 
 ```{r animation-pollen,fig.scap="(ref:animation-pollen-s)",fig.cap="(ref:animation-pollen)",echo=FALSE,fig.subcap=c("",""),out.width="45%"}
 knitr::include_graphics(path = c(
@@ -809,8 +824,8 @@ options(guiToolkit = "RGtk2") # 这项设置可省略
 创建图形界面有三大关键要素：一是界面控件，如按钮、下拉框、文本框等，二是这些控件的位置安排，或者嵌套关系，三是事件，因为控件通常是用来响应一些用户事件的，例如鼠标点击或键盘动作等。这些要素在 gWidgets 的框架下非常简易明了，下面我们以一个最简单的例子说明这些要素：
 
 ```{r gwidgets-simple-demo,eval=FALSE}
-gw <- gwindow("Hi Window!") # 创建一个窗口，它是所有控件的载体
-gb <- gbutton("Open", container = gw, handler = function(h, ...) {
+gw = gwindow("Hi Window!") # 创建一个窗口，它是所有控件的载体
+gb = gbutton("Open", container = gw, handler = function(h, ...) {
   gfile("Open a file", type = "open")
 })
 ```
@@ -873,9 +888,9 @@ gb <- gbutton("Open", container = gw, handler = function(h, ...) {
 大部分控件都有其取值，可以用函数 `svalue()` 提取或改变。例如文本框控件的取值就是其中的文本，我们也可以通过 `svalue()` 改变文本框中的文本：
 
 ```{r gwidgets-svalue-demo,eval=FALSE}
-gtxt <- gedit("initial text", container = TRUE)
+gtxt = gedit("initial text", container = TRUE)
 svalue(gtxt) # 返回 "initial text"
-svalue(gtxt) <- "changed text" # 文本框中的文本被更新
+svalue(gtxt) = "changed text" # 文本框中的文本被更新
 ```
 
 类似地，我们也可以用 `enabled()` 和 `visible()` 分别控制控件的可用性（不可用时控件通常变为灰色）和可见性。我们还可以用一系列 `addHandlerXXX()` 函数来事后往控件上添加事件，例如 `addHandlerClicked()` 可以添加鼠标点击事件，等等。
@@ -884,7 +899,7 @@ svalue(gtxt) <- "changed text" # 文本框中的文本被更新
 
 
 ```{r gwidgets-gtable-demo,eval=FALSE}
-gtb <- gtable(iris, container = TRUE)
+gtb = gtable(iris, container = TRUE)
 gtb[1, 1] # 表中第 1 行第 1 列的值
 gtb[1:10, 1:2] # 前 10 行前 2 列的值
 ```
@@ -893,11 +908,11 @@ gtb[1:10, 1:2] # 前 10 行前 2 列的值
 
 ```{r gwidgets-color-selector,eval=FALSE}
 library(gWidgetsRGtk2)
-g <- ggroup(horizontal = FALSE, container = gwindow("Color Selector"))
-x <- c(0, 0, 0) # 红绿蓝颜色成分向量
+g = ggroup(horizontal = FALSE, container = gwindow("Color Selector"))
+x = c(0, 0, 0) # 红绿蓝颜色成分向量
 for (i in 1:3) {
   gslider(from = 0, to = 1, by = 0.05, action = i, handler = function(h, ...) {
-    x[h$action] <<- svalue(h$obj)
+    x[h$action] <= svalue(h$obj)
     par(bg = rgb(x[1], x[2], x[3]), mar = rep(0, 4))
     plot.new()
   }, container = g)
@@ -928,11 +943,11 @@ knitr::include_graphics(path = c(
 
 至此，我们在重点介绍了 R 语言基础作图系统和 **ggplot2** 作图系统之外，又简略介绍了 **lattice** 作图系统、**rgl** 三维图形系统以及动画的制作。事实上，R 语言的作图系统远远不止这些。例如，**plotly** 包、**dygraph** 包和 **leaflet** 及 **leafletCN** 包可以绘制能与用户交互的动态图形；再如，**shiny** 包提供了完整而强大的用户界面开发系统，可以将数据输入输出与图形展示结合在同一个平台上（\@ref(sec:rchive) 小节给出了一个实例）；而 **R Markdown** 家族则是开辟了一个新世界，用户可以将各种静态的、动态的、交互的、动画的统计图形嵌入到各种五花八门的可重复性文档中。
 
-受篇幅所限，本书恕难一一介绍。不过，相信读者通过这番统计图形之旅，已经对 R 语言的统计作图有所领略。借助我们介绍的帮助系统（\@ref(sec:help)），读者可以对这套体系进一步深入了解，在未来进入更为绚烂多姿的统计图形世界。
+受篇幅所限，本书恕难一一介绍。不过，相信读者通过这番统计图形之旅，已经对 R 语言的统计作图有所领略。借助我们介绍的帮助系统（\@ref(sec:help) 小节），读者可以对这套体系进一步深入了解，以期在未来进入更为绚烂多姿的统计图形世界。
 
 ## 思考与练习
 
-1.  **lattice** 和 **ggplot2** 系统都可以用两个或多个分类变量拆分数据形成数据子集并分别画图，当这些分类变量的类数特别多的时候，图形必然会变得非常拥挤，因为画布被拆分为很小的矩形块，此时我们也几乎无法从图中清楚看到数据的特征，对这种情况你有什么解决办法？动态图形系统或者动画是否有帮助？如果我们感兴趣的只是某一个特定的子集，我们是否可以通过数据变换的方式来凸显这个子集？（例如新生成一个逻辑变量来标明某些行是否属于这个子集）
+1.  **lattice** 和 **ggplot2** 系统都可以用两个或多个分类变量拆分数据形成数据子集并分别画图。当这些分类变量的类数特别多的时候，图形必然会变得非常拥挤，因为画布被拆分为很小的矩形块，此时我们也几乎无法从图中清楚看到数据的特征，对这种情况你有什么解决办法？动态图形系统或者动画是否有帮助？如果我们感兴趣的只是某一个特定的子集，我们是否可以通过数据变换的方式来凸显这个子集？（例如新生成一个逻辑变量来标明某些行是否属于这个子集）
 
 2.  **ggplot2** 默认背景为灰色的理由是否令你信服？
 

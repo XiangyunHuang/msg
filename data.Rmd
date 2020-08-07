@@ -1,12 +1,12 @@
 # 现代实例 {#chap:data}
 
-> 　　"哦，你还不知道吧？"他笑了，大声说道。"很惭愧，我写了几篇专论，都是技术方面的。比方说，有一篇叫《论各种烟灰的辨别》。此文列举了一百四十种雪茄烟。卷烟、烟斗烟丝的烟灰，并附有彩色插图，以说明烟灰的区别。这是刑事审判中常常出现的重要证据，有时还是案件的重要线索。举例说，如果你断定某一谋杀案系一个抽印度雪茄的男人所为，显然缩小了侦查范围。在训练有素的人看来，印度雪茄的黑灰与"鸟眼"牌的白灰的区别，正如白菜和土豆的区别一样大。"
+> 　　"哦，你还不知道吧？"他笑了，大声说道。"很惭愧，我写了几篇专论，都是技术方面的。比方说，有一篇叫《论各种烟灰的辨别》。此文列举了一百四十种雪茄烟。卷烟、烟斗烟丝的烟灰，并附有彩色插图，以说明烟灰的区别。这是刑事审判中常常出现的重要证据，有时还是案件的重要线索。举例说，如果你断定某一谋杀案系一个抽印度雪茄的男人所为，显然缩小了侦查范围。在训练有素的人看来，印度雪茄的黑灰与'鸟眼'牌的白灰的区别，正如白菜和土豆的区别一样大。"
 >
 > ------柯南 $\cdot$ 道尔《四签名》
 
 本章以一些实际数据案例来说明统计图形的应用，这些数据都尽量取自生活，以保证足够的新颖性；然后，我们利用统计模拟生成的数据来说明统计图形的另类价值，即它在解释统计模型中的独特地位。为了增加阅读的趣味性，我们以探案的形式来介绍统计图形的创建过程，以及应用中可能存在的问题。
 
-首先我们看一个最简单的数据：猪肉价格。
+首先我们看一个最简单的实例：猪肉价格。
 
 ## 猪肉价格
 
@@ -20,14 +20,14 @@
 knitr::include_graphics(path = "images/pork-price-orig.png", dpi = NA)
 ```
 
-这幅图非常生动有趣，但莞尔之余我们不妨细看一下这幅图的横坐标------前四根柱子的对应的单位是一年，而后面五根柱子的单位却变成了三个月。虽然图中的小猪作腾飞状，但这幅图本身似乎看不出那么夸张的上涨效果，柱状图整体上比较平淡。这是为什么呢？
+这幅图非常生动有趣，但莞尔之余我们不妨细看一下这幅图的横坐标------前四根柱子对应的单位是一年，而后面五根柱子的单位却变成了三个月。虽然图中的小猪作腾飞状，但这幅图本身似乎看不出那么夸张的上涨效果，柱状图整体上比较平淡。这是为什么呢？
 
 ### 探案过程 {-}
 
 表 \@ref(tab:tab-pork) 列出了图中的数据。这是一个一维时间序列数据。我们按照真实的横坐标单位来重画这幅图，会看到另一番景象。
 
 ```{r tab-pork, eval=TRUE, echo=FALSE}
-tables$pork <- readr::read_csv("tables/pork.csv")
+tables$pork = readr::read_csv("tables/pork.csv")
 kable2(tables$pork, "2006 到 2011 年猪肉价格", only_head = FALSE, latex_options = "scale_down")
 ```
 
@@ -35,11 +35,11 @@ kable2(tables$pork, "2006 到 2011 年猪肉价格", only_head = FALSE, latex_op
 
 我们在图 \@ref(fig:pork-price) 中同时给出了两种图形。横坐标被调整到正确的位置之后，2010 年的价格上涨，真的如原图中的小猪一样直飞而上。道理很简单，原本三个月的上涨如果被"稀释"到一年中，那么我们当然不会感觉到强烈的上升趋势。图 \@ref(fig:pork-price) 给我们另外一点启示是，条形图容易观察差异大小（比较条的长短），而折线图更容易观察斜率大小（升降速度）。
 
-(ref:pork-price) 更新后的猪肉价格走势图：上方为条形图，下方为折线图，左侧图形的 y 轴从 0 开始，右侧图形的 y 轴从数据的最小值开始
+(ref:pork-price) R 语言重新绘制的猪肉价格走势图：上方为条形图，下方为折线图，左侧图形的 y 轴从 0 开始，右侧图形的 y 轴从数据的最小值开始
 
-(ref:pork-price-s) 更新后的猪肉价格走势图
+(ref:pork-price-s) R 语言重新绘制的猪肉价格走势图
 
-```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)"}
+```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)", dev='tikz', fig.showtext = FALSE}
 msg_graph("pork-price2")
 ```
 
@@ -63,7 +63,7 @@ msg_code("pork-price2")
 
 ### 案情回放 {-}
 
-2011 年 1 月 19 日，英国《卫报》发表了一篇关于中美国力对比的文章。此时正是中国国家主席胡锦涛访美期间，《卫报》称此次访问是"硬实力与软实力的会晤"。文中分析了中美一些经济社会指标的对比，配图如图 \@ref(fig:cn-us-guardian)。
+2011 年 1 月 19 日，英国《卫报》发表了一篇关于中美国力对比的文章。此时正是中国国家主席胡锦涛访美期间，《卫报》称此次访问是"硬实力与软实力的会晤"。文中分析了中美一些经济社会指标的对比，配图 \@ref(fig:cn-us-guardian)。
 
 (ref:cn-us-guardian) 2010 年中美国力对比：中国人口多、污染重、GDP 增长快；美国人均 GDP 高、市值高、失业率高
 
@@ -73,7 +73,7 @@ msg_code("pork-price2")
 knitr::include_graphics(path = "images/China-v-US-graphic.jpg")
 ```
 
-总体来说，这幅图形比较有冲击力，能突出两国各自的优势劣势，尤其值得称道的是作者将各个指标进行了排序，这样便于读者阅读。然而，如果我们再细看一下，就能发现一个问题：由于指标数值都是用扇环表示，因此容易造成一个误会，即数值大小究竟体现在扇环的半径上还是面积上？这一点可能每个读者的视角都不一样，但这幅图如果按照面积大小去解读数据可能就错了。例如，中国人口是美国人口的 4.3 倍，但图中中国扇环（红色）的面积显然不止是美国的 4.3 倍，这样可能给读者造成一个印象，似乎中国人口是美国的七八倍。
+总体来说，这幅图形比较有冲击力，能突出两国各自的优势劣势，尤其值得称道的是作者将各个指标进行了排序，这样便于读者阅读。然而，如果我们再细看一下，就能发现一个问题：由于指标数值都是用扇环表示，因此容易造成一个误会，即数值大小究竟体现在扇环的半径上还是面积上？不同读者的视角自有不同，但这幅图如果按照面积大小去解读数据就错了。例如，中国人口是美国人口的 4.3 倍，但图中中国扇环（红色）的面积显然不止是美国的 4.3 倍，这样可能给读者造成一个印象，似乎中国人口是美国的七八倍。
 
 那么，中美国力的实际对比到底是怎样的？我们应该如何用图形恰当地表达其差异？
 
@@ -85,7 +85,7 @@ knitr::include_graphics(path = "images/China-v-US-graphic.jpg")
 
 ```{r tab-cn-vs-us}
 data(cn_vs_us)
-kable2(cn_vs_us[, 1:4], "中美国力数据", only_head = FALSE)
+kable2(cn_vs_us[, 1:4], "2010 年中美国力数据", only_head = FALSE)
 ```
 
 
@@ -93,8 +93,8 @@ kable2(cn_vs_us[, 1:4], "中美国力数据", only_head = FALSE)
 
 (ref:cn-us-redraw-s) 2010 年中美国力对比条形图
 
-```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)", fig.width=10, fig.height=6}
-msg_graph("cn-us-redraw")
+```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)", fig.width=10, fig.height=6, dev='tikz', fig.showtext = FALSE}
+msg_graph("cn-us-redraw-tikz")
 ```
 
 
@@ -104,7 +104,7 @@ msg_graph("cn-us-redraw")
 
 ### 探案工具 {-}
 
-本案例使用了条形图（详见 \@ref(sec:barplot) 小节）和玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节），所使用的数据收集在 **MSG** 包中。加载数据和图形的绘制代码如下：
+本案例使用了条形图（详见 \@ref(sec:barplot) 小节）和玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节），所使用的数据收集在 **MSG** 包中。加载数据和绘制图形的代码如下：
 
 ```{r, results='asis'}
 msg_code("cn-us-redraw")
@@ -117,23 +117,23 @@ msg_code("cn-us-redraw")
 
 2020年春节前后，新冠疫情爆发，亿万人的生活和工作都或多或少受到疫情的影响。笔者在关注疫情统计数据的过程中，遇到了一些有意思的问题。这里试举两例。
 
-第一个例子是，笔者看到朋友分享的一幅疫情地图（如图 \@ref(fig:ncov-jiangsu)），显示了 1 月 22 日全国各省确诊和疑似病例，只见沿海地区一片火红（红色表示新冠肺炎确诊病例），唯有江苏省是白色。图上搭配文字：“在吗，救我”，在地图上格外抢眼。笔者即将赴江苏就职，对此格外关注的同时，不免产生疑问：江苏和周边省份差别真的有这么大吗？
+第一个例子是，笔者看到朋友分享的一幅疫情地图（如图 \@ref(fig:ncov-jiangsu)），显示了 1 月 22 日全国各省确诊和疑似病例，只见沿海地区一片火红（红色表示新冠肺炎确诊病例），唯有江苏省是白色。图上搭配文字：“在吗，救我”，在地图上格外抢眼。笔者即将赴江苏就职，对此格外关注的同时，不免产生疑问：江苏和周边省份差别真的有这么大吗？为什么？
 
-(ref:ncov-jiangsu-s) 新冠疫情下的江苏
+(ref:ncov-jiangsu-s) 2020 年 1 月 22 日新冠疫情下的江苏
 
-(ref:ncov-jiangsu) 新冠疫情下的江苏。2020 年 1 月 22 日，除了江苏省，东部和中部地区一片火红
+(ref:ncov-jiangsu) 新冠疫情下的江苏：2020 年 1 月 22 日，除了江苏省，东部和中部地区一片火红
 
 ```{r ncov-jiangsu, out.width="50%", fig.cap="(ref:ncov-jiangsu)", fig.scap="(ref:ncov-jiangsu-s)"}
 include_graphics("images/ncov-jiangsu.jpeg")
 ```
 
-第二个例子是，有一段时间，一种鹦鹉螺图非常流行，如图 \@ref(fig:covid-19) 所示，显示了 2020 年 3 月 27 日除我国以外的世界各国新冠疫情。图中用不同颜色、相同圆心角的扇形来代表确诊 707 例以上的不同国家，各国新冠肺炎的确诊和死亡人数以数字标注。显然，图形经过了精心设计，令人过目不忘。然而，仔细观察却不免心生困惑：与 \@ref(subsec:china-vs-us) 小节所举的例子类似，如果以半径代表数值，那么单从图形看，会给人一种印象，即美国确诊数是德国的 2 倍，而德国大约是英国的 2 倍；但一看数字，德国却大约是英国的 4 倍。那么确诊数量究竟体现在扇形的哪个属性呢？
+第二个例子是，有一段时间，一种鹦鹉螺图非常流行，如图 \@ref(fig:covid-19) 所示，显示了 2020 年 3 月 27 日除我国以外的世界各国新冠疫情。图中用不同颜色、相同圆心角的扇形来代表确诊 707 例以上的不同国家，各国新冠肺炎的确诊和死亡人数以数字标注。显然，图形经过了精心设计，令人过目不忘。然而，仔细观察却不免心生困惑：与 \@ref(subsec:china-vs-us) 小节所举的例子类似，如果以半径代表数值，那么单从图形看，会给人一种印象，即美国确诊数是德国的 2 倍，而德国大约是英国的 2 倍；但一看数字，德国却大约是英国的 4 倍。那么，确诊数量究竟体现在扇形的哪个属性呢？从图上如何看出各国的实际差异呢？
 
-(ref:covid-19-world) 世界各国新冠疫情的鹦鹉螺图：图中用不同颜色的扇形来代表不同国家
+(ref:covid-19-world) 2020 年 3 月 27 日世界各国新冠疫情的鹦鹉螺图：图中用不同颜色的扇形来代表不同国家
 
-(ref:covid-19-world-s) 世界各国新冠疫情的鹦鹉螺图
+(ref:covid-19-world-s) 2020 年 3 月 27 日世界各国新冠疫情的鹦鹉螺图
 
-```{r covid-19, fig.cap="(ref:covid-19-world)", fig.scap="(ref:covid-19-world-s)"}
+```{r covid-19, out.width="60%", fig.cap="(ref:covid-19-world)", fig.scap="(ref:covid-19-world-s)"}
 knitr::include_graphics("images/covidcountries.jpg")
 ```
 
@@ -142,21 +142,21 @@ knitr::include_graphics("images/covidcountries.jpg")
 对于第一个关于疫情地图的问题，笔者获取了当天（1 月 22 日）以及前一天（1 月 21 日）的疫情数据。这是为了避免数据统计时间的不同而出现与图 \@ref(fig:covid-19) 在统计数字上的差异。在这些数据的基础上，笔者绘制了这两天的疫情地图，如图 \@ref(fig:covidchina) 所示。
 
 ```{r tab-ncovr}
-covid_china <- readRDS(system.file("extdata", "covidchina.rds", package = "MSG"))
-covid_china2 <- covid_china[, 1:3]
-names(covid_china2) <- c("名称", "01-21", "01-22")
-kable2(covid_china2, "全国省级行政区新冠肺炎确诊人数", only_head = FALSE, insert_txt = "（未发现确诊病例的地区并未列出）")
+covid_china = readRDS(system.file("extdata", "covidchina.rds", package = "MSG"))
+covid_china2 = covid_china[, 1:3]
+names(covid_china2) = c("名称", "01-21", "01-22")
+kable2(covid_china2, "2020 年 1 月 21 日和 22 日全国省级行政区新冠肺炎确诊人数", only_head = FALSE, insert_txt = "（未发现确诊病例的地区并未列出）")
 ```
 
-在这两张地图上，我们同样是用红色来表示疫情的地理分布；不同的是，我们用红色的深浅来区分确诊病例的多少。同时，由于各省确诊病例数量极差较大，数量跨三个数量级，我们使用了对数坐标，以便显示低值之间的差异。
+在这两张地图上，我们同样是用红色来表示疫情的地理分布；不同的是，我们用红色的深浅来区分确诊病例的多少。同时，由于各省确诊病例数量极差较大，跨三个数量级，我们使用了对数坐标，以便显示低值之间的差异。
 
-从图中可以看出，江苏跟周边省份差别并不是很大：1 月 21 日，除了浙江 5 例确诊（浅红色）外，江苏和安徽无确诊，山东只有一例，在地图上都是白色或接近白色；而 1 月 22 日，浙江共 10 例，而江苏、安徽、山东各增加一例，均是极浅的浅红色。
+从图中可以看出，江苏跟周边省份差别并不是很大：1 月 21 日，除了浙江 5 例确诊（浅红色）外，江苏和安徽无确诊，山东只有 1 例，在地图上都是白色或接近白色；而 1 月 22 日，浙江共 10 例，而江苏、安徽、山东各增加 1 例，均是极浅的浅红色。
 
 (ref:covidchina) 新冠疫情中国地图。图中用红色的深浅来表示确诊病例的多少。由于各省确诊病例数量极差较大，数量跨三个数量级，使用对数坐标来显示低值之间的差异
 
 (ref:covidchina-s) 新冠疫情中国地图
 
-```{r covidchina, fig.show='hold', out.width="49%", fig.cap="(ref:covidchina)", fig.scap="(ref:covidchina-s)"}
+```{r covidchina, fig.show='hold', out.width="49%", fig.cap="(ref:covidchina)", fig.scap="(ref:covidchina-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("covidchina")
 ```
 
@@ -168,14 +168,14 @@ msg_graph("covidchina")
 
 对于第二个关于鹦鹉螺图的问题，鹦鹉螺图的本质是条形图，只不过是把条形图的笛卡尔坐标转换成了极坐标：用极坐标的角度代表笛卡尔坐标的 $x$，而半径代表 $y$。从图 \@ref(fig:covid-19) 来看，各国确诊病例对应的肯定不是扇形半径，因为论确诊数量的话，排在第一位的美国是排在末位的菲律宾的一百多倍，而对应的扇形半径凭肉眼判断，肯定相差不到 100 倍。有没有可能是圆心并不代表 0 病例，而是某个其他数值呢？也不是，因为如果那样的话，两者半径相差的倍数只会更多。
 
-肯定也不是面积，因为美国确诊数量是德国的大约两倍，而其扇形面积显然超过这个比例。此外，选用扇形来对比两者大小的时候，要么是令圆心角相同而比较半径的不同（如 \@ref(sec:nightingale) 小节的极坐标面积图和 \@ref(sec:windrose) 小节的风玫瑰图，此时面积与半径的平方成正比），要么是令半径相同而比较圆心角的不同（如 \@ref(sec:pie) 小节的饼图，此时面积与圆心角成正比）。由于人对扇形的角度和半径比较敏感，对面积不敏感，一般不会在半径不同的情况下用扇形面积来区分大小。
+会不会是用扇形面积表示确诊数量呢？也不是，因为美国确诊数量是德国的大约两倍，而其扇形面积显然超过这个比例。此外，选用扇形来对比两者大小的时候，要么是令圆心角相同而比较半径的不同（如 \@ref(sec:nightingale) 小节的极坐标面积图和 \@ref(sec:windrose) 小节的风玫瑰图，此时面积与半径的平方成正比），要么是令半径相同而比较圆心角的不同（如 \@ref(sec:pie) 小节的饼图，此时面积与圆心角成正比）。由于人对扇形的角度和半径比较敏感，对面积不敏感，一般不会在半径不同的情况下用扇形面积来区分大小。
 
 那么，有没有可能是将确诊数量取了对数之后作图呢？让我们来看一下：以美国、德国和英国为例，美国确诊病例是德国的大约 2 倍，而德国确诊病例是英国的大约 4 倍。假定是以扇形半径来表示确诊病例的对数，那么德英两国的扇形半径差应该是美德两国扇形半径差的 2 倍，但图 \@ref(fig:covid-19) 显然不是这样，甚至相反：德英两国的扇形半径差大约只有美德两国的一半。
 
 为了一探究竟，笔者获取了当天的全球疫情数据，自行绘制了一张类似的鹦鹉螺图，如图 \@ref(fig:covidcountries) 的上图所示，以扇形的半径来表示确诊病例的对数。图中的统计数字略有出入，可能是数据更新的当天时刻有不同，这不影响我们的对比。半透明的环状带标示了病例为 10、100、1000 和 10000 的位置。
 
 
-(ref:covidcountries) 对数坐标表示的世界各国新冠疫情的鹦鹉螺图（上）和点图（下）：上图用不同颜色的扇形来代表不同国家，半透明的环状带自内向外标示了病例为 10、100、1000 和 10000
+(ref:covidcountries) 对数坐标表示的世界各国新冠疫情的鹦鹉螺图（上）和点图（下）：上图用不同颜色的扇形来代表不同国家
 
 (ref:covidcountries-s) 对数坐标表示的世界各国新冠疫情的鹦鹉螺图和点图
 
@@ -196,7 +196,16 @@ msg_graph("covidcountries")
 ```{r, results='asis'}
 msg_code("covidchina")
 ```
-\noindent 用于绘制图 \@ref(fig:covidcountries) 的代码为：
+
+这里用到了笔者开发的 R 附加包 **ncovr** [@ncovr] 中的 `plot_ggmap()` 函数。这个函数将中国地图的数据进行了封装，包含了九段线区域（即中国地图右下角的矩形区域）。**ncovr** 包发布在 GitHub 上，安装之前需要先安装 **remotes** 包，再使用其中的 `install_github()` 函数进行远程安装：
+
+```{r, eval=FALSE, echo=TRUE}
+install.packages("remotes")
+remotes::install_github("pzhaonet/ncovr")
+```
+
+
+用于绘制图 \@ref(fig:covidcountries) 的代码为：
 
 ```{r, results='asis'}
 msg_code("covidcountries")
@@ -227,14 +236,14 @@ data(canabalt)
 kable2(canabalt, "“末日狂奔”游戏得分消息")
 ```
 
-这都是基于离散变量的连续变量比较，一个自然而然的选择就是对离散变量的每一分类分别画图。图 \@ref(fig:canabalt-boxplot) 是基于离散变量的不同分类的箱线图。从图中可以看出，iPad 玩家的平均得分较高，这可能是因为 iPad 相比起 iPhone 或者 iPod touch 来说屏幕较大，玩家易于控制，也可能是因为 iPad 需要专门开机，不像另外两个平台随时都能打开玩，因此 iPad 玩家玩起来会更集中精力。至于死因，由于作者对这款游戏并不在行，玩了几次，得到的结果都是因为跳得不够高而撞墙坠落摔死，最多能跑几百米，因此不了解其它死因的场景。因为撞墙摔死的玩家中有很多人得分超高，看来这种障碍的难度并不小。注意我们画箱线图时，对死因做了重新排序——按照得分的中位数排序，这样能方便读者阅读这幅图，否则，读者需要额外花费功夫用眼睛对箱线图排序，对读者来说是不必要的阅读负担。按照原始数据的顺序画图尤其是条形图和饼图中常见的问题，其实排序对于制图者只是举手之劳，对读者却能带来很大的方便。
+这都是基于离散变量的连续变量比较，一个自然而然的选择就是对离散变量的每一分类分别画图。图 \@ref(fig:canabalt-boxplot) 是基于离散变量的不同分类的箱线图。从图中可以看出，iPad 玩家的平均得分较高，这可能是因为 iPad 相比起 iPhone 或者 iPod touch 来说屏幕较大，玩家易于控制，也可能是因为 iPad 携带起来不够方便，不像另外两个平台随时都能打开玩，因此 iPad 玩家玩起来会更集中精力。至于死因，由于作者对这款游戏并不在行，玩了几次，得到的结果都是因为跳得不够高而撞墙坠落摔死，最多能跑几百米，因此不了解其它死因的场景。因为撞墙摔死的玩家中有很多人得分超高，看来这种障碍的难度并不小。注意我们画箱线图时，对死因做了重新排序——按照得分的中位数排序，这样能方便读者阅读这幅图，否则，读者需要额外花费功夫用眼睛对箱线图排序，对读者来说是不必要的阅读负担。按照原始数据的顺序画图尤其是条形图和饼图中常见的问题，其实排序对于制图者只是举手之劳，对读者却能带来很大的方便。
 
 (ref:canabalt-boxplot) “末日狂奔”游戏得分在不同游戏平台以及死因下的比较：iPad 玩家的分数平均较高，得分最高的人最终是因为"错过另一扇窗"而死
 
 (ref:canabalt-boxplot-s) “末日狂奔”游戏得分在不同游戏平台以及死因下的比较
 
-```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)"}
-msg_graph("canabalt-boxplot2")
+```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)", dev='tikz', fig.showtext = FALSE}
+msg_graph("canabalt-boxplot")
 ```
 
 ### 探案工具 {-}
@@ -242,7 +251,7 @@ msg_graph("canabalt-boxplot2")
 本案例使用了箱线图（详见 \@ref(sec:boxplot) 小节）。数据集收在了我们的 **MSG** 包里。运行下面的代码，可以加载这个数据集并做出图 \@ref(fig:canabalt-boxplot)：
 
 ```{r, results='asis'}
-msg_code("canabalt-boxplot2")
+msg_code("canabalt-boxplot")
 ```
 
 在 `canabalt` 数据的帮助文档中有这批数据的来源以及收集方式，对抓取网络数据感兴趣的读者不妨看看原作者是如何用 Python 等工具获得数据的:
@@ -265,7 +274,7 @@ help("canabalt")
 
 ### 探案过程 {-}
 
-我们创建了 Rchive 这个在线应用[^rchive]，中文叫做“R 区洛阳铲”，意思是挖掘历史的工具。
+我们创建了 Rchive 这个在线应用[^rchive]，中文叫做“R 区洛阳铲”，意思是用来挖掘 R 语言社区历史的工具。
 
 [^rchive]: <https://sciwis.shinyapps.io/rchive/>
 
@@ -302,7 +311,7 @@ R-help 邮件列表里的热门话题涉及 R 包的安装、文本操作、R �
 
 ### 探案工具 {-}
 
-Rchive 是使用 R 语言的 shiny 包制作的，主要使用了直方图（详见 \@ref(sec:hist) 小节）、玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）和动态时间序列图。这个工具制作的过程和部分源代码可以参看统计之都论坛的讨论[^rchive-source]。
+Rchive 是使用 R 语言的 shiny 包制作的，主要使用了直方图（详见 \@ref(sec:hist) 小节）、玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）和交互时间序列图。这个工具制作的过程和部分源代码可以参看统计之都论坛的讨论[^rchive-source]。
 
 [^rchive-source]: <https://d.cosx.org/d/420739>
 
@@ -310,8 +319,7 @@ Rchive 是使用 R 语言的 shiny 包制作的，主要使用了直方图（详
 
 ### 案情回放 {-}
 
-2010 年 8 月 11 日，TV Guide 杂志公布了一批收入最高的电视剧演员名单，数据中包括演员名称、电视剧名称、类别（正剧 Drama 或喜剧 Comedy）、平均每集的收入，随后有人继续整理了 72 名演员的性别、IMDB （环球电影数据库）评分等信息。数据中包括《绝望的主妇》中的 4 位，《好汉两个半》中的 3 位，等等。最高薪酬为每集 125 万美元——该演员为《好汉两个半》中的 Charlie Sheen。《绝望的主妇》中的 4 位演员（Marcia Cross、Teri Hatcher、Felicity Huffman、Eva Longoria）的薪酬为 40 万美元，排在并列第 3。这批数据收录在 **MSG** 包的 `tvearn` 中。表 \@ref(tab:tab-tvearn) 列出了薪酬排名前十的数据。
-
+2010 年 8 月 11 日，*TV Guide* 杂志公布了一批收入最高的电视剧演员名单，数据中包括演员名称、电视剧名称、类别（正剧 Drama 或喜剧 Comedy）、平均每集的收入，随后有人继续整理了 72 名演员的性别、IMDB （环球电影数据库）评分等信息（表 \@ref(tab:tab-tvearn)）。数据中包括《绝望的主妇》中的 4 位，《好汉两个半》中的 3 位，等等。最高薪酬为每集 125 万美元——该演员为《好汉两个半》中的 Charlie Sheen。《绝望的主妇》中的 4 位演员（Marcia Cross、Teri Hatcher、Felicity Huffman、Eva Longoria）的薪酬为 40 万美元，排在并列第 3。
 
 ```{r tab-tvearn}
 data(tvearn)
@@ -323,12 +331,12 @@ kable2(tvearn[order(tvearn$pay, decreasing = TRUE), 1:4], "电视剧演员薪酬
 
 ### 探案过程 {-}
 
-我们可以用数值的方式回答这些问题，也可以作图。如男女演员的平均薪酬，可以使用 R 语言这样计算：
+这批数据收录在 **MSG** 包的 `tvearn` 中。我们可以用数值的方式回答这些问题，也可以作图。如男女演员的平均薪酬，可以使用 R 语言这样计算：
 
 ```{r tvearn-mean, echo=TRUE}
-data(tvearn)
+data(tvearn, package = "MSG")
 # 平均薪酬 pay.mean 以及男女演员数量 pay.number
-myfun <- function(x) {
+myfun = function(x) {
  c(mean = mean(x), number = length(x))
 }
 aggregate(pay ~ gender, data = tvearn, FUN = myfun)
@@ -344,7 +352,7 @@ aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 
 (ref:tvearn-s) 演员的薪酬直方图及薪酬与电视剧评分的散点图
 
-```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10}
+```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10, dev='tikz', fig.showtext = FALSE}
 msg_graph("tvearn")
 ```
 
@@ -393,7 +401,7 @@ msg_graph("music-andrews-tikz")
 
 (ref:music-3d-pcp-s) 音乐曲目左声道频率的三维散点图与平行坐标图
 
-```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8, out.width="70%"}
+```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8, out.width="70%", dev='tikz', fig.showtext = FALSE}
 msg_graph("music-3d-pcp")
 ```
 
@@ -421,16 +429,7 @@ msg_code("music-3d-pcp")
 
 ### 案情回放 {-}
 
-2009 年 12 月 25 日，CLE 骑士与 LAL 湖人在洛杉矶 Staples Center 展开一场圣诞大战，最终骑士以 102:87 胜出。我们可以从网上[^basketballgeek] 获得这一场比赛的详细数据，甚至包括每一次投篮时球员的在球场上的坐标（表 \@ref(tab:CLELAL09-data)）。同时，我们还得到了这场比赛的将助攻矩阵数据（表 \@ref(tab:assists-data)）。
-
-```{r assists-data}
-data(assists, package = "MSG")
-kable2(assists[,1:6], "一场篮球比赛的助攻数据", latex_options = "scale_down")
-```
-
-作为一名准球迷，笔者想知道，从这批数据中，我们能看出这场比赛有什么特点？投篮结果与投篮位置有什么关系吗？
-
-[^basketballgeek]: <http://www.basketballgeek.com>
+2009 年 12 月 25 日，CLE 骑士与 LAL 湖人在洛杉矶 Staples Center 展开一场圣诞大战，最终骑士以 102:87 胜出。我们可以从网上[^basketballgeek] 获得这一场比赛的详细数据，甚至包括每一次投篮时球员在球场上的坐标（表 \@ref(tab:CLELAL09-data)）。同时，我们还得到了这场比赛的助攻矩阵数据（表 \@ref(tab:assists-data)）。
 
 
 ```{r CLELAL09-data}
@@ -439,28 +438,37 @@ data(CLELAL09, package = "animation")
 kable2(CLELAL09, "一场篮球比赛的球员坐标")
 ```
 
+```{r assists-data}
+data(assists, package = "MSG")
+kable2(assists[,1:6], "一场篮球比赛的助攻数据", latex_options = "scale_down", coln = ncol(assists))
+```
+
+作为一名准球迷，笔者想知道，从这批数据中，我们能看出这场比赛有什么特点？投篮结果与投篮位置有什么关系吗？
+
+[^basketballgeek]: <http://www.basketballgeek.com>
+
 ### 探案过程 {-}
 
 (ref:assists-sna) 骑士与湖人比赛的助攻网络图：詹姆斯曾为 5 位队友助攻，而奥尼尔不为任何人助攻
 
 (ref:assists-sna-s) 骑士与湖人比赛的助攻网络图
 
-```{r assists-sna,fig.cap="(ref:assists-sna)",fig.scap=" (ref:assists-sna-s)",message=FALSE}
+```{r assists-sna,fig.cap="(ref:assists-sna)",fig.scap=" (ref:assists-sna-s)",message=FALSE, dev='tikz', fig.showtext = FALSE}
 msg_graph("assists-sna")
 ```
 
 我们将表 \@ref(tab:assists-data) 的数据绘制成了助攻网络图（图 \@ref(fig:assists-sna)）。其中，West 为 Varejao、Hickson 和 James 各助攻 1 次，James 为 Parker 和 West 各助攻一次。数据中一共有 22 位球员，因此完整数据矩阵维数为 $22\times22$。网络图能让我们很快看出比赛中的助攻关系，图中两个"聚类"显然分别是骑士和湖人的队员。总体来看，骑士队内部助攻次数较多，助攻网比较大，但也有些特立独行的球员如"大鲨鱼"奥尼尔（中锋），他在这场比赛里没有为任何人助攻。湖人队依然是以科比为中心，这一点想必没有读者会觉得惊讶。据说因为莫 $\cdot$ 威廉姆斯在雄鹿队的时候不爱给易建联传球，所以中国球迷给他取名"莫不传"，实际上这场比赛中他也是有助攻的。
 
-也许是这场比赛骑士队的协作比较好，最终赢了湖人，不过这都是事后分析。我们可以再看看正常比赛中所有投篮的地点如图 \@ref(fig:CLEvsLAL09)。这里我们需要解释一下，NBA 比赛场地尺寸为 $94\times50$ 英寸，而数据中的 `realx` 和 `realy` 变量是转换过的坐标：假设左半场为骑士（向右半场进攻），右半场为湖人（向左半场进攻），那么 `realx` 和 `realy` 分别指的是球员位置离左侧底线和下边边线的距离（单位为英寸）。简单推理可知，对于骑士来说，`realx` 一定大于 47，湖人则小于 47，例如上面数据中湖人队的加索尔（Gasol）在第 1 节于坐标 $(14,31)$ 处投篮命中。图 \@ref(fig:CLEvsLAL09) 是我们用 R 语言绘制的一幅球场示意图，读者可以对照理解这里的坐标，甚至可以找出图中代表加索尔的点。
+骑士队最终赢了湖人，也许是因为这次的协作比较好，不过这都是事后分析。我们可以再看看正常比赛中所有投篮的地点如图 \@ref(fig:CLEvsLAL09)。这里我们需要解释一下，NBA 比赛场地尺寸为 $94\times50$ 英尺，而数据中的 `realx` 和 `realy` 变量是转换过的坐标：假设左半场为骑士（向右半场进攻），右半场为湖人（向左半场进攻），那么 `realx` 和 `realy` 分别指的是球员位置离左侧底线和下边边线的距离（单位为英尺）。简单推理可知，对于骑士来说，`realx` 一定大于 47，湖人则小于 47，例如上面数据中湖人队的加索尔（Gasol）在第 1 节于坐标 $(14,31)$ 处投篮命中。图 \@ref(fig:CLEvsLAL09) 是我们用 R 语言绘制的一幅球场示意图，读者可以对照理解这里的坐标，甚至可以找出图中代表加索尔的点。
 
-显然，这是一幅平滑散点图，颜色越深的区域说明在该地点进行的投篮尝试最多。毫无疑问，几乎所有的篮球比赛都有一个共同特点，那就是大多数投篮都是在篮筐下进行的。湖人进攻时的投篮地点分布相对比较均匀，而骑士的进攻地点则似乎有两处"空白区域"，这很容易让我们考虑，投篮地点和进球结果之间有什么关系？
+显然，这是一幅平滑散点图（见 \@ref(sec:smoothScatter) 小节），颜色越深的区域说明在该地点进行的投篮尝试最多。毫无疑问，几乎所有的篮球比赛都有一个共同特点，那就是大多数投篮都是在篮筐下进行的。湖人进攻时的投篮地点分布相对比较均匀，而骑士的进攻地点则似乎有两处"空白区域"，这很容易让我们考虑，投篮地点和进球结果之间有什么关系？
 
 
 (ref:CLEvsLAL09) 投篮坐标与结果的平滑散点图：绝大多数投篮的位置都在篮筐下，湖人投篮次数多但命中率低
 
 (ref:CLEvsLAL09-s) 投篮坐标与结果的平滑散点图
 
-```{r CLEvsLAL09,results='hide',fig.cap="(ref:CLEvsLAL09)",fig.scap="(ref:CLEvsLAL09-s)",message=FALSE}
+```{r CLEvsLAL09,results='hide',fig.cap="(ref:CLEvsLAL09)",fig.scap="(ref:CLEvsLAL09-s)",message=FALSE, dev='tikz', fig.showtext = FALSE}
 msg_graph("basketball")
 ```
 
@@ -470,7 +478,7 @@ msg_graph("basketball")
 
 (ref:basketball-fourfold-s) 球场左右侧投篮命中的四瓣图
 
-```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)"}
+```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("basketball-fourfold")
 ```
 
@@ -521,7 +529,7 @@ data(gov.cn.pct, package = "MSG")
 # kable(head(gov.cn.pct, 5), "latex", booktabs = TRUE, 
 #       caption = "中国政府网站中的百分比数据（部分）", align = "c")
 
-kable2(gov.cn.pct, "中国政府网站中的百分比数据")
+kable2(gov.cn.pct, "中国政府网站中的百分比数据", insert_txt = "。round0 和 round1 分别表示是否四舍五入到个位和十分位")
 ```
 
 我们对这组数据进行了粗略的探索。图 \@ref(fig:gov-cn-pct) 展示了这些百分比数据的搜索频数。其中，左上图用垂线表示了每个百分比的搜索频数大小。从中我们可以发现，垂线在某些区间上显得异常得高。为了更清楚查看这些大频数的位置，我们可以把图形放大，如右上图所示，显示了 $[10\%,\,11\%]$ 区间上的频数。这里我们可以清楚看到取整的百分比的频数明显比其它百分比的频数大，其它区间上有类似的特征。我们绘制了一个 GIF 动画[^gif]，展示了所有长度为 1 的区间上的频数，使这个特征更容易观察到。
@@ -578,7 +586,7 @@ kable2(PlantCounts, "植物物种数目与海拔高度")
 
 (ref:PlantCounts-s) 海拔高度与物种数目的 LOWESS 曲线
 
-```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)"}
+```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("PlantCounts2")
 ```
 
@@ -617,7 +625,7 @@ msg_code("PlantCounts2")
 
 ```{r SongWords-data}
 load(system.file("extdata", "SongWords.rda", package = "MSG"))
-kable2(SongWords[, 1:8], "宋词词频矩阵")
+kable2(SongWords[, 1:8], "宋词词频矩阵", coln = ncol(SongWords))
 ```
 
 我们对这些高频词可能并不陌生。例如，苏轼常用的词中有"人间"（出现过 23 次），我们会自然想到"起舞弄清影，何似在人间"。根据这个矩阵计算 16 位作者的词风相关系数矩阵，以这个相关系数矩阵度量作者之间的相似性，我们就可以对这 16 位作者进行聚类如图 \@ref(fig:song-words-hclust)。这样的图形称为"谱系图"，它很形象地解释了聚类的过程。
@@ -630,12 +638,6 @@ $$d_{ij}=\sqrt{(x_{i1}-x_{j1})^{2}+\cdots+(x_{ip}-x_{jp})^{2}}$$
 
 除了个体与个体之间的距离之外，我们还需要定义个体与类、以及类与类之间的距离，这些定义又有多种方式，例如定义一个点与一类点之间的距离为这个点与该类中离它最近的点之间的距离（或最远的点，或类的中心，等等）。定义好这些距离之后，我们就可以开始层次聚类了：首先将所有个体视为单独的类（即：若个体数量为 $n$ 那么此时就有 $n$ 类），然后将最近的两类归到同一类中，接着重新计算一下 $n-1$ 类之间的距离并将最近的两类归为一类，如此操作下去，最终所有的个体都将归入同一类。
 
-在 R 中我们可以用函数 `hclust()` 来实现层次聚类，需要提供的是距离矩阵和类与类之间的距离定义：
-
-```{r hclust-usage, results='asis'}
-usage2(usage(hclust, output = FALSE))
-```
-
 (ref:song-words-hclust) 宋词作者层次聚类谱系图：从下到上，16 位作者逐渐"合并"，最终聚为 1 类。作者在纵轴上的位置高低标明了他们进入类的先后顺序
 
 (ref:song-words-hclust-s) 宋词作者层次聚类谱系图
@@ -644,7 +646,7 @@ usage2(usage(hclust, output = FALSE))
 msg_graph("song-words-hclust")
 ```
 
-图 \@ref(fig:song-words-hclust) 背后的距离矩阵是 $1-\text{相关系数矩阵}$，意即：若两位词人之间的相关系数为 1 （完全正相关），那么他们的距离为 $1-1=0$；若相关系数 $-1$（完全负相关），那么他们之间的距离为 $1-(-1)=2$。我们知道，相关系数取值在 $-1$ 到 1 之间。所以，这里的距离矩阵确实能体现作者之间的"距离" --- 距离越大，则相关系数越低。图中我们可以看到，所有作者中，马钰和谭处端最先聚为一类，这是因为他们之间的距离最小；接下来，苏轼和黄庭坚聚为一类，他们的距离次之；后面不断有新的作者聚为一类，如晏几道和欧阳修；也有一些作者直接加入现有的类，如王处一加入马钰和谭处端。我们可以根据这幅谱系图将作者划分为任意数量的类，只需在图的纵轴上以一条横线将这棵倒挂的"树"切割为"树枝"即可（读者若愿意，将它想象成吊着的葡萄枝也未尝不可）。图 \@ref(fig:song-words-hclust) 中的红色矩形框是将作者分为 4 类的结果，我们也可以将他们分为 2 类（结果将是道家作者和其他作者）或者更多类。
+图 \@ref(fig:song-words-hclust) 背后的距离矩阵是 “$1-\text{相关系数矩阵}$”，意即：若两位词人之间的相关系数为 1 （完全正相关），那么他们的距离为 $1-1=0$；若相关系数 $-1$（完全负相关），那么他们之间的距离为 $1-(-1)=2$。我们知道，相关系数取值在 $-1$ 到 1 之间。所以，这里的距离矩阵确实能体现作者之间的"距离"------距离越大，则相关系数越低。图中我们可以看到，所有作者中，马钰和谭处端最先聚为一类，这是因为他们之间的距离最小；接下来，苏轼和黄庭坚聚为一类，他们的距离次之；后面不断有新的作者聚为一类，如晏几道和欧阳修；也有一些作者直接加入现有的类，如王处一加入马钰和谭处端。我们可以根据这幅谱系图将作者划分为任意数量的类，只需在图的纵轴上以一条横线将这棵倒挂的"树"切割为"树枝"即可（读者若愿意，将它想象成吊着的葡萄枝也未尝不可）。图 \@ref(fig:song-words-hclust) 中的红色矩形框是将作者分为 4 类的结果，我们也可以将他们分为 2 类（结果将是道家作者和其他作者）或者更多类。
 
 实际上，我们也可以直接画出相关系数矩阵。图 \@ref(fig:song-words-corr) 就是对宋词作者相关系数矩阵可视化的一种结果。由于这里我们使用了同样的聚类方法，因此这幅图中得到的最终结果和图 \@ref(fig:song-words-hclust) 是一样的。
 
@@ -658,13 +660,13 @@ msg_graph("song-words-corr")
 
 观察图 \@ref(fig:song-words-corr) 可以一目了然地看到词人之间风格的相似程度。词人被划分为四类，如图中方框所示。可以看出，全真四子的词风非常接近，和其他词人风格差别较大； 而全真四子中，只有丘处机和苏轼、辛弃疾、黄庭坚等人的词呈正相关，而其他三子和另外 12 位作者相关系数都为负数。金庸武侠小说中写到，丘处机侠骨热肠，多行走江湖，而他的师兄弟们则执着于道；从这里词风分析来看，亦有相似的结果。李煜、晏殊、姜夔、辛弃疾、黄庭坚、苏轼、秦观、周邦彦、欧阳修、晏几道属于第二类，该类中李煜和其他作者的关系系数较小，其他九位之间的相关系数都较大，尤其是辛弃疾、黄庭坚、苏轼之间，苏辛都是豪放派词人的代表，而黄庭坚是苏轼的第一弟子。第三类只包含了李清照一人，她和其他 15 位词人的关系都很弱，从图中看她是最为独特的词人。 实际上，李清照词的与众不同是广为人知的。她的名作《词论》中，就对很多词人进行了评价：
 
-> 李煜语虽甚奇，所谓"亡国之音哀以思"也。柳永词虽协音律，而词语尘下。张子野、宋子京兄弟、沈唐、元绛、晁次之辈，虽时时有妙语，而破碎何足名家！晏殊、欧阳修、苏轼学际天人，然皆句读不茸之诗尔，且常不协音律。王安石、曾巩，文章似西汉，若作一小歌词，则人必绝倒，不可读也。词别是一家，至晏几道、贺铸、秦观、黄庭坚出，始能知之。然晏苦无铺叙；贺苦少重典；秦即专主情致，而少故实；黄即尚故实而多疵病。
+> 　　李煜语虽甚奇，所谓"亡国之音哀以思"也。柳永词虽协音律，而词语尘下。张子野、宋子京兄弟、沈唐、元绛、晁次之辈，虽时时有妙语，而破碎何足名家！晏殊、欧阳修、苏轼学际天人，然皆句读不茸之诗尔，且常不协音律。王安石、曾巩，文章似西汉，若作一小歌词，则人必绝倒，不可读也。词别是一家，至晏几道、贺铸、秦观、黄庭坚出，始能知之。然晏苦无铺叙；贺苦少重典；秦即专主情致，而少故实；黄即尚故实而多疵病。
 
-最后一类是柳永。晏殊和欧阳修、晏几道（晏殊之子）的词风相关系数也较大。晏殊是欧阳修仕途中的伯乐，他们的词风也较为接近，后人曾一并评价他们"晏元献，欧阳文忠公，风流蕴藉，一时莫及，而温润秀洁，亦无其比"。这和我们从图中得到的信息是完全一致的。此外，除了图 \@ref(fig:song-words-corr)，**corrplot** 包还支持以其它方式来展示相关矩阵，读者不妨一试。
+最后一类是柳永。晏殊和欧阳修、晏几道（晏殊之子）的词风相关系数也较大。晏殊是欧阳修仕途中的伯乐，他们的词风也较为接近，后人曾一并评价他们"晏元献，欧阳文忠公，风流蕴藉，一时莫及，而温润秀洁，亦无其比"。这和我们从图中得到的信息是完全一致的。
 
 图 \@ref(fig:song-words-corr) 中最重要的信息就是作者两两之间的相关系数，这些信息是不变的；而词人的聚类信息可以随着聚类方法的不同而变动，这些信息是变动的。这对那些所属类群不太明显的作者尤其敏感。 因此，对聚类结果的分析应该慎重而不能绝对化。
 
-从以上的可视分析结果可以看出，结合统计分析和可视化可以在浩如烟海的卷帙中迅速挖掘并展示出很多有用的信息；这在信息爆炸的时代无疑很有应用价值。
+从以上的可视分析结果可以看出，结合统计分析和可视化，我们可以在浩如烟海的卷帙中迅速挖掘并展示出很多有用的信息，这在信息爆炸的时代无疑很有应用价值。
 
 接下来，我们分析一下高频词之间的关系。
 
@@ -675,7 +677,7 @@ msg_graph("song-words-corr")
 $$R_{i,j}=\frac{\mbox{同时出现高频词}i\mbox{和}{j}\mbox{的词的数目}}{\mbox{出现高频词}i\mbox{或}j\mbox{的词的数目}}$$ 
 显然，当高频词 $i$ 和 $j$ 总是同时出现时，关系系数为 1；当它们从来不同时出现在同一首词时，关系系数为 0。据此可以得到一个 $100\times100$ 的矩阵，并画出这 100 个词的关系网络图，如图 \@ref(fig:song-high-freq)。
 
-(ref:song-high-freq) 宋词前 100 高频词的关系网络图：节点越多的类中圆圈颜色越深，节点间连线的粗细颜色对应不同的关系系数，如逍遥和自在之间的连线最粗
+(ref:song-high-freq) 宋词前 100 高频词的关系网络图：节点越多的类中圆圈颜色越深，节点间连线的粗细颜色对应不同的关系系数，如“逍遥”和“自在”之间的连线最粗
 
 (ref:song-high-freq-s) 宋词前 100 高频词的关系网络图
 
@@ -685,16 +687,16 @@ msg_graph("song-high-freq")
 
 观察图 \@ref(fig:song-high-freq)，可以发现，这一百个高频词被划分为多个类。有些类包含多个节点，是个大家族；而有些类仅有一个节点。将包含两个节点以上的类整理如下：
 
--   第一类（22 个节点，图右上） 自然、 逍遥、 物外、 无为、 蓬莱、 修行、 清净、 山侗、 长生、 功成、 云水、 自在、 马风、 神仙、 水云、 风仙、 自有、 日月、 赴蓬、 功行、 虎龙 、些儿
--   第二类（9 个节点，图左下） 人间、 风流、 无人、 归来、 江南、 万里、 千古、 当年、 寂寞
--   第三类（8 个节点，图右下） 归去、 落花、 风雨、 如今、 芳草、 不见、 人不、 夜来
--   第四类（7 个节点，图左侧） 尊前、 万事、 白发、 相逢、 人生、 青山、 几时
--   第五类（5 个节点，图左上） 千里、 多少、 回首、 月明、 昨夜
--   第六类（5 个节点，图左上） 今日、 去年、 时时、 日日、 从今
--   第七类（4 个节点，图正上） 春风、 多情、 无情、 杨柳
--   第八类（3 个节点，图正下） 东风、 风吹、 无限
--   第九类（3 个节点，图中部） 相思、 梅花、 花开
--   第十类（2 个节点，图左中） 明月、 清风
+-   第一类（22 个节点，图左下） 自然、 逍遥、 物外、 无为、 蓬莱、 修行、 清净、 山侗、 长生、 功成、 云水、 自在、 马风、 神仙、 水云、 风仙、 自有、 日月、 赴蓬、 功行、 虎龙 、些儿
+-   第二类（9 个节点，图右侧） 人间、 风流、 无人、 归来、 江南、 万里、 千古、 当年、 寂寞
+-   第三类（8 个节点，图右上） 归去、 落花、 风雨、 如今、 芳草、 不见、 人不、 夜来
+-   第四类（7 个节点，图右下） 尊前、 万事、 白发、 相逢、 人生、 青山、 几时
+-   第五类（5 个节点，图正上） 千里、 多少、 回首、 月明、 昨夜
+-   第六类（5 个节点，图左侧） 今日、 去年、 时时、 日日、 从今
+-   第七类（4 个节点，图正下） 春风、 多情、 无情、 杨柳
+-   第八类（3 个节点，图正上） 东风、 风吹、 无限
+-   第九类（3 个节点，图正上） 相思、 梅花、 花开
+-   第十类（2 个节点，图左上） 明月、 清风
 
 第一类颇具清修悟道之味。经查证，全真四子的大多数词都是这个主题和路数，反反复复出现这些字眼，因此这些词之间形成了一个大类。其他几类也都有各自的特色，比如第二类寂寥，第三类凄凉，第四类沧桑，第五类哀思，第六类时间，第七类怀春等等。当然，各个类 都具有自己独特的拓扑结构，同一个类内节点的关系也是不一样的。
 
@@ -707,6 +709,12 @@ msg_graph("song-high-freq")
 两种方法的共同特点是都以具体统计、数学模型为基础来探求相关关系，且这些关系发掘算法有很多是可以互通的。可视分析是数据分析和图形展示的有机结合。显然，前期的数据分析是最终图形的基础，比如本节中系统聚类的应用以及词风、高频词关系系数的定义等都是极其重要的。在实践中，我们应该根据具体问题和需求选择恰当的数据分析方法和最终的可视化方式。
 
 ### 探案工具 {-}
+
+在 R 中我们可以用函数 `hclust()` 来实现层次聚类，需要提供的是距离矩阵和类与类之间的距离定义：
+
+```{r hclust-usage, results='asis'}
+usage2(usage(hclust, output = FALSE))
+```
 
 本案例使用了层次聚类谱系图、相关矩阵图和关系网络图，数据加载和图形绘制的代码如下：
 
@@ -722,7 +730,7 @@ msg_code("song-words-corr")
 msg_code("song-high-freq")
 ```
 
-需要说明的是，这里仅仅用设定阈值的粗糙方法来划分高词频的类。**igraph** 包中提供了很多算法对网络进行聚类，比如 fastgreedy、walktrap、spinglass 等方法，读者可以自行尝试。
+需要说明的是，这里仅仅用设定阈值的粗糙方法来划分高词频的类。**igraph** 包中提供了很多算法对网络进行聚类，比如 fastgreedy、walktrap、spinglass 等方法，读者可以自行尝试。此外，除了图 \@ref(fig:song-words-corr)，**corrplot** 包还支持以其它方式来展示相关矩阵，读者不妨一试。
 
 ## 统计模拟
 
@@ -741,9 +749,9 @@ $$y=-x+z+\epsilon$$
 
 ```{r multireg-lm, echo=TRUE}
 set.seed(123)
-x <- seq(0, 4, length = 100)
-z <- rep(0:4, each = 20)
-y <- -x + z + rnorm(100, 0, .25)
+x = seq(0, 4, length = 100)
+z = rep(0:4, each = 20)
+y = -x + z + rnorm(100, 0, .25)
 # 回归系数全都显著
 coef(summary(lm(y ~ x)))
 coef(summary(lm(y ~ x + z)))
@@ -756,8 +764,8 @@ coef(summary(lm(y ~ x + z)))
 
 (ref:multireg-scatter-s) 控制变量 $z$ 之后 $y$ 与 $x$ 的关系
 
-```{r multireg-scatter, fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)",fig.width=7,fig.height=3.5}
-msg_graph("multireg-scatter2")
+```{r multireg-scatter, fig.cap="(ref:multireg-scatter)",fig.scap="(ref:multireg-scatter-s)",fig.width=7,fig.height=3.5,dev='tikz', fig.showtext = FALSE}
+msg_graph("multireg-scatter2-tikz")
 ```
 
 这里给出图 \@ref(fig:multireg-scatter) 的两种作图代码：
@@ -818,9 +826,9 @@ $$\hat{\boldsymbol{\beta}}=\arg\min_{\boldsymbol{\beta}}\text{median}\left\{ (y_
 
 ```{r OLS-LMS-fun, echo=TRUE}
 library(MASS)
-gg_olsLms <- function(df, lqs_xy){
-  lqs <- lqs(y ~ x, method = "lqs", data = df)
-  df$y1 <- predict(lqs)
+gg_olsLms = function(df, lqs_xy){
+  lqs = lqs(y ~ x, method = "lqs", data = df)
+  df$y1 = predict(lqs)
   ggplot(df, aes(x, y)) +
     geom_point() + 
     geom_smooth(aes(color = "OLS"), method = "lm", se = FALSE) +
@@ -837,22 +845,22 @@ gg_olsLms <- function(df, lqs_xy){
 
 ```{r OLS-LMS-data, echo=TRUE}
 set.seed(123)
-x <- runif(50)
-y <- 2 + 3 * x + rnorm(50)
+x = runif (50)
+y = 2 + 3 * x + rnorm(50)
 # 插入一个离群点 (2, 50)
-x1 <- c(x, 2)
-y1 <- c(y, 50)
+x1 = c(x, 2)
+y1 = c(y, 50)
 # 插入 500 个分布在数据中心的随机数
-x2 <- c(x, jitter(rep(mean(x), 500), 10))
-y2 <- c(y, jitter(rep(mean(y), 500), 10))
+x2 = c(x, jitter(rep(mean(x), 500), 10))
+y2 = c(y, jitter(rep(mean(y), 500), 10))
 ```
 
 (ref:OLS-LMS) LMS 回归的稳健性及其缺点：左图体现了 LMS 回归的稳健性，右图体现了 LMS 回归对中心数据点敏感的特征
 
 (ref:OLS-LMS-s) LMS 回归的稳健性及其缺点
 
-```{r OLS-LMS, fig.width=7,fig.height=3.5,fig.cap="(ref:OLS-LMS)",fig.scap="(ref:OLS-LMS-s)"}
-msg_graph("OLS-LMS2")
+```{r OLS-LMS, fig.width=7,fig.height=3.5,fig.cap="(ref:OLS-LMS)",fig.scap="(ref:OLS-LMS-s)", dev='tikz', fig.showtext = FALSE}
+msg_graph("OLS-LMS2-tikz")
 ```
 
 图 \@ref(fig:OLS-LMS) 中的两幅散点图及其回归直线表明了 LMS 回归对离群点的稳健性和对中心数据的敏感性。左图中 OLS 回归直线的斜率明显被右上角的离群点"拉"大，但 LMS 回归并没有受离群点影响，它的斜率反映了大部分数据所体现的规律；右图中 OLS 回归直线斜率反映了所有数据的趋势，而 LMS 回归的斜率则明显违背了数据的趋势。通过模拟和图形，LMS 回归的优缺点一目了然。
@@ -881,7 +889,7 @@ msg_code("OLS-LMS2")
 (ref:outlier-resample-s) 用部分抽样方法诊断多个离群点
 
 ```{r outlier-resample, fig.cap="(ref:outlier-resample)",fig.scap="(ref:outlier-resample-s)",dev='tikz',fig.process=to_png,fig.width=4,fig.height=4,fig.showtext=FALSE,small.mar=FALSE}
-msg_graph("outlier-resample2")
+msg_graph("outlier-resample2-tikz")
 ```
 
 图 \@ref(fig:outlier-resample) 展示了传统诊断方法与这里提出的抽样诊断方法的比较。左上图显示普通线性回归受离群点影响严重：理论上回归直线应该是水平的（斜率为 0），但右上角的两个离群点将回归直线拉起；右上图画出了这个回归模型中每个样本点的 Cook 距离，从图中可以看到，只有最后一条数据是离群点，而事实上倒数第二条数据也是离群点，只是删除这一条数据之后回归模型不会有太大变化（受最后一条数据掩盖），所以它不能被 Cook 距离识别出来；左下图显示了一种抽样的可能性：我们抽取数据的前 60 条（图中用实心点表示），去掉数据的后 42 条（空心点表示），然后重新建立回归模型，并画出回归直线，此时我们可以看到，由于去掉了两个离群点，回归直线的斜率大致为 0，与理论相符了；基于这种抽样的想法，我们将这个步骤重复 100 次，每次重新随机抽取一部分数据（可能包含离群点，也可能不包含），并重新计算回归系数，最终把 100 次的斜率都记录下来并画在右下图中，可以看出，这些斜率大致分为三群，这种"多群"的特征反映出原数据中有不止一个离群点（否则 100 个斜率只会分为两群：包含或不包含一个离群点的结果），靠近 0 的斜率是抽样不包含两个离群点的结果，而靠近 1 的斜率是包含两个离群点的结果，中间一层斜率是包含一个离群点的结果（可能是最后一条数据，也可能是倒数第二条）。这样我们就成功诊断出传统方法找不出来或者找不完全的离群点现象。这个模拟的动画版本可以在线[^multiple-outliers-detection]观看。

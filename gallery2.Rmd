@@ -2,7 +2,7 @@
 
 本章介绍反映两个变量之间关系的统计图形，即双变量图。
 
-双变量图以我们熟悉的 X-Y 散点图为代表，此外还有一些基于普通散点图的变种。如果两个变量中的一个是分类变量，我们常常使用的是条形图、箱线图、点图等类型，在第\@ref(cha:gallery1)章已有介绍，此处不再赘述。
+双变量图以我们熟悉的 X-Y 散点图为代表，此外还有一些基于普通散点图的变种。如果两个变量中的一个是分类变量，我们常常使用的是条形图、箱线图、点图等类型，在第\@ref(cha:gallery1)章已有介绍，此处不再赘述。而等高图需要基于散点图计算而得到二维核密度矩阵，因此在第\@ref(cha:gallerymatrix)章介绍。
 
 ## 散点图 {#sec:plot-default}
 
@@ -54,7 +54,7 @@ R 中散点图的基础绘图函数为 `plot.default()`，但是很少用。由�
 usage2(usage(plot.default, output = FALSE))
 ```
 
-\noindent 参数含义：若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数均已在 \@ref(sec:plot) 小节中介绍（例如设置 `type = "o"` 就会得到折线图）。
+\noindent 参数含义：若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数在 \@ref(sec:plot) 小节中介绍（例如设置 `type = "o"` 就会得到折线图）。
 
 使用基础函数绘制图 \@ref(fig:scatter-alpha)的代码如下[^demo-scatter-alpha]：
 
@@ -78,11 +78,11 @@ msg_code("scatter-alpha2")
 
 ### 示例 {-}
 
-图 \@ref(fig:curve) 给出了函数 $f(x)=\sin(\cos(x)*\exp(-x/2))$ 的曲线以及均匀分布 $U(-1,1)$ 的特征函数曲线作为示例，其中特征函数为概率论中定义的 $\varphi_{X}(t) = \mathrm{E}[\exp(itX)]$。
+图 \@ref(fig:curve) 给出了函数 $f(x)=\sin(\cos(x) \cdot \exp(-x/2))$ 的曲线以及均匀分布 $U(-1,1)$ 的特征函数曲线作为示例，其中特征函数为概率论中定义的 $\varphi_{X}(t) = \mathrm{E}[\exp(itX)]$。
 
-(ref:fig-curve-s) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图和均匀分布 $U(-1,1)$ 的特征函数图
+(ref:fig-curve-s) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x) \cdot \mathrm{exp}(-x/2))$ 的曲线图和均匀分布 $U(-1,1)$ 的特征函数图
 
-(ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）
+(ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x) \cdot \mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）
 
 ```{r curve,fig.width=4.8,fig.height=3.6,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
 msg_graph("curve-tikz")
@@ -126,7 +126,7 @@ msg_code("curve")
 **ggplot2**包里并没有现成的函数绘制一元函数曲线图。一个变通的方法就是设定一系列 $x$ 值，根据函数关系计算出 $y$ 值，然后绘制折线图即可。绘制代码如下：
 
 ```{r, results='asis'}
-msg_graph("curve2")
+msg_code("curve2")
 ```
 
 由于这种曲线图与数据分析关系不甚密切，我们在此只是粗略介绍一下。
@@ -156,7 +156,7 @@ kable2(iris, "鸢尾花花瓣数据")
 
 (ref:fig-sunflowerplot) 鸢尾花花瓣长和宽的向日葵散点图
 
-```{r sunflowerplot,fig.width=4,fig.height=4,out.width="70%", fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
+```{r sunflowerplot,fig.width=4,fig.height=4,out.width="70%", fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("sunflowerplot")
 ```
 
@@ -230,9 +230,9 @@ msg_code("sunflowerplot")
 
 我们对表 \@ref(tab:tab-BinormCircle) 绘制了平滑散点图，如图 \@ref(fig:smoothScatter) 所示。 从计算的角度来说，我们首先将平面划分为 $n\times n$ 的网格，计算每个网格点上的二维密度值，然后用颜色将密度值大小表达出来。关于这一点，可将图 \@ref(fig:smoothScatter) 放大 8 倍，就立刻理解"网格"的意思了。这幅图的原始散点图参见图 \@ref(fig:scatter-alpha) 左图。由于使用了核密度估计，这批数据中藏着的圆圈很容易就能被发现，因为它们的密度值都很大，导致这一圈上颜色也就相应较深。
 
-(ref:fig-smoothScatter-s) BinormCircle 数据的平滑散点图
+(ref:fig-smoothScatter-s) `BinormCircle` 数据的平滑散点图
 
-(ref:fig-smoothScatter) BinormCircle 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）
+(ref:fig-smoothScatter) `BinormCircle` 数据的平滑散点图：基于核密度估计找出散点图中暗含的圆圈（圆圈上的颜色深）
 
 ```{r smoothScatter,fig.width=4.5,fig.height=4.5,out.width="75%", fig.cap="(ref:fig-smoothScatter)",fig.scap="(ref:fig-smoothScatter-s)"}
 msg_graph("smoothScatter2")
@@ -311,7 +311,7 @@ kable2(mydata[, 2:3], "伦敦 Marylebone 风速风向数据", insert_txt = "：1
 
 (ref:fig-windrose-s) 伦敦 Marylebone 的风玫瑰图
 
-(ref:fig-windrose) 伦敦 Marylebone 的风玫瑰图：将风向分为 12 个（左）或 16 个方向，每个方向用一根“指针”或一个扇形来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮西南偏南风，因为该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%
+(ref:fig-windrose) 伦敦 Marylebone 的风玫瑰图：将风向分为 12 个（左）或 16 个（右）方向，每个方向用一根“指针”（左）或一个扇形（右）来表示该方向上风力的具体情况。从图中可以看出，该地区最常刮西南偏南风，因为该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%
 
 ```{r windrose,fig.width=5.4,fig.height=5.4,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",fig.show='hold', out.width="49%"}
 msg_graph("windrose")
@@ -361,7 +361,7 @@ usage2(usage(windRose, output = FALSE))
 : 逻辑值，决定了是否显示指针柄。
 
 `key.header`、`key.footer`、`key.position`、`key`:
-: 控制图例的顶端、底部、位置和其他设置。其中，图例位置可取值为`“top”` `“right”` `“bottom”` `“left”`。
+: 控制图例的顶端、底部、位置和其他设置。其中，图例位置可取值为`"top"`、`"right"`、`"bottom"`、`"left"`。
 
 \noindent 其他参数不常用，请读者自行查阅帮助。
 
@@ -376,8 +376,8 @@ library(ggplot2)
 library(forcats)
 library(ggwindrose)
 
-gg1 <- ggwindrose(data = mydata, method = 'hist') 
-gg3 <- ggwindrose(data = mydata, method = 'area', ws_breaks = 1:8) +
+gg1 = ggwindrose(data = mydata, method = 'hist') 
+gg3 = ggwindrose(data = mydata, method = 'area', ws_breaks = 1:8) +
   scale_fill_brewer(palette = 'Blues', direction = -1)
   
 -->
@@ -415,7 +415,7 @@ kable2(aml, "急性髓细胞白血病病人生存数据")
 
 (ref:fig-survival) 急性髓细胞白血病病人生存函数图
 
-```{r survival,fig.width=4.8,fig.height=3,out.width="80%", fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
+```{r survival,fig.width=4.8,fig.height=3,out.width="80%", fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold", dev='tikz', fig.showtext = FALSE}
 msg_graph("survival2")
 ```
 
@@ -487,7 +487,7 @@ survdiff(Surv(time, status) ~ x, data = aml)
 我们以美国国家航空和宇宙航行局的一批 O 型环（O-ring，一种由橡胶或塑料制成的平环，用作垫圈）失效数据（表 \@ref(tab:tab-fail-temperature)）为例。这批数据有两个变量：温度变量和是否失效的变量。
 
 ```{r tab-fail-temperature}
-fail <-  factor(
+fail =  factor(
   c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1,
     2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1),
   levels = 2:1, 
@@ -496,19 +496,19 @@ fail <-  factor(
 temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
   70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81
 )
-fail_temperature <- data.frame(fail = fail, temperature = temperature)
+fail_temperature = data.frame(fail = fail, temperature = temperature)
 kable2(fail_temperature, "美国国家航空和宇宙航行局的一批 O 型环失效数据", only_head = FALSE)
 ```
 
 为了探索温度对 O 型环失效的影响，我们可以使用诸如 Logistic 回归之类的统计模型去计算、分析，而这里我们用条件密度图来展示温度的影响，如图 \@ref(fig:cdplot)。
 
-由于因变量是一个二分类变量，图中相应有两个多边形（带颜色的区域）分别表示是否失效。从图中我们可以清楚观察到，随着温度的上升，失效的可能性越来越小（下面的多边形高度越来越高），但失效的概率与温度并不是简单的线性关系，例如 55 °F 到 65 °F 之间的温度上升会使得失效概率迅速下降，而当气温更高的时候，失效概率下降的速度会减缓。为了更清楚地观察条件密度图的效果，我们也将原始数据以点的形式添加到图中；不难发现，O 型环失效的情况大多对应着相对较低的温度。
+由于因变量是一个二分类变量，图中相应有两个多边形（带颜色的区域）分别表示是否失效。从图中我们可以清楚观察到，随着温度的上升，失效的可能性越来越小（下面的多边形高度越来越高），但失效的概率与温度并不是简单的线性关系。例如，55 °F 到 65 °F 之间的温度上升会使得失效概率迅速下降；而当气温更高的时候，失效概率下降的速度会减缓。为了更清楚地观察条件密度图的效果，我们也将原始数据以点的形式添加到图中；不难发现，O 型环失效的情况大多对应着相对较低的温度。
 
 (ref:fig-cdplot-s) 航天飞机 O 型环在不同温度下失效的条件密度图
 
 (ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效
 
-```{r cdplot,fig.width=4.8,fig.height=2.4, out.width="80%",results="hide", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.show="hold"}
+```{r cdplot,fig.width=4.8,fig.height=2.4, out.width="80%", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("cdplot2")
 ```
 
@@ -531,10 +531,10 @@ usage2(usage(graphics:::cdplot.formula, output = FALSE))
 `y`:
 : 一个因子向量，即离散变量 $Y$。
 
-`plot`
+`plot`:
 : 逻辑值，决定了是作出图形还是仅仅计算而不作图。
 
-`ylevels`：
+`ylevels`:
 : 给出因子的取值水平（或者分类的名称）。
 
 `bw` 、 `n` 、 `from` 和 `to`：
@@ -580,7 +580,7 @@ msg_code("cdplot2")
 
 (ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 $(60, 75]$ 区间内
 
-```{r spineplot,fig.width=4.8,fig.height=3,out.width="75%",fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
+```{r spineplot,fig.width=4.8,fig.height=3,out.width="75%",fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("spineplot")
 ```
 
@@ -628,22 +628,26 @@ msg_code("spineplot")
 
 ### 示例 {-}
 
-*Consumer Reports* 杂志 1990 年四月刊给出了一组汽车测试报告，记录了车重 `Weight` 和气缸排量 `Disp.`两个变量（表 \@ref(tab:tab-car-test)）。
+*Consumer Reports* 杂志 1990 年四月刊给出了一组汽车测试报告，记录了一些车型的价格、产地等信息（表 \@ref(tab:tab-car-test)）。
+
+(ref:tab-cartest) Consumer Reports 杂志的汽车测试报告数据
+
+(ref:tab-cartest-s) *Consumer Reports* 杂志的汽车测试报告数据
 
 ```{r tab-car-test}
 data(car.test.frame, package = "rpart")
-kable2(car.test.frame, "汽车测试报告数据")
+kable2(car.test.frame, "(ref:tab-cartest)", x_scap2 = "(ref:tab-cartest-s)")
 ```
 
-图 \@ref(fig:bagplot) 左图展示了车重和气缸排量的二维箱线图。图中心有一个米字型的点，代表二维数据的中位数；内层深色袋子包含了一半的数据点（约 30 个）。作为对比，右图从二维核密度估计的角度画出了密度值的等高图（见 \@ref(sec:contour) 小节），这两幅图可以看作是相通的：左图里层袋子就是右图中密度曲面[^bagplot-surf] 从中心向外积分数值到 0.5 时对应的区域。
+我们对车重 `Weight` 和气缸排量 `Disp.`两个变量绘制了二维箱线图，如图 \@ref(fig:bagplot) 左图。图中心有一个米字型的点，代表二维数据的中位数；内层深色袋子包含了一半的数据点（约 30 个）。作为对比，右图从二维核密度估计的角度画出了密度值的等高图（见 \@ref(sec:contour) 小节），这两幅图可以看作是相通的：左图里层袋子就是右图中密度曲面[^bagplot-surf] 从中心向外积分数值到 0.5 时对应的区域。
 
 [^bagplot-surf]: 不要忘记：等高图实际上是三维图形！请想象这个“曲面”的形状。
 
-(ref:fig-bagplot-s) *Consumer Reports* 中汽车数据的二维箱线图和密度等高图
+(ref:fig-bagplot-s) *Consumer Reports* 杂志 中汽车数据的二维箱线图和密度等高图
 
-(ref:fig-bagplot) *Consumer Reports* 中汽车数据的二维箱线图（左）和二维密度等高图（右）
+(ref:fig-bagplot) Consumer Reports 杂志 中汽车数据的二维箱线图（左）和二维密度等高图（右）
 
-```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
+```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)", dev='tikz', fig.showtext = FALSE}
 msg_graph("bagplot2")
 ```
 
@@ -657,6 +661,7 @@ usage2(usage(bagplot, output = FALSE))
 ```
 
 \noindent 参数含义：
+
 `x` 和 `y`:
 : 分别是横纵坐标轴上的数据向量，也可以直接提供一个 2 列的矩阵或数据框。
 
@@ -664,7 +669,7 @@ usage2(usage(bagplot, output = FALSE))
 : 类似 `boxplot()` 中的 `range` 参数，用来定义离群点。取值越大，则离群点越少（数据点离中心的距离可以越远）。
 
 `approx.limit`:
-: 界定了大数据的样本量，如果原始数据的样本量超过这个数字，则随机抽取 `approx.limit` 个数据点用作二维箱线图的计算。
+: 界定了大数据的样本量。如果原始数据的样本量超过这个数字，则随机抽取 `approx.limit` 个数据点用作二维箱线图的计算。
 
 `dkmethod`:
 : 取值 1 或 2，决定用哪种方法计算袋子的范围。取值 2 计算更精确。

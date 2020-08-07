@@ -9,7 +9,7 @@
 > ——柯南 $\cdot$ 道尔《巴斯克维尔的猎犬》  
 
 
-基础图形系统虽然灵活，但它无穷无尽的选项往往让用户感到迷茫， **lattice** 系统（见 \@ref(sec:lattice) 小节）也有同样的问题（甚至更严重）。**ggplot2** 包 [@ggplot2] 从易用性出发，结合了基础图形系统的简便以及 **grid** 和 **lattice** 的灵活，并以 *The Grammar of Graphics*一书 [@Wilkinson05] 的理论为支撑，构建了一套易用、实用而且美观的图形系统。
+基础图形系统虽然灵活，但它无穷无尽的选项往往让用户感到迷茫， **lattice** 系统（见 \@ref(sec:lattice) 小节）也有同样的问题（甚至更严重）。**ggplot2** 包 [@ggplot2] 从易用性出发，结合了基础图形系统的简便以及 **grid** 和 **lattice** 的灵活，并以 *The Grammar of Graphics*一书 [@Wilkinson05] 的理论为支撑，已成为当前最流行的作图系统。
 
 ## 快速体验
 
@@ -40,7 +40,7 @@ usage2(usage(qplot, output = FALSE))
 
 \noindent 其它参数都是一些细节调整，可以根据具体任务设定。
 
-在下面的代码中，我们使用 `qplot()` 函数来绘制图 \@ref(fig:hist-geyser) 中的直方图和图 \@ref(fig:scatter-alpha) 中的散点图：
+在下面的代码中，我们使用 `qplot()` 函数来绘制图 \@ref(fig:hist-geyser) 中的直方图和图 \@ref(fig:scatter-alpha) 中的散点图，得到图 \@ref(fig:qplot)：
 
 ```{r, results='asis'}
 msg_code("qplot")
@@ -58,7 +58,7 @@ msg_graph("qplot")
 
 ## 基本框架
 
-**ggplot2** 的核心概念是“层”：所有的图形都是由层的“叠加”构成。这是对统计图形的一个非常形象的抽象。“叠加”这个操作在程序实现上很巧妙：它扩展了泛型函数 `+`。也许用户会对此感到迷茫，后面我们看了具体例子马上就能明白。
+**ggplot2** 的核心概念是“层”：所有的图形都是由层的“叠加”构成。“叠加”这个操作在程序实现上很巧妙：它扩展了泛型函数 `+`。也许用户会对此感到迷茫，后面我们看了具体例子马上就能明白。
 
 **ggplot2** 作图的基本语法框架是：
 
@@ -89,7 +89,7 @@ methods("+") # 加号上的 S3 方法
 在 **ggplot2** 中，画图只需要将若干个图层简单相加即可，语法非常精炼，如：
 
 ```{r plus-ggplot2, echo=TRUE, eval=FALSE}
-p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
+p = ggplot(aes(x = hp, y = mpg), data = mtcars) +
   geom_point() # 先画一个散点图的图层
 p + geom_smooth(method = "loess") # 用散点图加上平滑层
 ```
@@ -98,7 +98,7 @@ p + geom_smooth(method = "loess") # 用散点图加上平滑层
 
 ## 构成元素
 
-整个 **ggplot2** 系统大致由几何形状（geom）、统计量（statistic）、标度（scale）、坐标系（coordinate system）和切片（facet）构成，下面我们分别作介绍。
+整个 **ggplot2** 系统大致由几何形状（geom）、统计量（statistic）、标度（scale）、坐标系（coordinate system）和切片（facet，或称为“分面”）构成，下面我们分别作介绍。
 
 ### 几何形状
 
@@ -110,11 +110,11 @@ p + geom_smooth(method = "loess") # 用散点图加上平滑层
 - 箱线图（`geom_boxplot()`）、
 - 文本（`geom_text()`、`geom_label()`）
 
-\noindent 等等。实际上，它们就是第\@ref(cha:elements)章介绍的图形元素，但是 **ggplot2** 在这些元素上做了更多工作。例如，箱线图并非基础图形元素，但它在 **ggplot2** 中的地位也是基础形状；还有平滑曲线和平滑带，背后都涉及到大量的统计计算。而 **ggplot2** 对它打包之后，用户用起来就简单多了，否则我们需要手工建立平滑模型（可能是线性回归，可能是 LOWESS，或是分位数回归等），然后取一系列 x 值并拟合 y 值。
+\noindent 等等。实际上，它们就是第\@ref(cha:elements)章介绍的图形元素，但是 **ggplot2** 在这些元素上做了更多工作。例如，箱线图并非基础图形元素，但它在 **ggplot2** 中的地位也是基础形状；还有平滑曲线和平滑带，背后都涉及大量的统计计算。而 **ggplot2** 对它打包之后，用户用起来就简单多了，否则我们需要手工建立平滑模型（可能是线性回归，可能是 LOWESS，或是分位数回归等），然后取一系列 x 值并拟合 y 值。
 
 几何形状通常和统计量紧密相关。因为要画出几何形状，必须计算一些坐标值（例如箱线图中的分位数、条形图的高度），所以我们必须要知道对数据做什么样的统计变换或汇总。
 
-图 \@ref(fig:mtcars-smooth) 展示了 \@ref(sec:stars) 小节曾经提到过的汽车数据。从图中我们可以看到，随着汽车马力增大，每加仑汽油能行驶的英里数在降低，但并非直线下降，而是在逐渐变缓。这也符合常识——不可能有哪种汽车的马力大到无法开动的程度。图中的平滑曲线基于 LOWESS 生成，它是散点图的重要辅助工具，在 \@ref(subsec:percentage) 小节和 \@ref(subsec:lowess) 小节有详细介绍。
+图 \@ref(fig:mtcars-smooth) 展示了表 \@ref(tab:mtcars-data) 的汽车数据。从图中我们可以看到，随着汽车马力增大，每加仑汽油能行驶的英里数在降低，但并非直线下降，而是在逐渐变缓。这也符合常识——不可能有哪种汽车的马力大到无法开动的程度。图中的平滑曲线基于 LOWESS 生成，它是散点图的重要辅助工具，在 \@ref(subsec:percentage) 小节和 \@ref(subsec:lowess) 小节有详细介绍。
 
 
 ```{r, results='asis'}
@@ -125,15 +125,15 @@ msg_code("mtcars-smooth")
 
 (ref:mtcars-smooth) 汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的
 
-```{r mtcars-smooth, out.width="75%", fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)"}
+```{r mtcars-smooth, out.width="75%", fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)", dev='tikz', fig.showtext = FALSE}
 msg_graph("mtcars-smooth")
 ```
 
 ### 统计量
 
-统计量指定了对原始数据做何种变换，进而用几何形状表达出来。**ggplot2** 中除了划分直方图区间求频数、求分位数、计算密度值这些普通的变换功能之外，还有一些新颖的统计量，例如根据二维数据用网格划分区间求每个格子内的数据频数（实际上就是二维直方图），或者用蜂巢形状将平面划分为一系列的六边形区间再求数据频数。
+统计量指定了对原始数据做何种变换，进而用几何形状表达出来。**ggplot2** 中除了划分直方图区间求频数、求分位数、计算密度值这些普通的变换功能之外，还有一些新颖的统计量。例如，根据二维数据用网格划分区间，求每个格子内的数据频数（实际上就是二维直方图）；或者用蜂巢形状将平面划分为一系列的六边形区间，再求数据频数。
 
-图 \@ref(fig:diamonds-hex) 是 **ggplot2** 包中 `diamonds` 数据的一幅蜂巢图，它展示了在每个蜂巢格子里的数据频数大小。这种图形和平滑散点图的思想类似，都是要展示二维数据的密度，只不过实现方法不同而已。蜂巢图的背后是散点图，但具体的点都没有显示出来，我们看到的只有蜂巢及其颜色。从图例中可以看出，红色表示该单元格内的数据频数为 7000 左右，蓝色表示 1000。该数据内大多数钻石的价格（纵轴）和重量（横轴为克拉数）都偏小。另外，我们也很容易看出，随着克拉数增大，价格也相应升高，这也是符合常识的，但有些 3 克拉的钻石价格和 0.5 克拉的一样，这可能是因为打磨质量的问题。
+图 \@ref(fig:diamonds-hex) 是 **ggplot2** 包中 `diamonds` 数据的一幅蜂巢图，它展示了在每个蜂巢格子里的数据频数大小。这种图形和平滑散点图的思想类似，都是要展示二维数据的密度，只不过实现方法不同而已。蜂巢图的背后是散点图，但具体的点都没有显示出来，我们看到的只有蜂巢及其颜色。从图例中可以看出，浅蓝色表示该单元格内的数据频数为 7000 左右，深蓝色表示 1000。该数据内大多数钻石的价格（纵轴）和重量（横轴为克拉数）都偏小。另外，我们也很容易看出，随着克拉数增大，价格也相应升高，这也是符合常识的，但有些 3 克拉的钻石价格和 0.5 克拉的一样，这可能是因为打磨质量的问题。该图的绘制代码如下：
 
 ```{r, results='asis'}
 msg_code("diamonds-hex")
@@ -143,7 +143,7 @@ msg_code("diamonds-hex")
 
 (ref:diamonds-hex) 钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小
 
-```{r diamonds-hex, out.width="80%", fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)"}
+```{r diamonds-hex, out.width="80%", fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)", dev='tikz', fig.showtext = FALSE}
 msg_graph("diamonds-hex")
 ```
 
@@ -157,7 +157,7 @@ msg_code("ggplot2-violin")
 
 (ref:ggplot2-violin) 使用 `stat_density()` 函数构建的小提琴图
 
-```{r ggplot2-violin, echo=TRUE, fig.width=4.8,fig.height=3,out.width="80%",fig.cap="(ref:ggplot2-violin)"}
+```{r ggplot2-violin, fig.width=4.8,fig.height=3,out.width="80%",fig.cap="(ref:ggplot2-violin)", dev='tikz', fig.showtext = FALSE}
 msg_graph("ggplot2-violin")
 ```
 
@@ -165,17 +165,17 @@ msg_graph("ggplot2-violin")
 
 ### 标度
 
-标度通常指定如何从数据映射到几何形状的颜色、符号和大小等属性，这也是 **ggplot2** 系统的一个非常吸引人的特征。大多数情况下，我们只需要指定用来做标度的变量即可，剩下的映射工作 **ggplot2** 会自动完成。例如图 \@ref(fig:iris-ggplot2) 中，我们指定 `color` 和 `shape` 两个参数之后， **ggplot2** 就能自动用 **RColorBrewer** 包的离散调色板生成颜色并添加图例。图 \@ref(fig:point-iris) 画的是几乎是同样的散点图，但其代码显然相形见绌。
+标度通常指定如何从数据映射到几何形状的颜色、符号和大小等属性，这也是 **ggplot2** 系统的一个非常吸引人的特征。大多数情况下，我们只需要指定用来做标度的变量即可，剩下的映射工作 **ggplot2** 会自动完成。例如图 \@ref(fig:iris-ggplot2) 中，我们指定 `color` 和 `shape` 两个参数之后， **ggplot2** 就能自动用 **RColorBrewer** 包的离散调色板生成颜色并添加图例。该图的绘制代码如下。图 \@ref(fig:point-iris) 画的是几乎是同样的散点图，但其代码显然相形见绌。
 
 ```{r, results='asis'}
 msg_code("iris-ggplot2")
 ```
 
-(ref:iris-ggplot2-s) **ggplot2** 中的鸢尾花花瓣长宽散点图
+(ref:iris-ggplot2-s) **ggplot2** 包绘制鸢尾花花瓣长宽散点图
 
-(ref:iris-ggplot2) **ggplot2** 中的鸢尾花花瓣长宽散点图：对比图 \@ref(fig:point-iris) 看看 **ggplot2** 中语法之简洁，颜色、形状、图例一气呵成
+(ref:iris-ggplot2) **ggplot2** 包绘制鸢尾花花瓣长宽散点图：对比图 \@ref(fig:point-iris) 看看 **ggplot2** 中语法之简洁，颜色、形状、图例一气呵成
 
-```{r iris-ggplot2, fig.scap="(ref:iris-ggplot2-s)",fig.cap="(ref:iris-ggplot2)"}
+```{r iris-ggplot2, fig.scap="(ref:iris-ggplot2-s)",fig.cap="(ref:iris-ggplot2)", dev='tikz', fig.showtext = FALSE}
 msg_graph("iris-ggplot2")
 ```
 
@@ -189,15 +189,15 @@ msg_code("quake6-bubbles")
 
 (ref:quake6-bubbles) 1973 年以来全球 6 级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7 月的地震频率相对较低？
 
-```{r quake6-bubbles, fig.width=7, fig.height=6, fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
-msg_graph("quake6-bubbles")
+```{r quake6-bubbles, fig.width=7, fig.height=6, fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)", dev='tikz', fig.showtext = FALSE}
+msg_graph("quake6-bubbles-tikz")
 ```
 
 **MSG** 包中的 `quake6` 数据记录了 1973 年到 2010 年每个月发生的 6 级以上的地震信息，我们可以按照年份和月份汇总地震发生的频数，然后画年份和月份的散点图，并将频数信息附着在点上。从图中可以看到，地震发生的频数似乎随着年份在增加，尤其是 2007 年 4 月和 2009 年 10 月地震活动非常频繁。另外，7 月似乎是地震低发期。注意这批数据来自美国地震局（USGS），这让我们考虑到地震频数逐年增加可能是个假象，很可能是因为近年来地震记录设备越来越先进，更多地震活动被探测到并记录了下来。
 
 ### 坐标系
 
-我们平时用到的坐标系大多数都是笛卡尔坐标系，**ggplot2** 也提供了极坐标系和地图坐标系，并支持笛卡尔坐标系的翻转，即交换 x 轴和 y 轴。
+我们平时用到的坐标系大多数都是笛卡尔坐标系，**ggplot2** 也提供了极坐标系（如图 \@ref(fig:covidcountries) 所示的鹦鹉螺图、图 \@ref(fig:pie-chart) 中的饼图）和地图坐标系（见 \@ref(sec:maps) 小节），并支持笛卡尔坐标系的翻转（如图 \@ref(fig:insects-boxplot)），即交换 x 轴和 y 轴。
 
 函数 `coord_flip()` 可以用来翻转几乎任何图形，而且由于 **ggplot2** 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上 `coord_flip()` 再打印即可。图 \@ref(fig:diamonds-cut) 是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。
 
@@ -209,13 +209,13 @@ msg_code("diamonds-cut")
 
 (ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 `Fair` 到 `Ideal` 雕琢水平逐渐增高，但价格并没有严格上升
 
-```{r diamonds-cut, fig.width=7, fig.height=3.5, fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1}
+```{r diamonds-cut, fig.width=7, fig.height=3.5, fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1, dev='tikz', fig.showtext = FALSE}
 msg_graph("diamonds-cut")
 ```
 
 图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，这一点在 \@ref(subsec:china-vs-us) 小节和 \@ref(sec:covid) 小节中有举例说明，请读者慎用。
 
-```{r, results='asis'}
+```{r, results='asis', dev='tikz', fig.showtext = FALSE}
 msg_code("diamonds-polar")
 ```
 
@@ -229,7 +229,7 @@ msg_graph("diamonds-polar")
 
 ### 切片 {#subsec:facet}
 
-切片的思想来自于 Trellis 图形：将整批数据按照某一个或两个分类变量切成一个个子集，然后对这些子集画图。在 **ggplot2** 中实现切片也很简单，添加一个 `facet_xxx()`函数即可。这个函数的参数取值为一个公式，公式左侧决定在行上摆放的子集图形，右侧决定列上的图形。
+切片，在一些 **ggplot2** 的书籍里又称为“分面”。切片的思想来自于 Trellis 图形：将整批数据按照某一个或两个分类变量切成一个个子集，然后对这些子集画图。在 **ggplot2** 中实现切片也很简单，添加一个 `facet_xxx()`函数即可。这个函数的参数取值为一个公式，公式左侧决定在行上摆放的子集图形，右侧决定列上的图形。
 
 图 \@ref(fig:diamonds-carat) 给出了每一种雕琢水平下的钻石重量密度曲线，整幅图形按照雕琢水平切片，公式为 `cut ~ .`，意思是每一行摆放一种 cut 值。五种雕琢水平下，雕琢最好的钻石的重量大多都在 1 克拉以下，密度曲线严重右偏。
 
@@ -241,7 +241,7 @@ msg_code("diamonds-carat")
 
 (ref:diamonds-carat) 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻
 
-```{r diamonds-carat, fig.width=7, fig.height=7, out.width="75%", fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
+```{r diamonds-carat, fig.width=7, fig.height=7, out.width="75%", fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1, dev='tikz', fig.showtext = FALSE}
 msg_graph("diamonds-carat")
 ```
 
@@ -269,7 +269,7 @@ msg_graph("geom-jitter-demo")
 
 可能读者已经注意到，**ggplot2** 图形有一套自己的独特风格，它与别的图形系统在外观上的典型区别就是它通常会画一个灰色的背景，背景中有网格线。
 
-首先，网格线是为了辅助阅读图形而画的，这是非常重要的图形组成部分；其次，灰色的背景也有其原因：因为一篇文章的文字通常是黑色，所以灰底的图形会和黑色文字能融合得更好，这是一点美学上的考虑。有的用户可能喜欢这样的设置，有的用户则可能很不习惯这种默认设置。**ggplot2** 可以自定义主题，例如 `theme_bw()` 就是黑白主题，但它的黑白主题几乎仅限于设定灰色背景为白色，图中元素的颜色不会受到影响，用法示例如下：
+首先，网格线是为了辅助阅读图形而画的，这是非常重要的图形组成部分；其次，灰色的背景也有其原因：因为一篇文章的文字通常是黑色，所以灰底的图形会和黑色文字能融合得更好，这是一点美学上的考虑。有的用户可能喜欢这样的设置，有的用户则可能很不习惯这种默认设置。**ggplot2** 可以自定义主题，例如 `theme_bw()` 就是黑白主题，但它的黑白主题几乎仅限于设定背景为白色，图中元素的颜色不会受到影响，用法示例如下：
 
 ```{r, eval=FALSE, echo=TRUE}
 ggplot(aes(x = mpg, y = wt), data = mtcars) +
@@ -277,22 +277,22 @@ ggplot(aes(x = mpg, y = wt), data = mtcars) +
   theme_bw()
 ```
 
-当前最新版的 **ggplot2** 3.3.2 内置了 9 个主题。此外，其他附加包也提供了更多主题可用。图 \@ref(fig:ggplot2-theme) 展示了这些主题的外观。
+当前最新版的 **ggplot2** 3.3.2 内置了 9 个主题。此外，其他附加包也提供了更多主题可用。图 \@ref(fig:ggplot2-theme) 展示了几个主题的外观，包含了内置主题和 **cowplot** 包提供的一个主题。
 
 (ref:ggplot2-theme) **ggplot2** 主题演示
 
 (ref:ggplot2-theme-s) **ggplot2** 主题演示 
 
-```{r ggplot2-theme, fig.scap="(ref:ggplot2-theme-s)",fig.cap="(ref:ggplot2-theme)", fig.width=8,fig.height=12}
+```{r ggplot2-theme, fig.scap="(ref:ggplot2-theme-s)",fig.cap="(ref:ggplot2-theme)", fig.width=10,fig.height=15}
 msg_graph("ggplot2-theme")
 ```
 
 主题还涉及到大量的细节问题，如文字的大小、颜色、旋转角度、图例的位置等等，读者可以参考 `theme_set()` 函数的帮助文档。
 
-经过这些“图层”的分解与抽象，**ggplot2** 系统中的图形可以像一个魔方一样任意组合，这也是一种重要的编程思想——让对象可重用。例如， 在下面的代码里，我们先创建一个散点图的图层，然后加上平滑层，或者加上切片层，或者加上二维核密度，如图 \@ref(fig:ggplot2-layers) 所示。 这些“相加”的操作都不需要重新写创建散点图图层的代码，大大减轻了代码量。
+经过这些“图层”的分解与抽象，**ggplot2** 系统中的图形可以像一个魔方一样任意组合，这也是一种重要的编程思想——让对象可重复使用。例如， 在下面的代码里，我们先创建一个散点图的图层，然后加上平滑层，或者加上切片层，或者加上二维核密度，如图 \@ref(fig:ggplot2-layers) 所示。 这些“相加”的操作都不需要重新写创建散点图图层的代码，大大减轻了代码量。
 
 ```{r, eval=FALSE, echo=TRUE}
-p <- ggplot(aes(x = hp, y = mpg), data = mtcars) +
+p = ggplot(aes(x = hp, y = mpg), data = mtcars) +
   geom_point() # 散点图的图层
 p + geom_smooth(method = "loess") # 用散点图加上平滑层并打印出来
 p + facet_grid(~am) # 用自动档和手动挡将散点图切片并打印
@@ -308,8 +308,14 @@ p + geom_density2d() # 散点图上加上二维核密度估计层
 msg_graph("ggplot2-layers")
 ```
 
-限于篇幅，本章对 **ggplot2** 系统的介绍非常有限。事实上，除了 **ggplot2** 包本身，R 语言中还有很多基于 **ggplot2** 开发的附加包，例如 \@ref(sec:scatterplot-matrix) 小节介绍的 **GGally** 包、第二章频繁使用的 **patchwork** 包等。这些附加包，以 **ggplot2** 包为核心，已经成长为一套优雅而强大的作图系统。
+限于篇幅，本章对 **ggplot2** 系统的介绍非常有限。事实上，除了 **ggplot2** 包本身，R 语言中还有很多基于 **ggplot2** 开发的附加包，例如 \@ref(sec:scatterplot-matrix) 小节介绍的 **GGally** 包、第二章频繁使用的 **patchwork** 包等。这些附加包，以 **ggplot2** 包为核心，已经发展为一套易用、实用、优雅而强大的作图系统。
 
-关于这套作图系统，更多的应用实例请参看本书第二部分。更为详细内容可以阅读 @ggplot2， 该系统的作者也提供了配套的网站示例[^ggplot2-web]，这个网站也是笔者经常参考的资源。
+关于这套作图系统，更多的应用实例请参看本书第二部分。更为详细内容可以阅读 @wickham2016 或 @wickham2016zh， 该系统的作者也提供了配套的网站示例[^ggplot2-web]，这个网站也是笔者经常参考的资源。
 
 [^ggplot2-web]: <https://ggplot2.tidyverse.org/>
+
+## 思考与练习
+
+1. 在本书第\@ref(par:gallery)部分，大多数图形都给出了 R 基础作图的实现方案和 **ggplot2** 实现方案。试比较这两种方案各自的优点和缺点。有些图形，我们并未提供 **ggplot2** 的实现方案，你猜猜这是为什么？你知道怎样使用 **ggplot2** 绘制这些图形吗？
+
+2. 在本书中，出现了哪些基于 **ggplot2** 或者配合 **ggplot2** 的附加包？请列举，并查看其中的主要函数。他们都有什么用途？你还能列举出哪些本书中未出现的这类附加包？
