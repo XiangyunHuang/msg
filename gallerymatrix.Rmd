@@ -533,18 +533,18 @@ chisq.test(x)$p.value # 卡方检验 P 值
 
 表 \@ref(tab:contingency) 是一个典型的二维列联表。通常我们想检验的是行变量与列变量是否独立。前面 \@ref(sec:assocplot) 小节中曾经利用 $\chi^{2}$ 检验构造了关联图，这里我们从优比（Odds Ratio，OR）的角度出发对列联表进行检验。
 
-首先我们定义以下二式分别为在因素出现和不出现的情况下事件的发生率（医学上常称为风险）：
+首先我们定义以下二式分别为在因素出现和不出现的情况下事件的发生率（医学上常称为风险率，即 Risk Ratio，简称 RR）：
 
 \begin{equation} 
 \frac{P_{1}}{P_{1}+P_{3}};\;\;\frac{P_{2}}{P_{2}+P_{4}}
-(\#eq:OR1)
+(\#eq:RR1)
 \end{equation} 
 
-进而我们用这二式之比得到优比：
+进而我们用这二式之比得到风险率：
 
 \begin{equation} 
-\mathrm{OR}\equiv\frac{P_{1}}{P_{1}+P_{3}}/\frac{P_{2}}{P_{2}+P_{4}}=\frac{P_{1}(P_{2}+P_{4})}{P_{2}(P_{1}+P_{3})}
-(\#eq:OR)
+\mathrm{RR}\equiv\frac{P_{1}}{P_{1}+P_{3}}/\frac{P_{2}}{P_{2}+P_{4}}=\frac{P_{1}(P_{2}+P_{4})}{P_{2}(P_{1}+P_{3})}
+(\#eq:RR)
 \end{equation} 
 
 Table: (\#tab:contingency) 二维列联表的经典形式
@@ -557,11 +557,11 @@ Table: (\#tab:contingency) 二维列联表的经典形式
 |           | $P_{1}+P_{2}$　$P_{3}+P_{4}$ |               |
 
 
-由于通常情况下事件发生的几率都比较小（尤其是医学上的疾病），即 $P_{1}$ 相对 $P_{3}$ 来说较小，$P_{2}$ 相对 $P_{4}$ 来说较小，因此 \@ref(eq:OR) 式可以近似用 \@ref(eq:ORapprox) 式代替：
+由于通常情况下事件发生的几率都比较小（尤其是医学上的疾病），即 $P_{1}$ 相对 $P_{3}$ 来说较小，$P_{2}$ 相对 $P_{4}$ 来说较小，因此 \@ref(eq:RR) 式可以近似用 \@ref(eq:OR) 式代替：
 
 \begin{equation} 
-\mathrm{OR}\approx\Psi\equiv\frac{P_{1}P_{4}}{P_{2}P_{3}}
-(\#eq:ORapprox)
+\mathrm{OR}=\Psi\equiv\frac{P_{1}P_{4}}{P_{2}P_{3}}
+(\#eq:OR)
 \end{equation} 
 
 我们记各单元格的样本实现值分别为 $a,b,c,d$；如果事件和因素相互独立，那么因素是否发生对事件是否发生（或发生率）没有影响，因此在零假设下优比的样本实现值 $ad/bc$ 应该接近于 1。换句话说，如果优比与 1 显著不同，那么很可能行列变量不独立。
