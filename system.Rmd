@@ -1,4 +1,4 @@
-# 其它作图系统 {#chap:system}
+# 其它作图系统 {#cha:system}
 
 > 　　他解释说："你要明白，我认为人的大脑原本像一间空空的屋子，必须有选择地用一些家具填满它。只有笨蛋才把他碰到的各种各样的破烂都塞进去。这样的话，那些可能用得上的知识就被挤了出来；或者，充其量也只是把那些破烂同其它东西混杂在一块儿。结果，在需要时却难得找到了。因此，一个善于工作的人，对于将什么东西纳入自己的头脑里是非常仔细的。他只会容纳那些工作时用得着的工具，而且又将这些工具分门别类，安排得井然有序。如果认为这间屋子的墙壁富有弹性，可以随意扩展，那就大错特错了。毫无疑问，总有一天，当你增加点滴知识时，却把从前熟悉的知识给忘记了。因此，不要让无用的信息挤掉那些有用的信息，这一点是至关重要的。"
 >
@@ -409,122 +409,7 @@ plotly的葵花图
 library(plotly, warn.conflicts = FALSE)
 ```
 
-[plotly](https://plotly-r.com) 类似 ggplot2 提供了各种交互图形的绘制函数，其中 `plot_ly` 函数提供了两种风格的绘图方式，一种是类 Base R，可以使用函数多层嵌套的方式起草绘图代码， 另一种是类似 ggplot2，基于图层的方式，使用管道符（而不是ggplot2的`+`）来进行传参或图层叠加。本部分内容我们主要考虑使用 ggplot2 风格方式绘图。
-
-### ggplotly {#subsec:plotly-ggplotly}
-
-如果你对plotly不熟悉，但是你对ggplot2比较熟悉，那么恭喜你：plotly包中，函数 `ggplotly` 可以直接将 ggplot2 对象转化为 plotly 对象。这意味着你不需要学习plotly相关的函数和参数设置，即可通过简单的一个函数，基于ggplot2制作交互图形。这个函数会把ggplot2对象翻译成plotly对应的语法。
-
-```{r,eval=FALSE}
-g <- ggplot(faithful, aes(x = eruptions, y = waiting)) +
-  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
-  xlim(1, 6) + ylim(40, 100)
-g
-gg <- ggplotly(g)
-```
-```{r faithful,fig.cap="交互式图形",echo=FALSE}
-knitr::include_graphics(path = "interactives/faithful.pdf")
-```
-
-
-### plot_ly {#subsec:plotly-plot_ly}
-
-一般来说，我们可以通过ggplot2绘图函数和`ggplotly()`来实现plotly动态图形绘制。但是如果我们想实现更多关于plotly本身的图形绘制和参数设置，那么我们则需要对plotly包本身的函数进行学习。
-
-** 语法简介： **
-plotly中，以`plot_ly()`函数来创建基础对象，我们可以基于此函数使用管道符`%>%`添加图形对象对象，比如:
-- 添加折线图`add_lines()`
-- 添加饼图`add_pie()`
-- 添加文本`add_text()`
-- 添加带状图`add_ribbons()`
-- 添加点图`add_markers()`
-- 等等其它对象。
-
-需要注意的是，一般而言，scatter都表示散点图，但是在plotly中它的含义被更加扩展了，它实际包括了：
-- scatter plots 散点图
-- error bar 误差条
-- line plot 折线图
-- segments 线段图
-- ribbons 带状图
-- polygons 多边形
-
-它们有一个共同之处就是图形都是由二维空间点来确定的，在绘图时需要指定相应的x, y作为映射。因此，同样，这些图也可以用`add_traces()`来添加，并指定type参数及不同的mode来实现。需要注意的是，在映射时，应使用`~`函数，比如将date映射为x轴，则应使用`plot_ly(x = ~Date)`。
-
-同时，如果想查看plotly官方的图形库，可以在Graphing Libraries(https://plotly.com/r/)查看。另外，关于详细的参数设置，可以查看Figure Reference(https://plotly.com/r/reference/)。
-
-在参数设置中，需要注意的是，不同级的参数，应使用R语言中的list包裹，以进行函数参数嵌套。
-
-### 折线图 {#subsec:plotly-line}
-
-根据以上语法，我们可以构建一个简单折线图
-
-```{r,eval=TRUE}
-library(plotly)
-set.seed(1)
-# 定义数据
-y <- rnorm(100, mean = -5)
-x <- c(1:100)
-dat <- data.frame(x,y)
-
-# 绘图，将x映射为横坐标，将y映射为纵坐标
-p1<-dat %>%
-  plot_ly(x = ~ x, y = ~y,type="scatter",mode="lines")
-
-# 下面是等价的
-p2<-dat %>%
-  plot_ly(x = ~ x, y = ~y) %>%
-  add_trace(type="scatter",mode="lines")
-
-# 下面也是等价的
-p3<-dat %>%
-  plot_ly(x = ~ x, y = ~y) %>%
-  add_lines()
-
-# 将图形排版，3行1列。
-subplot(
-  p1,p2,p3,
-  nrows = 3
-)
-
-```
-
-这里，我们使用不同的方法生成了3个同样的图形，并学会了使用plotly的图形排版函数。
-
-当然，我们也可以对分组数据映射颜色或者是点的不同形状。
-
-```{r}
-# 定义数据
-library(plotly)
-set.seed(1)
-# 定义数据
-y <- rnorm(150, mean = -5)
-x <- rep(c(1:50),times = 3)
-dat <- data.frame(x,y)
-dat$group <- rep(c("a", "b", "c"), each = 50)
-
-# 只分组，不映射颜色 ，类似于ggplot2中的group映射。
-p1<-dat %>%
-  group_by(group)%>%
-  plot_ly(x = ~ x, y = ~y, type = "scatter", mode = "lines")
-
-# 将group映射为颜色
-p2<-dat %>%
-  plot_ly(x = ~ x, y = ~y, color = ~group, type="scatter", mode="lines")
-
-# 将group映射为颜色的同时，映射给点的形状。
-p3<-dat %>%
-  plot_ly(x = ~ x, y = ~y, color = ~group, symbol = ~group, symbols = c(1, 6, 5), type="scatter", mode="lines+markers")
-
-
-subplot(
-  p1,p2,p3,
-  nrows = 3
-)
-
-```
-
-注意，这里将变量映射给点的形状，用的`symbol = ~group`，symbols参数是指定每组的点的具体形状。
-
+[plotly](https://plotly-r.com) 类似 ggplot2 提供了各种交互图形的绘制函数，其中 `plot_ly` 函数提供了两种风格的绘图方式，一种是 Base R， 另一种是 ggplot2，我们主要考虑使用 ggplot2 这种风格的，基于图层的方式。
 
 ### 直方图 {#subsec:plotly-histogram}
 
@@ -656,6 +541,10 @@ map_data("world", "china") %>%
 # plotly::orca(m, file = "plotly-china-map.pdf")
 knitr::include_graphics(path = "interactives/plotly-china-map.pdf")
 ```
+
+### ggplotly {#subsec:plotly-ggplotly}
+
+函数 `ggplotly` 可以直接将 ggplot2 对象转化为 plotly 对象
 
 ```{r,eval=FALSE}
 g = ggplot(faithful, aes(x = eruptions, y = waiting)) +
