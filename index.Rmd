@@ -54,10 +54,13 @@ url: 'https\://bookdown.org/xiangyun/msg/'
 ---
 
 ```{r, include=FALSE}
-options(width = 70, bookdown.render.file_scope = FALSE, knitr.kable.NA = '', knitr.table.format = "latex")
+options(width = 70, 
+        bookdown.render.file_scope = FALSE,
+        knitr.kable.NA = '', 
+        knitr.table.format = "latex")
 
 pkgs <- c("formatR", 
-          "ggplot2", "MSG", "grid", "magrittr", "ncovr", "kableExtra", "knitr", "patchwork", "RColorBrewer", "cowplot", "qqplotr")
+          "ggplot2", "MSG", "grid", "magrittr", "ncovr", "kableExtra", "knitr", "lattice", "patchwork", "RColorBrewer", "cowplot", "qqplotr")
 
 lapply(pkgs, require,character.only = TRUE)
 
@@ -79,6 +82,17 @@ usage2 <- function(txt){
   cat("```r", 
       txt, 
       "```", sep = '\n')
+}
+
+library(MSG)
+msg_code <- function(x, filter = 0) {
+  cat("```r\n")
+  msg(fig = x, show_code = TRUE, print_plot = FALSE, filter = filter)
+  cat("```\n")
+}
+
+msg_graph <- function(x) {
+  msg(fig = x, show_code = FALSE, print_plot = TRUE)
 }
 
 table_font_size <- 8

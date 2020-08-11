@@ -1,0 +1,136 @@
+andrews-curve-tikz.R
+data("iris")
+andrews-curve.R
+data(iris)
+andrews-curve.R
+data(trees)
+assists-sna.R
+data(assists, package = "MSG")
+assocplot.R
+data(HairEyeColor)
+assocplot2.R
+data(HairEyeColor)
+axis-demo.R
+data(Export.USCN, package = "MSG")
+bagplot.R
+data(car.test.frame, package = "rpart")
+bagplot2.R
+data(car.test.frame, package = "rpart")
+basketball-fourfold.R
+data(CLELAL09, package = "animation")
+basketball.R
+data(CLELAL09, package = "animation")
+canabalt-boxplot.R
+data(canabalt)
+cn-us-redraw.R
+data(cn_vs_us)
+contour-pop.R
+data(ChinaLifeEdu, package = "MSG")
+contour-pop2.R
+data(ChinaLifeEdu, package = "MSG")
+coplot.R
+data(quakes)
+coplot2.R
+data(quakes)
+coplot2.R
+    data = map_data("world", region = c("New Zealand", "Fiji")),
+density-2d-filled.R
+data(ChinaLifeEdu, package = "MSG")
+dotchart.R
+data(VADeaths)
+dotchart2.R
+data(VADeaths)
+fig-contour-persp.R
+data(ChinaLifeEdu, package = "MSG")
+ggparcoord.R
+data("iris")
+gov-cn-pct.R
+data(gov.cn.pct, package = "MSG")
+gov-cn-pct2.R
+data(gov.cn.pct, package = "MSG")
+hist-density.R
+data(geyser, package = "MASS")
+hist-density2.R
+data(geyser, package = "MASS")
+hist-geyser.R
+data(geyser, package = "MASS")
+hist-geyser2.R
+data(geyser, package = "MASS")
+image.R
+data(volcano)
+image2.R
+data(volcano)
+insects-boxplot.R
+data(InsectSprays)
+insects-boxplot2.R
+data(InsectSprays)
+interaction-plot.R
+data(esoph)
+map2.R
+worldmap = map_data("world")
+mosaicplot.R
+data(Titanic)
+murcia-ternary.R
+data(murcia, package = "MSG")
+music-3d-pcp.R
+data(music, package = "MSG")
+music-andrews-tikz.R
+data(music)
+music-andrews.R
+data(music)
+music-mds.R
+data("music", package = "MSG")
+nightingale-ggplot2.R
+data(Nightingale)
+pay-rating-points.R
+data("tvearn", package = "MSG")
+persp.R
+data("volcano")
+PlantCounts.R
+data(PlantCounts, package = "MSG")
+PlantCounts2.R
+data(PlantCounts, package = "MSG")
+qplot.R
+data(geyser, package = "MASS")
+qplot.R
+data(BinormCircle, package = "MSG")
+qqnorm.R
+data(geyser, package = "MASS")
+qqnorm2.R
+data(geyser)
+quake6-bubbles.R
+data(quake6, package = "MSG")
+rpart.R
+data(kyphosis, package = "rpart")
+rug.R
+data(faithful)
+rug2.R
+data(faithful)
+scatter-alpha.R
+data(BinormCircle, package = "MSG")
+scatter-alpha2.R
+data(BinormCircle, package = "MSG")
+smoothScatter.R
+data("BinormCircle", package = "MSG")
+smoothScatter2.R
+data("BinormCircle", package = "MSG")
+stem-islands.R
+data(islands)
+stem-poisson.R
+data(islands)
+stripchart.R
+data(InsectSprays)
+stripchart2.R
+data(InsectSprays)
+sunflowerplot.R
+data(iris)
+survival.R
+data(aml, package = "survival")
+survival2.R
+data(aml, package = "survival")
+tvearn.R
+data(tvearn)
+vadeaths-barplot.R
+data(VADeaths)
+vadeaths-barplot2.R
+data(VADeaths)

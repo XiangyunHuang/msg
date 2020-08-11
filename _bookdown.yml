@@ -6,26 +6,33 @@ language:
   ui:
     edit: "编辑"
     chapter_name: ["第 ", " 章"]
-
-before_chapter_script: ["_common.R"]
-new_session: yes
-rmd_files: 
+# before_chapter_script: ["_before_each_chapter.R"]
+# new_session: yes
+rmd_files:
 - "index.Rmd"
+# - "stat_bag.Rmd"
+# - "zz-test.Rmd"
 - "foreword.Rmd"
+- "guide.Rmd"
+- "kable2.Rmd"
+
+- "part1.Rmd"
 - "history.Rmd"
 - "tools.Rmd"
-
-- "elements.Rmd"
-- "gallery.Rmd"
-
-- "system.Rmd"
 - "data.Rmd"
+
+- "part2.Rmd"
+- "gallery1.Rmd"
+- "gallery2.Rmd"
+- "gallery3.Rmd"
+- "gallerymatrix.Rmd"
 - "principle.Rmd"
 
-- "programming.Rmd"
-- "tricks.Rmd"
-- "gui.Rmd"
-- "msg.Rmd"
-- "postscript.Rmd"
+- "part3.Rmd"
+- "baser.Rmd"
+- "ggplot2.Rmd"
+- "system.Rmd"
 
+- "foreword_zhao.Rmd"
+# - "postscript.Rmd"
 - "references.Rmd"
