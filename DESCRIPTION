@@ -28,6 +28,7 @@ Imports:
     maptools,
     MSG,
     mvtnorm,
+    patchwork,
     pdftools,
     plot3D,
     plotly,
