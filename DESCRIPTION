@@ -21,6 +21,7 @@ Imports:
     heatmaply,
     igraph,
     iplots,
+    kableExtra,
     leaflet,
     magick,
     maps,
