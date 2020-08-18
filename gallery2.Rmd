@@ -16,8 +16,8 @@
 
 ### 示例 {-}
 
-图 \@ref(fig:scatter-alpha)
-展示了一个人造数据的散点图：我们设计了 2 万个样本，其中有 1 万个样本点来自于两个独立的标准正态分布，另 1 万个样本点的坐标落在半径为 0.5 的圆上，最后将这 2 万个样本拼起来并打乱顺序（表 \@ref(tab:tab-BinormCircle)）。
+我们设计了 2 万个样本，其中有 1 万个样本点来自于两个独立的标准正态分布，另 1 万个样本点的坐标落在半径为 0.5 的圆上，最后将这 2 万个样本拼起来并打乱顺序（表 \@ref(tab:tab-BinormCircle)）。图 \@ref(fig:scatter-alpha)
+展示了这组人造数据的散点图。
 
 ```{r tab-BinormCircle}
 data(BinormCircle, package = "MSG")
@@ -60,7 +60,7 @@ usage2(usage(plot.default, output = FALSE))
 
 \noindent 参数含义：若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数在 \@ref(sec:plot) 小节中介绍（例如设置 `type = "o"` 就会得到折线图）。
 
-使用基础函数绘制图 \@ref(fig:scatter-alpha)的代码如下[^demo-scatter-alpha]：
+使用基础函数绘制图 \@ref(fig:scatter-alpha) 的代码如下[^demo-scatter-alpha]：
 
 [^demo-scatter-alpha]: 可以运行 `demo("alphaDemo", package = "MSG")`获取。
 
@@ -300,7 +300,7 @@ msg_code("smoothScatter2")
 
 风玫瑰图通常用来展示东南西北甚至更多方向上的风力强度和频数，它是观察风力在各个方向上分布的一种直观办法。风玫瑰图的本质是堆叠的直方图，只是绘在了极坐标系中。它通常把水平方向以 0° 到 360°计，并平均分为 16 个风向区间，用 16 个扇形（或指针，或数据点）表示来自这些区间的风，在每一扇形上对各等风速进行频数汇总，最后除以观测时间内的观测次数（包括无风次数），就得到了各种风速在各个风向的频率，用扇环的半径表示出来即可。风玫瑰图在要求不高的时候也可以分 8 个或 12 个方向，也有细分为 32 个方向的。
 
-在一些与气象有关的部门，风玫瑰图有其特殊用处。例如，机场需要参考当地的风向玫瑰图来决定应该以什么样的方向修建飞机跑道；再如，污染空气的工厂一般要建在城市的下风向，这就要参考风玫瑰图来选址。
+在一些与气象有关的部门，风玫瑰图有其特殊用处。例如，机场需要参考当地的风玫瑰图来决定应该以什么样的方向修建飞机跑道；再如，污染空气的工厂一般要建在城市的下风向，这就要参考风玫瑰图来选址。
 
 ### 示例 {-}
 
@@ -308,14 +308,16 @@ msg_code("smoothScatter2")
 
 ```{r tab-windrose}
 data(mydata, package = "openair")
-kable2(mydata[, 2:3], "伦敦 Marylebone 风速风向数据", insert_txt = "：1998 年 1 月 1 日到 2005 年 6 月 23 日")
+mydata2 <- mydata[, 2:3]
+names(mydata2) <- c("Wind Speed", "Wind Direction")
+kable2(mydata2, "伦敦 Marylebone 风速风向数据", insert_txt = "：1998 年 1 月 1 日到 2005 年 6 月 23 日")
 ```
 
 图 \@ref(fig:windrose) 是当地风玫瑰图的示例，各种风速的频率分别用指针的一小节或一个扇环来表示。也就是说，指针的某一小节或者某个扇环的半径越长，表示该风速水平上的刮风次数越多。从图中可以看出，该地区最常刮西南偏南风，因为该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%。
 
 (ref:fig-windrose-s) 伦敦 Marylebone 的风玫瑰图
 
-(ref:fig-windrose) 伦敦 Marylebone 的风玫瑰图：将风向分为 12 个（左）或 16 个（右）方向，每个方向用一根“指针”（左）或一个扇形（右）来表示该方向上风力的具体情况。从图中可以看出，该地区最常刮西南偏南风，因为该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%
+(ref:fig-windrose) 伦敦 Marylebone 的风玫瑰图：将风向分为 12 个（左）或 16 个（右）方向，每个方向用一根“指针”（左）或一个扇形（右）来表示该方向上风力的具体情况。从图中可以看出，该地区最常刮西南偏南风，该方向的扇环半径最长，或者指针最长；相对来说东南风较少。无风的频率大约是 0.3 \%
 
 ```{r windrose,fig.width=5.4,fig.height=5.4,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",fig.show='hold', out.width="49%"}
 msg_graph("windrose")
@@ -365,9 +367,9 @@ usage2(usage(windRose, output = FALSE))
 : 逻辑值，决定了是否显示指针柄。
 
 `key.header`、`key.footer`、`key.position`、`key`:
-: 控制图例的顶端、底部、位置和其他设置。其中，图例位置可取值为`"top"`、`"right"`、`"bottom"`、`"left"`。
+: 控制图例的顶端、底部、位置和其它设置。其中，图例位置可取值为`"top"`、`"right"`、`"bottom"`、`"left"`。
 
-\noindent 其他参数不常用，请读者自行查阅帮助。
+其它参数不常用，请读者自行查阅帮助。
 
 图 \@ref(fig:windrose) 所用的数据加载和图形绘制代码如下：
 
@@ -459,7 +461,7 @@ usage2(usage(survival:::plot.survfit, output = FALSE))
 msg_code("survival")
 ```
 
-**ggplot2** 包并没有提供生存函数的作图函数，然而 **survminer** 包提供了函数 `ggsurvplot()`，可以胜任：
+**ggplot2** 包并没有提供生存函数的作图函数，然而 **survminer** 包提供的函数 `ggsurvplot()` 可以完成这项任务：
 
 ```{r, results='asis'}
 msg_code("survival2")
@@ -491,17 +493,10 @@ survdiff(Surv(time, status) ~ x, data = aml)
 我们以美国国家航空和宇宙航行局的一批 O 型环（O-ring，一种由橡胶或塑料制成的平环，用作垫圈）失效数据（表 \@ref(tab:tab-fail-temperature)）为例。这批数据有两个变量：温度变量和是否失效的变量。
 
 ```{r tab-fail-temperature}
-fail =  factor(
-  c(2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 2, 1,
-    2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1),
-  levels = 2:1, 
-  labels = c("yes", "no")
-)
-temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
-  70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81
-)
-fail_temperature = data.frame(fail = fail, temperature = temperature)
-kable2(fail_temperature, "美国国家航空和宇宙航行局的一批 O 型环失效数据", only_head = FALSE)
+data(orings, package = "DAAG")
+orings$Fail = factor(apply(orings[, -1], 1, function(x) all(x == 0)),
+                     labels = c("yes", "no"))
+kable2(orings[, c("Temperature", "Fail")], "美国国家航空和宇宙航行局的一批 O 型环失效数据", only_head = FALSE)
 ```
 
 为了探索温度对 O 型环失效的影响，我们可以使用诸如 Logistic 回归之类的统计模型去计算、分析，而这里我们用条件密度图来展示温度的影响，如图 \@ref(fig:cdplot)。
@@ -550,7 +545,7 @@ usage2(usage(graphics:::cdplot.formula, output = FALSE))
 `border`:
 : 多边形的边线颜色。
 
-\noindent 其它参数诸如标题、坐标轴范围等此处略去。
+其它参数诸如标题、坐标轴范围等此处略去。
 
 利用该函数来为表 \@ref(tab:tab-fail-temperature) 绘制条件密度图的代码为：
 
@@ -647,7 +642,7 @@ kable2(car.test.frame, "(ref:tab-cartest)", x_scap2 = "(ref:tab-cartest-s)")
 
 [^bagplot-surf]: 不要忘记：等高图实际上是三维图形！请想象这个“曲面”的形状。
 
-(ref:fig-bagplot-s) *Consumer Reports* 杂志 中汽车数据的二维箱线图和密度等高图
+(ref:fig-bagplot-s) 汽车数据的二维箱线图和密度等高图
 
 (ref:fig-bagplot) Consumer Reports 杂志 中汽车数据的二维箱线图（左）和二维密度等高图（右）
 
@@ -697,9 +692,12 @@ msg_code("bagplot2")
 
 ## 思考与练习
 
-1.  尽管一元函数曲线图和展示数据似乎没什么关系，但它在优化一元目标函数或者对一元函数求根时通常有帮助。例如我们用 `uniroot()` 求根时需要提供根的大致区间，请参考帮助文档说明一元函数曲线图在这里有什么用处。
+1. 尽管一元函数曲线图和展示数据似乎没什么关系，但它在优化一元目标函数或者对一元函数求根时通常有帮助。例如我们用 `uniroot()` 求根时需要提供根的大致区间，请参考帮助文档说明一元函数曲线图在这里有什么用处。
 
-2.  在信息可视化（Information Visualization）领域，树图和标签云都非常流行，实际上这些图形从统计学角度来说表达的信息非常简单：它们表达的只是数字大小。树图为 Treemap，不是 \@ref(sec:rpart) 小节提到的分类与回归树，但思想类似，也是递归分割，如图 \@ref(fig:disk-usage) 是笔者操作系统中的 R 包文件大小树图。树图主要是用矩形大小代表数字大小，纵横交替分割一个大矩形为小单元。图 \@ref(fig:disk-usage) 中最大的灰色矩形代表所有 R 包的大小，在 \~/R/x86\_64-pc-linux-gnu-library/2.12/ 文件夹下有若干 R 包，每个包都有自己的大小，其中最大的是 **mapdata**，其次是 **RGtk2**，然后是 **Rcpp**，等等。纵向划分的长矩形表示一个个包（面积和包的大小成比例），然后在这些矩形内部再横向划分小矩形分别表示子文件夹的大小，若子文件夹下还有子文件夹，那么继续纵横划分。树图同时表达了嵌套关系和数值大小，看起来一目了然，通常最大的矩形能最先吸引人的注意力。例如，若我们想清理磁盘上的文件，那么就会考虑究竟是哪些文件占用了很大的空间，此时树图就是很好的可视化方法（笔者正是用这样的办法清理自己的磁盘空间的）。图 \@ref(fig:disk-usage) 显示的是 Ubuntu 系统下的 Disk Usage Analyzer，Windows 下也有类似的软件如 WinDirStat。
+2. 在信息可视化（Information Visualization）领域，树图和标签云都非常流行，实际上这些图形从统计学角度来说表达的信息非常简单：它们表达的只是数字大小。树图为 Treemap，不是 \@ref(sec:rpart) 小节提到的分类与回归树，但思想类似，也是递归分割，如图 \@ref(fig:disk-usage) 是笔者操作系统中的 R 包文件大小树图。树图主要是用矩形大小代表数字大小，纵横交替分割一个大矩形为小单元。图 \@ref(fig:disk-usage) 中最大的灰色矩形代表所有 R 包的大小，在 \~/R/x86\_64-pc-linux-gnu-library/2.12/ 文件夹下有若干 R 包，每个包都有自己的大小，其中最大的是 **mapdata**，其次是 **RGtk2**，然后是 **Rcpp**，等等。纵向划分的长矩形表示一个个包（面积和包的大小成比例），然后在这些矩形内部再横向划分小矩形分别表示子文件夹的大小，若子文件夹下还有子文件夹，那么继续纵横划分。树图同时表达了嵌套关系和数值大小，看起来一目了然，通常最大的矩形能最先吸引人的注意力。例如，若我们想清理磁盘上的文件，那么就会考虑究竟是哪些文件占用了很大的空间，此时树图就是很好的可视化方法（笔者正是用这样的办法清理自己的磁盘空间的）。图 \@ref(fig:disk-usage) 显示的是 Ubuntu 系统下的 Disk Usage Analyzer，Windows 下也有类似的软件如 WinDirStat。  
+  标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是笔者英文博客[^yihui-en]利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为笔者一直开发 **animation** 包，并研究着 Sweave（后来以此催生了 **knitr**）。  
+  本书大部分内容都是关于数据可视化的，统计学的成分比较大。请结合这里给出的两幅图形思考，信息可视化和数据可视化的区别是什么？它们各有什么优势以及如何结合它们的优势？
+
 
 (ref:fig-disk-usage-s) 系统中 R 附加包文件大小的树图
 
@@ -709,7 +707,7 @@ msg_code("bagplot2")
 knitr::include_graphics("images/disk-usage.png", dpi = NA)
 ```
 
-标签云就更简单了：将一些文本标签按一定顺序排在平面上，文本大小和某个数值成比例，这样最大的文字就能最先吸引我们的注意力。例如我们计算一篇文章中单词出现的频数，用频数大小来决定单词的大小，这样高频出现的词在图中一眼就能看出来，如图 \@ref(fig:yihui-name-wordle) 是笔者英文博客[^yihui-en]利用 Wordle 生成的标签云。显然，animation 和 Sweave 两个词字号最大，这说明这两个词在博客中出现频率最高，这不难解释：因为笔者一直开发 **animation** 包，并研究着 Sweave（后来以此催生了 **knitr**）。
+
 
 [^yihui-en]: <https://yihui.org/en/>
 
@@ -720,5 +718,3 @@ knitr::include_graphics("images/disk-usage.png", dpi = NA)
 ```{r yihui-name-wordle,fig.cap="(ref:fig-yihui-name-wordle)",fig.scap="(ref:fig-yihui-name-wordle-s)",echo=FALSE}
 knitr::include_graphics("images/yihui-name-wordle.png", dpi = NA)
 ```
-
-本书大部分内容都是关于数据可视化的，统计学的成分比较大。请结合这里给出的两幅图形思考，信息可视化和数据可视化的区别是什么？它们各有什么优势以及如何结合它们的优势？

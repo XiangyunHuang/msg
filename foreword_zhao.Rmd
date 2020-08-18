@@ -1,3 +1,5 @@
+\newpage \thispagestyle{empty} \setcounter{footnote}{0} 
+
 # 古统新修记 {#postscript .unnumbered}
 
 \markboth{后记}{}
@@ -39,4 +41,5 @@
 
 [^xuer]: <https://xuer.pzhao.org>
 
-> ——赵鹏 于 姑苏西浦
+> ——赵鹏　于　姑苏西浦
+
