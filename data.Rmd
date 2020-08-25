@@ -96,7 +96,7 @@ kable2(cn_vs_us[, 1:4], "《卫报》提供的 2010 年中美国力数据", inse
 
 我们利用这些数据重画了《卫报》的图形，如图 \@ref(fig:cn-us-redraw) 所示。
 
-(ref:cn-us-redraw) 重新调整后的 2010 年中美国力对比图：条形图的高度表达数值大小更清楚（图中红色代表中国）。注意：本图的“市值”（Market Capitalisation）数据与图 \@ref(fig:cn-us-guardian) 所示的数据中美两国颠倒了，这源于《卫报》给出的数据表中的错误。数据表中还有两处错误，你能找到吗？
+(ref:cn-us-redraw) 重新调整后的 2010 年中美国力对比图：条形图的高度表达数值大小更清楚（图中红色代表中国）。各子图显示的指标详见表 \@ref(tab:tab-cn-vs-us)。注意：本图的“市值”（Market Capitalisation）数据与图 \@ref(fig:cn-us-guardian) 所示的数据中美两国颠倒了，这源于《卫报》给出的数据表中的错误。数据表中还有两处错误，你能找到吗？
 
 (ref:cn-us-redraw-s) 2010 年中美国力对比条形图
 
@@ -249,11 +249,11 @@ knitr::include_graphics(path = "images/canabalt-screenshot.png", dpi = NA)
 
 ### 探案过程 {-}
 
-由于游戏结束时画面上会提示是否把奔跑的距离发到 Twitter 上，所以 Twitter 上有不少关于这个游戏的得分消息，我们可以抓取这些消息来看各位玩家跑了多远以及玩游戏的平台信息。我们搜集了 1208 条这样的数据，数据包括 3 列：得分、死因和游戏平台（iPad、iPhone 和 iPod touch），如表 \@ref(tab:tab-canabalt) 所示。
+由于游戏结束时画面上会提示是否把奔跑的距离发到 Twitter 上，所以 Twitter 上有不少关于这个游戏的得分记录，我们可以抓取这些记录来看各位玩家跑了多远以及玩游戏的平台信息。我们搜集了 1208 条这样的数据，数据包括 3 列：得分、死因和游戏平台（iPad、iPhone 和 iPod touch），如表 \@ref(tab:tab-canabalt) 所示。
 
 ```{r tab-canabalt}
 data(canabalt)
-kable2(canabalt, "“末日狂奔”游戏得分消息")
+kable2(canabalt, "“末日狂奔”游戏得分记录")
 ```
 
 这都是基于离散变量的连续变量比较，一个自然而然的选择就是对离散变量的每一分类分别画图。图 \@ref(fig:canabalt-boxplot) 是基于离散变量的不同分类的箱线图。从图中可以看出，iPad 玩家的平均得分较高，这可能是因为 iPad 相比起 iPhone 或者 iPod touch 来说屏幕较大，玩家易于控制，也可能是因为 iPad 携带起来不够方便，不像另外两个平台随时都能打开玩，因此 iPad 玩家玩起来会更集中精力。至于死因，由于作者对这款游戏并不在行，玩了几次，得到的结果都是因为跳得不够高而撞墙坠落摔死，最多能跑几百米，因此不了解其它死因的场景。因为撞墙摔死的玩家中有很多人得分超高，看来这种障碍的难度并不小。注意我们画箱线图时，对死因做了重新排序——按照得分的中位数排序，这样能方便读者阅读这幅图，否则，读者需要额外花费工夫用眼睛对箱线图排序，对读者来说是不必要的阅读负担。按照原始数据的顺序画图尤其是条形图和饼图中常见的问题，其实排序对于制图者只是举手之劳，对读者却能带来很大的方便。
@@ -316,9 +316,15 @@ Rchive 的界面如图 \@ref(fig:rchive) 所示。这个网页分 COS（统计�
 
 (ref:rchive-ts-s) R 语言论坛热度的年际变化
 
-(ref:rchive-ts) R 语言论坛热度的年际变化。左：统计之都论坛；中：R-help 邮件列表；右：R-devel 邮件列表
+(ref:rchive-ts) R 语言论坛热度的年际变化
 
-```{r rchive-ts, out.width="32%", fig.cap="(ref:rchive-ts)", fig.scap="(ref:rchive-ts-s)", fig.show='hold'}
+(ref:rchive-ts-a) 统计之都论坛
+
+(ref:rchive-ts-b) R-help 邮件列表
+
+(ref:rchive-ts-c) R-devel 邮件列表
+
+```{r rchive-ts, out.width="32%", fig.subcap=c("(ref:rchive-ts-a)", "(ref:rchive-ts-b)", "(ref:rchive-ts-c)"), fig.cap="(ref:rchive-ts)", fig.scap="(ref:rchive-ts-s)", fig.show='hold'}
 knitr::include_graphics("images/cosx.png")
 knitr::include_graphics("images/rhelp.png")
 knitr::include_graphics("images/rdevel.png")
