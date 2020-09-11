@@ -52,5 +52,5 @@ Imports:
     tuneR,
     vcd,
     vioplot
-Remotes: yihui/fun, yihui/MSG
+Remotes: yihui/fun
 BugReports: https://github.com/XiangyunHuang/MSG-Book/issues
