@@ -37,7 +37,6 @@ Imports:
     randomForest,
     raster,
     rgeos,
-    rggobi,
     rgl,
     RgoogleMaps,
     scatterplot3d,
