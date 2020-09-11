@@ -1,7 +1,7 @@
 language: r
 r: 
- - 4.0.0
-dist: xenial
+ - 4.0.2
+dist: bionic
 services:
   - xvfb
 cache:
@@ -11,7 +11,7 @@ cache:
     - $HOME/.npm
     
 latex: false
-pandoc_version: 2.7.3
+pandoc_version: 2.10.1
 
 env:
   global:
@@ -19,11 +19,9 @@ env:
 
 repos:
   CRAN: https://cloud.r-project.org
-  RForge: https://r-forge.r-project.org
 
 addons:
   apt:
-    update: true
     sources:
       - sourceline: 'ppa:cran/ffmpeg-4'
     packages:
@@ -47,7 +45,6 @@ addons:
       - libproj-dev 	
       - libgeos-dev 	
       - libgdal-dev
-      - ggobi
       - libgtk2.0-dev
 
 before_script:
