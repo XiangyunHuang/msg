@@ -68,7 +68,7 @@ before_script:
 
 script:
   - mkdir -p _book/interactives && cp -r interactives/* _book/interactives
-  - Rscript -e 'bookdown::render_book("index.Rmd")'
+  #- Rscript -e 'bookdown::render_book("index.Rmd")'
 
 after_success:
   - npm install netlify-cli -g
