@@ -122,7 +122,7 @@ bib <- knitr::write_bib(
     "iplots", "leaflet",
     "MSG", "maps", "Matrix",
     "quantreg",
-    "rggobi", "rgl", "rpart", "RColorBrewer",
+    "rgl", "rpart", "RColorBrewer",
     "sm", "survival",
     "TeachingDemos", "tikzDevice", "tuneR",
     "vcd", "vioplot"
