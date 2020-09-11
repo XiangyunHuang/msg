@@ -1,7 +1,7 @@
 language: r
 r: 
  - 4.0.2
-dist: bionic
+dist: xenial
 services:
   - xvfb
 cache:
@@ -30,7 +30,6 @@ addons:
       - optipng
       - graphviz
       - cargo
-      - libavdevice-dev
       - libavfilter-dev
       # magick
       - libmagick++-dev
