@@ -100,7 +100,7 @@ kable2(cn_vs_us[, 1:4], "《卫报》提供的 2010 年中美国力数据", inse
 
 (ref:cn-us-redraw-s) 2010 年中美国力对比条形图
 
-```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)", fig.width=10, fig.height=6, dev='tikz', fig.showtext = FALSE}
+```{r cn-us-redraw,fig.cap="(ref:cn-us-redraw)",fig.scap="(ref:cn-us-redraw-s)", fig.width=10, fig.height=6, fig.showtext = FALSE}
 msg_graph("cn-us-redraw-tikz")
 ```
 
@@ -163,7 +163,7 @@ kable2(covid_china2, "全国省级行政区新冠肺炎确诊人数", only_head 
 
 (ref:covidchina-s) 新冠疫情中国地图
 
-```{r covidchina, fig.show='hold', out.width="49%", fig.cap="(ref:covidchina)", fig.scap="(ref:covidchina-s)", dev='tikz', fig.showtext = FALSE}
+```{r covidchina, fig.show='hold', out.width="49%", fig.cap="(ref:covidchina)", fig.scap="(ref:covidchina-s)", fig.showtext = FALSE}
 msg_graph("covidchina")
 ```
 
@@ -262,7 +262,7 @@ kable2(canabalt, "“末日狂奔”游戏得分记录")
 
 (ref:canabalt-boxplot-s) “末日狂奔”游戏得分在不同游戏平台以及死因下的比较
 
-```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)", dev='tikz', fig.showtext = FALSE}
+```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)", fig.showtext = FALSE}
 msg_graph("canabalt-boxplot")
 ```
 
