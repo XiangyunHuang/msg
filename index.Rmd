@@ -49,7 +49,7 @@ lapply(c(
   "GGally", "ggplot2", "igraph", 
   "magick", "maps", "maptools", "MSG", "mvtnorm",
   "pdftools", "plot3D", "plotrix",
-  "randomForest", "rgeos", "rggobi", "rgl",
+  "randomForest", "rgeos", "rgl",
   "scatterplot3d", "showtext", "sna", "sp", "svglite",
   "TeachingDemos", "tikzDevice", "vcd", "vioplot"
 ), function(pkg) {
