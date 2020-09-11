@@ -264,6 +264,4 @@ plot_ggmap <- function(x,
   p
 }
 tables <- list()
-
-Sys.setlocale("LC_CTYPE", "Chinese")
 ```
