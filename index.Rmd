@@ -60,7 +60,7 @@ options(width = 70,
         knitr.table.format = "latex")
 
 pkgs <- c("formatR", 
-          "ggplot2", "MSG", "grid", "magrittr", "ncovr", "kableExtra", "knitr", "lattice", "patchwork", "RColorBrewer", "cowplot", "qqplotr")
+          "ggplot2", "MSG", "grid", "magrittr", "ncovr", "kableExtra", "knitr", "lattice", "patchwork", "RColorBrewer", "qqplotr")
 
 lapply(pkgs, require,character.only = TRUE)
 
