@@ -39,7 +39,7 @@ kable2(tables$pork, "2006 到 2011 年猪肉价格", only_head = FALSE, latex_op
 
 (ref:pork-price-s) R 语言重新绘制的猪肉价格走势图
 
-```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)", dev='tikz', fig.showtext = FALSE}
+```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)", fig.showtext = FALSE}
 msg_graph("pork-price2")
 ```
 
