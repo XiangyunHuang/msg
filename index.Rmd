@@ -119,7 +119,7 @@ bib <- knitr::write_bib(
     "formatR", "fun", "KernSmooth",
     "GGally", "ggpointdensity",
     "hexbin", "htmlwidgets", "heatmaply",
-    "iplots", "leaflet",
+    "leaflet",
     "MSG", "maps", "Matrix",
     "quantreg",
     "rgl", "rpart", "RColorBrewer",
