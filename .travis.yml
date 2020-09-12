@@ -45,9 +45,8 @@ addons:
       - libgeos-dev 	
       - libgdal-dev
       - libgtk2.0-dev
-
-before_install:
-  - sudo R CMD javareconf
+      # rJava
+      - r-cran-rjava
 
 before_script:
   - mkdir -p ~/.R ~/.fonts
