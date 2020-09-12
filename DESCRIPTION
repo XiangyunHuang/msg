@@ -20,7 +20,6 @@ Imports:
     gifski,
     heatmaply,
     igraph,
-    iplots,
     leaflet,
     magick,
     maps,

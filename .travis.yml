@@ -45,8 +45,6 @@ addons:
       - libgeos-dev 	
       - libgdal-dev
       - libgtk2.0-dev
-      # rJava
-      - r-cran-rjava
 
 before_script:
   - mkdir -p ~/.R ~/.fonts
