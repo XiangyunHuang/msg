@@ -197,7 +197,7 @@ msg_graph("quake6-bubbles-tikz")
 
 ### 坐标系
 
-我们平时用到的坐标系大多数都是笛卡尔坐标系，**ggplot2** 也提供了极坐标系（如图 \@ref(fig:covidcountries) 所示的玫瑰图、图 \@ref(fig:pie-chart) 中的饼图）和地图坐标系（见 \@ref(sec:maps) 小节），并支持笛卡尔坐标系的翻转（如图 \@ref(fig:insects-boxplot)），即交换 x 轴和 y 轴。
+我们平时用到的坐标系大多数都是笛卡尔坐标系，**ggplot2** 也提供了极坐标系（如图 \@ref(fig:nightingale-ggplot2) 所示的玫瑰图、图 \@ref(fig:pie-chart) 中的饼图）和地图坐标系（见 \@ref(sec:maps) 小节），并支持笛卡尔坐标系的翻转（如图 \@ref(fig:insects-boxplot)），即交换 x 轴和 y 轴。
 
 函数 `coord_flip()` 可以用来翻转几乎任何图形，而且由于 **ggplot2** 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上 `coord_flip()` 再打印即可。图 \@ref(fig:diamonds-cut) 是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。
 
@@ -213,7 +213,7 @@ msg_code("diamonds-cut")
 msg_graph("diamonds-cut")
 ```
 
-图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，这一点在 \@ref(subsec:china-vs-us) 小节和 \@ref(sec:covid) 小节中有举例说明，请读者慎用。
+图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，请读者慎用。
 
 ```{r, results='asis', dev='tikz', fig.showtext = FALSE}
 msg_code("diamonds-polar")
@@ -310,9 +310,7 @@ msg_graph("ggplot2-layers")
 
 限于篇幅，本章对 **ggplot2** 系统的介绍非常有限。事实上，除了 **ggplot2** 包本身，R 语言中还有很多基于 **ggplot2** 开发的附加包，例如 \@ref(sec:scatterplot-matrix) 小节介绍的 **GGally** 包、第二章频繁使用的 **patchwork** 包等。以 **ggplot2** 包为核心，这些附加包已经发展为一套易用、实用、优雅而强大的作图系统。
 
-关于这套作图系统，更多的应用实例请参看本书第二部分。更为详细内容可以阅读 @wickham2016 或 @wickham2016zh， 该系统的作者也提供了配套的网站示例[^ggplot2-web]，这个网站也是笔者经常参考的资源。
-
-[^ggplot2-web]: <https://ggplot2.tidyverse.org/>
+关于这套作图系统，更多的应用实例请参看本书第二部分。更为详细内容可以阅读 @wickham2016 或 @wickham2016zh， 该系统的作者也提供了配套的网站示例，这个网站也是笔者经常参考的资源。
 
 ## 思考与练习
 

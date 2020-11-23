@@ -24,7 +24,7 @@ bibliography:
   - bib/book.bib
   - bib/MSG-packages.bib
   - bib/Modern-Stat-Graphics.bib
-biblio-style: plainnat
+biblio-style: apalike # plainnat
 natbiboptions: "authoryear,square"
 link-citations: yes
 graphics: yes
@@ -264,4 +264,6 @@ plot_ggmap <- function(x,
   p
 }
 tables <- list()
+
+Sys.setlocale("LC_CTYPE", "Chinese")
 ```

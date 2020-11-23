@@ -113,20 +113,11 @@ help("canabalt")
 
 ### 案情回放 {-}
 
-在 R 语言用户社区里，有五个主要的 R 语言邮件列表系统，是 R 用户获取新资讯、相互交流、获取帮助的传统形式。其中，比较常用的是为普通用户提供帮助的 r-help[^r-help]，以及供开发者讨论的 r-devel[^r-devel]。在中文社区，“统计之都”[^cosx]是比较活跃的 R 语言论坛。然而，近年来，传统论坛的活跃度明显下降。我们想看看，这些传统论坛是何时衰落的；而论坛如今的热门话题一般都在聊些什么。
-
-[^r-help]: <https://stat.ethz.ch/mailman/listinfo/r-help>
-
-[^r-devel]: <https://stat.ethz.ch/mailman/listinfo/r-devel>
-
-[^cosx]: <https://d.cosx.org/>
+在 R 语言用户社区里，有五个主要的 R 语言邮件列表系统，是 R 用户获取新资讯、相互交流、获取帮助的传统形式。其中，比较常用的是为普通用户提供帮助的 r-help，以及供开发者讨论的 r-devel。在中文社区，“统计之都”是比较活跃的 R 语言论坛。然而，近年来，传统论坛的活跃度明显下降。我们想看看，这些传统论坛是何时衰落的；而论坛如今的热门话题一般都在聊些什么。
 
 ### 探案过程 {-}
 
-我们创建了 Rchive 这个在线应用[^rchive]，中文叫做“R 区洛阳铲”，意思是用来挖掘 R 语言社区历史的工具。
-
-[^rchive]: <https://sciwis.shinyapps.io/rchive/>
-
+我们创建了 Rchive 这个在线应用，中文叫做“R 区洛阳铲”，意思是用来挖掘 R 语言社区历史的工具。
 
 (ref:rchive-s) R 区洛阳铲
 
@@ -166,9 +157,7 @@ R-help 邮件列表里的热门话题涉及 R 包的安装、文本操作、R �
 
 ### 探案工具 {-}
 
-Rchive 是使用 R 语言的 shiny 包制作的，主要使用了直方图（详见 \@ref(sec:hist) 小节）、玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）和交互时间序列图。这个工具制作的过程和部分源代码可以参看统计之都论坛的讨论[^rchive-source]。
-
-[^rchive-source]: <https://d.cosx.org/d/420739>
+Rchive 是使用 R 语言的 shiny 包制作的，主要使用了直方图（详见 \@ref(sec:hist) 小节）、玫瑰图（详见 \@ref(sec:nightingale) 和 \@ref(sec:windrose) 小节）和交互时间序列图。这个工具制作的过程和部分源代码可以参看统计之都论坛的讨论。
 
 ## 绝望主妇 {#subsec:tvearn}
 
@@ -209,7 +198,7 @@ aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 
 (ref:tvearn-s) 演员的薪酬直方图及薪酬与电视剧评分的散点图
 
-```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10, dev='tikz', fig.showtext = FALSE}
+```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10, fig.showtext = FALSE}
 msg_graph("tvearn")
 ```
 
@@ -246,7 +235,7 @@ kable2(music[, 1:5], "音乐曲目数据")
 
 (ref:music-andrews-s) 音乐曲目左声道频率的调和曲线图
 
-```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=6,fig.height=2.8,dev='tikz',fig.process=to_png,fig.showtext=FALSE}
+```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=6,fig.height=2.8, fig.process=to_png,fig.showtext=FALSE}
 msg_graph("music-andrews-tikz")
 ```
 
@@ -258,7 +247,7 @@ msg_graph("music-andrews-tikz")
 
 (ref:music-3d-pcp-s) 音乐曲目左声道频率的三维散点图与平行坐标图
 
-```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8, out.width="70%", dev='tikz', fig.showtext = FALSE}
+```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8, out.width="70%", fig.showtext = FALSE}
 msg_graph("music-3d-pcp")
 ```
 
@@ -280,7 +269,7 @@ msg_code("music-3d-pcp")
 
 ### 案情回放 {-}
 
-2009 年 12 月 25 日，CLE 骑士与 LAL 湖人在洛杉矶 Staples Center 展开一场圣诞大战，最终骑士以 102:87 胜出。我们可以从网上[^basketballgeek] 获得这一场比赛的详细数据，甚至包括每一次投篮时球员在球场上的坐标（表 \@ref(tab:CLELAL09-data)）。同时，我们还得到了这场比赛的助攻矩阵数据（表 \@ref(tab:assists-data)）。
+2009 年 12 月 25 日，CLE 骑士与 LAL 湖人在洛杉矶 Staples Center 展开一场圣诞大战，最终骑士以 102:87 胜出。我们可以从网上获得这一场比赛的详细数据，甚至包括每一次投篮时球员在球场上的坐标（表 \@ref(tab:CLELAL09-data)）。同时，我们还得到了这场比赛的助攻矩阵数据（表 \@ref(tab:assists-data)）。
 
 
 ```{r CLELAL09-data}
@@ -296,7 +285,6 @@ kable2(assists[,1:6], "一场篮球比赛的助攻数据", latex_options = "scal
 
 作为一名准球迷，笔者想知道，从这批数据中，我们能看出这场比赛有什么特点？投篮结果与投篮位置有什么关系吗？
 
-[^basketballgeek]: <http://www.basketballgeek.com>
 
 ### 探案过程 {-}
 
@@ -329,7 +317,7 @@ msg_graph("basketball")
 
 (ref:basketball-fourfold-s) 球场左右侧投篮命中的四瓣图
 
-```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)", dev='tikz', fig.showtext = FALSE}
+```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)", fig.showtext = FALSE}
 msg_graph("basketball-fourfold")
 ```
 
@@ -363,11 +351,7 @@ demo("CLEvsLAL", package = "animation")
 
 ### 案情回放 {-}
 
-这个案例的背景是一则名为"神奇 87.53 这个数字竟然走红"的新闻报导[^funny-nr]。这则新闻的导火索是"国家统计局称，在他们随机调查的 100 位网友中，有 87.53% 的网友支持封杀 BTchina"，其中百分比 87.53% 引起了网友们的注意。只调查了 100 名，那么小数点后面的 "53" 有何含义？进而有人继续收集了各大网站中的百分比数据[^percentage-web]，试图说明一些统计数字的荒谬。这组百分比数据究竟有何规律？其中有何荒谬之处呢？
-
-[^funny-nr]: <https://news.sina.com.cn/c/2009-12-12/034016758777s.shtml>
-
-[^percentage-web]: 原网页 <http://chemhack.com/cn/2009/12/87-53-stat/> 已失效，快照：<https://web.archive.org/web/20120115032226/http://chemhack.com/cn/2009/12/87-53-stat/>
+这个案例的背景是一则名为"神奇 87.53 这个数字竟然走红"的新闻报导。这则新闻的导火索是"国家统计局称，在他们随机调查的 100 位网友中，有 87.53% 的网友支持封杀 BTchina"，其中百分比 87.53% 引起了网友们的注意。只调查了 100 名，那么小数点后面的 "53" 有何含义？进而有人继续收集了各大网站中的百分比数据，试图说明一些统计数字的荒谬。这组百分比数据究竟有何规律？其中有何荒谬之处呢？
 
 ### 探案过程 {-}
 
@@ -383,11 +367,9 @@ data(gov.cn.pct, package = "MSG")
 kable2(gov.cn.pct, "中国政府网站中的百分比数据", insert_txt = "。round0 和 round1 分别表示是否四舍五入到个位和十分位")
 ```
 
-我们对这组数据进行了粗略的探索。图 \@ref(fig:gov-cn-pct) 展示了这些百分比数据的搜索频数。其中，左上图用垂线表示了每个百分比的搜索频数大小。从中我们可以发现，垂线在某些区间上显得异常得高。为了更清楚查看这些大频数的位置，我们可以把图形放大，如右上图所示，显示了 $[10\%,\,11\%]$ 区间上的频数。这里我们可以清楚看到取整的百分比的频数明显比其它百分比的频数大，其它区间上有类似的特征。我们绘制了一个 GIF 动画[^gif]，展示了所有长度为 1 的区间上的频数，使这个特征更容易观察到。
+我们对这组数据进行了粗略的探索。图 \@ref(fig:gov-cn-pct) 展示了这些百分比数据的搜索频数。其中，左上图用垂线表示了每个百分比的搜索频数大小。从中我们可以发现，垂线在某些区间上显得异常得高。为了更清楚查看这些大频数的位置，我们可以把图形放大，如右上图所示，显示了 $[10\%,\,11\%]$ 区间上的频数。这里我们可以清楚看到取整的百分比的频数明显比其它百分比的频数大，其它区间上有类似的特征。我们绘制了一个 GIF 动画（见笔者的博客），展示了所有长度为 1 的区间上的频数，使这个特征更容易观察到。
 
 为了进一步验证"取整"的猜测，我们可以分别将取整和不取整的百分比以不同样式的点表示出来，并且加上 LOWESS 曲线（见 \@ref(subsec:lowess) 小节）。从图中可以看到，无论是取整到整数还是取整到 1 位小数，搜索频数都明显更高。注意左下图和右下图的 y 轴是取过对数的，因此取整和不取整的实际差异比图中看到的更大。
-
-[^gif]: <https://yihui.org/cn/2009/12/statistics-in-their-eyes/>
 
 (ref:gov-cn-pct) 中国政府网站中的百分比数据 LOWESS 图：首先我们画出每个百分比数据的频数（左上），然后放大 $[10\%,\,11\%]$ 区间上的频数图（右上），继而猜测数据有四舍五入的特征，所以分别对整数位和非整数位的百分比画 LOWESS 曲线（左下），最后分别对保留一位和两位小数的百分比画 LOWESS 曲线（右下）
 
@@ -437,7 +419,7 @@ kable2(PlantCounts, "植物物种数目与海拔高度")
 
 (ref:PlantCounts-s) 海拔高度与物种数目的 LOWESS 曲线
 
-```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)", dev='tikz', fig.showtext = FALSE}
+```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)", fig.showtext = FALSE}
 msg_graph("PlantCounts2")
 ```
 
@@ -747,9 +729,7 @@ msg_code("outlier-resample2")
 msg_graph("outlier-resample2-tikz")
 ```
 
-图 \@ref(fig:outlier-resample) 展示了传统诊断方法与这里提出的抽样诊断方法的比较。左上图显示普通线性回归受离群点影响严重：理论上回归直线应该是水平的（斜率为 0），但右上角的两个离群点将回归直线拉起；右上图画出了这个回归模型中每个样本点的 Cook 距离，从图中可以看到，只有最后一条数据是离群点，而事实上倒数第二条数据也是离群点，只是删除这一条数据之后回归模型不会有太大变化（受最后一条数据掩盖），所以它不能被 Cook 距离识别出来；左下图显示了一种抽样的可能性：我们抽取数据的前 60 条（图中用实心点表示），去掉数据的后 42 条（空心点表示），然后重新建立回归模型，并画出回归直线，此时我们可以看到，由于去掉了两个离群点，回归直线的斜率大致为 0，与理论相符了；基于这种抽样的想法，我们将这个步骤重复 100 次，每次重新随机抽取一部分数据（可能包含离群点，也可能不包含），并重新计算回归系数，最终把 100 次的斜率都记录下来并画在右下图中，可以看出，这些斜率大致分为三群，这种"多群"的特征反映出原数据中有不止一个离群点（否则 100 个斜率只会分为两群：包含或不包含一个离群点的结果），靠近 0 的斜率是抽样不包含两个离群点的结果，而靠近 1 的斜率是包含两个离群点的结果，中间一层斜率是包含一个离群点的结果（可能是最后一条数据，也可能是倒数第二条）。这样我们就成功诊断出传统方法找不出来或者找不完全的离群点现象。这个模拟的动画版本可以在线[^multiple-outliers-detection]观看。
-
-[^multiple-outliers-detection]: <https://yihui.org/cn/2008/09/multiple-outliers-detection/>
+图 \@ref(fig:outlier-resample) 展示了传统诊断方法与这里提出的抽样诊断方法的比较。左上图显示普通线性回归受离群点影响严重：理论上回归直线应该是水平的（斜率为 0），但右上角的两个离群点将回归直线拉起；右上图画出了这个回归模型中每个样本点的 Cook 距离，从图中可以看到，只有最后一条数据是离群点，而事实上倒数第二条数据也是离群点，只是删除这一条数据之后回归模型不会有太大变化（受最后一条数据掩盖），所以它不能被 Cook 距离识别出来；左下图显示了一种抽样的可能性：我们抽取数据的前 60 条（图中用实心点表示），去掉数据的后 42 条（空心点表示），然后重新建立回归模型，并画出回归直线，此时我们可以看到，由于去掉了两个离群点，回归直线的斜率大致为 0，与理论相符了；基于这种抽样的想法，我们将这个步骤重复 100 次，每次重新随机抽取一部分数据（可能包含离群点，也可能不包含），并重新计算回归系数，最终把 100 次的斜率都记录下来并画在右下图中，可以看出，这些斜率大致分为三群，这种"多群"的特征反映出原数据中有不止一个离群点（否则 100 个斜率只会分为两群：包含或不包含一个离群点的结果），靠近 0 的斜率是抽样不包含两个离群点的结果，而靠近 1 的斜率是包含两个离群点的结果，中间一层斜率是包含一个离群点的结果（可能是最后一条数据，也可能是倒数第二条）。这样我们就成功诊断出传统方法找不出来或者找不完全的离群点现象。这个模拟的动画版本可以在观看（见笔者的博客）。
 
 本例仅仅是以模拟的方法提供了一种离群点诊断新思路，沿着这种想法，我们可以继续发展新的理论，来弥补传统理论的不足。
 

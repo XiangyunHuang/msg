@@ -16,7 +16,7 @@
 knitr::include_graphics(path = "images/Playfair-TimeSeries.png", dpi = NA)
 ```
 
-(ref:playfair86) @Playfair86 绘制的线图。 这幅图主要展示了 1700 年至 1780 年间英格兰的进出口时序数据，左边表明了对外贸易对英格兰不利，而随着时间发展，大约 1752 年后，对外贸易逐渐变得有利。图片来源： <https://en.wikipedia.org/wiki/William_Playfair>
+(ref:playfair86) @Playfair86 绘制的线图。 这幅图主要展示了 1700 年至 1780 年间英格兰的进出口时序数据，左边表明了对外贸易对英格兰不利，而随着时间发展，大约 1752 年后，对外贸易逐渐变得有利。图片来自维基百科
 
 (ref:playfair86-s) William Playfair 的时序线图
 
@@ -24,7 +24,7 @@ knitr::include_graphics(path = "images/Playfair-TimeSeries.png", dpi = NA)
 knitr::include_graphics(path = c("images/Playfair-pie1.png", "images/Playfair-pie2.jpg"), dpi = NA)
 ```
 
-(ref:playfair01) @Playfair01 绘制的饼图。这是历史上最早出现的饼图，描述了法国大革命前后一些欧洲国家的统计数据。上方的大图展示了各个国家的领土面积（和圆圈成比例）以及人口（左垂线）、税收（右垂线）、国土在各大洲分布比例等数据，两条垂线连线的斜率可表示税负的轻重（这一点颇有争议，因为斜率与圆的半径有关）。下方的饼图展示了土耳其帝国在三大洲的国土面积分布。图片来源：<https://en.wikipedia.org/wiki/William_Playfair>，<https://www.math.usu.edu/~symanzik/papers/2009_cost/editorial.html>
+(ref:playfair01) @Playfair01 绘制的饼图。这是历史上最早出现的饼图，描述了法国大革命前后一些欧洲国家的统计数据。上方的大图展示了各个国家的领土面积（和圆圈成比例）以及人口（左垂线）、税收（右垂线）、国土在各大洲分布比例等数据，两条垂线连线的斜率可表示税负的轻重（这一点颇有争议，因为斜率与圆的半径有关）。下方的饼图展示了土耳其帝国在三大洲的国土面积分布。图片来自维基百科
 
 (ref:playfair01-s) William Playfair 的饼图
 

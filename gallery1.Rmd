@@ -28,7 +28,7 @@ kable2(VADeaths, "弗吉尼亚州死亡数据", only_head = FALSE)
 
 (ref:fig-vadeaths-barplot) 弗吉尼亚死亡率数据条形图： 堆砌和并列的条形图效果
 
-```{r vadeaths-barplot, fig.width=4.8, fig.height=4.8, fig.cap = "(ref:fig-vadeaths-barplot)", fig.scap="(ref:fig-vadeaths-barplot-s)", fig.show="hold", dev='tikz', fig.showtext = FALSE}
+```{r vadeaths-barplot, fig.width=4.8, fig.height=4.8, fig.cap = "(ref:fig-vadeaths-barplot)", fig.scap="(ref:fig-vadeaths-barplot-s)", fig.show="hold", fig.showtext = FALSE}
 msg_graph("vadeaths-barplot2")
 ```
 
@@ -91,7 +91,7 @@ msg_code("vadeaths-barplot2")
 
 (ref:fig-dotchart) 弗吉尼亚死亡率数据的 Cleveland 点图
 
-```{r dotchart,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)", dev='tikz', fig.showtext = FALSE}
+```{r dotchart,fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart)",fig.scap="(ref:fig-dotchart-s)", fig.showtext = FALSE}
 msg_graph("dotchart")
 ```
 
@@ -129,7 +129,7 @@ msg_code("dotchart2")
 
 (ref:fig-dotchart2) 用 **ggplot2** 绘制的弗吉尼亚死亡率点图
 
-```{r dotchart2, fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart2)",fig.scap="(ref:fig-dotchart2-s)", dev='tikz', fig.showtext = FALSE}
+```{r dotchart2, fig.width=4.8,fig.height=2.7,fig.cap="(ref:fig-dotchart2)",fig.scap="(ref:fig-dotchart2-s)", fig.showtext = FALSE}
 msg_graph("dotchart2")
 ```
 
@@ -148,7 +148,7 @@ msg_graph("dotchart2")
 (ref:fig-hist-geyser) 黄石国家公园喷泉喷发间隔时间直方图：（1）使用默认参数值（作频数图）；（2）概率密度直方图；（3）减小区间段数，直方图看起来更平滑（偏差大，方差小）；（4）增大区间段数，直方图更突兀（偏差小，方差大）
 
 
-```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE,out.width="100%", dev='tikz', fig.showtext = FALSE}
+```{r hist-geyser, fig.width=4.8, fig.height=4, fig.cap="(ref:fig-hist-geyser)", fig.scap='(ref:fig-hist-geyser-s)', fig.show='hold', fig.ncol=1, message=FALSE,out.width="100%", fig.showtext = FALSE}
 msg_graph("hist-geyser2")
 ```
 
@@ -208,7 +208,7 @@ kable2(geyser, "黄石国家公园喷泉数据")
 
 (ref:fig-hist-density) 直方图与密度曲线的结合：R 基础作图法借助函数 `density()` 可以计算出数据的核密度估计，然后利用低层作图函数 `lines()` 将核密度估计曲线添加到直方图中；**ggplot2** 包则是直接使用 `geom_density()` 函数
 
-```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="70%", dev='tikz', fig.showtext = FALSE}
+```{r hist-density, fig.width=3.6, fig.height=3, results='hide', fig.cap='(ref:fig-hist-density)', fig.scap='(ref:fig-hist-density-s)', fig.show='hold', fig.ncol=1,out.width="70%", fig.showtext = FALSE}
 msg_graph("hist-density2")
 ```
 
@@ -371,7 +371,7 @@ kable2(InsectSprays, "实验中使用各种杀虫剂后的昆虫数目")
 
 (ref:fig-insects-boxplot) 昆虫数目箱线图：实验中使用六种杀虫剂后的昆虫数目分布
 
-```{r insects-boxplot, fig.width=4.8, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1, dev='tikz', fig.showtext = FALSE}
+```{r insects-boxplot, fig.width=4.8, fig.height=3, fig.cap="(ref:fig-insects-boxplot)", fig.scap="(ref:fig-insects-boxplot-s)",fig.show='hold', fig.ncol=1, fig.showtext = FALSE}
 msg_graph("insects-boxplot2")
 ```
 
@@ -539,7 +539,7 @@ msg_code("vioplot")
 
 (ref:fig-rug) 带坐标轴须的喷泉间隔时间密度曲线图
 
-```{r rug,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)", dev='tikz', fig.showtext = FALSE}
+```{r rug,fig.width=4.8,fig.height=2,fig.cap="(ref:fig-rug)",fig.scap="(ref:fig-rug-s)", fig.showtext = FALSE}
 msg_graph("rug2")
 ```
 
@@ -595,7 +595,7 @@ msg_code("rug2")
 
 (ref:fig-stripchart) 实验中使用各种杀虫剂后的昆虫数目的带状图：堆砌和随机打乱的带状图
 
-```{r stripchart,fig.width=4.8,fig.height=4.8,out.width="80%", fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)", dev='tikz', fig.showtext = FALSE}
+```{r stripchart,fig.width=4.8,fig.height=4.8,out.width="80%", fig.cap="(ref:fig-stripchart)",fig.scap="(ref:fig-stripchart-s)", fig.showtext = FALSE}
 layout(matrix(1:2, 2), height = c(1, 1))
 msg_graph("stripchart")
 ```
@@ -644,7 +644,7 @@ msg_code("stripchart2")
 
 (ref:fig-stripchart2) **ggplot2** 包绘制的 使用各种杀虫剂后的昆虫数目的带状图
 
-```{r stripchart2, fig.width=4.8,fig.height=2.4,out.width="80%", fig.cap="(ref:fig-stripchart2)", dev='tikz', fig.showtext = FALSE}
+```{r stripchart2, fig.width=4.8,fig.height=2.4,out.width="80%", fig.cap="(ref:fig-stripchart2)", fig.showtext = FALSE}
 msg_graph("stripchart2")
 ```
 
@@ -656,11 +656,9 @@ msg_graph("stripchart2")
 
 饼图是目前应用非常广泛的统计图形，原理很简单：每一个扇形的角度与相应数据的数值大小成比例。
 
-然而，根据统计学家（主要是 Cleveland 和 McGill）和一些心理学家的调查结果 [@Cleveland85]，这种以比例展示数据的统计图形实际上是很糟糕的可视化方式。因此，R 关于饼图的帮助文件中清楚地说明了并不推荐使用饼图，而是使用条形图（\@ref(sec:barplot) 小节）或点图（\@ref(sec:dotchart) 小节）作为替代。读者若有兴趣可以到“统计之都”论坛[^pie]查看一则关于饼图的幽默。
+然而，根据统计学家（主要是 Cleveland 和 McGill）和一些心理学家的调查结果 [@Cleveland85]，这种以比例展示数据的统计图形实际上是很糟糕的可视化方式。因此，R 关于饼图的帮助文件中清楚地说明了并不推荐使用饼图，而是使用条形图（\@ref(sec:barplot) 小节）或点图（\@ref(sec:dotchart) 小节）作为替代。读者若有兴趣可以到“统计之都”论坛查看一则关于饼图的幽默。
 
 尽管我们不推荐使用饼图，鉴于饼图的使用如此普遍，我们仍然在这里做简单介绍。
-
-[^pie]: <https://d.cosx.org/d/101157>
 
 ### 示例 {-}
 
@@ -688,7 +686,7 @@ kableExtra::kable_styling(
 
 (ref:fig-pie-chart) 各类馅饼销售数据的饼图：对比上面的饼图和下面的点图以及条形图，人眼对角度或比例的感知能力是否弱于对长度的感知能力？
 
-```{r pie-chart,fig.width=6,fig.height=8,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)", dev='tikz', fig.showtext = FALSE}
+```{r pie-chart,fig.width=6,fig.height=8,fig.cap="(ref:fig-pie-chart)",fig.scap="(ref:fig-pie-chart-s)", fig.showtext = FALSE}
 msg_graph("pie-chart2")
 ```
 
@@ -817,9 +815,7 @@ msg_graph("nightingale-ggplot2")
 
 3.  如果箱线图中出现大量的占据范围很大的离群点，则会导致箱子的主体部分被压得很扁，此时我们很难看清分位数的位置。请问对于这种情况有什么好的解决办法？
 
-4.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性[^cos18521]。
-
-[^cos18521]: 本题源于统计之都论坛帖子：<https://d.cosx.org/d/18521>。
+4.  在第 \@ref(sec:qqplot) 节中我们了解了如何画 QQ 图，与之对应的还有一种图形叫 PP 图（Probability-Probability），它也是一种检验数据分布是否和理论分布吻合的图形工具，原理和 QQ 图类似：对数据的实际概率分布值和理论概率分布值作散点图即可（也可以选择性地添加一条直线）。编写函数画出 `geyser$waiting` 的 PP 图（理论分布选择正态分布，均值和标准差用矩估计获得），并评价该数据的正态性（本题源于统计之都论坛）。
 
 5.  用 QQ 图评价数据正态性应该注意什么问题？模拟一些正态分布的数据，画出 QQ 图，看看如果数据真的来自正态分布，QQ 图看起来是什么样的。或者参考 **animation** 包中的 `sim.qqnorm()` 函数。
 
