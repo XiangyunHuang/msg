@@ -125,7 +125,7 @@ msg_code("mtcars-smooth")
 
 (ref:mtcars-smooth) 汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的
 
-```{r mtcars-smooth, out.width="75%", fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)", dev='tikz', fig.showtext = FALSE}
+```{r mtcars-smooth, out.width="75%", fig.scap="(ref:mtcars-smooth-s)",fig.cap="(ref:mtcars-smooth)"}
 msg_graph("mtcars-smooth")
 ```
 
@@ -143,7 +143,7 @@ msg_code("diamonds-hex")
 
 (ref:diamonds-hex) 钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小
 
-```{r diamonds-hex, out.width="80%", fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)", dev='tikz', fig.showtext = FALSE}
+```{r diamonds-hex, out.width="80%", fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)"}
 msg_graph("diamonds-hex")
 ```
 
@@ -157,7 +157,7 @@ msg_code("ggplot2-violin")
 
 (ref:ggplot2-violin) 使用 `stat_density()` 函数构建的小提琴图
 
-```{r ggplot2-violin, fig.width=4.8,fig.height=3,out.width="80%",fig.cap="(ref:ggplot2-violin)", dev='tikz', fig.showtext = FALSE}
+```{r ggplot2-violin, fig.width=4.8,fig.height=3,out.width="80%",fig.cap="(ref:ggplot2-violin)"}
 msg_graph("ggplot2-violin")
 ```
 
@@ -175,7 +175,7 @@ msg_code("iris-ggplot2")
 
 (ref:iris-ggplot2) **ggplot2** 包绘制鸢尾花花瓣长宽散点图：对比图 \@ref(fig:point-iris) 看看 **ggplot2** 中语法之简洁，颜色、形状、图例一气呵成
 
-```{r iris-ggplot2, fig.scap="(ref:iris-ggplot2-s)",fig.cap="(ref:iris-ggplot2)", dev='tikz', fig.showtext = FALSE}
+```{r iris-ggplot2, fig.scap="(ref:iris-ggplot2-s)",fig.cap="(ref:iris-ggplot2)"}
 msg_graph("iris-ggplot2")
 ```
 
@@ -189,8 +189,8 @@ msg_code("quake6-bubbles")
 
 (ref:quake6-bubbles) 1973 年以来全球 6 级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7 月的地震频率相对较低？
 
-```{r quake6-bubbles, fig.width=7, fig.height=6, fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)", dev='tikz', fig.showtext = FALSE}
-msg_graph("quake6-bubbles-tikz")
+```{r quake6-bubbles, fig.width=7, fig.height=6, fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
+msg_graph("quake6-bubbles")
 ```
 
 **MSG** 包中的 `quake6` 数据记录了 1973 年到 2010 年每个月发生的 6 级以上的地震信息，我们可以按照年份和月份汇总地震发生的频数，然后画年份和月份的散点图，并将频数信息附着在点上。从图中可以看到，地震发生的频数似乎随着年份在增加，尤其是 2007 年 4 月和 2009 年 10 月地震活动非常频繁。另外，7 月似乎是地震低发期。注意这批数据来自美国地震局（USGS），这让我们考虑到地震频数逐年增加可能是个假象，很可能是因为近年来地震记录设备越来越先进，更多地震活动被探测到并记录了下来。
@@ -209,13 +209,13 @@ msg_code("diamonds-cut")
 
 (ref:diamonds-cut) 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 `Fair` 到 `Ideal` 雕琢水平逐渐增高，但价格并没有严格上升
 
-```{r diamonds-cut, fig.width=7, fig.height=3.5, fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1, dev='tikz', fig.showtext = FALSE}
+```{r diamonds-cut, fig.width=7, fig.height=3.5, fig.scap="(ref:diamonds-cut-s)",fig.cap="(ref:diamonds-cut)",fig.subcap=c("",""),fig.ncol=1}
 msg_graph("diamonds-cut")
 ```
 
 图 \@ref(fig:diamonds-polar) 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导，请读者慎用。
 
-```{r, results='asis', dev='tikz', fig.showtext = FALSE}
+```{r, results='asis'}
 msg_code("diamonds-polar")
 ```
 
@@ -241,7 +241,7 @@ msg_code("diamonds-carat")
 
 (ref:diamonds-carat) 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻
 
-```{r diamonds-carat, fig.width=7, fig.height=7, out.width="75%", fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1, dev='tikz', fig.showtext = FALSE}
+```{r diamonds-carat, fig.width=7, fig.height=7, out.width="75%", fig.scap="(ref:diamonds-carat-s)",fig.cap="(ref:diamonds-carat)",fig.asp=1}
 msg_graph("diamonds-carat")
 ```
 

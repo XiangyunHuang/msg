@@ -60,7 +60,7 @@ R 的官方网站中对 R 有详细介绍，我们也可以从它在世界各地
 
 进入 CRAN 官方网站或镜像网站（如清华大学镜像）主页，会发现顶端有 Download and Install R 一项，只需根据自己的操作系统选择相应的链接进入下载即可。R 软件可以在多种操作系统上运行，包括 Windows、Linux 以及 MacOS 等。
 
-- Windows 用户应点击 “Download R for Windows”，然后点击 “base”，就可进入基础安装包的下载页面。此时点击 “Download R-\*.\*.\* for Windows”（\*.\*.\* 表示版本号，例如 4.0.2），便可将安装包下载到本地，直接安装。安装过程中会出现一些选项，如无特殊要求，均按默认即可。
+- Windows 用户应点击 “Download R for Windows”，然后点击 “base”，就可进入基础安装包的下载页面。此时点击 “Download R-\*.\*.\* for Windows”（\*.\*.\* 表示版本号，例如 4.0.3），便可将安装包下载到本地，直接安装。安装过程中会出现一些选项，如无特殊要求，均按默认即可。
 - Linux 用户可点击 “Download R for Linux”，然后根据具体的系统如 RedHat、Ubuntu 等选择对应的链接。既可以用现成的二进制包，也可以自行下载源代码编译安装。但要注意：如果从源代码编译，则需要自己解决依赖问题；这些依赖包如果不存在，那么运行 `./configure` 的时候会给出提示。
 - Mac 用户可点击“Download R for (Mac) OS X”，然后选择 R-\*.\*.\*.pkg 文件下载安装。
 
@@ -109,7 +109,7 @@ knitr::include_graphics("images/r-gui.png")
 ```{r eval=FALSE, echo=TRUE}
 library(MSG) # 加载 MSG 包
 Sys.setlocale("LC_CTYPE", "Chinese") # 设置语言环境为中文
-msg("3.8") # 运行 msg() 函数，绘制图 3.8
+msg("5.5") # 运行 msg() 函数，绘制图 5.5
 ```
 
 \noindent 其中，第二行用来设置语言环境的字符格式为中文。这是由于笔者的操作系统为英文 Windows，R 对字符处理时也会相应采用英文格式，这样对中文字符的识别会出现问题，所以笔者要用这条指令使 R 能正确处理中文字符。如果读者的操作系统本身就是中文，那么这条指令可以忽略。
@@ -168,7 +168,7 @@ msg_code("ggplot2-minard")
 
 (ref:fig-ggplot2-minard-s) R 语言的 **ggplot2** 包绘制拿破仑远征图
 
-```{r ggplot2-minard, fig.cap='(ref:fig-ggplot2-minard)', fig.scap='(ref:fig-ggplot2-minard-s)', fig.width=4.9, fig.height=2.5, fig.showtext = FALSE}
+```{r ggplot2-minard, fig.cap='(ref:fig-ggplot2-minard)', fig.scap='(ref:fig-ggplot2-minard-s)', fig.width=4.9, fig.height=2.5}
 msg_graph("ggplot2-minard")
 ```
 

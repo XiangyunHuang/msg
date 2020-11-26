@@ -8,7 +8,7 @@
 
 除了这些静态图形系统之外，R 还有一些附加包支持动态图形和交互式图形，即：用户可以用鼠标或键盘和图形进行交互，比如用鼠标选取图中的点并高亮，或者拖拉旋转图形；代表性的附加包有 **ploty**、**iplots**、**rgl** 和 **playwith** 等。另外我们还可以利用 R 包 **animation** 生成动画。这些附加包极大增强了统计图形的探索功能和趣味性。
 
-## 网格图形系统 {#sec:grid}
+## 网格图形系统 {#sec:grid-graphics}
 
 网格图形（grid graphics）是与基础图形（base graphics）相平行的一套图形系统，在 R 中由 **grid** 包实现。相对于基础图形而言，网格图形具有更高的可控度和灵活性，但其本身只提供了非常底层的绘图命令，如果要绘制较复杂的图形，则可以考虑使用第 \@ref(sec:lattice) 节介绍的 **lattice** 和 第\@ref(cha:ggplot2)章介绍的 **ggplot2** 图形系统。这两个图形系统都是基于网格图形构建的。
 
@@ -66,7 +66,7 @@ msg_graph("grid-princomp")
 
 图形对象的动态编辑是网格图形系统的另一大优势。在基础图形系统中，图形元素一旦被绘制到设备上，就无法再对其进行编辑，除非采取覆盖的办法将图形重新绘制一遍。而在网格图形系统中，图形元素会以对象的形式保存在内存中，在需要的时候可以对其进行更改，例如修改颜色、大小等。
 
-下面的例子展示了编辑图形对象的方法[^editRect]：
+下面的例子展示了编辑图形对象的方法：
 
 ```{r grid-edit-rect,eval=FALSE, echo=TRUE}
 library(grid)
@@ -80,8 +80,6 @@ for (i in 1:100) {
   Sys.sleep(0.05)
 }
 ```
-
-[^editRect]: 参见 `demo("editRect", package = "MSG", ask = FALSE)`。
 
 如果在电脑屏幕上运行这段代码，应该会看到一个静止的正方形（“rect1”）和一个移动的正方形（“rect0”）。rect0 的位置和颜色会在循环语句中不断被修改，而 rect1 则保持不变。
 
@@ -140,7 +138,7 @@ msg_code("lattice-iris-hist")
 
 (ref:lattice-iris-hist-s) 三种鸢尾花各自的花萼长度直方图
 
-```{r lattice-iris-hist,fig.width=6, fig.height=3, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)", dev='tikz', fig.showtext = FALSE}
+```{r lattice-iris-hist,fig.width=6, fig.height=3, fig.cap="(ref:lattice-iris-hist)",fig.scap="(ref:lattice-iris-hist-s)"}
 msg_graph("lattice-iris-hist")
 ```
 
@@ -176,7 +174,7 @@ msg_code("lattice-vadeaths")
 
 (ref:lattice-vadeaths-s) 弗吉尼亚死亡率数据在 **lattice** 中的点图
 
-```{r lattice-vadeaths, fig.scap="(ref:lattice-vadeaths-s)",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8, dev='tikz', fig.showtext = FALSE}
+```{r lattice-vadeaths, fig.scap="(ref:lattice-vadeaths-s)",fig.cap="(ref:lattice-vadeaths)",fig.width=5,fig.height=2.8}
 msg_graph("lattice-vadeaths")
 ```
 
@@ -268,7 +266,7 @@ msg_code("lattice-panel-function")
 
 (ref:lattice-panel-function-s) **lattice** 中添加了密度曲线的直方图
 
-```{r lattice-panel-function,fig.width=6, fig.height=3, fig.scap="(ref:lattice-panel-function-s)",fig.cap="(ref:lattice-panel-function)", dev='tikz', fig.showtext = FALSE}
+```{r lattice-panel-function,fig.width=6, fig.height=3, fig.scap="(ref:lattice-panel-function-s)",fig.cap="(ref:lattice-panel-function)"}
 msg_graph("lattice-panel-function")
 ```
 

@@ -59,7 +59,7 @@ options(width = 70,
         knitr.kable.NA = '', 
         knitr.table.format = "latex")
 
-pkgs <- c("formatR", 
+pkgs <- c("Cairo", "formatR", 
           "ggplot2", "MSG", "grid", "magrittr", "ncovr", "kableExtra", "knitr", "lattice", "patchwork", "RColorBrewer", "qqplotr")
 
 lapply(pkgs, require,character.only = TRUE)

@@ -25,7 +25,7 @@
 
 (ref:fig-pairs) 鸢尾花数据的散点图矩阵：上三角区域为不同样式的点，对应着不同种类的鸢尾花，对角线的直方图展示了花瓣花萼长宽的一维分布，下三角区域用平滑曲线显示了变量之间的关系
 
-```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)", dev='tikz', fig.showtext = FALSE}
+```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
 msg_graph("pairs")
 ```
 
@@ -82,7 +82,7 @@ msg_code("pairs2")
 
 (ref:fig-pairs2) 鸢尾花数据的散点图矩阵增强版：散点图、直方图、密度曲线图、箱线图的结合
 
-```{r fig-ggally, fig.height=10, fig.width=10, fig.cap="(ref:fig-pairs2)", fig.scap="(ref:fig-pairs2-s)", dev='tikz', fig.showtext = FALSE}
+```{r fig-ggally, fig.height=10, fig.width=10, fig.cap="(ref:fig-pairs2)", fig.scap="(ref:fig-pairs2-s)"}
 msg_graph("pairs2")
 ```
 
@@ -109,7 +109,7 @@ kable2(quakes, "斐济岛附近的地震数据")
 
 (ref:fig-coplot) 给定震源深度范围的地震经纬度条件分割图：四幅散点图有相同的坐标系，震源深度按左下、右下、左上、右上的顺序逐渐增加，可以看到地震发生地点逐渐在向斐济岛靠近
 
-```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)", dev='tikz', fig.showtext = FALSE}
+```{r coplot,fig.width=4.8,fig.height=4.8, fig.cap="(ref:fig-coplot)", fig.scap="(ref:fig-coplot-s)"}
 msg_graph("coplot")
 ```
 
@@ -479,7 +479,7 @@ kable2(murcia, "西班牙 Murcia 省土壤样本成分")
 
 (ref:murcia-ternary-s) 西班牙 Murcia 省的土壤样本三元图
 
-```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="(ref:murcia-ternary-s)", dev='tikz', fig.showtext = FALSE}
+```{r murcia-ternary,fig.cap="(ref:murcia-ternary)",fig.scap="(ref:murcia-ternary-s)"}
 msg_graph("murcia-ternary")
 ```
 
@@ -615,8 +615,9 @@ kable2(warpbreaks, "经纱断裂数据")
 
 (ref:fig-plot-design) 经纱断裂数据的因素效应图：每种羊毛（A、B）和拉力强度（L、M、H）下断裂数目的均值（上图）和中位数（下图）
 
-```{r plot-design,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)", dev='tikz', fig.showtext = FALSE}
+```{r plot-design,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-plot-design)",fig.scap="(ref:fig-plot-design-s)"}
 msg_graph("plot-design")
+data(warpbreaks)
 ```
 
 上图中的刻度线展示出了不同羊毛种类和拉力强度下断裂根数的均值，下图展示的是中位数，两幅图有一定差异，说明数据的分布不对称（中位数和均值不相等）。
@@ -701,7 +702,7 @@ kable2(esoph, "法国食道癌数据")
 
 (ref:fig-interaction-plot) 法国食道癌数据的交互效应图：各饮酒组的折线走势大致一样，说明交互作用很微弱
 
-```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)", dev='tikz', fig.showtext = FALSE}
+```{r interaction-plot,fig.width=6.5,fig.height=4,fig.cap="(ref:fig-interaction-plot)",fig.scap="(ref:fig-interaction-plot-s)"}
 msg_graph("interaction-plot")
 ```
 
@@ -844,7 +845,7 @@ msg_code("rpart")
 
 (ref:fig-ggparcoord) 鸢尾花数据的平行坐标图：花萼长宽和花瓣长宽以及花的种类
 
-```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)", dev='tikz', fig.showtext = FALSE}
+```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)"}
 msg_graph("ggparcoord")
 ```
 
@@ -1069,9 +1070,7 @@ kable2(eq2010, "四川地区地震数据")
 
 得到的两幅地图中左图仅仅体现了震源位置的分布情况，不妨考虑将震级的大小映射为圆的半径大小。然而，图中存在着部分地震多发地带，如果使用圆来呈现震源的位置，这些区域的圆将出现严重的叠加现象。右图则使用 \@ref(sec:plot) 节中的透明度叠加来克服这类重叠问题。这里由于数据量不够大，这种透明度叠加的效果并不是非常明显。
 
-**RgoogleMaps** 包的潜力仍尚待挖掘。一方面，它可以展示空间分布信息，例如在 2010 年的 **ggplot2** 案例分析竞赛中，David Kahle 利用 **RgoogleMaps** 包和公开的犯罪信息数据，展示了休斯顿地区暴力犯罪的分布情况[^4]；另一方面，如果数据包含时间属性，那么我们可以固定住抓取图片的边界，并保证叠加元素的坐标对应正确，便能制作出有用的动画。读者可以发挥想象力，拓展更多的应用情境。
-
-[^4]: <http://1t.click/Ksb>
+**RgoogleMaps** 包的潜力仍尚待挖掘。一方面，它可以展示空间分布信息，例如在 2010 年的 **ggplot2** 案例分析竞赛中，David Kahle 利用 **RgoogleMaps** 包和公开的犯罪信息数据，展示了休斯顿地区暴力犯罪的分布情况；另一方面，如果数据包含时间属性，那么我们可以固定住抓取图片的边界，并保证叠加元素的坐标对应正确，便能制作出有用的动画。读者可以发挥想象力，拓展更多的应用情境。
 
 本节只是介绍了一个非常简单的应用，但也引出了一个重要话题：统计图形如何与它要表达的问题的背景相融合？用通俗的话讲，就是要找"应景"的背景。在这方面，图 \@ref(fig:pork-price-orig) 实际上做得很好，很有吸引眼球的效果，让人一看就明白要表达的主题。当然，背景元素也不能喧宾夺主，这一点在 \@ref(subsec:element-priority) 小节中有详细论述。
 
@@ -1102,6 +1101,6 @@ msg_code("coplot2")
 
 (ref:fig-coplot2) 使用 **ggplot2** 包绘制的地震经纬度条件分割图
 
-```{r coplot2, fig.cap="(ref:fig-coplot2)", dev='tikz', fig.showtext = FALSE}
+```{r coplot2, fig.cap="(ref:fig-coplot2)"}
 msg_graph("coplot2")
 ```

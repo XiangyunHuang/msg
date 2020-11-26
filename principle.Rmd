@@ -97,7 +97,7 @@ R 基础图形系统中点的默认的样式是空心点。在很多情况下，
 
 (ref:pay-rating-points-s) 演员收入与电视剧评分的空心和实心散点图
 
-```{r pay-rating-points,fig.scap="(ref:pay-rating-points-s)",fig.cap="(ref:pay-rating-points)",fig.width=7,fig.height=3.5, dev='tikz', fig.showtext = FALSE}
+```{r pay-rating-points,fig.scap="(ref:pay-rating-points-s)",fig.cap="(ref:pay-rating-points)",fig.width=7,fig.height=3.5}
 msg_graph("pay-rating-points-tikz")
 ```
 
@@ -109,7 +109,7 @@ msg_graph("pay-rating-points-tikz")
 
 (ref:pay-rating-log-s) 取对数的收入与评分散点图以及演员名字
 
-```{r pay-rating-log,fig.cap="(ref:pay-rating-log)",fig.scap="(ref:pay-rating-log-s)",fig.width=7,fig.height=3.5, dev='tikz', fig.showtext = FALSE}
+```{r pay-rating-log,fig.cap="(ref:pay-rating-log)",fig.scap="(ref:pay-rating-log-s)",fig.width=7,fig.height=3.5}
 msg_graph("pay-rating-log")
 ```
 
@@ -150,7 +150,7 @@ char_gen(c("*", "Q"), n = 320, nrow = 8) # 从 Q 中找 *
 
 (ref:tufte1997-s) O 型环的故障与温度的散点图
 
-```{r tufte1997,fig.cap="(ref:tufte1997)",fig.scap="(ref:tufte1997-s)",fig.width=6,fig.height=3, dev='tikz', fig.showtext = FALSE}
+```{r tufte1997,fig.cap="(ref:tufte1997)",fig.scap="(ref:tufte1997-s)",fig.width=6,fig.height=3}
 msg_graph("tufte1997")
 ```
 
@@ -212,7 +212,7 @@ R 基础图形系统中通常用 `asp` 参数设置纵横比（见 \@ref(sec:plo
 
 (ref:sunspots-asp-s) 不同纵横比设置下的太阳黑子时序图
 
-```{r sunspots-asp,fig.cap="(ref:sunspots-asp)",fig.scap="(ref:sunspots-asp-s)",fig.width=4.8,fig.height=4.8, dev='tikz', fig.showtext = FALSE}
+```{r sunspots-asp,fig.cap="(ref:sunspots-asp)",fig.scap="(ref:sunspots-asp-s)",fig.width=4.8,fig.height=4.8}
 msg_graph("sunspots-asp")
 ```
 

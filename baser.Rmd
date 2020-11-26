@@ -322,7 +322,7 @@ set.seed(714)
 sample(colors(), 20)
 ```
 
-有兴趣观看所有 657 种颜色的读者可以使用 **beginr** 包的 `beginr::plotcolors()` 函数，会得到两张颜色卡。一张是把这 657 种颜色按数字顺序排列，另一张是按颜色的相近程度排列。读者也可以试着运行下面的语句，其中 `pdf()` 函数的作用是打开一个作图设备，详情参见 \@ref(sec:device) 小节，可以把参数 `"colors-bar.pdf"` 替换为任意一个可以读写的路径[^windows-path]，条形图 `barplot()` 的说明参见 \@ref(sec:barplot) 小节。最后结果是在设定文件路径上获得一个 PDF 文件，展示所有颜色名称及其对应的颜色。
+有兴趣观看所有 657 种颜色的读者可以使用 **beginr** 包的 `plotcolors()` 函数，会得到两张颜色卡。一张是把这 657 种颜色按数字顺序排列，另一张是按颜色的相近程度排列。读者也可以试着运行下面的语句，其中 `pdf()` 函数的作用是打开一个作图设备，详情参见 \@ref(sec:device) 小节，可以把参数 `"colors-bar.pdf"` 替换为任意一个可以读写的路径[^windows-path]，条形图 `barplot()` 的说明参见 \@ref(sec:barplot) 小节。最后结果是在设定文件路径上获得一个 PDF 文件，展示所有颜色名称及其对应的颜色。
 
 [^windows-path]: Windows 用户注意路径的写法，不能用通常的单反斜杠 \\，而应该把路径中的单反斜杠换成双反斜杠 \\\\ 或者用单斜杠 \/；如 `D:/colors.pdf` 或 `D:\\colors.pdf`
 
@@ -467,7 +467,7 @@ msg_code("grad-color")
 
 (ref:grad-color-s) New Haven 地区的年均气温（1912~1971 年）
 
-```{r grad-color, fig.scap="(ref:grad-color-s)",fig.cap="(ref:grad-color)", dev='tikz', fig.showtext = FALSE}
+```{r grad-color, fig.scap="(ref:grad-color-s)",fig.cap="(ref:grad-color)"}
 msg_graph("grad-color")
 ```
 
@@ -507,7 +507,7 @@ msg_code("point-iris")
 
 (ref:point-iris-s) 鸢尾花的花瓣长宽散点图
 
-```{r point-iris, out.width="80%", fig.scap="(ref:point-iris-s)",fig.cap="(ref:point-iris)", dev='tikz', fig.showtext = FALSE}
+```{r point-iris, out.width="80%", fig.scap="(ref:point-iris-s)",fig.cap="(ref:point-iris)"}
 msg_graph("point-iris")
 ```
 
@@ -875,7 +875,7 @@ msg_code("axis-demo")
 
 (ref:axis-demo-s) 中美出口额双坐标轴图示
 
-```{r axis-demo, fig.width=7, fig.height=4, out.width="80%", fig.scap="(ref:axis-demo-s)",fig.cap="(ref:axis-demo)", dev='tikz', fig.showtext = FALSE}
+```{r axis-demo, fig.width=7, fig.height=4, out.width="80%", fig.scap="(ref:axis-demo-s)",fig.cap="(ref:axis-demo)"}
 msg_graph("axis-demo")
 ```
 

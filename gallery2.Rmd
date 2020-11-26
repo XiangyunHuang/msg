@@ -58,9 +58,7 @@ usage2(usage(plot.default, output = FALSE))
 
 \noindent 参数含义：若 `x` 是一个两列的矩阵或数据框，则无需再提供 `y` ，否则 `x` 和 `y` 都必须是数值型向量；其它参数在 \@ref(sec:plot) 小节中介绍（例如设置 `type = "o"` 就会得到折线图）。
 
-使用基础函数绘制图 \@ref(fig:scatter-alpha) 的代码如下[^demo-scatter-alpha]：
-
-[^demo-scatter-alpha]: 可以运行 `demo("alphaDemo", package = "MSG")`获取。
+使用基础函数绘制图 \@ref(fig:scatter-alpha) 的代码如下：
 
 ```{r, results='asis'}
 msg_code("scatter-alpha")
@@ -158,7 +156,7 @@ kable2(iris, "鸢尾花花瓣数据")
 
 (ref:fig-sunflowerplot) 鸢尾花花瓣长和宽的向日葵散点图
 
-```{r sunflowerplot,fig.width=4,fig.height=4,out.width="70%", fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)", fig.showtext = FALSE}
+```{r sunflowerplot,fig.width=4,fig.height=4,out.width="70%", fig.cap="(ref:fig-sunflowerplot)",fig.scap="(ref:fig-sunflowerplot-s)"}
 msg_graph("sunflowerplot")
 ```
 
@@ -419,7 +417,7 @@ kable2(aml, "急性髓细胞白血病病人生存数据")
 
 (ref:fig-survival) 急性髓细胞白血病病人生存函数图
 
-```{r survival,fig.width=4.8,fig.height=3,out.width="80%", fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold", fig.showtext = FALSE}
+```{r survival,fig.width=4.8,fig.height=3,out.width="80%", fig.cap="(ref:fig-survival)",fig.scap="(ref:fig-survival-s)",fig.show="hold"}
 msg_graph("survival2")
 ```
 
@@ -505,7 +503,7 @@ kable2(orings[, c("Temperature", "Fail")], "美国国家航空和宇宙航行局
 
 (ref:fig-cdplot) 航天飞机 O 型环在不同温度下失效的条件密度图：随着温度升高，O 型环越来越不容易失效
 
-```{r cdplot,fig.width=4.8,fig.height=2.4, out.width="80%", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)", fig.showtext = FALSE}
+```{r cdplot,fig.width=4.8,fig.height=2.4, out.width="80%", fig.cap="(ref:fig-cdplot)", fig.scap="(ref:fig-cdplot-s)"}
 msg_graph("cdplot2")
 ```
 
@@ -577,7 +575,7 @@ msg_code("cdplot2")
 
 (ref:fig-spineplot) 航天飞机 O 型环在不同温度下失效的棘状图：随着温度升高，O 型环失效的概率下降；从横轴方向上看，观测的温度数据的分布大多集中在 $(60, 75]$ 区间内
 
-```{r spineplot,fig.width=4.8,fig.height=3,out.width="75%",fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)", fig.showtext = FALSE}
+```{r spineplot,fig.width=4.8,fig.height=3,out.width="75%",fig.cap="(ref:fig-spineplot)",fig.scap="(ref:fig-spineplot-s)"}
 msg_graph("spineplot")
 ```
 
@@ -644,7 +642,7 @@ kable2(car.test.frame, "(ref:tab-cartest)", x_scap2 = "(ref:tab-cartest-s)")
 
 (ref:fig-bagplot) Consumer Reports 杂志 中汽车数据的二维箱线图（左）和二维密度等高图（右）
 
-```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)", fig.showtext = FALSE}
+```{r bagplot,fig.width=7,fig.height=3,fig.cap="(ref:fig-bagplot)",fig.scap="(ref:fig-bagplot-s)"}
 msg_graph("bagplot2")
 ```
 

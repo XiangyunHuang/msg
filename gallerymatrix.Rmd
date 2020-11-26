@@ -134,7 +134,7 @@ kable2(volcano[, 1:12], "新西兰 Maunga Whau 火山高度矩阵数据", coln =
 
 (ref:fig-filled-contour) 新西兰 Maunga Whau 火山高度数据颜色等高图
 
-```{r filled-contour,fig.height=4.3,fig.width=7,results="hide",fig.cap="(ref:fig-filled-contour)",fig.scap="(ref:fig-filled-contour-s)", dev='tikz', fig.showtext = FALSE}
+```{r filled-contour,fig.height=4.3,fig.width=7,results="hide",fig.cap="(ref:fig-filled-contour)",fig.scap="(ref:fig-filled-contour-s)"}
 msg_graph("filled-contour")
 ```
 
@@ -188,7 +188,7 @@ msg_graph("image242-tikz")
 
 (ref:fig-image) 新西兰 Maunga Whau 火山高度颜色图：图 \@ref(fig:persp) 提供了真实的火山立体图形；读者可以到本书主页下载原图并放大 8 倍以上查看颜色图和颜色等高图的区别：颜色图是用颜色填充方块，而颜色等高图则是用颜色填充等高线之间的区域
 
-```{r image,fig.cap="(ref:fig-image)",fig.scap="(ref:fig-image-s)", dev='tikz', fig.showtext = FALSE}
+```{r image,fig.cap="(ref:fig-image)",fig.scap="(ref:fig-image-s)"}
 msg_graph("image2")
 ```
 
@@ -480,7 +480,7 @@ kable2(x, "592 名学生的头发和眼睛的颜色数据", only_head = FALSE)
 
 (ref:fig-assocplot) 眼睛颜色与头发颜色的关联图
 
-```{r assocplot,fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)", dev='tikz', fig.showtext = FALSE}
+```{r assocplot,fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot)", fig.scap= "(ref:fig-assocplot-s)"}
 msg_graph("assocplot")
 ```
 
@@ -601,7 +601,7 @@ kable_styling(
 
 (ref:fig-fourfoldplot) 加州伯克利分校录取数据四瓣图
 
-```{r fourfoldplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-fourfoldplot)",fig.scap="(ref:fig-fourfoldplot-s)", dev='tikz', fig.showtext = FALSE}
+```{r fourfoldplot,fig.width=4.8,fig.height=4,fig.cap="(ref:fig-fourfoldplot)",fig.scap="(ref:fig-fourfoldplot-s)"}
 msg_graph("fourfoldplot")
 ```
 
@@ -703,6 +703,6 @@ parcoords(iris)
 
 (ref:fig-assocplot2) **ggplot2** 绘制的眼睛颜色与头发颜色的颜色图：网格颜色表示 Pearson 残差的大小
 
-```{r assocplot2, fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot2)", fig.scap= "(ref:fig-assocplot2-s)", dev='tikz', fig.showtext = FALSE}
+```{r assocplot2, fig.width=4.8,fig.height=4, out.width="75%", fig.cap="(ref:fig-assocplot2)", fig.scap= "(ref:fig-assocplot2-s)"}
 msg_graph("assocplot2")
 ```

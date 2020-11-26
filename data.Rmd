@@ -39,7 +39,7 @@ kable2(tables$pork, "2006 到 2011 年猪肉价格", only_head = FALSE, latex_op
 
 (ref:pork-price-s) R 语言重新绘制的猪肉价格走势图
 
-```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)", fig.showtext = FALSE}
+```{r pork-price,fig.scap="(ref:pork-price-s)",fig.cap="(ref:pork-price)"}
 msg_graph("pork-price2")
 ```
 
@@ -91,7 +91,7 @@ kable2(canabalt, "“末日狂奔”游戏得分记录")
 
 (ref:canabalt-boxplot-s) “末日狂奔”游戏得分在不同游戏平台以及死因下的比较
 
-```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)", fig.showtext = FALSE}
+```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="(ref:canabalt-boxplot-s)"}
 msg_graph("canabalt-boxplot")
 ```
 
@@ -198,7 +198,7 @@ aggregate(pay ~ gender, data = tvearn, FUN = myfun)
 
 (ref:tvearn-s) 演员的薪酬直方图及薪酬与电视剧评分的散点图
 
-```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10, fig.showtext = FALSE}
+```{r tvearn,fig.cap="(ref:tvearn)",fig.scap="(ref:tvearn-s)",fig.subcap=c("",""),fig.ncol=1, out.width="90%", fig.height=10}
 msg_graph("tvearn")
 ```
 
@@ -235,7 +235,7 @@ kable2(music[, 1:5], "音乐曲目数据")
 
 (ref:music-andrews-s) 音乐曲目左声道频率的调和曲线图
 
-```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=6,fig.height=2.8, fig.process=to_png,fig.showtext=FALSE}
+```{r music-andrews,fig.scap="(ref:music-andrews-s)",fig.cap="(ref:music-andrews)",fig.width=6,fig.height=2.8, fig.process=to_png, dev='tikz',fig.showtext=FALSE}
 msg_graph("music-andrews-tikz")
 ```
 
@@ -247,7 +247,7 @@ msg_graph("music-andrews-tikz")
 
 (ref:music-3d-pcp-s) 音乐曲目左声道频率的三维散点图与平行坐标图
 
-```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8, out.width="70%", fig.showtext = FALSE}
+```{r music-3d-pcp,fig.cap="(ref:music-3d-pcp)",fig.scap="(ref:music-3d-pcp-s)",message=FALSE,fig.subcap=c("",""),fig.ncol=1,fig.width=4.8,fig.height=2.8, out.width="70%"}
 msg_graph("music-3d-pcp")
 ```
 
@@ -317,7 +317,7 @@ msg_graph("basketball")
 
 (ref:basketball-fourfold-s) 球场左右侧投篮命中的四瓣图
 
-```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)", fig.showtext = FALSE}
+```{r basketball-fourfold,fig.cap="(ref:basketball-fourfold)",fig.scap="(ref:basketball-fourfold-s)"}
 msg_graph("basketball-fourfold")
 ```
 
@@ -419,8 +419,13 @@ kable2(PlantCounts, "植物物种数目与海拔高度")
 
 (ref:PlantCounts-s) 海拔高度与物种数目的 LOWESS 曲线
 
-```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)", fig.showtext = FALSE}
-msg_graph("PlantCounts2")
+```{r PlantCounts,fig.width=7,fig.height=3.5,fig.cap="(ref:PlantCounts)",fig.scap="(ref:PlantCounts-s)", message=FALSE}
+# library(showtext)
+# library(Cairo)
+# showtext_auto(enable=T)
+# msg_graph("PlantCounts2")
+# ggsave("images/PlantCounts2.pdf", width = 7, height = 3.5, device = cairo_pdf)
+knitr::include_graphics("images/PlantCounts2.pdf")
 ```
 
 图 \@ref(fig:PlantCounts) 用 LOWESS 曲线对这批数据进行了初步探索。左图中，曲线颜色越浅表示所取数据比例越大。不难看出，中部浅色的曲线几乎已呈直线状，而深色的线则波动较大。总体看来，图中大致有四处海拔上的物种数目偏离回归直线较严重：450 米（偏低）、550 米（偏高）、650 米（偏高）和 700 米（偏低）附近。若研究者的问题是"多高海拔处的物种数最多"，那么答案应该是在 650 米附近。从图中的曲线族来看，物种数目在过了 650 米高度之后有下降趋势，所以从这批数据来看，我们的结论将是物种数目在 650 米海拔处达到最大值。
