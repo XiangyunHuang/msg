@@ -77,6 +77,7 @@ RUN xvfb-run install2.r --error \
   quantreg \
   iplots \
   tuneR \
+  survminer \
   && installGithub.r \
   yihui/fun
 
