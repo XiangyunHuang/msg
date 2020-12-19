@@ -49,5 +49,4 @@ Imports:
     tuneR,
     vcd,
     vioplot
-Remotes: yihui/fun
 BugReports: https://github.com/XiangyunHuang/MSG-Book/issues
