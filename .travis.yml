@@ -66,23 +66,23 @@ script:
   - mkdir -p _book/interactives && cp -r interactives/* _book/interactives
   - Rscript -e 'bookdown::render_book("index.Rmd")'
 
-after_success:
-  - npm install netlify-cli -g
-  # deploy with messages 
-  - export COMMIT_MSG=$(git log -1 --format='%h %<(50,trunc)%s')
-  - echo $COMMIT_MSG
-  - export DEPLOY_MSG=${COMMIT_MSG//[\'\"\`]/}
-  - echo $DEPLOY_MSG
-
-deploy:
-  - provider: script
-    script: netlify deploy --dir _book --prod --message "$DEPLOY_MSG"    
-    skip_cleanup: true
-    on:
-      branch: master
-  - provider: script
-    script: netlify deploy --dir _book --message "$DEPLOY_MSG"    
-    skip_cleanup: true
-    on:
-      all_branches: true
-      condition: $TRAVIS_BRANCH != "master"
+# after_success:
+#   - npm install netlify-cli -g
+#   # deploy with messages 
+#   - export COMMIT_MSG=$(git log -1 --format='%h %<(50,trunc)%s')
+#   - echo $COMMIT_MSG
+#   - export DEPLOY_MSG=${COMMIT_MSG//[\'\"\`]/}
+#   - echo $DEPLOY_MSG
+# 
+# deploy:
+#   - provider: script
+#     script: netlify deploy --dir _book --prod --message "$DEPLOY_MSG"    
+#     skip_cleanup: true
+#     on:
+#       branch: master
+#   - provider: script
+#     script: netlify deploy --dir _book --message "$DEPLOY_MSG"    
+#     skip_cleanup: true
+#     on:
+#       all_branches: true
+#       condition: $TRAVIS_BRANCH != "master"
