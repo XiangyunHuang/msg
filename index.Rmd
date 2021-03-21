@@ -2,9 +2,9 @@
 title: "现代统计图形"
 subtitle: "Modern Statistical Graphics"
 author: 
+  - 赵鹏
   - 谢益辉
   - 黄湘云
-  - 赵鹏
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
