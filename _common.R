@@ -38,3 +38,7 @@ if (is_latex) {
     out.width = "70%"
   )
 }
+
+append_ext <- function(filename) {
+  paste(filename, ifelse(is_latex, "pdf", "svg"), sep = ".")
+}
