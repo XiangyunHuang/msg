@@ -54,7 +54,7 @@ before_script:
   - tlmgr install ctex xecjk mdwtools zhnumber ulem ms xcolor unicode-math filehook lm-math
       subfig sourcecodepro sourceserifpro sourcesanspro cancel titlepic pgf preview psnfss
       jknapltx titlesec tocbibind tocloft trimspaces savesym environ fancyhdr listings
-      psnfss realscripts relsize rsfs setspace soul xltxtra mathdesign animate
+      psnfss realscripts relsize rsfs setspace soul xltxtra mathdesign animate pdfcrop ocgx2 media9
   - curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
   - unzip Adobe-Fonts.zip -d ~/.fonts/adobe
   - fc-cache -fsv
