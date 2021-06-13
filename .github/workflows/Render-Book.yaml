@@ -106,9 +106,8 @@ jobs:
 
       - name: Add Fonts
         run: |
-          mkdir -p ~/.R ~/.fonts
           curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
-          unzip Adobe-Fonts.zip -d ~/.fonts/adobe
+          unzip Adobe-Fonts.zip -d ~/Library/Fonts
           fc-cache -fsv
 
       - name: Test Pkgs

@@ -4,6 +4,7 @@ amscls
 animate
 arphic
 beamer
+cancel
 caption
 cjk
 cjkpunct
