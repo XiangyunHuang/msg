@@ -123,7 +123,7 @@ jobs:
       - name: Render Book
         id: render-book
         run: |
-          bookdown::render_book("index.Rmd")
+          bookdown::render_book("index.Rmd", "all")
         shell: Rscript {0}
 
       - name: Cp Graphics
