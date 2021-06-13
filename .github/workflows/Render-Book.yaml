@@ -58,6 +58,8 @@ jobs:
         run: |
           brew update
           brew install ghostscript imagemagick@6 poppler xquartz optipng graphviz
+          brew tap homebrew/cask-fonts
+          brew install font-inconsolata font-dejavu 
           
       - name: Cache R packages
         uses: actions/cache@v2
@@ -104,12 +106,11 @@ jobs:
           font_install(source_han_sans(), quiet = TRUE)
         shell: Rscript {0}
 
-      - name: Add Fonts
-        run: |
-          mkdir -p ~/.R ~/.fonts
-          curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
-          unzip Adobe-Fonts.zip -d ~/.fonts/adobe
-          fc-cache -fsv
+      # - name: Add Fonts
+      #   run: |
+      #     curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
+      #     unzip Adobe-Fonts.zip -d ~/Library/Fonts/adobe
+      #     fc-cache -fsv
 
       - name: Test Pkgs
         run: |
