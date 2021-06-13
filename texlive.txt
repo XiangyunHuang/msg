@@ -1,6 +1,7 @@
 adobemapping
 amsfonts
 amscls
+animate
 arphic
 beamer
 caption
@@ -28,11 +29,13 @@ makeindex
 makecell
 mathpazo
 mathspec
+media9
 mptopdf
 ms
 multirow
 ncntrsbk
 norasi-c90
+ocgx2
 pdfcrop
 pdflscape
 pgf
