@@ -13,14 +13,12 @@ options(
   gganimate.nframes = 50,
   gganimate.fps = 20,
   str = utils::strOptions(strict.width = "cut"),
+  tinytex.engine = 'xelatex',
   tikzDefaultEngine = "xetex",
-  tikzMetricsDictionary = "tikzMetricsCache",
-  tikzDocumentDeclaration = "\\documentclass[12pt,UTF8,fontset=adobe]{ctexart}\n",
+  tikzDocumentDeclaration = "\\documentclass[tikz]{standalone}\n",
   tikzXelatexPackages = c(
-    "\\usepackage[colorlinks, breaklinks]{hyperref}",
-    "\\usepackage{color,times,tikz}",
-    "\\usepackage[active,tightpage,xetex]{preview}",
-    "\\PreviewEnvironment{pgfpicture}",
-    "\\usepackage{amsmath,amsfonts,mathrsfs,amssymb}"
+    "\\usepackage[fontset=fandol]{ctex}",
+    "\\usepackage[default,semibold]{sourcesanspro}",
+    "\\usepackage{amsfonts,mathrsfs,amssymb}\n"
   )
 )

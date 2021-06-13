@@ -18,7 +18,9 @@ bookdown::gitbook:
       all: []
   md_extensions: "+ascii_identifiers"
   includes:
-    in_header: includes/header.html
+    in_header: 
+      - includes/header.html
+      - includes/ga_script.html
     after_body:
       - includes/data-url.html
 bookdown::pdf_book:
