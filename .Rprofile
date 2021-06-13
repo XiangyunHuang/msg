@@ -17,7 +17,7 @@ options(
   tikzDefaultEngine = "xetex",
   tikzDocumentDeclaration = "\\documentclass[tikz]{standalone}\n",
   tikzXelatexPackages = c(
-    "\\usepackage[fontset=adobe]{ctex}",
+    "\\usepackage[fontset=fandol]{ctex}",
     "\\usepackage[default,semibold]{sourcesanspro}",
     "\\usepackage{amsfonts,mathrsfs,amssymb}\n"
   )
