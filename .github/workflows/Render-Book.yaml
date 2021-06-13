@@ -1,0 +1,134 @@
+on:
+  push:
+    branches:
+      - develop
+      - xiangyun
+      - master
+    paths-ignore:
+      - 'examples/**'
+      - 'Dockerfile'
+  pull_request:
+    branches:
+      - develop
+      - xiangyun
+      - master
+  schedule:
+    # 每周一晚上11点跑任务
+    - cron:  '0 23 * * 1'
+
+name: bookdown
+
+env:
+  isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
+
+jobs:
+  build:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (r-${{ matrix.config.r }})
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macos-10.15, r: '4.1.0'}
+
+    env:
+      LANG: "en_US.UTF-8"
+      TZ: "Asia/Shanghai"
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.config.r }}
+
+      - name: Install Pandoc
+        uses: r-lib/actions/setup-pandoc@v1
+        with:
+          pandoc-version: '2.13'
+
+      - name: Install ghostscript and Others
+        run: |
+          brew upgrade
+          brew install ghostscript imagemagick poppler
+          
+      - name: Cache R packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('DESCRIPTION') }}
+          restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
+
+      - name: Cache bookdown results
+        uses: actions/cache@v2
+        with:
+          path: _bookdown_files
+          key: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('**/*Rmd') }}
+          restore-keys: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-
+
+      - name: Configure R CXXFLAGS
+        run: |
+          mkdir -p ~/.R
+          echo "CXXFLAGS += -Wno-ignored-attributes" >> ~/.R/Makevars
+          cat ~/.Rprofile
+          cat ~/.R/Makevars
+   
+      - name: Install TinyTeX
+        uses: r-lib/actions/setup-tinytex@master
+        env:
+          # install full prebuilt version
+          TINYTEX_INSTALLER: TinyTeX
+
+      - name: Install R packages
+        run: |
+          if(!require('renv')) install.packages('renv')
+          renv::restore()
+        shell: Rscript {0}
+
+      - name: Install LaTeX Packages
+        run: |
+          tinytex::tlmgr_install(readLines("texlive.txt"))
+        shell: Rscript {0}
+
+      - name: Install Fonts
+        run: |
+          library(showtext)
+          font_install(source_han_serif(), quiet = TRUE)
+          font_install(source_han_sans(), quiet = TRUE)
+        shell: Rscript {0}
+
+      - name: Render Book
+        id: render-book
+        run: |
+          bookdown::render_book("index.Rmd")
+        shell: Rscript {0}
+
+      - name: Upload book folder for debug
+        if: failure()
+        uses: actions/upload-artifact@main
+        with:
+          name: Upload Book
+          path: _book
+
+      - name: Deploy book to bookdown.org
+        if: github.event_name == 'push'
+        env:
+          CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
+          CONTENT_ID: 37689
+        run: |
+          Rscript '_deploy-book.R'
+
+      # 先本地创建一个 Github Pages 分支推送上来才行
+      # https://bookdown.org/yihui/bookdown/github.html
+      - name: Checkout the gh-pages branch
+        uses: actions/checkout@v2
+        with:
+          ref: gh-pages
+          path: book-output
+
+      - name: Deploy to Github Pages
+        if: ${{ github.ref == 'refs/heads/master' }}
+        run: ./_deploy.sh
