@@ -53,7 +53,7 @@ jobs:
       - name: Install ghostscript and Others
         run: |
           brew update
-          brew install ghostscript imagemagick@6 poppler xquartz optipng graphviz cargo
+          brew install ghostscript imagemagick@6 poppler xquartz optipng graphviz
           
       - name: Cache R packages
         uses: actions/cache@v2
