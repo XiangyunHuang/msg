@@ -58,6 +58,8 @@ jobs:
         run: |
           brew update
           brew install ghostscript imagemagick@6 poppler xquartz optipng graphviz
+          brew tap homebrew/cask-fonts
+          brew install font-inconsolata font-dejavu 
           
       - name: Cache R packages
         uses: actions/cache@v2
