@@ -109,7 +109,7 @@ jobs:
       - name: Add Fonts
         run: |
           curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
-          unzip Adobe-Fonts.zip -d ~/Library/Fonts
+          unzip Adobe-Fonts.zip -d ~/Library/Fonts/adobe
           fc-cache -fsv
 
       - name: Test Pkgs
