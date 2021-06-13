@@ -3,6 +3,8 @@ on:
     branches:
       - develop
       - xiangyun
+      - edition1
+      - edition2
       - master
     paths-ignore:
       - 'examples/**'
@@ -11,12 +13,14 @@ on:
     branches:
       - develop
       - xiangyun
+      - edition1
+      - edition2
       - master
   schedule:
     # 每周一晚上11点跑任务
     - cron:  '0 23 * * 1'
 
-name: bookdown
+name: Render-Book
 
 env:
   isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
