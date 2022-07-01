@@ -53,5 +53,5 @@ summary(fit <- lm(counts ~ altitude, data = PlantCounts))
 
 ```{block2, type = 'flushright', html.tag = 'p'}
 谢益辉  
-于 Ames, Iowa
+于美国奥马哈
 ```
