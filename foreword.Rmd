@@ -1,12 +1,6 @@
 \mainmatter
 
-# 序言 {#forword .unnumbered}
-
-## 代序一 {#forword-one .unnumbered}
-
-## 代序二 {#forword-two .unnumbered}
-
-## 作者导读 {#audience-guide .unnumbered}
+# 前言 {#forword .unnumbered}
 
 我们常说一图胜千言，然而现实情况是我们了解的图形种类太少、使用的作图工具缺乏灵活性，这在很大程度上制约了统计图形的发展，使得统计图形在数据分析中应有的潜力没有被充分挖掘出来，正是这样的背景催生了本书的写作。
 
