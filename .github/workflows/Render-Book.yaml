@@ -42,15 +42,15 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup R
-        uses: r-lib/actions/setup-r@master
+        uses: r-lib/actions/setup-r@v2
         with:
           r-version: ${{ matrix.config.r }}
 
       - name: Install Pandoc
-        uses: r-lib/actions/setup-pandoc@v1
+        uses: r-lib/actions/setup-pandoc@v2
         with:
           pandoc-version: '2.13'
 
@@ -62,14 +62,14 @@ jobs:
           brew install font-inconsolata font-dejavu 
           
       - name: Cache R packages
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ${{ env.R_LIBS_USER }}
           key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('DESCRIPTION') }}
           restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
 
       - name: Cache bookdown results
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: _bookdown_files
           key: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('**/*Rmd') }}
@@ -83,7 +83,7 @@ jobs:
           cat ~/.R/Makevars
    
       - name: Install TinyTeX
-        uses: r-lib/actions/setup-tinytex@master
+        uses: r-lib/actions/setup-tinytex@v2
         env:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
@@ -133,7 +133,7 @@ jobs:
 
       - name: Upload book folder for debug
         if: failure()
-        uses: actions/upload-artifact@main
+        uses: actions/upload-artifact@v3
         with:
           name: Upload Book
           path: _book
@@ -149,7 +149,7 @@ jobs:
       # 先本地创建一个 Github Pages 分支推送上来才行
       # https://bookdown.org/yihui/bookdown/github.html
       - name: Checkout the gh-pages branch
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: gh-pages
           path: book-output
