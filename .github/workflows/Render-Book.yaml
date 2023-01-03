@@ -16,9 +16,9 @@ on:
       - edition1
       - edition2
       - master
-  schedule:
-    # 每周一晚上11点跑任务
-    - cron:  '0 23 * * 1'
+  # schedule:
+  #   # 每周一晚上11点跑任务
+  #   - cron:  '0 23 * * 1'
 
 name: Render-Book
 
@@ -34,7 +34,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-10.15, r: '4.1.0'}
+          - {os: macos-12, r: '4.1.0'}
 
     env:
       LANG: "en_US.UTF-8"
@@ -52,7 +52,7 @@ jobs:
       - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v2
         with:
-          pandoc-version: '2.13'
+          pandoc-version: '2.19.2'
 
       - name: Install ghostscript and Others
         run: |
@@ -161,7 +161,7 @@ jobs:
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')
         id: netlify-deploy
-        uses: nwtgck/actions-netlify@v1.2
+        uses: nwtgck/actions-netlify@v2
         with:
           publish-dir: './_book'
           production-branch: master
