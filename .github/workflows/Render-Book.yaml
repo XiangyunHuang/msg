@@ -50,7 +50,7 @@ jobs:
 
       - name: Install ghostscript and Others
         run: |
-          brew install ghostscript imagemagick poppler xquartz optipng graphviz
+          brew install poppler xquartz optipng graphviz
           brew tap homebrew/cask-fonts
           brew install font-inconsolata font-dejavu 
           
