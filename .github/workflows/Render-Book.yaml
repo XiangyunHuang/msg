@@ -1,24 +1,13 @@
 on:
   push:
     branches:
-      - develop
-      - xiangyun
-      - edition1
-      - edition2
       - master
     paths-ignore:
       - 'examples/**'
       - 'Dockerfile'
   pull_request:
     branches:
-      - develop
-      - xiangyun
-      - edition1
-      - edition2
       - master
-  # schedule:
-  #   # 每周一晚上11点跑任务
-  #   - cron:  '0 23 * * 1'
 
 name: Render-Book
 
@@ -56,8 +45,7 @@ jobs:
 
       - name: Install ghostscript and Others
         run: |
-          brew update
-          brew install ghostscript imagemagick poppler xquartz optipng graphviz
+          brew install poppler xquartz optipng graphviz
           brew tap homebrew/cask-fonts
           brew install font-inconsolata font-dejavu 
           
