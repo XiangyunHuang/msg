@@ -64,7 +64,8 @@ ggplot(aes(x = hp, y = mpg), data = mtcars) +
 
 ```{r diamonds-hex,fig.scap="(ref:diamonds-hex-s)",fig.cap="(ref:diamonds-hex)"}
 ggplot(aes(x = carat, y = price), data = diamonds) +
-  geom_hex()
+  geom_hex() +
+  scale_fill_gradient(low = "blue3", high = "red3")
 ```
 
 (ref:diamonds-hex-s) 钻石重量与价格的蜂巢图
