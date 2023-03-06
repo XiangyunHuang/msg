@@ -390,7 +390,7 @@ R 的 **grDevices** 包 \index{grDevices 包}中提供了一系列数学公式�
 
 如果想向图中添加数学表达式的文本标签，只需要将文本设置为表达式（expression）的类型即可。 图 \@ref(fig:plotmath) 展示了向正态曲线上添加正态分布密度函数表达式的方法，可以看到，表达式中的公式都是 LaTeX \index{LaTeX}与 R 的混合语法。另外，我们也可以设置符号的外形，如斜体、粗体等。详情参见 `?plotmath` 或者运行代码 `demo(plotmath)` 观看 R 提供的数学公式演示。
 
-注意本书中的所有图形均由 **tikzDevice** 包 [@tikzDevice] 生成，其中的数学公式数学公式为原始 LaTeX 代码，其质量比 R 自身的数学公式质量高很多，因此图 \@ref(fig:plotmath) 并没有采用 `demo(plotmath)` 中的写法生成数学公式图上展示的代码为“伪代码”。
+注意本书中的所有图形均由 **tikzDevice** 包 [@tikzDevice] 生成，其中的数学公式数学公式为原始 LaTeX 代码，其质量比 R 自身的数学公式质量高很多，因此图 \@ref(fig:plotmath) 并没有采用 `demo(plotmath)` 中的写法生成数学公式，图上展示的代码为“伪代码”。
 
 ## 一页多图 {#sec:multipage}
 
