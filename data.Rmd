@@ -136,13 +136,15 @@ summary(canabalt)
 我们关心的重点当然是得分，因此拿到这批数据我们可以先看一下得分的分布，例如用直方图；其次我们会考虑游戏得分和平台是否有关，高分玩家会因为什么原因死亡，等等，这都是基于离散变量的连续变量比较，一个自然而然的选择就是对离散变量的每一分类分别画图。图 \@ref(fig:canabalt-boxplot) 是基于离散变量的不同分类的箱线图，从图中可以看出，iPad 玩家的平均得分较高，这可能是因为 iPad 相比起 iPhone 或者 iPod touch 来说屏幕较大，玩家易于控制，也可能是因为 iPad 需要专门开机，不像另外两个平台随时都能打开玩，因此 iPad 玩家玩起来会更集中精力。至于死因，由于作者对这款游戏并不在行，玩了几次，得到的结果都是因为跳得不够高而撞墙坠落摔死，最多能跑几百米，因此不了解其它死因的场景。因为撞墙摔死的玩家中有很多人得分超高，看来这种障碍的难度并不小。注意我们画箱线图时，对死因做了重新排序 — 按照得分的中位数排序，这样能方便读者阅读这幅图，否则，读者需要额外花费功夫用眼睛对箱线图排序，对读者来说是不必要的阅读负担。按照原始数据的顺序画图尤其是条形图和饼图中常见的问题，其实排序对于制图者只是举手之劳，对读者却能带来很大的方便。
 
 ```{r canabalt-boxplot,fig.cap="(ref:canabalt-boxplot)",fig.scap="游戏得分在不同游戏平台以及死因下的比较",message=FALSE}
-canabalt_g1 <- qplot(device, score, data = canabalt, geom = "boxplot") +
+canabalt_g1 <- ggplot(aes(device, score), data = canabalt) +
+  geom_boxplot() +
   coord_flip()
-canabalt_g2 <- qplot(reorder(death, score, median), score,
-  data = canabalt,
-  geom = "boxplot", xlab = "death"
+canabalt_g2 <- ggplot(aes(reorder(death, score, median), score),
+  data = canabalt
 ) +
-  coord_flip()
+  geom_boxplot() +
+  coord_flip() +
+  labs(xlab = "death")
 library(cowplot)
 plot_grid(canabalt_g1, canabalt_g2, ncol = 1)
 ```
@@ -478,10 +480,10 @@ $$R_{i,j}=\frac{\mbox{同时出现高频词}i\mbox{和}{j}\mbox{的词的数目}
 ```{r song-high-freq,fig.cap="(ref:song-high-freq)",fig.scap=" 宋词前 100 高频词的关系网络图 "}
 library(igraph, warn.conflicts = FALSE)
 load(system.file("extdata", "HighFreq100.rda", package = "MSG"))
-g <- graph.adjacency((HighFreq100 > 0.05) * HighFreq100,
+g <- graph_from_adjacency_matrix((HighFreq100 > 0.05) * HighFreq100,
   mode = "undirected", weighted = TRUE, diag = FALSE
 )
-cg <- clusters(g)
+cg <- components(g)
 colbar <- as.numeric(as.factor(cg$csize[cg$membership + 1]))
 V(g)$color <- rev(heat.colors(9))[colbar]
 

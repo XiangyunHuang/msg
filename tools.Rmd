@@ -81,12 +81,12 @@ R 的官方网站 <https://www.R-project.org> 中对 R 有详细介绍，我们�
 
 (ref:fig-ggplot2-minard-s) 在 R 中用 **ggplot2** 包重制拿破仑远征图
 
-```{r ggplot2-minard, fig.cap='(ref:fig-ggplot2-minard)', fig.scap='(ref:fig-ggplot2-minard-s)', fig.width=4.9, fig.height=2.5}
+```{r ggplot2-minard, fig.cap='(ref:fig-ggplot2-minard)', fig.scap='(ref:fig-ggplot2-minard-s)', fig.width=6, fig.height=3}
 troops <- read.table(system.file("extdata", "troops.txt", package = "MSG"), header = TRUE)
 cities <- read.table(system.file("extdata", "cities.txt", package = "MSG"), header = TRUE)
 library(ggplot2)
 p <- ggplot(cities, aes(x = long, y = lat)) # 框架
-p <- p + geom_path(aes(size = survivors, colour = direction, group = group), 
+p <- p + geom_path(aes(linewidth = survivors, colour = direction, group = group), 
                    data = troops, lineend = "round") # 军队路线
 p <- p + geom_point() # 城市点
 p <- p + geom_text(aes(label = city), hjust = 0, vjust = 1, size = 2.5) # 城市名称

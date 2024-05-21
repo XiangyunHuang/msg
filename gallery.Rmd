@@ -73,7 +73,7 @@ library(ggplot2)
 library(cowplot)
 p <- ggplot(aes(waiting), data = geyser)
 p1 <- p + geom_histogram(breaks = seq(40, 110, by = 5))
-p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = ..density..))
+p2 <- p + geom_histogram(breaks = seq(40, 110, by = 5), aes(y = after_stat(density)))
 p3 <- p + geom_histogram(breaks = seq(40, 110, by = 10))
 p4 <- p + geom_histogram(breaks = seq(42, 108, by = 2), fill = "red", color = "black")
 plot_grid(p1, p2, p3, p4, labels = c(
@@ -109,7 +109,6 @@ p2 + geom_density(fill = "lightgray", color = "black") +
 
 由于直方图需要对连续型数据做离散分组，因此它有一个明显的缺点，就是它的形状依赖于分组的端点，例如若有好几个相同的数值正好处在分组端点上，那么我们只要稍微向左或向右移动一下分组端点，这些数据点就会被划分入不同的区间，导致矩形条的高度变化。@Scott92 提出了一种解决这种直方图不稳定性问题的办法叫“移动平均直方图”（Average Shifted Histogram，简称 ASH），它的思想是使用一系列移动的区间去划分数据，比如 $(b_1+ih/n,b_2+ih/n,\ldots,b_n+ih/n)$，$i=0,\cdots,n-1$，最后将这 $n$ 种划分方法的频数结果"平均"起来，就得到了 ASH 图，这样有效避免了边界点的归属问题。然而，在核密度估计理论已经非常完备的今天，我们几乎没有必要再用这种技巧去克服原来的问题了，毕竟 ASH 与核密度估计比起来显得还是太粗糙。图 \@ref(fig:hist-density) 的核密度曲线基于函数 `density()` 计算而来，它的参数包括核函数和窗宽等，实际应用中我们可能需要尝试不同的核函数以及窗宽值，@Venables02 第 5.6 小节介绍了一些选择的经验可供参考。
 
-[密度曲线的延伸 --- 岭线 ggridges <https://github.com/clauswilke/ggridges>]{.todo}
 
 ## 茎叶图
 
@@ -468,7 +467,7 @@ ggplot(contour_grid_tidy, aes(x, y)) +
   scale_x_continuous(limits = c(0.5, 4.5), labels = function(x) paste("x =", x)) +
   scale_y_continuous(limits = c(0.5, 3.5), labels = function(x) paste("x =", x)) +
   geom_polygon(data = contour_grid_polygon, fill = NA, color = "black", lty = 2) +
-  geom_segment(aes(x = 2, y = 2, xend = 3, yend = 2)) +
+  geom_segment(aes(x = 2, y = y, xend = 3, yend = y), data = data.frame(y = 2)) +
   theme_bw()
 ```
 
@@ -597,7 +596,7 @@ coplot(lat ~ long | depth,
 (ref:fig-curve) 函数 $f(x)=\mathrm{sin}(\mathrm{cos}(x)*\mathrm{exp}(-x/2))$ 的曲线图（上）和均匀分布 $U(-1,1)$ 的特征函数图（下）。
 
 ```{r curve,fig.width=4.8,fig.height=5,fig.cap="(ref:fig-curve)",fig.scap="(ref:fig-curve-s)",dev='tikz',fig.process=to_png,fig.showtext=FALSE,small.mar=FALSE}
-par(par(mar = c(4.5, 4, 0.2, 0.2)), mfrow = c(2, 1))
+par(mar = c(4.5, 4, 0.2, 0.2), mfrow = c(2, 1))
 chippy <- function(x) sin(cos(x) * exp(-x / 2))
 curve(chippy, -8, 7, n = 2008, xlab = "$x$", ylab = "$\\mathrm{chippy}(x)$")
 curve(sin(x) / x, from = -20, to = 20, n = 200, 
@@ -939,9 +938,6 @@ usage(graphics:::pairs.formula)
 ```{r define-pairs-panel}
 # 观察如何使用 hist() 做计算并用 rect() 画图
 panel.hist <- function(x, ...) {
-  usr <- par("usr")
-  on.exit(par(usr))
-  par(usr = c(usr[1:2], 0, 1.5))
   h <- hist(x, plot = FALSE)
   nB <- length(breaks <- h$breaks)
   y <- h$counts / max(h$counts)
@@ -956,10 +952,10 @@ panel.hist <- function(x, ...) {
 ```{r pairs,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-pairs)",fig.scap="(ref:fig-pairs-s)"}
 idx <- as.integer(iris[["Species"]])
 pairs(iris[1:4],
-      upper.panel = function(x, y, ...)
-        points(x, y, pch = c(17, 16, 6)[idx], col = idx),
-      pch = 20, oma = c(2, 2, 2, 2),
-      lower.panel = panel.smooth, diag.panel = panel.hist
+  upper.panel = function(x, y, ...) {
+    points(x, y, pch = c(17, 16, 6)[idx], col = idx)
+  },
+  lower.panel = panel.smooth, diag.panel = panel.hist
 )
 ```
 
@@ -1763,7 +1759,7 @@ usage(ggparcoord)
 
 ```{r ggparcoord,fig.width=4.8,fig.height=2.5,fig.cap="(ref:fig-ggparcoord)",fig.scap="(ref:fig-ggparcoord-s)"}
 ggparcoord(iris, columns = 1:4, groupColumn = 5, scale = "uniminmax") + 
-  geom_line(size = 1.2)
+  geom_line(linewidth = 1.2)
 ```
 
 

@@ -80,12 +80,12 @@ ggplot(aes(x = carat, y = price), data = diamonds) +
 
 ```{r ggplot2-violin}
 ggplot(diamonds, aes(x = price)) +
-  stat_density(aes(ymax = ..density.., ymin = -..density..),
+  stat_density(aes(ymax = after_stat(density), ymin = -after_stat(density)),
     geom = "ribbon", position = "identity"
   )
 ```
 
-注意其中 density 变量的两边都需要用 `..` 围起来，这是 ggplot2 的语法规定，这种写法表示变量从统计量函数中计算而来，并非原始数据自带的。 ribbon 是带状的几何形状，本质上是多边形，通常带有填充色。
+注意其中 density 变量需要传递给函数 `after_stat()`，这是 ggplot2 的语法规定，这种写法表示变量从统计量函数中计算而来，并非原始数据自带的。 ribbon 是带状的几何形状，本质上是多边形，通常带有填充色。
 
 ### 标度
 
@@ -162,12 +162,6 @@ ggplot(aes(x = carat), data = diamonds) +
 
 切片的版面设置除了上面介绍的行列排列之外，还有一种从左到右、从上到下的排列方式，有时候切片生成的子集数目如果太多的话，无论按行或按列摆放可能都摆不下，这时候可以考虑这种顺序排列的方式，参见 `facet_wrap()` 的帮助文档（前一种排列叫 `facet_grid()`）。
 
-### 分组 {#subsec:group}
-
-[介绍 group 参数和切片/分面的区别]{.todo}
-
-
-
 ### 位置调整
 
 位置调整主要针对条形图中的矩形条的位置摆放。在 \@ref(sec:barplot) 小节中我们讲到了基础图形系统中的条形图，里面有个 beside 参数可以指定矩形条是并排排列还是堆砌排列，ggplot2 系统中的位置调整也类似。当然，不仅条形图中有矩形条，直方图中也有，所以我们同样可以画堆砌直方图。另外在散点图中也有一类重要的位置调整，即随机打乱，这一点在 \@ref(sec:stripchart) 小节和图 \@ref(fig:discrete-var) 中都提到过。略微随机打乱散点图中的点的位置，能减轻图的重叠程度，尤其是有很多个点都在同一个位置上时，由于重叠的原因，我们可能会被误导（以为该处只有 1 个点）。随机打乱也可以作为一种几何形状添加到图中，如：
@@ -178,65 +172,6 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
   geom_jitter(color = "red") # 对比随机打乱的散点
 ```
 
-[介绍 ggrepel <https://github.com/slowkow/ggrepel> 和 ggbeeswarm <https://github.com/eclarke/ggbeeswarm>]{.todo}
-
-### 图例 {#subsec:legend}
-
-添加、取消、修改图例
-
-二维的图例 [biscale](https://github.com/slu-openGIS/biscale) 和 [multiscales](https://github.com/clauswilke/multiscales) 和 [ggnewscale](https://github.com/eliocamp/ggnewscale)
-
-### 注释 {#subsec:annotation}
-
-### 字体 {#subsec:font}
-
-相比于 Base R 绘图系统，ggplot2 系统可以更加精细地设置各处字体
-
-```{r font-in-ggplot,fig.cap="(ref:font-in-ggplot)",fig.scap="(ref:font-in-ggplot-s)",message=FALSE,fig.showtext=FALSE}
-p1 <- ggplot(pressure, aes(x = temperature, y = pressure)) +
-  geom_point()
-p2 <- p1 + theme(
-  axis.title = element_text(family = "sans"),
-  axis.text = element_text(family = "serif")
-)
-p3 <- p1 + labs(x = "温度", y = "压力") +
-  theme(
-    axis.title = element_text(family = "GB1"),
-    axis.text = element_text(family = "serif")
-  )
-p4 <- p1 + labs(
-  x = "温度", y = "压力", title = "散点图",
-  subtitle = "Vapor Pressure of Mercury as a Function of Temperature",
-  caption = paste("Data on the relation between temperature in degrees Celsius and",
-    "vapor pressure of mercury in millimeters (of mercury).",
-    sep = "\n"
-  )
-) +
-  theme(
-    axis.title = element_text(family = "GB1"),
-    axis.text.x = element_text(family = "serif"),
-    axis.text.y = element_text(family = "sans"),
-    title = element_text(family = "GB1"),
-    plot.subtitle = element_text(family = "sans", size = rel(0.7)),
-    plot.caption = element_text(family = "sans", size = rel(0.6))
-  )
-library(cowplot)
-plot_grid(p1, p2, p3, p4,
-  labels = c(
-    "默认字体设置", "英文字体设置",
-    "中文字体设置", "任意字体设置"
-  ), label_fontfamily = "GB1", ncol = 2,
-  label_x = 0.1, label_y = 0.6
-)
-```
-
-(ref:font-in-ggplot-s) 在 ggplot2 绘图系统中设置中英文字体
-
-(ref:font-in-ggplot) 在 ggplot2 绘图系统中，字体可以非常容易地做到精细的设置，轴的标题、标签和图的主、副标题等都可以设置不同的字体、字号和字样
-
-### 配色 {#subsec:color}
-
-RColorBrewer 和 colorspace
 
 ### 主题 {#subsec:theme}
 
