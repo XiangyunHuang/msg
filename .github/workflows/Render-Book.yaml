@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
@@ -48,9 +48,11 @@ jobs:
 
       - name: Install ghostscript and Others
         run: |
-          brew install poppler xquartz optipng graphviz
-          brew tap homebrew/cask-fonts
-          brew install font-inconsolata font-dejavu
+          export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+          brew update
+          brew install poppler optipng graphviz
+          brew install --cask xquartz
+          brew install --cask font-inconsolata font-dejavu
    
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2
@@ -88,7 +90,7 @@ jobs:
       - name: Render Book
         id: render-book
         run: |
-          bookdown::render_book("index.Rmd")
+          bookdown::render_book("index.Rmd", "all")
         shell: Rscript {0}
 
       - name: Cp Graphics
@@ -97,7 +99,7 @@ jobs:
 
       - name: Upload book folder for debug
         if: failure()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Upload Book
           path: _book
@@ -113,7 +115,7 @@ jobs:
       # 先本地创建一个 Github Pages 分支推送上来才行
       # https://bookdown.org/yihui/bookdown/github.html
       - name: Checkout the gh-pages branch
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
           path: book-output
