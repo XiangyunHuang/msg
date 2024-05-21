@@ -102,17 +102,13 @@ ggplot(aes(x = Petal.Length, y = Petal.Width), data = iris) +
 
 标度除了用在颜色和符号上之外，还可以用在大小上，例如用图中圆圈的大小表示第三维变量的大小，这与 \@ref(sec:symbols) 小节的符号图很相似。ggplot2 中可以用 size 参数还设置和元素大小对应的变量，并可以用 `scale_size()` 函数来调整映射的端点（最小值和最大值）。图 \@ref(fig:quake6-bubbles) 就是这样的一个示例。**MSG** 包中的 `quake6` 数据记录了 1973 年到 2010 年每个月发生的 6 级以上的地震信息，我们可以按照年份和月份汇总地震发生的频数，然后画年份和月份的散点图，并将频数信息附着在点上。从图中可以看到，地震发生的频数似乎随着年份在增加，尤其是 2007 年 4 月和 2009 年 10 月地震活动非常频繁。另外，7 月似乎是地震低发期。注意这批数据来自美国地震局（USGS），这让我们考虑到地震频数逐年增加可能是个假象，很可能是因为近年来地震记录设备越来越先进，更多地震活动被探测到并记录了下来。
 
-### 刻度 {#subsec:scale}
-
-替换合适的刻度/尺度有利于显示数据
-
 
 ### 坐标系
 
 ```{r quake6-bubbles,fig.scap="(ref:quake6-bubbles-s)",fig.cap="(ref:quake6-bubbles)"}
 data(quake6, package = "MSG")
 ggplot(quake6, aes(x = year, y = month)) +
-  stat_sum(aes(size = ..n..)) + scale_size(range = c(1, 8))
+  stat_sum(aes(size = after_stat(n))) + scale_size(range = c(1, 8))
 ```
 
 (ref:quake6-bubbles-s) 1973 年以来全球 6 级以上地震的时间频数图
