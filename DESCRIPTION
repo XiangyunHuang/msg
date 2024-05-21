@@ -34,6 +34,7 @@ Imports:
     randomForest,
     raster,
     rgl,
+    rsconnect,
     RgoogleMaps,
     scatterplot3d,
     showtext,
