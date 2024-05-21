@@ -1,5 +1,4 @@
-[![Book build status](https://github.com/XiangyunHuang/MSG-Book/workflows/Render-Book/badge.svg?event=push)](https://github.com/XiangyunHuang/MSG-Book/actions?workflow=Render-Book)
----
+## [![Book build status](https://github.com/XiangyunHuang/msg/workflows/Render-Book/badge.svg?event=push)](https://github.com/XiangyunHuang/msg/actions?workflow=Render-Book)
 
 ## 现代统计图形
 
@@ -11,11 +10,11 @@ This is code and text behind the [Modern Statistical Graphics](https://bookdown.
 
 ## 授权 LICENSE
 
-<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.5/cn/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/2.5/cn/88x31.png" /></a>
+<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.5/cn/"><img src="https://i.creativecommons.org/l/by-nc-sa/2.5/cn/88x31.png" alt="知识共享许可协议" style="border-width:0"/></a>
 
 本作品采用<a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/2.5/cn/">知识共享署名-非商业性使用-相同方式共享 2.5 中国大陆许可协议</a>进行许可。
 
----
+------------------------------------------------------------------------
 
 ## 益辉答读者问
 
@@ -45,7 +44,7 @@ This is code and text behind the [Modern Statistical Graphics](https://bookdown.
 
 ### 6. 统计图形的艺术性和功能性如何辩证看待？
 
-艺术？艺术就是爆炸（迪达拉），还是永恒（赤砂蝎）？……我个人倾向于功能性优先（即永恒）。如果有人信奉艺术就是爆炸的美学，那我觉得可以关注一下纽约时报的可视化项目，它们有时候很有艺术性。另外有个做可视化的网站叫布丁，我个人觉得它的艺术性非常惊艳，供参考：https://pudding.cool
+艺术？艺术就是爆炸（迪达拉），还是永恒（赤砂蝎）？……我个人倾向于功能性优先（即永恒）。如果有人信奉艺术就是爆炸的美学，那我觉得可以关注一下纽约时报的可视化项目，它们有时候很有艺术性。另外有个做可视化的网站叫布丁，我个人觉得它的艺术性非常惊艳，供参考：<https://pudding.cool>
 
 ### 7. 真的一图胜千言吗？图形承载多大的信息量才合适，或者，清楚明白才是王道?
 
@@ -73,21 +72,21 @@ This is code and text behind the [Modern Statistical Graphics](https://bookdown.
 
 ### 11. 您好，我买了这本新书。然后尝试了一下代码，发现: 输出的图表中，不显示汉字，请问这种情况该如何解决？
 
-这种技术性问题不妨到论坛上问：https://d.cosx.org 但请按论坛的规矩发帖，提供相应的系统信息。
+这种技术性问题不妨到论坛上问：<https://d.cosx.org> 但请按论坛的规矩发帖，提供相应的系统信息。
 
 ### 12. 想问问大佬这本书的定位是怎样的，以及阅读这本书的方法？
 
 本书的前言回答了这个问题。
 
-### 13.  这本书14年前就在网上开源啦，图灵出的书和网上内容相比，主要有哪些变化？
+### 13. 这本书14年前就在网上开源啦，图灵出的书和网上内容相比，主要有哪些变化？
 
-本书的后记里部分回答了这个问题。更详细的对比参见：https://msg2020.pzhao.org
+本书的后记里部分回答了这个问题。更详细的对比参见：<https://msg2020.pzhao.org>
 
 ### 14. 有哪些值得推荐的数据可视化工具？
 
 这个问题听起来像个知乎问题，有点笼统。我从没在知乎上回答过问题，这个问题我也不知从何答起。什么“值得推荐”取决于“推荐了之后想拿它去做什么”。本书介绍的主要是 R，有点偏统计。现在江湖上的 JavaScript 酷炫可视化库也铺天盖地，我觉得也可以稍微关注一下，具体哪家强我就不点名了（我不是这方面的专家，而且我掌握的信息可能已经落后时代几年了）。
 
-### 15.  本书对R语言的要求是什么样的？
+### 15. 本书对R语言的要求是什么样的？
 
 可以初学者，也可以是熟悉 R 语言的程度。前言中有提到，依据对 R 掌握的不同等级，这本书可以有不同的读法。
 
@@ -110,5 +109,3 @@ This is code and text behind the [Modern Statistical Graphics](https://bookdown.
 ### 19. 统计绘图当中，不少GUI软件貌似在不少情况下效率更高:代码 vs GUI
 
 本书的 2.2 小节中谈到了这个问题。如果是一次性的作图、作后即焚，而你感觉图形界面软件好用，那用一次也无妨。如果是注重图形的可重复性，那么用代码作图更方便；比如要是将来发现数据变了，那代码只需要重跑一遍即可，而哪里不会点哪里的图形界面软件就需要你再全程点一遍。
-
-

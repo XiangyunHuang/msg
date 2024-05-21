@@ -1,7 +1,7 @@
 Package: placeholder
 Type: Book
 Title: placeholder.
-Version: 0.0.0.9999
+Version: 1.0.0
 Depends: R (>= 4.1.0)
 Imports: 
     alphahull,
@@ -11,6 +11,7 @@ Imports:
     bookdown,
     corrplot,
     cowplot,
+    car,
     formatR,
     fun,
     GGally,
@@ -23,7 +24,6 @@ Imports:
     leaflet,
     magick,
     maps,
-    maptools,
     MSG,
     mvtnorm,
     pdftools,
@@ -33,7 +33,6 @@ Imports:
     quantreg,
     randomForest,
     raster,
-    rgeos,
     rgl,
     RgoogleMaps,
     scatterplot3d,
@@ -49,4 +48,4 @@ Imports:
     tuneR,
     vcd,
     vioplot
-BugReports: https://github.com/XiangyunHuang/MSG-Book/issues
+BugReports: https://github.com/XiangyunHuang/msg/issues

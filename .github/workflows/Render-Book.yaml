@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-12, r: '4.1.0'}
+          - {os: macos-14, r: '4.4.0'}
 
     env:
       LANG: "en_US.UTF-8"
@@ -36,51 +36,27 @@ jobs:
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
+          use-public-rspm: true
           r-version: ${{ matrix.config.r }}
 
+      - uses: r-lib/actions/setup-r-dependencies@v2
+      
       - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v2
         with:
-          pandoc-version: '2.19.2'
+          pandoc-version: '3.1.11'
 
       - name: Install ghostscript and Others
         run: |
           brew install poppler xquartz optipng graphviz
           brew tap homebrew/cask-fonts
-          brew install font-inconsolata font-dejavu 
-          
-      - name: Cache R packages
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: r-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('DESCRIPTION') }}
-          restore-keys: r-${{ matrix.config.os }}-${{ matrix.config.r }}-
-
-      - name: Cache bookdown results
-        uses: actions/cache@v3
-        with:
-          path: _bookdown_files
-          key: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-${{ hashFiles('**/*Rmd') }}
-          restore-keys: bookdown-${{ matrix.config.os }}-${{ matrix.config.r }}-
-
-      - name: Configure R CXXFLAGS
-        run: |
-          mkdir -p ~/.R
-          echo "CXXFLAGS += -Wno-ignored-attributes" >> ~/.R/Makevars
-          cat ~/.Rprofile
-          cat ~/.R/Makevars
+          brew install font-inconsolata font-dejavu
    
       - name: Install TinyTeX
         uses: r-lib/actions/setup-tinytex@v2
         env:
           # install full prebuilt version
           TINYTEX_INSTALLER: TinyTeX
-
-      - name: Install R packages
-        run: |
-          if(!require('renv')) install.packages('renv')
-          renv::restore()
-        shell: Rscript {0}
 
       - name: Install LaTeX Packages
         run: |
@@ -94,11 +70,11 @@ jobs:
           font_install(source_han_sans(), quiet = TRUE)
         shell: Rscript {0}
 
-      # - name: Add Fonts
-      #   run: |
-      #     curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
-      #     unzip Adobe-Fonts.zip -d ~/Library/Fonts/adobe
-      #     fc-cache -fsv
+      - name: Add Fonts
+        run: |
+          curl -fLo Adobe-Fonts.zip https://github.com/XiangyunHuang/fonts/releases/download/v0.1/Adobe-Fonts.zip
+          unzip Adobe-Fonts.zip -d ~/Library/Fonts/adobe
+          fc-cache -fsv
 
       - name: Test Pkgs
         run: |
@@ -112,7 +88,7 @@ jobs:
       - name: Render Book
         id: render-book
         run: |
-          bookdown::render_book("index.Rmd", "all")
+          bookdown::render_book("index.Rmd")
         shell: Rscript {0}
 
       - name: Cp Graphics
@@ -145,20 +121,3 @@ jobs:
       - name: Deploy to Github Pages
         if: ${{ github.ref == 'refs/heads/master' }}
         run: ./_deploy.sh
-
-      - name: Deploy to Netlify
-        if: contains(env.isExtPR, 'false')
-        id: netlify-deploy
-        uses: nwtgck/actions-netlify@v2
-        with:
-          publish-dir: './_book'
-          production-branch: master
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message:
-            'Deploy from GHA: ${{ github.event.pull_request.title || github.event.head_commit.message }} (${{ github.sha }})'
-          enable-pull-request-comment: true
-          enable-commit-comment: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 10

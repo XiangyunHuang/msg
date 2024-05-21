@@ -35,6 +35,6 @@ bookdown::pdf_book:
   extra_dependencies:
     ctex: 
      - heading
-     - fontset=fandol
+     - fontset=adobe
   pandoc_args: ["--top-level-division=chapter", "--lua-filter=sidebar.lua"]
   quote_footer: ["\\hspace*{\\fill} ", ""]

@@ -1,4 +1,4 @@
-# 本书 R 包 {#cha:MSG}
+# 本书 R 包 {#chap:MSG}
 
 ```{r include=FALSE}
 library(MSG)
