@@ -49,6 +49,7 @@ jobs:
       - name: Install ghostscript and Others
         run: |
           export HOMEBREW_NO_INSTALLED_DEPENDENTS_CHECK=1
+          brew update
           brew install poppler optipng graphviz
           brew install --cask xquartz
           brew install --cask font-inconsolata font-dejavu
