@@ -1,8 +1,8 @@
-## [![Book build status](https://github.com/XiangyunHuang/msg/workflows/Render-Book/badge.svg?event=push)](https://github.com/XiangyunHuang/msg/actions?workflow=Render-Book)
+## [![Book build status](https://github.com/XiangyunHuang/msg/workflows/Render-Book/badge.svg)](https://github.com/XiangyunHuang/msg/actions?workflow=Render-Book)
 
 ## 现代统计图形
 
-本仓库作为 [《现代统计图形》](https://bookdown.org/xiangyun/msg/) 书稿源码的托管地址
+本仓库作为 [《现代统计图形》](https://bookdown.org/xiangyun/msg/) 书稿源码的托管地址，《现代统计图形》印刷版的主页见 <https://msg2020.pzhao.org/>。
 
 ## Modern Statistical Graphics
 
