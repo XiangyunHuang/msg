@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A 程序初步 | 现代统计图形</title>
+  <meta name="description" content="A 程序初步 | 现代统计图形书稿" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="A 程序初步 | 现代统计图形" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A 程序初步 | 现代统计图形书稿" />
+  <meta name="github-repo" content="XiangyunHuang/msg" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="A 程序初步 | 现代统计图形" />
+  
+  <meta name="twitter:description" content="A 程序初步 | 现代统计图形书稿" />
+  
+
+<meta name="author" content="赵鹏" />
+<meta name="author" content="谢益辉" />
+<meta name="author" content="黄湘云" />
+
+
+<meta name="date" content="2024-05-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="principle.html"/>
+<link rel="next" href="tricks.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { extensions: ["cancel.js"] }
+    });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6EJ5FTG9E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V6EJ5FTG9E');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">现代统计图形</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>推荐语</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>自序</a></li>
+<li class="chapter" data-level="" data-path="foreword.html"><a href="foreword.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="1" data-path="history.html"><a href="history.html"><i class="fa fa-check"></i><b>1</b> 历史</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="history.html"><a href="history.html#sec:pie-and-line-of-history"><i class="fa fa-check"></i><b>1.1</b> 饼图和线图的起源</a></li>
+<li class="chapter" data-level="1.2" data-path="history.html"><a href="history.html#sec:the-mystery-of-cholera-infection"><i class="fa fa-check"></i><b>1.2</b> 霍乱传染之谜</a></li>
+<li class="chapter" data-level="1.3" data-path="history.html"><a href="history.html#sec:nightingale"><i class="fa fa-check"></i><b>1.3</b> 提灯女士的玫瑰图</a></li>
+<li class="chapter" data-level="1.4" data-path="history.html"><a href="history.html#sec:charles-joseph-minard"><i class="fa fa-check"></i><b>1.4</b> 拿破仑的俄罗斯远征</a></li>
+<li class="chapter" data-level="1.5" data-path="history.html"><a href="history.html#sec:begin"><i class="fa fa-check"></i><b>1.5</b> 小结与开始</a></li>
+<li class="chapter" data-level="1.6" data-path="history.html"><a href="history.html#section"><i class="fa fa-check"></i><b>1.6</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> 工具</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tools.html"><a href="tools.html#section-1"><i class="fa fa-check"></i><b>2.1</b> 选择作图工具</a></li>
+<li class="chapter" data-level="2.2" data-path="tools.html"><a href="tools.html#sec:R-intro"><i class="fa fa-check"></i><b>2.2</b> R 语言简介</a></li>
+<li class="chapter" data-level="2.3" data-path="tools.html"><a href="tools.html#r-"><i class="fa fa-check"></i><b>2.3</b> 安装 R 语言</a></li>
+<li class="chapter" data-level="2.4" data-path="tools.html"><a href="tools.html#section-2"><i class="fa fa-check"></i><b>2.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="elements.html"><a href="elements.html"><i class="fa fa-check"></i><b>3</b> 元素</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="elements.html"><a href="elements.html#sec:color"><i class="fa fa-check"></i><b>3.1</b> 颜色</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="elements.html"><a href="elements.html#sec:palette"><i class="fa fa-check"></i><b>3.1.1</b> 固定颜色选择函数</a></li>
+<li class="chapter" data-level="3.1.2" data-path="elements.html"><a href="elements.html#section-3"><i class="fa fa-check"></i><b>3.1.2</b> 颜色生成和转换函数</a></li>
+<li class="chapter" data-level="3.1.3" data-path="elements.html"><a href="elements.html#subsec:palette"><i class="fa fa-check"></i><b>3.1.3</b> 特定颜色主题调色板</a></li>
+<li class="chapter" data-level="3.1.4" data-path="elements.html"><a href="elements.html#section-4"><i class="fa fa-check"></i><b>3.1.4</b> 渐变色的简单原理及应用</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="elements.html"><a href="elements.html#sec:points"><i class="fa fa-check"></i><b>3.2</b> 点</a></li>
+<li class="chapter" data-level="3.3" data-path="elements.html"><a href="elements.html#sec:lines"><i class="fa fa-check"></i><b>3.3</b> 曲线、直线、线段、箭头、X-样条</a></li>
+<li class="chapter" data-level="3.4" data-path="elements.html"><a href="elements.html#sec:polygon"><i class="fa fa-check"></i><b>3.4</b> 矩形、多边形</a></li>
+<li class="chapter" data-level="3.5" data-path="elements.html"><a href="elements.html#sec:grid"><i class="fa fa-check"></i><b>3.5</b> 网格线</a></li>
+<li class="chapter" data-level="3.6" data-path="elements.html"><a href="elements.html#sec:text"><i class="fa fa-check"></i><b>3.6</b> 标题、任意文本、周边文本</a></li>
+<li class="chapter" data-level="3.7" data-path="elements.html"><a href="elements.html#sec:legend"><i class="fa fa-check"></i><b>3.7</b> 图例</a></li>
+<li class="chapter" data-level="3.8" data-path="elements.html"><a href="elements.html#sec:axis"><i class="fa fa-check"></i><b>3.8</b> 坐标轴</a></li>
+<li class="chapter" data-level="3.9" data-path="elements.html"><a href="elements.html#section-5"><i class="fa fa-check"></i><b>3.9</b> 图形元素应用示例</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="elements.html"><a href="elements.html#subsec:waterfall-chart"><i class="fa fa-check"></i><b>3.9.1</b> 瀑布图</a></li>
+<li class="chapter" data-level="3.9.2" data-path="elements.html"><a href="elements.html#subsec:grad-desc"><i class="fa fa-check"></i><b>3.9.2</b> 梯度下降算法</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="elements.html"><a href="elements.html#section-6"><i class="fa fa-check"></i><b>3.10</b> 小结</a></li>
+<li class="chapter" data-level="3.11" data-path="elements.html"><a href="elements.html#section-7"><i class="fa fa-check"></i><b>3.11</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gallery.html"><a href="gallery.html"><i class="fa fa-check"></i><b>4</b> 图库</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gallery.html"><a href="gallery.html#sec:hist"><i class="fa fa-check"></i><b>4.1</b> 直方图</a></li>
+<li class="chapter" data-level="4.2" data-path="gallery.html"><a href="gallery.html#section-8"><i class="fa fa-check"></i><b>4.2</b> 茎叶图</a></li>
+<li class="chapter" data-level="4.3" data-path="gallery.html"><a href="gallery.html#sec:boxplot"><i class="fa fa-check"></i><b>4.3</b> 箱线图</a></li>
+<li class="chapter" data-level="4.4" data-path="gallery.html"><a href="gallery.html#sec:barplot"><i class="fa fa-check"></i><b>4.4</b> 条形图</a></li>
+<li class="chapter" data-level="4.5" data-path="gallery.html"><a href="gallery.html#sec:plot-default"><i class="fa fa-check"></i><b>4.5</b> 散点图</a></li>
+<li class="chapter" data-level="4.6" data-path="gallery.html"><a href="gallery.html#sec:assocplot"><i class="fa fa-check"></i><b>4.6</b> 关联图</a></li>
+<li class="chapter" data-level="4.7" data-path="gallery.html"><a href="gallery.html#sec:cdplot"><i class="fa fa-check"></i><b>4.7</b> 条件密度图</a></li>
+<li class="chapter" data-level="4.8" data-path="gallery.html"><a href="gallery.html#sec:contour"><i class="fa fa-check"></i><b>4.8</b> 等高图/等高线</a></li>
+<li class="chapter" data-level="4.9" data-path="gallery.html"><a href="gallery.html#sec:coplot"><i class="fa fa-check"></i><b>4.9</b> 条件分割图</a></li>
+<li class="chapter" data-level="4.10" data-path="gallery.html"><a href="gallery.html#sec:curve"><i class="fa fa-check"></i><b>4.10</b> 一元函数曲线图</a></li>
+<li class="chapter" data-level="4.11" data-path="gallery.html"><a href="gallery.html#sec:dotchart"><i class="fa fa-check"></i><b>4.11</b> Cleveland 点图</a></li>
+<li class="chapter" data-level="4.12" data-path="gallery.html"><a href="gallery.html#sec:filled-contour"><i class="fa fa-check"></i><b>4.12</b> 颜色等高图/层次图</a></li>
+<li class="chapter" data-level="4.13" data-path="gallery.html"><a href="gallery.html#sec:fourfoldplot"><i class="fa fa-check"></i><b>4.13</b> 四瓣图</a></li>
+<li class="chapter" data-level="4.14" data-path="gallery.html"><a href="gallery.html#sec:image"><i class="fa fa-check"></i><b>4.14</b> 颜色图</a></li>
+<li class="chapter" data-level="4.15" data-path="gallery.html"><a href="gallery.html#sec:matplot"><i class="fa fa-check"></i><b>4.15</b> 矩阵图、矩阵点、矩阵线</a></li>
+<li class="chapter" data-level="4.16" data-path="gallery.html"><a href="gallery.html#sec:mosaicplot"><i class="fa fa-check"></i><b>4.16</b> 马赛克图</a></li>
+<li class="chapter" data-level="4.17" data-path="gallery.html"><a href="gallery.html#sec:scatterplot-matrix"><i class="fa fa-check"></i><b>4.17</b> 散点图矩阵</a></li>
+<li class="chapter" data-level="4.18" data-path="gallery.html"><a href="gallery.html#sec:persp"><i class="fa fa-check"></i><b>4.18</b> 三维透视图</a></li>
+<li class="chapter" data-level="4.19" data-path="gallery.html"><a href="gallery.html#plot-design"><i class="fa fa-check"></i><b>4.19</b> 因素效应图</a></li>
+<li class="chapter" data-level="4.20" data-path="gallery.html"><a href="gallery.html#sec:rug"><i class="fa fa-check"></i><b>4.20</b> 坐标轴须</a></li>
+<li class="chapter" data-level="4.21" data-path="gallery.html"><a href="gallery.html#sec:smoothScatter"><i class="fa fa-check"></i><b>4.21</b> 平滑散点图</a></li>
+<li class="chapter" data-level="4.22" data-path="gallery.html"><a href="gallery.html#sec:spineplot"><i class="fa fa-check"></i><b>4.22</b> 棘状图</a></li>
+<li class="chapter" data-level="4.23" data-path="gallery.html"><a href="gallery.html#sec:stars"><i class="fa fa-check"></i><b>4.23</b> 星状图、蛛网图、雷达图</a></li>
+<li class="chapter" data-level="4.24" data-path="gallery.html"><a href="gallery.html#sec:stripchart"><i class="fa fa-check"></i><b>4.24</b> 带状图</a></li>
+<li class="chapter" data-level="4.25" data-path="gallery.html"><a href="gallery.html#sec:sunflowerplot"><i class="fa fa-check"></i><b>4.25</b> 向日葵散点图</a></li>
+<li class="chapter" data-level="4.26" data-path="gallery.html"><a href="gallery.html#sec:symbols"><i class="fa fa-check"></i><b>4.26</b> 符号图</a></li>
+<li class="chapter" data-level="4.27" data-path="gallery.html"><a href="gallery.html#sec:pie"><i class="fa fa-check"></i><b>4.27</b> 饼图</a></li>
+<li class="chapter" data-level="4.28" data-path="gallery.html"><a href="gallery.html#section-9"><i class="fa fa-check"></i><b>4.28</b> 热图</a></li>
+<li class="chapter" data-level="4.29" data-path="gallery.html"><a href="gallery.html#section-10"><i class="fa fa-check"></i><b>4.29</b> 交互效应图</a></li>
+<li class="chapter" data-level="4.30" data-path="gallery.html"><a href="gallery.html#sec:qqplot"><i class="fa fa-check"></i><b>4.30</b> QQ 图</a></li>
+<li class="chapter" data-level="4.31" data-path="gallery.html"><a href="gallery.html#section-11"><i class="fa fa-check"></i><b>4.31</b> 生存函数图</a></li>
+<li class="chapter" data-level="4.32" data-path="gallery.html"><a href="gallery.html#sec:rpart"><i class="fa fa-check"></i><b>4.32</b> 分类与回归树图</a></li>
+<li class="chapter" data-level="4.33" data-path="gallery.html"><a href="gallery.html#sec:vioplot"><i class="fa fa-check"></i><b>4.33</b> 小提琴图</a></li>
+<li class="chapter" data-level="4.34" data-path="gallery.html"><a href="gallery.html#sec:maps"><i class="fa fa-check"></i><b>4.34</b> 地图</a></li>
+<li class="chapter" data-level="4.35" data-path="gallery.html"><a href="gallery.html#sec:faces"><i class="fa fa-check"></i><b>4.35</b> 脸谱图</a></li>
+<li class="chapter" data-level="4.36" data-path="gallery.html"><a href="gallery.html#sec:parcoords"><i class="fa fa-check"></i><b>4.36</b> 平行坐标图</a></li>
+<li class="chapter" data-level="4.37" data-path="gallery.html"><a href="gallery.html#sec:andrews-curve"><i class="fa fa-check"></i><b>4.37</b> 调和曲线图</a></li>
+<li class="chapter" data-level="4.38" data-path="gallery.html"><a href="gallery.html#sec:bagplot"><i class="fa fa-check"></i><b>4.38</b> 二维箱线图</a></li>
+<li class="chapter" data-level="4.39" data-path="gallery.html"><a href="gallery.html#sec:base-graph-ext"><i class="fa fa-check"></i><b>4.39</b> 延伸与小结</a></li>
+<li class="chapter" data-level="4.40" data-path="gallery.html"><a href="gallery.html#section-12"><i class="fa fa-check"></i><b>4.40</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="system.html"><a href="system.html"><i class="fa fa-check"></i><b>5</b> 系统</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="system.html"><a href="system.html#sec:ggplot2"><i class="fa fa-check"></i><b>5.1</b> ggplot2 图形</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="system.html"><a href="system.html#section-13"><i class="fa fa-check"></i><b>5.1.1</b> 几何形状</a></li>
+<li class="chapter" data-level="5.1.2" data-path="system.html"><a href="system.html#section-14"><i class="fa fa-check"></i><b>5.1.2</b> 统计量</a></li>
+<li class="chapter" data-level="5.1.3" data-path="system.html"><a href="system.html#section-15"><i class="fa fa-check"></i><b>5.1.3</b> 标度</a></li>
+<li class="chapter" data-level="5.1.4" data-path="system.html"><a href="system.html#section-16"><i class="fa fa-check"></i><b>5.1.4</b> 坐标系</a></li>
+<li class="chapter" data-level="5.1.5" data-path="system.html"><a href="system.html#subsec:facet"><i class="fa fa-check"></i><b>5.1.5</b> 切片</a></li>
+<li class="chapter" data-level="5.1.6" data-path="system.html"><a href="system.html#section-17"><i class="fa fa-check"></i><b>5.1.6</b> 位置调整</a></li>
+<li class="chapter" data-level="5.1.7" data-path="system.html"><a href="system.html#subsec:theme"><i class="fa fa-check"></i><b>5.1.7</b> 主题</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="system.html"><a href="system.html#section-18"><i class="fa fa-check"></i><b>5.2</b> 网格图形</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="system.html"><a href="system.html#section-19"><i class="fa fa-check"></i><b>5.2.1</b> 视图区</a></li>
+<li class="chapter" data-level="5.2.2" data-path="system.html"><a href="system.html#section-20"><i class="fa fa-check"></i><b>5.2.2</b> 旋转</a></li>
+<li class="chapter" data-level="5.2.3" data-path="system.html"><a href="system.html#section-21"><i class="fa fa-check"></i><b>5.2.3</b> 图形对象</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="system.html"><a href="system.html#lattice-"><i class="fa fa-check"></i><b>5.3</b> lattice 图形</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="system.html"><a href="system.html#subsec:lattice-intro"><i class="fa fa-check"></i><b>5.3.1</b> 简介</a></li>
+<li class="chapter" data-level="5.3.2" data-path="system.html"><a href="system.html#section-22"><i class="fa fa-check"></i><b>5.3.2</b> 公式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="system.html"><a href="system.html#section-23"><i class="fa fa-check"></i><b>5.3.3</b> 选项</a></li>
+<li class="chapter" data-level="5.3.4" data-path="system.html"><a href="system.html#section-24"><i class="fa fa-check"></i><b>5.3.4</b> 数据</a></li>
+<li class="chapter" data-level="5.3.5" data-path="system.html"><a href="system.html#section-25"><i class="fa fa-check"></i><b>5.3.5</b> 细节</a></li>
+<li class="chapter" data-level="5.3.6" data-path="system.html"><a href="system.html#section-26"><i class="fa fa-check"></i><b>5.3.6</b> 面板</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="system.html"><a href="system.html#sec:dynamic-graphics"><i class="fa fa-check"></i><b>5.4</b> rggobi 动态图形</a></li>
+<li class="chapter" data-level="5.5" data-path="system.html"><a href="system.html#sec:rgl"><i class="fa fa-check"></i><b>5.5</b> rgl 三维图形</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="system.html"><a href="system.html#section-27"><i class="fa fa-check"></i><b>5.5.1</b> 三维点线图</a></li>
+<li class="chapter" data-level="5.5.2" data-path="system.html"><a href="system.html#section-28"><i class="fa fa-check"></i><b>5.5.2</b> 三维透视图</a></li>
+<li class="chapter" data-level="5.5.3" data-path="system.html"><a href="system.html#section-29"><i class="fa fa-check"></i><b>5.5.3</b> 动画和截图</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="system.html"><a href="system.html#sec:animation"><i class="fa fa-check"></i><b>5.6</b> 动画视频</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="system.html"><a href="system.html#section-30"><i class="fa fa-check"></i><b>5.6.1</b> 动画导出工具</a></li>
+<li class="chapter" data-level="5.6.2" data-path="system.html"><a href="system.html#section-31"><i class="fa fa-check"></i><b>5.6.2</b> 统计学动画</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="system.html"><a href="system.html#section-32"><i class="fa fa-check"></i><b>5.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>6</b> 数据</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data.html"><a href="data.html#sec:data-type"><i class="fa fa-check"></i><b>6.1</b> 数据类型</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data.html"><a href="data.html#section-33"><i class="fa fa-check"></i><b>6.1.1</b> 分类数据</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data.html"><a href="data.html#section-34"><i class="fa fa-check"></i><b>6.1.2</b> 连续数据</a></li>
+<li class="chapter" data-level="6.1.3" data-path="data.html"><a href="data.html#section-35"><i class="fa fa-check"></i><b>6.1.3</b> 混合数据</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data.html"><a href="data.html#sec:data-case"><i class="fa fa-check"></i><b>6.2</b> 数据案例</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="data.html"><a href="data.html#section-36"><i class="fa fa-check"></i><b>6.2.1</b> 价格走势</a></li>
+<li class="chapter" data-level="6.2.2" data-path="data.html"><a href="data.html#subsec:canabalt"><i class="fa fa-check"></i><b>6.2.2</b> 末日狂奔</a></li>
+<li class="chapter" data-level="6.2.3" data-path="data.html"><a href="data.html#subsec:music"><i class="fa fa-check"></i><b>6.2.3</b> 音乐之声</a></li>
+<li class="chapter" data-level="6.2.4" data-path="data.html"><a href="data.html#subsec:tvearn"><i class="fa fa-check"></i><b>6.2.4</b> 绝望主妇</a></li>
+<li class="chapter" data-level="6.2.5" data-path="data.html"><a href="data.html#section-37"><i class="fa fa-check"></i><b>6.2.5</b> 灌篮高手</a></li>
+<li class="chapter" data-level="6.2.6" data-path="data.html"><a href="data.html#subsec:percentage"><i class="fa fa-check"></i><b>6.2.6</b> 神奇数字</a></li>
+<li class="chapter" data-level="6.2.7" data-path="data.html"><a href="data.html#subsec:lowess"><i class="fa fa-check"></i><b>6.2.7</b> 化点为线</a></li>
+<li class="chapter" data-level="6.2.8" data-path="data.html"><a href="data.html#subsec:ternary"><i class="fa fa-check"></i><b>6.2.8</b> 三足鼎立</a></li>
+<li class="chapter" data-level="6.2.9" data-path="data.html"><a href="data.html#section-38"><i class="fa fa-check"></i><b>6.2.9</b> 背景地图</a></li>
+<li class="chapter" data-level="6.2.10" data-path="data.html"><a href="data.html#subsec:cluster"><i class="fa fa-check"></i><b>6.2.10</b> 统计词话</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="data.html"><a href="data.html#sec:simulations"><i class="fa fa-check"></i><b>6.3</b> 统计模拟</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data.html"><a href="data.html#section-39"><i class="fa fa-check"></i><b>6.3.1</b> 线性回归</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data.html"><a href="data.html#section-40"><i class="fa fa-check"></i><b>6.3.2</b> 稳健回归</a></li>
+<li class="chapter" data-level="6.3.3" data-path="data.html"><a href="data.html#section-41"><i class="fa fa-check"></i><b>6.3.3</b> 离群检测</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data.html"><a href="data.html#section-42"><i class="fa fa-check"></i><b>6.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="principle.html"><a href="principle.html"><i class="fa fa-check"></i><b>7</b> 原则</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="principle.html"><a href="principle.html#sec:data-priority"><i class="fa fa-check"></i><b>7.1</b> 数据至上</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="principle.html"><a href="principle.html#subsec:element-priority"><i class="fa fa-check"></i><b>7.1.1</b> 分清主次</a></li>
+<li class="chapter" data-level="7.1.2" data-path="principle.html"><a href="principle.html#subsec:clear-symbols"><i class="fa fa-check"></i><b>7.1.2</b> 符号明确可分</a></li>
+<li class="chapter" data-level="7.1.3" data-path="principle.html"><a href="principle.html#subsec:data-processing"><i class="fa fa-check"></i><b>7.1.3</b> 谨慎处理数据</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="principle.html"><a href="principle.html#section-43"><i class="fa fa-check"></i><b>7.2</b> 节约墨水</a></li>
+<li class="chapter" data-level="7.3" data-path="principle.html"><a href="principle.html#section-44"><i class="fa fa-check"></i><b>7.3</b> 设计布局</a></li>
+<li class="chapter" data-level="7.4" data-path="principle.html"><a href="principle.html#section-45"><i class="fa fa-check"></i><b>7.4</b> 附带解释</a></li>
+<li class="chapter" data-level="7.5" data-path="principle.html"><a href="principle.html#sec:psychology"><i class="fa fa-check"></i><b>7.5</b> 考虑心理</a></li>
+<li class="chapter" data-level="7.6" data-path="principle.html"><a href="principle.html#section-46"><i class="fa fa-check"></i><b>7.6</b> 统计原则</a></li>
+<li class="chapter" data-level="7.7" data-path="principle.html"><a href="principle.html#section-47"><i class="fa fa-check"></i><b>7.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>A</b> 程序初步</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="programming.html"><a href="programming.html#sec:object"><i class="fa fa-check"></i><b>A.1</b> 对象类型</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="programming.html"><a href="programming.html#section-48"><i class="fa fa-check"></i><b>A.1.1</b> 向量</a></li>
+<li class="chapter" data-level="A.1.2" data-path="programming.html"><a href="programming.html#section-49"><i class="fa fa-check"></i><b>A.1.2</b> 因子</a></li>
+<li class="chapter" data-level="A.1.3" data-path="programming.html"><a href="programming.html#section-50"><i class="fa fa-check"></i><b>A.1.3</b> 数组和矩阵</a></li>
+<li class="chapter" data-level="A.1.4" data-path="programming.html"><a href="programming.html#section-51"><i class="fa fa-check"></i><b>A.1.4</b> 数据框和列表</a></li>
+<li class="chapter" data-level="A.1.5" data-path="programming.html"><a href="programming.html#section-52"><i class="fa fa-check"></i><b>A.1.5</b> 函数</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="programming.html"><a href="programming.html#section-53"><i class="fa fa-check"></i><b>A.2</b> 操作方法</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="programming.html"><a href="programming.html#section-54"><i class="fa fa-check"></i><b>A.2.1</b> 选择与循环</a></li>
+<li class="chapter" data-level="A.2.2" data-path="programming.html"><a href="programming.html#section-55"><i class="fa fa-check"></i><b>A.2.2</b> 输入与输出</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="programming.html"><a href="programming.html#section-56"><i class="fa fa-check"></i><b>A.3</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="tricks.html"><a href="tricks.html"><i class="fa fa-check"></i><b>B</b> 细节技巧</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="tricks.html"><a href="tricks.html#sec:par"><i class="fa fa-check"></i><b>B.1</b> <code>par()</code> 函数</a></li>
+<li class="chapter" data-level="B.2" data-path="tricks.html"><a href="tricks.html#sec:plot"><i class="fa fa-check"></i><b>B.2</b> <code>plot()</code> 函数</a></li>
+<li class="chapter" data-level="B.3" data-path="tricks.html"><a href="tricks.html#sec:plotmath"><i class="fa fa-check"></i><b>B.3</b> 数学公式</a></li>
+<li class="chapter" data-level="B.4" data-path="tricks.html"><a href="tricks.html#sec:multipage"><i class="fa fa-check"></i><b>B.4</b> 一页多图</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="tricks.html"><a href="tricks.html#section-57"><i class="fa fa-check"></i><b>B.4.1</b> 设置图形参数</a></li>
+<li class="chapter" data-level="B.4.2" data-path="tricks.html"><a href="tricks.html#section-58"><i class="fa fa-check"></i><b>B.4.2</b> 设置图形版面</a></li>
+<li class="chapter" data-level="B.4.3" data-path="tricks.html"><a href="tricks.html#section-59"><i class="fa fa-check"></i><b>B.4.3</b> 拆分设备屏幕</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="tricks.html"><a href="tricks.html#sec:interaction"><i class="fa fa-check"></i><b>B.5</b> 交互操作</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="tricks.html"><a href="tricks.html#section-60"><i class="fa fa-check"></i><b>B.5.1</b> 获取鼠标位置的坐标</a></li>
+<li class="chapter" data-level="B.5.2" data-path="tricks.html"><a href="tricks.html#section-61"><i class="fa fa-check"></i><b>B.5.2</b> 识别鼠标附近的数据</a></li>
+<li class="chapter" data-level="B.5.3" data-path="tricks.html"><a href="tricks.html#section-62"><i class="fa fa-check"></i><b>B.5.3</b> 响应鼠标键盘的动作</a></li>
+</ul></li>
+<li class="chapter" data-level="B.6" data-path="tricks.html"><a href="tricks.html#sec:device"><i class="fa fa-check"></i><b>B.6</b> 图形设备</a></li>
+<li class="chapter" data-level="B.7" data-path="tricks.html"><a href="tricks.html#section-63"><i class="fa fa-check"></i><b>B.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="gui.html"><a href="gui.html"><i class="fa fa-check"></i><b>C</b> 图形界面</a></li>
+<li class="chapter" data-level="D" data-path="msg-pkgs.html"><a href="msg-pkgs.html"><i class="fa fa-check"></i><b>D</b> 本书 R 包</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="msg-pkgs.html"><a href="msg-pkgs.html#sec:MSG-fun"><i class="fa fa-check"></i><b>D.1</b> 函数说明</a></li>
+<li class="chapter" data-level="D.2" data-path="msg-pkgs.html"><a href="msg-pkgs.html#section-64"><i class="fa fa-check"></i><b>D.2</b> 数据说明</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="postscript.html"><a href="postscript.html"><i class="fa fa-check"></i><b>E</b> 后记</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">现代统计图形</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chap:programming" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">A</span> 程序初步<a href="programming.html#chap:programming" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>如第 <a href="tools.html#cha:tools">2</a> 章所讲，R 的编程方式是面向对象（Object-Oriented）的，这里我们把 R 中的数据类型简要介绍一下，以便读者能熟练操纵数据；此外，我们也简要介绍一下 R 编程中的选择与循环语句以及输入输出的操作。</p>
+<div id="sec:object" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">A.1</span> 对象类型<a href="programming.html#sec:object" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>在 R 的系统中，几乎任何东西都是对象 。使用对象的好处在于它们都可以重用（Reuse）。例如我们可以建立并拟合一个回归模型（不妨称之为 fit），这个对象中包含了若干子对象，在后面的计算中我们随时可以调用这个对象中的子对象，如残差向量（<code>fit$residuals</code> 或 <code>resid(fit)</code>）、系数估计（<code>fit$coefficients</code> 或 <code>coef(fit)</code>）等。面向对象的编程方式尤其在涉及到大量计算的工作中会大显身手，刚才我们提到的只是做一个回归模型，看起来优势并不明显，但如果我们想用某个因变量针对 1000 个自变量分别作回归，然后看看回归系数的 t 值或者 AIC 值的分布情况等等，这时“对象”操作的便利性就充分体现出来了，相比之下，读者不妨考虑用 SPSS 或其它软件如何完成类似的任务及其难度。掌握了 R 的对象之后，在 R 的世界编程基本就可以畅通无阻了。</p>
+<div id="section-48" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">A.1.1</span> 向量<a href="programming.html#section-48" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>向量 （vector）是最简单的数据结构，它是若干数据点的简单集合，如从 1 到 10 的数字：</p>
+<div class="sourceCode" id="cb438"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb438-1"><a href="programming.html#cb438-1" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>通常我们可以用函数 <code>c()</code> 拼接一些数字或字符生成一个向量，如：</p>
+<div class="sourceCode" id="cb440"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb440-1"><a href="programming.html#cb440-1" tabindex="-1"></a><span class="fu">c</span>(<span class="fl">7.11</span>, <span class="fl">9.11</span>, <span class="fl">9.19</span>, <span class="fl">1.23</span>)</span></code></pre></div>
+<pre><code>## [1] 7.11 9.11 9.19 1.23</code></pre>
+<p>我们可以将一个向量赋值给一个变量：</p>
+<div class="sourceCode" id="cb442"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb442-1"><a href="programming.html#cb442-1" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">7.11</span>, <span class="fl">9.11</span>, <span class="fl">9.19</span>, <span class="fl">1.23</span>))</span></code></pre></div>
+<pre><code>## [1] 7.11 9.11 9.19 1.23</code></pre>
+<p>注意 R 中赋值符号可以是 <code>&lt;-</code> 或 <code>=</code>，或 <code>-&gt;</code>（从左往右赋值），或者使用 <code>assign()</code> 函数进行赋值。向量的运算一般都是针对每一个元素的运算，如：</p>
+<div class="sourceCode" id="cb444"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb444-1"><a href="programming.html#cb444-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">/</span> x</span></code></pre></div>
+<pre><code>## [1] 0.1406470 0.1097695 0.1088139 0.8130081</code></pre>
+<div class="sourceCode" id="cb446"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb446-1"><a href="programming.html#cb446-1" tabindex="-1"></a>x <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
+<pre><code>## [1]  8.11 10.11 10.19  2.23</code></pre>
+<p>实际上以向量的形式进行元素运算是 R 语言计算的重要特征。通过中括号和下标值可以提取向量中的元素或者改变相应位置的元素：</p>
+<div class="sourceCode" id="cb448"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb448-1"><a href="programming.html#cb448-1" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>)]</span></code></pre></div>
+<pre><code>## [1] 7.11 1.23</code></pre>
+<div class="sourceCode" id="cb450"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb450-1"><a href="programming.html#cb450-1" tabindex="-1"></a>(tmp <span class="ot">&lt;-</span> x) <span class="co"># 将 x 赋值给 tmp</span></span></code></pre></div>
+<pre><code>## [1] 7.11 9.11 9.19 1.23</code></pre>
+<div class="sourceCode" id="cb452"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb452-1"><a href="programming.html#cb452-1" tabindex="-1"></a>tmp[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb452-2"><a href="programming.html#cb452-2" tabindex="-1"></a>tmp</span></code></pre></div>
+<pre><code>## [1] 10.00  9.11  9.19  1.23</code></pre>
+<p>利用现有的向量可以继续利用 <code>c()</code> 生成新的向量：</p>
+<div class="sourceCode" id="cb454"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb454-1"><a href="programming.html#cb454-1" tabindex="-1"></a>(y <span class="ot">&lt;-</span> <span class="fu">c</span>(x, <span class="fl">12.19</span>))</span></code></pre></div>
+<pre><code>## [1]  7.11  9.11  9.19  1.23 12.19</code></pre>
+<p>向量的长度可以用 <code>length()</code> 获得：</p>
+<div class="sourceCode" id="cb456"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb456-1"><a href="programming.html#cb456-1" tabindex="-1"></a><span class="fu">length</span>(y)</span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<p>我们还可以用 <code>names()</code> 给向量的每一个元素命名：</p>
+<div class="sourceCode" id="cb458"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb458-1"><a href="programming.html#cb458-1" tabindex="-1"></a><span class="fu">names</span>(x) <span class="ot">&lt;-</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(x)]</span>
+<span id="cb458-2"><a href="programming.html#cb458-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>##    A    B    C    D 
+## 7.11 9.11 9.19 1.23</code></pre>
+<p>对于有名称的向量，我们可以用名称提取向量的元素（获取数据子集的方式通常有三种：整数下标、子对象名称以及逻辑值）：</p>
+<div class="sourceCode" id="cb460"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb460-1"><a href="programming.html#cb460-1" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="st">&quot;B&quot;</span>, <span class="st">&quot;A&quot;</span>)]</span></code></pre></div>
+<pre><code>##    B    A 
+## 9.11 7.11</code></pre>
+<p>函数 <code>sort()</code> 可以对向量排序（顺序或倒序）：</p>
+<div class="sourceCode" id="cb462"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb462-1"><a href="programming.html#cb462-1" tabindex="-1"></a><span class="fu">sort</span>(x)</span></code></pre></div>
+<pre><code>##    D    A    B    C 
+## 1.23 7.11 9.11 9.19</code></pre>
+<p>因为很多统计量的计算是针对一维数据的，所以用向量操作起来会非常方便，例如计算样本方差 <span class="math inline">\(\sum_{i=1}^{n}(x_{i}-\bar{x})^{2}/(n-1)\)</span>：</p>
+<div class="sourceCode" id="cb464"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb464-1"><a href="programming.html#cb464-1" tabindex="-1"></a><span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> (<span class="fu">length</span>(x) <span class="sc">-</span> <span class="dv">1</span>)</span></code></pre></div>
+<pre><code>## [1] 14.03027</code></pre>
+<div class="sourceCode" id="cb466"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb466-1"><a href="programming.html#cb466-1" tabindex="-1"></a><span class="fu">var</span>(x) <span class="co"># 自带函数 var() 作为对比</span></span></code></pre></div>
+<pre><code>## [1] 14.03027</code></pre>
+<p>当然 R 提供了现成的方差函数 <code>var()</code>，我们不必将代码写得那么复杂，从上面的输出可以看出，直接根据公式写的代码和方差函数计算的结果是一样的。另外，向量操作可以节省显式循环的使用，如果在 C 语言或 VB 等其它程序语言中，我们只能使用几段循环来计算方差数值，因为其中涉及到两个求和函数。</p>
+<p>使用函数 <code>seq()</code> 和 <code>rep()</code> 可以生成规则的序列，前者提供了等差数列的功能，后者可以将向量或元素重复多次从而生成新的向量，如：</p>
+<div class="sourceCode" id="cb468"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb468-1"><a href="programming.html#cb468-1" tabindex="-1"></a><span class="dv">10</span><span class="sc">:</span><span class="dv">1</span> <span class="co"># 冒号表示步长为 1 或-1 的序列</span></span></code></pre></div>
+<pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
+<div class="sourceCode" id="cb470"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb470-1"><a href="programming.html#cb470-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">7</span>, <span class="dv">9</span>, .<span class="dv">2</span>) <span class="co"># 步长为 0.2</span></span></code></pre></div>
+<pre><code>##  [1] 7.0 7.2 7.4 7.6 7.8 8.0 8.2 8.4 8.6 8.8 9.0</code></pre>
+<div class="sourceCode" id="cb472"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb472-1"><a href="programming.html#cb472-1" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">7</span>, <span class="dv">9</span>, <span class="at">length.out =</span> <span class="dv">6</span>) <span class="co"># 生成向量长度为 6</span></span></code></pre></div>
+<pre><code>## [1] 7.0 7.4 7.8 8.2 8.6 9.0</code></pre>
+<div class="sourceCode" id="cb474"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb474-1"><a href="programming.html#cb474-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">10</span>)</span></code></pre></div>
+<pre><code>##  [1] 2 2 2 2 2 2 2 2 2 2</code></pre>
+<div class="sourceCode" id="cb476"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb476-1"><a href="programming.html#cb476-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">5</span>) <span class="co"># 整个向量重复 5 次</span></span></code></pre></div>
+<pre><code>##  [1] 1 2 3 1 2 3 1 2 3 1 2 3 1 2 3</code></pre>
+<div class="sourceCode" id="cb478"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb478-1"><a href="programming.html#cb478-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">each =</span> <span class="dv">5</span>) <span class="co"># 每个元素重复 5 次</span></span></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 1 2 2 2 2 2 3 3 3 3 3</code></pre>
+<div class="sourceCode" id="cb480"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb480-1"><a href="programming.html#cb480-1" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) <span class="co"># 每个元素分别重复 1、2、3 次</span></span></code></pre></div>
+<pre><code>## [1] 1 2 2 3 3 3</code></pre>
+<p>向量除了可以是数值型之外，还可以是逻辑值、字符等，如：</p>
+<div class="sourceCode" id="cb482"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb482-1"><a href="programming.html#cb482-1" tabindex="-1"></a>(z <span class="ot">&lt;-</span> (x <span class="sc">&lt;</span> <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>##     A     B     C     D 
+## FALSE FALSE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb484"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb484-1"><a href="programming.html#cb484-1" tabindex="-1"></a>letters <span class="co"># letters 和 LETTERS 是 R 中的字符常量</span></span></code></pre></div>
+<pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot; &quot;k&quot; &quot;l&quot; &quot;m&quot; &quot;n&quot; &quot;o&quot; &quot;p&quot; &quot;q&quot; &quot;r&quot;
+## [19] &quot;s&quot; &quot;t&quot; &quot;u&quot; &quot;v&quot; &quot;w&quot; &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<p>注意逻辑值的 <code>TRUE</code> 和 <code>FALSE</code> 可以简写为 <code>T</code> 和 <code>F</code>，但强烈建议这两个逻辑值不要使用简写 <a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>。我们也可以用逻辑向量提取向量的元素，如：</p>
+<div class="sourceCode" id="cb486"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb486-1"><a href="programming.html#cb486-1" tabindex="-1"></a>x[<span class="sc">!</span>z] <span class="co"># 满足“非 z”的元素</span></span></code></pre></div>
+<pre><code>##    A    B    C 
+## 7.11 9.11 9.19</code></pre>
+<p>R 中有三种特殊的值：缺失值 <code>NA</code>，非数值 <code>NaN</code> 和无穷大 / 无穷小 <code>Inf/-Inf</code>。非数值通常由无意义的数学计算产生，如 <code>0/0</code>；注意分子不为 0 而分母为 0 时，结果是无穷大。</p>
+</div>
+<div id="section-49" class="section level3 hasAnchor" number="8.1.2">
+<h3><span class="header-section-number">A.1.2</span> 因子<a href="programming.html#section-49" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>因子（factor）对应着统计中的分类数据，它的形式和向量很相像，只是因子数据具有水平（level）和标签（label），前者即分类变量的不同取值，后者即各类取值的名称。</p>
+<p>因子型数据可以由 <code>factor()</code> 函数生成，如：</p>
+<div class="sourceCode" id="cb488"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb488-1"><a href="programming.html#cb488-1" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>), <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;g1&quot;</span>, <span class="st">&quot;g2&quot;</span>, <span class="st">&quot;g3&quot;</span>)))</span></code></pre></div>
+<pre><code>## [1] g1 g2 g3 g1 g1 g3 g2 g3 g3
+## Levels: g1 g2 g3</code></pre>
+<p>我们可以对因子型数据求频数、将其转化为整数或字符型向量。注意整数是因子型数据的本质：它本身以整数存储，但表现出来是字符，原理就是把整数对应的标签显示出来，这种存储方式在很多情况下可以大大节省存储空间（存整数往往比存字符串占用空间小）。</p>
+<div class="sourceCode" id="cb490"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb490-1"><a href="programming.html#cb490-1" tabindex="-1"></a><span class="fu">table</span>(x)</span></code></pre></div>
+<pre><code>## x
+## g1 g2 g3 
+##  3  2  4</code></pre>
+<div class="sourceCode" id="cb492"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb492-1"><a href="programming.html#cb492-1" tabindex="-1"></a><span class="fu">as.integer</span>(x)</span></code></pre></div>
+<pre><code>## [1] 1 2 3 1 1 3 2 3 3</code></pre>
+<div class="sourceCode" id="cb494"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb494-1"><a href="programming.html#cb494-1" tabindex="-1"></a><span class="fu">as.character</span>(x)</span></code></pre></div>
+<pre><code>## [1] &quot;g1&quot; &quot;g2&quot; &quot;g3&quot; &quot;g1&quot; &quot;g1&quot; &quot;g3&quot; &quot;g2&quot; &quot;g3&quot; &quot;g3&quot;</code></pre>
+<p>因子型数据在分类汇总时比较有用，例如在 <code>tapply()</code> 中：</p>
+<div class="sourceCode" id="cb496"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb496-1"><a href="programming.html#cb496-1" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">9</span></span>
+<span id="cb496-2"><a href="programming.html#cb496-2" tabindex="-1"></a><span class="fu">data.frame</span>(y, x) <span class="co"># x 和 y 并列放的样子</span></span></code></pre></div>
+<pre><code>##   y  x
+## 1 1 g1
+## 2 2 g2
+## 3 3 g3
+## 4 4 g1
+## 5 5 g1
+## 6 6 g3
+## 7 7 g2
+## 8 8 g3
+## 9 9 g3</code></pre>
+<div class="sourceCode" id="cb498"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb498-1"><a href="programming.html#cb498-1" tabindex="-1"></a><span class="fu">tapply</span>(y, x, mean) <span class="co"># x 的每一组的均值</span></span></code></pre></div>
+<pre><code>##       g1       g2       g3 
+## 3.333333 4.500000 6.500000</code></pre>
+<p>因子型数据中有一种特殊的类型，就是有序因子，它与普通的因子型数据的区别在于各个分类之间是有顺序的，即统计上所说的定序变量；与此相关的函数为 <code>ordered()</code>。</p>
+</div>
+<div id="section-50" class="section level3 hasAnchor" number="8.1.3">
+<h3><span class="header-section-number">A.1.3</span> 数组和矩阵<a href="programming.html#section-50" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>数组和矩阵是具有维度属性（dimension）的数据结构，注意这里的维度并非统计上所说的“列”，而是一般的计算机语言中所定义的维度（数据下标的个数）。矩阵是数组的特例，它的维度为 2。数组和矩阵可以分别由 <code>array()</code> 和 <code>matrix()</code> 函数生成。注意矩阵中所有元素必须为同一种类型，要么全都是数值，要么全都是字符，后面我们会介绍数据框，它会放宽这个要求。这里给出一些示例说明数组和矩阵的用法：</p>
+<div class="sourceCode" id="cb500"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb500-1"><a href="programming.html#cb500-1" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">array</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>, <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">2</span>))) <span class="co"># 3 维数组示例</span></span></code></pre></div>
+<pre><code>## , , 1
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]    1    4    7   10
+## [2,]    2    5    8   11
+## [3,]    3    6    9   12
+## 
+## , , 2
+## 
+##      [,1] [,2] [,3] [,4]
+## [1,]   13   16   19   22
+## [2,]   14   17   20   23
+## [3,]   15   18   21   24</code></pre>
+<div class="sourceCode" id="cb502"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb502-1"><a href="programming.html#cb502-1" tabindex="-1"></a><span class="fu">dim</span>(x) <span class="co"># 维数</span></span></code></pre></div>
+<pre><code>## [1] 3 4 2</code></pre>
+<div class="sourceCode" id="cb504"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb504-1"><a href="programming.html#cb504-1" tabindex="-1"></a>x[, , <span class="dv">1</span>] <span class="co"># 第 3 维第 1 个位置上的元素</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    4    7   10
+## [2,]    2    5    8   11
+## [3,]    3    6    9   12</code></pre>
+<div class="sourceCode" id="cb506"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb506-1"><a href="programming.html#cb506-1" tabindex="-1"></a>x[<span class="dv">1</span>, , <span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 13 16 19 22</code></pre>
+<div class="sourceCode" id="cb508"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb508-1"><a href="programming.html#cb508-1" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">nrow =</span> <span class="dv">2</span>, <span class="at">ncol =</span> <span class="dv">6</span>)) <span class="co"># 矩阵示例</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    3    5    7    9   11
+## [2,]    2    4    6    8   10   12</code></pre>
+<div class="sourceCode" id="cb510"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb510-1"><a href="programming.html#cb510-1" tabindex="-1"></a>x[<span class="dv">1</span>, <span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1] 9</code></pre>
+<div class="sourceCode" id="cb512"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb512-1"><a href="programming.html#cb512-1" tabindex="-1"></a>x <span class="sc">&lt;</span> <span class="dv">5</span> <span class="co"># 逻辑比较：是否小于 5？</span></span></code></pre></div>
+<pre><code>##      [,1] [,2]  [,3]  [,4]  [,5]  [,6]
+## [1,] TRUE TRUE FALSE FALSE FALSE FALSE
+## [2,] TRUE TRUE FALSE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb514"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb514-1"><a href="programming.html#cb514-1" tabindex="-1"></a>x[x <span class="sc">&lt;</span> <span class="dv">5</span>] <span class="co"># 以逻辑矩阵为下标挑选出小于 5 的元素</span></span></code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<div class="sourceCode" id="cb516"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb516-1"><a href="programming.html#cb516-1" tabindex="-1"></a>x<span class="sc">^</span><span class="dv">2</span> <span class="co"># 各个元素的平方</span></span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6]
+## [1,]    1    9   25   49   81  121
+## [2,]    4   16   36   64  100  144</code></pre>
+<div class="sourceCode" id="cb518"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb518-1"><a href="programming.html#cb518-1" tabindex="-1"></a>x <span class="sc">%*%</span> <span class="fu">t</span>(x) <span class="co"># 矩阵乘法 X * X&#39;（t() 为转置函数）</span></span></code></pre></div>
+<pre><code>##      [,1] [,2]
+## [1,]  286  322
+## [2,]  322  364</code></pre>
+<div class="sourceCode" id="cb520"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb520-1"><a href="programming.html#cb520-1" tabindex="-1"></a><span class="co"># 一个随机方阵</span></span>
+<span id="cb520-2"><a href="programming.html#cb520-2" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">7</span>), <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    2    5    1
+## [2,]    9    6    3
+## [3,]    4    8    7</code></pre>
+<div class="sourceCode" id="cb522"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb522-1"><a href="programming.html#cb522-1" tabindex="-1"></a><span class="fu">solve</span>(x) <span class="co"># 求逆</span></span></code></pre></div>
+<pre><code>##            [,1]        [,2]        [,3]
+## [1,] -0.1052632  0.15789474 -0.05263158
+## [2,]  0.2982456 -0.05847953 -0.01754386
+## [3,] -0.2807018 -0.02339181  0.19298246</code></pre>
+<div class="sourceCode" id="cb524"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb524-1"><a href="programming.html#cb524-1" tabindex="-1"></a><span class="co"># 还有 eigen(x) 求特征根与特征向量，</span></span>
+<span id="cb524-2"><a href="programming.html#cb524-2" tabindex="-1"></a><span class="co">#   用 qr(x) 对矩阵作 QR 分解，等等</span></span>
+<span id="cb524-3"><a href="programming.html#cb524-3" tabindex="-1"></a><span class="co"># 我们还可以用 cbind() 和 rbind() 等函数</span></span>
+<span id="cb524-4"><a href="programming.html#cb524-4" tabindex="-1"></a><span class="co">#   将几个向量拼接成矩阵</span></span></code></pre></div>
+<p>矩阵相对于数组来说在统计中应用更为广泛，尤其是大量的统计理论都涉及到矩阵的运算。顺便提一下，R 包 <strong>Matrix</strong> <span class="citation">(<a href="#ref-Matrix">Bates, Maechler, and Jagan 2024</a>)</span> 在处理（高维）稀疏或稠密矩阵时效率会比 R 自身的矩阵运算效率更高。</p>
+</div>
+<div id="section-51" class="section level3 hasAnchor" number="8.1.4">
+<h3><span class="header-section-number">A.1.4</span> 数据框和列表<a href="programming.html#section-51" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>数据框（data frame）和列表（list）是 R 中非常灵活的数据结构。数据框也是二维表的形式，与矩阵非常类似，区别在于数据框只要求各列内的数据类型相同，而各列的类型可以不同，比如第 1 列为数值，第 2 列为字符，第 3 列为因子，等等；列表则是更灵活的数据结构，它可以包含任意类型的子对象。数据框和列表分别可以由 <code>data.frame()</code> 和 <code>list()</code> 生成。</p>
+<div class="sourceCode" id="cb525"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb525-1"><a href="programming.html#cb525-1" tabindex="-1"></a><span class="co"># 生成一个数据框，前两列为数值型，后一列为字符型</span></span>
+<span id="cb525-2"><a href="programming.html#cb525-2" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="dv">5</span>), <span class="at">y =</span> <span class="fu">runif</span>(<span class="dv">5</span>), <span class="at">z =</span> letters[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div>
+<pre><code>##            x           y z
+## 1 -0.7085846 0.337269401 a
+## 2 -1.6260958 0.169977632 b
+## 3 -0.5020697 0.737128817 c
+## 4  1.0272052 0.096742302 d
+## 5 -0.7071847 0.000806866 e</code></pre>
+<div class="sourceCode" id="cb527"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb527-1"><a href="programming.html#cb527-1" tabindex="-1"></a><span class="co"># 包含四个子对象的列表</span></span>
+<span id="cb527-2"><a href="programming.html#cb527-2" tabindex="-1"></a>(Lst <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">name =</span> <span class="st">&quot;Fred&quot;</span>, <span class="at">wife =</span> <span class="st">&quot;Mary&quot;</span>, <span class="at">no.children =</span> <span class="dv">3</span>, <span class="at">child.ages =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">9</span>)))</span></code></pre></div>
+<pre><code>## $name
+## [1] &quot;Fred&quot;
+## 
+## $wife
+## [1] &quot;Mary&quot;
+## 
+## $no.children
+## [1] 3
+## 
+## $child.ages
+## [1] 4 7 9</code></pre>
+<div class="sourceCode" id="cb529"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb529-1"><a href="programming.html#cb529-1" tabindex="-1"></a>Lst<span class="sc">$</span>child.ages <span class="co"># 用名称提取子对象</span></span></code></pre></div>
+<pre><code>## [1] 4 7 9</code></pre>
+<div class="sourceCode" id="cb531"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb531-1"><a href="programming.html#cb531-1" tabindex="-1"></a>Lst[[<span class="dv">2</span>]] <span class="co"># 用整数下标提取子对象</span></span></code></pre></div>
+<pre><code>## [1] &quot;Mary&quot;</code></pre>
+<div class="sourceCode" id="cb533"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb533-1"><a href="programming.html#cb533-1" tabindex="-1"></a><span class="co"># 甚至可以试试 list(first = Lst, second = 1:10) 之类的语句（list 嵌套 list）</span></span></code></pre></div>
+<p>矩阵的本质是（带有维度属性的）向量，数据框的本质是（整齐的）列表。</p>
+</div>
+<div id="section-52" class="section level3 hasAnchor" number="8.1.5">
+<h3><span class="header-section-number">A.1.5</span> 函数<a href="programming.html#section-52" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R 中也可以自定义函数 ，以便编程中可以以不同的参数值重复使用一段代码。定义函数的方式为：<code>function(arglist) expr return(value)</code>；其中 <code>arglist</code> 是参数列表，<code>expr</code> 是函数的主体，<code>return()</code> 用来返回函数值。例如我们定义一个求峰度 <span class="math inline">\(\sum_{i=1}^{n}(x_{i}-\bar{x})^{4}/(n\cdot\mathrm{Var}(x))-3\)</span> 的函数 <code>kurtosis()</code> 如下：</p>
+<div class="sourceCode" id="cb534"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb534-1"><a href="programming.html#cb534-1" tabindex="-1"></a>kurtosis <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">na.rm =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb534-2"><a href="programming.html#cb534-2" tabindex="-1"></a>  <span class="co"># 去掉缺失值</span></span>
+<span id="cb534-3"><a href="programming.html#cb534-3" tabindex="-1"></a>  <span class="cf">if</span> (na.rm) x <span class="ot">&lt;-</span> x[<span class="sc">!</span><span class="fu">is.na</span>(x)]</span>
+<span id="cb534-4"><a href="programming.html#cb534-4" tabindex="-1"></a>  <span class="fu">return</span>(<span class="fu">sum</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x))<span class="sc">^</span><span class="dv">4</span>) <span class="sc">/</span> (<span class="fu">length</span>(x) <span class="sc">*</span> <span class="fu">var</span>(x)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">-</span> <span class="dv">3</span>)</span>
+<span id="cb534-5"><a href="programming.html#cb534-5" tabindex="-1"></a>}</span></code></pre></div>
+<p>该函数有两个参数，数据向量 x 和是否删除缺失值 <code>na.rm</code>，后者有默认值 <code>FALSE</code>；下面我们用均匀分布的随机数测试一下：</p>
+<div class="sourceCode" id="cb535"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb535-1"><a href="programming.html#cb535-1" tabindex="-1"></a><span class="co"># 理论上均匀分布的峰度应该小于 1，以下为一个模拟结果</span></span>
+<span id="cb535-2"><a href="programming.html#cb535-2" tabindex="-1"></a><span class="fu">kurtosis</span>(<span class="fu">runif</span>(<span class="dv">100</span>))</span></code></pre></div>
+<pre><code>## [1] -1.248841</code></pre>
+<p>注意，R 中有时候不必用函数 <code>return()</code> 指定返回值，默认情况下，函数主体的最后一行即为函数返回值。</p>
+<p>最后，因为本书的很多作图函数都是泛型函数，我们也补充一点泛型函数 （generic function）的作用原理。实际上泛型函数是根据第一个参数的类（class）去调用了相应的“子函数”。以 <code>plot()</code> 为例，我们用 <code>methods()</code> 查看一下它有哪些作图方法：</p>
+<div class="sourceCode" id="cb537"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb537-1"><a href="programming.html#cb537-1" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">methods</span>(<span class="st">&quot;plot&quot;</span>), <span class="dv">24</span>) <span class="co"># 显示前 24 个</span></span></code></pre></div>
+<pre><code>##  [1] &quot;plot.acf&quot;           &quot;plot.data.frame&quot;    &quot;plot.decomposed.ts&quot;
+##  [4] &quot;plot.default&quot;       &quot;plot.dendrogram&quot;    &quot;plot.density&quot;      
+##  [7] &quot;plot.ecdf&quot;          &quot;plot.factor&quot;        &quot;plot.formula&quot;      
+## [10] &quot;plot.function&quot;      &quot;plot.hclust&quot;        &quot;plot.histogram&quot;    
+## [13] &quot;plot.HoltWinters&quot;   &quot;plot.isoreg&quot;        &quot;plot.lm&quot;           
+## [16] &quot;plot.medpolish&quot;     &quot;plot.mlm&quot;           &quot;plot.ppr&quot;          
+## [19] &quot;plot.prcomp&quot;        &quot;plot.princomp&quot;      &quot;plot.profile&quot;      
+## [22] &quot;plot.profile.nls&quot;   &quot;plot.R6&quot;            &quot;plot.raster&quot;</code></pre>
+<p>可以看出，这些函数都是以 <code>plot.*</code> 的形式定义的，其中*便是类的名称。泛型函数的基本原理就是：传给 <code>plot()</code> 的第一个参数是何种类，则调用何种函数进行作图。例如 <code>iris</code> 的类是 <code>data.frame</code>，那么 <code>plot(iris)</code> 就会调用 <code>plot.data.frame()</code> 作图（散点图矩阵）。下面的代码有助于进一步说明这种原理：</p>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="programming.html#cb539-1" tabindex="-1"></a><span class="fu">class</span>(iris)</span></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="programming.html#cb541-1" tabindex="-1"></a><span class="fu">plot</span>(iris) <span class="co"># 调用 plot.data.frame() 作散点图矩阵</span></span></code></pre></div>
+<p><img src="programming_files/figure-html/function-demo4-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="programming.html#cb542-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">density</span>(faithful<span class="sc">$</span>waiting)</span>
+<span id="cb542-2"><a href="programming.html#cb542-2" tabindex="-1"></a><span class="fu">class</span>(x)</span></code></pre></div>
+<pre><code>## [1] &quot;density&quot;</code></pre>
+<div class="sourceCode" id="cb544"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb544-1"><a href="programming.html#cb544-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="fl">0.5</span>))</span>
+<span id="cb544-2"><a href="programming.html#cb544-2" tabindex="-1"></a><span class="fu">plot</span>(x) <span class="co"># 调用 plot.density() 作密度曲线</span></span></code></pre></div>
+<p><img src="programming_files/figure-html/function-demo4-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>我们也可以对现有的泛型函数进行扩充，使它们适应我们自定义的类。例如 <code>print()</code> 也是一个常用的泛型函数，当我们在 R 控制台中键入一个对象以显示其内容时，实际上是调用了该函数以打印出对象的内容。现在我们定义一个 <code>print.xie()</code>，使得类名称为 xie 的对象在屏幕上打印出来时数值为真实数值的 2 倍：</p>
+<div class="sourceCode" id="cb545"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb545-1"><a href="programming.html#cb545-1" tabindex="-1"></a><span class="co"># 本例告诉我们，眼见未必为实！</span></span>
+<span id="cb545-2"><a href="programming.html#cb545-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span></span>
+<span id="cb545-3"><a href="programming.html#cb545-3" tabindex="-1"></a><span class="fu">class</span>(x) <span class="co"># 原始的类</span></span></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb547"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb547-1"><a href="programming.html#cb547-1" tabindex="-1"></a><span class="fu">class</span>(x) <span class="ot">&lt;-</span> <span class="st">&quot;xie&quot;</span> <span class="co"># 改变类</span></span>
+<span id="cb547-2"><a href="programming.html#cb547-2" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5
+## attr(,&quot;class&quot;)
+## [1] &quot;xie&quot;</code></pre>
+<div class="sourceCode" id="cb549"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb549-1"><a href="programming.html#cb549-1" tabindex="-1"></a>print.xie <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">print.default</span>(<span class="fu">unclass</span>(<span class="dv">2</span> <span class="sc">*</span> x))</span>
+<span id="cb549-2"><a href="programming.html#cb549-2" tabindex="-1"></a>x <span class="co"># 打印出来的数值变成了原来的 2 倍</span></span></code></pre></div>
+<pre><code>## [1]  2  4  6  8 10</code></pre>
+<div class="sourceCode" id="cb551"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb551-1"><a href="programming.html#cb551-1" tabindex="-1"></a><span class="fu">str</span>(x) <span class="co"># 但真正的构成是：</span></span></code></pre></div>
+<pre><code>##  &#39;xie&#39; int [1:5] 1 2 3 4 5</code></pre>
+<p>至此，读者应该能够明白有些作图函数既可以直接接受数据作为参数又可以接受公式作为参数的原因了，如 <code>boxplot()</code>。</p>
+</div>
+</div>
+<div id="section-53" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">A.2</span> 操作方法<a href="programming.html#section-53" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>在了解对象的几种基本类型之后，我们需要知道如何对这些对象进行简单的四则运算之外的操作。在计算机程序和算法中，最常见结构的就是选择分支结构和循环结构，通过这样的程序语句，我们可以进一步控制和操纵对象；同时，在执行计算机程序时，我们也常常需要一些输入输出的操作。</p>
+<div id="section-54" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">A.2.1</span> 选择与循环<a href="programming.html#section-54" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>一般来说，计算机程序都是按代码先后顺序执行的，而有时候我们希望代码能够按照一定的判断条件执行，或者将一个步骤执行多次，此时我们就需要选择 和循环结构 的程序。</p>
+<p>R 提供了如下一些实现选择和循环的方法：</p>
+<ul>
+<li><code>if(cond) expr if(cond) cons.expr else alt.expr</code></li>
+<li><code>for(var in seq) expr</code></li>
+<li><code>while(cond) expr</code></li>
+</ul>
+<p><code>cond</code> 为条件（其计算结果为逻辑值 <code>TRUE</code> 或 <code>FALSE</code>），<code>expr</code> 为一段要执行的代码，通常放在大括号{}中，除非代码只有一行。</p>
+<p>选择结构的函数还有 <code>ifelse()</code> 和 <code>swith()</code>，请读者自行查阅帮助文件。关于选择和循环，这里仅给出一个简单的综合示例，不再详加说明：</p>
+<div class="sourceCode" id="cb553"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb553-1"><a href="programming.html#cb553-1" tabindex="-1"></a><span class="co"># x 初始为空</span></span>
+<span id="cb553-2"><a href="programming.html#cb553-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb553-3"><a href="programming.html#cb553-3" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) {</span>
+<span id="cb553-4"><a href="programming.html#cb553-4" tabindex="-1"></a>  rnd <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb553-5"><a href="programming.html#cb553-5" tabindex="-1"></a>  <span class="co"># 如果随机数在 [-1.65, 1.65] 范围内则放到 x 中去</span></span>
+<span id="cb553-6"><a href="programming.html#cb553-6" tabindex="-1"></a>  <span class="cf">if</span> (rnd <span class="sc">&lt;</span> <span class="fl">1.65</span> <span class="sc">&amp;</span> rnd <span class="sc">&gt;</span> <span class="sc">-</span><span class="fl">1.65</span>) {</span>
+<span id="cb553-7"><a href="programming.html#cb553-7" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">c</span>(x, rnd)</span>
+<span id="cb553-8"><a href="programming.html#cb553-8" tabindex="-1"></a>  }</span>
+<span id="cb553-9"><a href="programming.html#cb553-9" tabindex="-1"></a>}</span>
+<span id="cb553-10"><a href="programming.html#cb553-10" tabindex="-1"></a>x</span></code></pre></div>
+<pre><code>## [1] -1.5545690  0.7211611 -0.7861011  0.6458869  0.9395080  1.1289550
+## [7]  0.9619195 -0.3110563  1.3923272</code></pre>
+</div>
+<div id="section-55" class="section level3 hasAnchor" number="8.2.2">
+<h3><span class="header-section-number">A.2.2</span> 输入与输出<a href="programming.html#section-55" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>对于统计程序来说，输入的一般是数据，而输出一般是图形和表格，它们在 R 中都容易实现。前者可以参考 <code>read.table()</code> 系列函数，后者则可以使用图形设备（附录 <a href="tricks.html#sec:device">B.6</a>）以及 <code>write.table()</code> 系列函数。具体使用方法请查阅这些函数的帮助文件。</p>
+</div>
+</div>
+<div id="section-56" class="section level2 hasAnchor" number="8.3">
+<h2><span class="header-section-number">A.3</span> 思考与练习<a href="programming.html#section-56" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>绝对离差中位数（Median Absolute Deviation，MAD）：MAD 是对数据分散程度的一种刻画，它的定义为 <span class="math inline">\(\text{MAD}(x)=C\cdot\text{median}(|x-\text{median}(x)|)\)</span>，其中 <span class="math inline">\(C\)</span> 是一个给定的常数，通常取值为 <code>1/qnorm(.75)</code>；若原数据服从正态分布，MAD 将是标准差的一个渐近估计。编写函数计算数据 <code>women$height</code> 的绝对离差中位数，并与 R 自带的 <code>mad()</code> 函数作比较；若有兴趣，请欣赏 <code>mad()</code> 函数的源代码（如何将程序写得安全而简练）。</p></li>
+<li><p>变量选择问题：某多元线性回归模型包含了 20 个自变量，根据某些经验，自变量的个数在 3 个左右是最合适的。要求建立所有可能的回归模型，并根据 AIC 准则找出最优模型以及相应的自变量。</p>
+<p>提示：所有回归模型数目为组合数 <span class="math inline">\(C_{20}^{3}=1140\)</span>，可使用函数 <code>combn()</code> 生成所有组合，用 <code>lm()</code> 建模，并用 <code>AIC()</code> 提取 AIC 值。</p></li>
+<li><p>DNA 序列的反转互补：给定一个 DNA 序列字符串，要求将它的字符序列顺序颠倒过来，然后 A 与 T 互换，C 与 G 互换。例如原序列为“TTGGTAGTGC”，首先将它顺序反转为“CGTGATGGTT”，然后互补为“GCACTACCAA”。</p>
+<p>提示：可以采用 <code>substr()</code> 暴力提取每一个字符的方式，然后用繁琐的循环和选择语句实现本题的要求；但利用 R 的向量化操作功能会大大加速计算速度，可采用的函数有：拆分字符串 <code>strsplit()</code>、反转向量 <code>rev()</code>、拼接字符串 <code>paste()</code>。仔细考虑如何利用名字和整数的下标功能实现序列的互补。</p></li>
+<li><p>接受 — 拒绝抽样（Acceptance-Rejection Sampling）：当我们不容易从某个分布中生成随机数的时候，若有另一个分布的密度函数 <span class="math inline">\(g(x)\)</span> 能控制前一个分布的密度函数 <span class="math inline">\(f(x)\)</span> 的核 <span class="math inline">\(h(x)\)</span>（此处“控制”的意思是 <span class="math inline">\(\exists M&gt;0,\ h(x)/g(x)\leq M,\ \forall x\)</span>，核 <span class="math inline">\(h(x)\)</span> 正比于 <span class="math inline">\(f(x)\)</span>），而且我们很方便从 <span class="math inline">\(g(\cdot)\)</span> 中生成随机数，那么我们可用“接受 — 拒绝抽样”的方式从 <span class="math inline">\(f(\cdot)\)</span> 中生成随机数。步骤如下：</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>从 <span class="math inline">\(g(\cdot)\)</span> 中生成随机数 <span class="math inline">\(x_{i}\)</span>；</p></li>
+<li><p>从均匀分布 <span class="math inline">\(U(0,1)\)</span> 中生成随机数 <span class="math inline">\(u_{i}\)</span>；</p></li>
+<li><p>若 <span class="math inline">\(u_{i}\leq h(x_{i})/(M\cdot g(x_{i}))\)</span>，则记下 <span class="math inline">\(x_{i}\)</span>；</p></li>
+</ol>
+<p>重复以上步骤若干次，被接受的 <span class="math inline">\(x_{i}\)</span> 的概率密度函数即为 <span class="math inline">\(f(\cdot)\)</span>。根据以上抽样步骤用适当的循环和选择语句生成服从以下分布的随机数：</p>
+<p><span class="math display">\[f(\theta)=c\frac{\exp(\theta)}{1+\exp(\theta)}\frac{1}{\sqrt{2\pi}}\exp(-\theta^{2}/2)\]</span></p>
+<p>其中，<span class="math inline">\(c\)</span> 为使得 <span class="math inline">\(f(\theta)\)</span> 积分为 1 的常数。</p></li>
+</ol>
+
+</div>
+</div>
+<h3>参考文献<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Matrix" class="csl-entry">
+Bates, Douglas, Martin Maechler, and Mikael Jagan. 2024. <em>Matrix: Sparse and Dense Matrix Classes and Methods</em>. <a href="https://CRAN.R-project.org/package=Matrix">https://CRAN.R-project.org/package=Matrix</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="12">
+<li id="fn12"><p>倾向简写这两个逻辑值的人容易倾向简写任何字符，比如变量名；据作者的经验，很多人的程序出错就在这里，因为使用了 <code>T</code> 或 <code>F</code> 作为变量名，而在程序的某些地方又将 <code>T</code> 或 <code>F</code> 作为逻辑值对待，如这段条件语句 <code>x = 1; T = NULL; ...; if ((x &gt; 0) == T ) ...</code> 会出错，因为条件 <code>(x &gt; 0) == T</code> 返回的结果是长度为 0 的逻辑值，不符合 <code>if</code> 语句的要求。<a href="programming.html#fnref12" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<script>
+window.onload = function() {
+
+  var imgs = document.querySelectorAll('img');
+
+  // Upon clicking an image, open a new window with the
+  // dimensions of the image, pointing the `data-url` link
+  var on_click = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      // Add some extra height for the modebar
+      var height = 'height=' + (e.target.clientHeight * 1.05);
+      var width = 'width=' + e.target.clientWidth;
+      var param = 'location=yes,' + height + ',' + width + ',scrollbars=yes,status=yes';
+      window.open(e.target.dataset.url, '_blank', param);
+    }
+  };
+
+  var on_hover = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      e.target.style.cursor = 'pointer';
+    }
+  };
+
+  for (var i = 0; i < imgs.length; i++) {
+    imgs[i].addEventListener('click', on_click);
+    imgs[i].addEventListener('mouseover', on_hover);
+  }
+};
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="principle.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tricks.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/MSG-Book/edit/master/programming.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

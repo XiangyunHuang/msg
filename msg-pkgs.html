@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>D 本书 R 包 | 现代统计图形</title>
+  <meta name="description" content="D 本书 R 包 | 现代统计图形书稿" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="D 本书 R 包 | 现代统计图形" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="D 本书 R 包 | 现代统计图形书稿" />
+  <meta name="github-repo" content="XiangyunHuang/msg" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="D 本书 R 包 | 现代统计图形" />
+  
+  <meta name="twitter:description" content="D 本书 R 包 | 现代统计图形书稿" />
+  
+
+<meta name="author" content="赵鹏" />
+<meta name="author" content="谢益辉" />
+<meta name="author" content="黄湘云" />
+
+
+<meta name="date" content="2024-05-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="gui.html"/>
+<link rel="next" href="postscript.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { extensions: ["cancel.js"] }
+    });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6EJ5FTG9E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V6EJ5FTG9E');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">现代统计图形</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>推荐语</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>自序</a></li>
+<li class="chapter" data-level="" data-path="foreword.html"><a href="foreword.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="1" data-path="history.html"><a href="history.html"><i class="fa fa-check"></i><b>1</b> 历史</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="history.html"><a href="history.html#sec:pie-and-line-of-history"><i class="fa fa-check"></i><b>1.1</b> 饼图和线图的起源</a></li>
+<li class="chapter" data-level="1.2" data-path="history.html"><a href="history.html#sec:the-mystery-of-cholera-infection"><i class="fa fa-check"></i><b>1.2</b> 霍乱传染之谜</a></li>
+<li class="chapter" data-level="1.3" data-path="history.html"><a href="history.html#sec:nightingale"><i class="fa fa-check"></i><b>1.3</b> 提灯女士的玫瑰图</a></li>
+<li class="chapter" data-level="1.4" data-path="history.html"><a href="history.html#sec:charles-joseph-minard"><i class="fa fa-check"></i><b>1.4</b> 拿破仑的俄罗斯远征</a></li>
+<li class="chapter" data-level="1.5" data-path="history.html"><a href="history.html#sec:begin"><i class="fa fa-check"></i><b>1.5</b> 小结与开始</a></li>
+<li class="chapter" data-level="1.6" data-path="history.html"><a href="history.html#section"><i class="fa fa-check"></i><b>1.6</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> 工具</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tools.html"><a href="tools.html#section-1"><i class="fa fa-check"></i><b>2.1</b> 选择作图工具</a></li>
+<li class="chapter" data-level="2.2" data-path="tools.html"><a href="tools.html#sec:R-intro"><i class="fa fa-check"></i><b>2.2</b> R 语言简介</a></li>
+<li class="chapter" data-level="2.3" data-path="tools.html"><a href="tools.html#r-"><i class="fa fa-check"></i><b>2.3</b> 安装 R 语言</a></li>
+<li class="chapter" data-level="2.4" data-path="tools.html"><a href="tools.html#section-2"><i class="fa fa-check"></i><b>2.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="elements.html"><a href="elements.html"><i class="fa fa-check"></i><b>3</b> 元素</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="elements.html"><a href="elements.html#sec:color"><i class="fa fa-check"></i><b>3.1</b> 颜色</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="elements.html"><a href="elements.html#sec:palette"><i class="fa fa-check"></i><b>3.1.1</b> 固定颜色选择函数</a></li>
+<li class="chapter" data-level="3.1.2" data-path="elements.html"><a href="elements.html#section-3"><i class="fa fa-check"></i><b>3.1.2</b> 颜色生成和转换函数</a></li>
+<li class="chapter" data-level="3.1.3" data-path="elements.html"><a href="elements.html#subsec:palette"><i class="fa fa-check"></i><b>3.1.3</b> 特定颜色主题调色板</a></li>
+<li class="chapter" data-level="3.1.4" data-path="elements.html"><a href="elements.html#section-4"><i class="fa fa-check"></i><b>3.1.4</b> 渐变色的简单原理及应用</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="elements.html"><a href="elements.html#sec:points"><i class="fa fa-check"></i><b>3.2</b> 点</a></li>
+<li class="chapter" data-level="3.3" data-path="elements.html"><a href="elements.html#sec:lines"><i class="fa fa-check"></i><b>3.3</b> 曲线、直线、线段、箭头、X-样条</a></li>
+<li class="chapter" data-level="3.4" data-path="elements.html"><a href="elements.html#sec:polygon"><i class="fa fa-check"></i><b>3.4</b> 矩形、多边形</a></li>
+<li class="chapter" data-level="3.5" data-path="elements.html"><a href="elements.html#sec:grid"><i class="fa fa-check"></i><b>3.5</b> 网格线</a></li>
+<li class="chapter" data-level="3.6" data-path="elements.html"><a href="elements.html#sec:text"><i class="fa fa-check"></i><b>3.6</b> 标题、任意文本、周边文本</a></li>
+<li class="chapter" data-level="3.7" data-path="elements.html"><a href="elements.html#sec:legend"><i class="fa fa-check"></i><b>3.7</b> 图例</a></li>
+<li class="chapter" data-level="3.8" data-path="elements.html"><a href="elements.html#sec:axis"><i class="fa fa-check"></i><b>3.8</b> 坐标轴</a></li>
+<li class="chapter" data-level="3.9" data-path="elements.html"><a href="elements.html#section-5"><i class="fa fa-check"></i><b>3.9</b> 图形元素应用示例</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="elements.html"><a href="elements.html#subsec:waterfall-chart"><i class="fa fa-check"></i><b>3.9.1</b> 瀑布图</a></li>
+<li class="chapter" data-level="3.9.2" data-path="elements.html"><a href="elements.html#subsec:grad-desc"><i class="fa fa-check"></i><b>3.9.2</b> 梯度下降算法</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="elements.html"><a href="elements.html#section-6"><i class="fa fa-check"></i><b>3.10</b> 小结</a></li>
+<li class="chapter" data-level="3.11" data-path="elements.html"><a href="elements.html#section-7"><i class="fa fa-check"></i><b>3.11</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gallery.html"><a href="gallery.html"><i class="fa fa-check"></i><b>4</b> 图库</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gallery.html"><a href="gallery.html#sec:hist"><i class="fa fa-check"></i><b>4.1</b> 直方图</a></li>
+<li class="chapter" data-level="4.2" data-path="gallery.html"><a href="gallery.html#section-8"><i class="fa fa-check"></i><b>4.2</b> 茎叶图</a></li>
+<li class="chapter" data-level="4.3" data-path="gallery.html"><a href="gallery.html#sec:boxplot"><i class="fa fa-check"></i><b>4.3</b> 箱线图</a></li>
+<li class="chapter" data-level="4.4" data-path="gallery.html"><a href="gallery.html#sec:barplot"><i class="fa fa-check"></i><b>4.4</b> 条形图</a></li>
+<li class="chapter" data-level="4.5" data-path="gallery.html"><a href="gallery.html#sec:plot-default"><i class="fa fa-check"></i><b>4.5</b> 散点图</a></li>
+<li class="chapter" data-level="4.6" data-path="gallery.html"><a href="gallery.html#sec:assocplot"><i class="fa fa-check"></i><b>4.6</b> 关联图</a></li>
+<li class="chapter" data-level="4.7" data-path="gallery.html"><a href="gallery.html#sec:cdplot"><i class="fa fa-check"></i><b>4.7</b> 条件密度图</a></li>
+<li class="chapter" data-level="4.8" data-path="gallery.html"><a href="gallery.html#sec:contour"><i class="fa fa-check"></i><b>4.8</b> 等高图/等高线</a></li>
+<li class="chapter" data-level="4.9" data-path="gallery.html"><a href="gallery.html#sec:coplot"><i class="fa fa-check"></i><b>4.9</b> 条件分割图</a></li>
+<li class="chapter" data-level="4.10" data-path="gallery.html"><a href="gallery.html#sec:curve"><i class="fa fa-check"></i><b>4.10</b> 一元函数曲线图</a></li>
+<li class="chapter" data-level="4.11" data-path="gallery.html"><a href="gallery.html#sec:dotchart"><i class="fa fa-check"></i><b>4.11</b> Cleveland 点图</a></li>
+<li class="chapter" data-level="4.12" data-path="gallery.html"><a href="gallery.html#sec:filled-contour"><i class="fa fa-check"></i><b>4.12</b> 颜色等高图/层次图</a></li>
+<li class="chapter" data-level="4.13" data-path="gallery.html"><a href="gallery.html#sec:fourfoldplot"><i class="fa fa-check"></i><b>4.13</b> 四瓣图</a></li>
+<li class="chapter" data-level="4.14" data-path="gallery.html"><a href="gallery.html#sec:image"><i class="fa fa-check"></i><b>4.14</b> 颜色图</a></li>
+<li class="chapter" data-level="4.15" data-path="gallery.html"><a href="gallery.html#sec:matplot"><i class="fa fa-check"></i><b>4.15</b> 矩阵图、矩阵点、矩阵线</a></li>
+<li class="chapter" data-level="4.16" data-path="gallery.html"><a href="gallery.html#sec:mosaicplot"><i class="fa fa-check"></i><b>4.16</b> 马赛克图</a></li>
+<li class="chapter" data-level="4.17" data-path="gallery.html"><a href="gallery.html#sec:scatterplot-matrix"><i class="fa fa-check"></i><b>4.17</b> 散点图矩阵</a></li>
+<li class="chapter" data-level="4.18" data-path="gallery.html"><a href="gallery.html#sec:persp"><i class="fa fa-check"></i><b>4.18</b> 三维透视图</a></li>
+<li class="chapter" data-level="4.19" data-path="gallery.html"><a href="gallery.html#plot-design"><i class="fa fa-check"></i><b>4.19</b> 因素效应图</a></li>
+<li class="chapter" data-level="4.20" data-path="gallery.html"><a href="gallery.html#sec:rug"><i class="fa fa-check"></i><b>4.20</b> 坐标轴须</a></li>
+<li class="chapter" data-level="4.21" data-path="gallery.html"><a href="gallery.html#sec:smoothScatter"><i class="fa fa-check"></i><b>4.21</b> 平滑散点图</a></li>
+<li class="chapter" data-level="4.22" data-path="gallery.html"><a href="gallery.html#sec:spineplot"><i class="fa fa-check"></i><b>4.22</b> 棘状图</a></li>
+<li class="chapter" data-level="4.23" data-path="gallery.html"><a href="gallery.html#sec:stars"><i class="fa fa-check"></i><b>4.23</b> 星状图、蛛网图、雷达图</a></li>
+<li class="chapter" data-level="4.24" data-path="gallery.html"><a href="gallery.html#sec:stripchart"><i class="fa fa-check"></i><b>4.24</b> 带状图</a></li>
+<li class="chapter" data-level="4.25" data-path="gallery.html"><a href="gallery.html#sec:sunflowerplot"><i class="fa fa-check"></i><b>4.25</b> 向日葵散点图</a></li>
+<li class="chapter" data-level="4.26" data-path="gallery.html"><a href="gallery.html#sec:symbols"><i class="fa fa-check"></i><b>4.26</b> 符号图</a></li>
+<li class="chapter" data-level="4.27" data-path="gallery.html"><a href="gallery.html#sec:pie"><i class="fa fa-check"></i><b>4.27</b> 饼图</a></li>
+<li class="chapter" data-level="4.28" data-path="gallery.html"><a href="gallery.html#section-9"><i class="fa fa-check"></i><b>4.28</b> 热图</a></li>
+<li class="chapter" data-level="4.29" data-path="gallery.html"><a href="gallery.html#section-10"><i class="fa fa-check"></i><b>4.29</b> 交互效应图</a></li>
+<li class="chapter" data-level="4.30" data-path="gallery.html"><a href="gallery.html#sec:qqplot"><i class="fa fa-check"></i><b>4.30</b> QQ 图</a></li>
+<li class="chapter" data-level="4.31" data-path="gallery.html"><a href="gallery.html#section-11"><i class="fa fa-check"></i><b>4.31</b> 生存函数图</a></li>
+<li class="chapter" data-level="4.32" data-path="gallery.html"><a href="gallery.html#sec:rpart"><i class="fa fa-check"></i><b>4.32</b> 分类与回归树图</a></li>
+<li class="chapter" data-level="4.33" data-path="gallery.html"><a href="gallery.html#sec:vioplot"><i class="fa fa-check"></i><b>4.33</b> 小提琴图</a></li>
+<li class="chapter" data-level="4.34" data-path="gallery.html"><a href="gallery.html#sec:maps"><i class="fa fa-check"></i><b>4.34</b> 地图</a></li>
+<li class="chapter" data-level="4.35" data-path="gallery.html"><a href="gallery.html#sec:faces"><i class="fa fa-check"></i><b>4.35</b> 脸谱图</a></li>
+<li class="chapter" data-level="4.36" data-path="gallery.html"><a href="gallery.html#sec:parcoords"><i class="fa fa-check"></i><b>4.36</b> 平行坐标图</a></li>
+<li class="chapter" data-level="4.37" data-path="gallery.html"><a href="gallery.html#sec:andrews-curve"><i class="fa fa-check"></i><b>4.37</b> 调和曲线图</a></li>
+<li class="chapter" data-level="4.38" data-path="gallery.html"><a href="gallery.html#sec:bagplot"><i class="fa fa-check"></i><b>4.38</b> 二维箱线图</a></li>
+<li class="chapter" data-level="4.39" data-path="gallery.html"><a href="gallery.html#sec:base-graph-ext"><i class="fa fa-check"></i><b>4.39</b> 延伸与小结</a></li>
+<li class="chapter" data-level="4.40" data-path="gallery.html"><a href="gallery.html#section-12"><i class="fa fa-check"></i><b>4.40</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="system.html"><a href="system.html"><i class="fa fa-check"></i><b>5</b> 系统</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="system.html"><a href="system.html#sec:ggplot2"><i class="fa fa-check"></i><b>5.1</b> ggplot2 图形</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="system.html"><a href="system.html#section-13"><i class="fa fa-check"></i><b>5.1.1</b> 几何形状</a></li>
+<li class="chapter" data-level="5.1.2" data-path="system.html"><a href="system.html#section-14"><i class="fa fa-check"></i><b>5.1.2</b> 统计量</a></li>
+<li class="chapter" data-level="5.1.3" data-path="system.html"><a href="system.html#section-15"><i class="fa fa-check"></i><b>5.1.3</b> 标度</a></li>
+<li class="chapter" data-level="5.1.4" data-path="system.html"><a href="system.html#section-16"><i class="fa fa-check"></i><b>5.1.4</b> 坐标系</a></li>
+<li class="chapter" data-level="5.1.5" data-path="system.html"><a href="system.html#subsec:facet"><i class="fa fa-check"></i><b>5.1.5</b> 切片</a></li>
+<li class="chapter" data-level="5.1.6" data-path="system.html"><a href="system.html#section-17"><i class="fa fa-check"></i><b>5.1.6</b> 位置调整</a></li>
+<li class="chapter" data-level="5.1.7" data-path="system.html"><a href="system.html#subsec:theme"><i class="fa fa-check"></i><b>5.1.7</b> 主题</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="system.html"><a href="system.html#section-18"><i class="fa fa-check"></i><b>5.2</b> 网格图形</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="system.html"><a href="system.html#section-19"><i class="fa fa-check"></i><b>5.2.1</b> 视图区</a></li>
+<li class="chapter" data-level="5.2.2" data-path="system.html"><a href="system.html#section-20"><i class="fa fa-check"></i><b>5.2.2</b> 旋转</a></li>
+<li class="chapter" data-level="5.2.3" data-path="system.html"><a href="system.html#section-21"><i class="fa fa-check"></i><b>5.2.3</b> 图形对象</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="system.html"><a href="system.html#lattice-"><i class="fa fa-check"></i><b>5.3</b> lattice 图形</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="system.html"><a href="system.html#subsec:lattice-intro"><i class="fa fa-check"></i><b>5.3.1</b> 简介</a></li>
+<li class="chapter" data-level="5.3.2" data-path="system.html"><a href="system.html#section-22"><i class="fa fa-check"></i><b>5.3.2</b> 公式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="system.html"><a href="system.html#section-23"><i class="fa fa-check"></i><b>5.3.3</b> 选项</a></li>
+<li class="chapter" data-level="5.3.4" data-path="system.html"><a href="system.html#section-24"><i class="fa fa-check"></i><b>5.3.4</b> 数据</a></li>
+<li class="chapter" data-level="5.3.5" data-path="system.html"><a href="system.html#section-25"><i class="fa fa-check"></i><b>5.3.5</b> 细节</a></li>
+<li class="chapter" data-level="5.3.6" data-path="system.html"><a href="system.html#section-26"><i class="fa fa-check"></i><b>5.3.6</b> 面板</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="system.html"><a href="system.html#sec:dynamic-graphics"><i class="fa fa-check"></i><b>5.4</b> rggobi 动态图形</a></li>
+<li class="chapter" data-level="5.5" data-path="system.html"><a href="system.html#sec:rgl"><i class="fa fa-check"></i><b>5.5</b> rgl 三维图形</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="system.html"><a href="system.html#section-27"><i class="fa fa-check"></i><b>5.5.1</b> 三维点线图</a></li>
+<li class="chapter" data-level="5.5.2" data-path="system.html"><a href="system.html#section-28"><i class="fa fa-check"></i><b>5.5.2</b> 三维透视图</a></li>
+<li class="chapter" data-level="5.5.3" data-path="system.html"><a href="system.html#section-29"><i class="fa fa-check"></i><b>5.5.3</b> 动画和截图</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="system.html"><a href="system.html#sec:animation"><i class="fa fa-check"></i><b>5.6</b> 动画视频</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="system.html"><a href="system.html#section-30"><i class="fa fa-check"></i><b>5.6.1</b> 动画导出工具</a></li>
+<li class="chapter" data-level="5.6.2" data-path="system.html"><a href="system.html#section-31"><i class="fa fa-check"></i><b>5.6.2</b> 统计学动画</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="system.html"><a href="system.html#section-32"><i class="fa fa-check"></i><b>5.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>6</b> 数据</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data.html"><a href="data.html#sec:data-type"><i class="fa fa-check"></i><b>6.1</b> 数据类型</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data.html"><a href="data.html#section-33"><i class="fa fa-check"></i><b>6.1.1</b> 分类数据</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data.html"><a href="data.html#section-34"><i class="fa fa-check"></i><b>6.1.2</b> 连续数据</a></li>
+<li class="chapter" data-level="6.1.3" data-path="data.html"><a href="data.html#section-35"><i class="fa fa-check"></i><b>6.1.3</b> 混合数据</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data.html"><a href="data.html#sec:data-case"><i class="fa fa-check"></i><b>6.2</b> 数据案例</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="data.html"><a href="data.html#section-36"><i class="fa fa-check"></i><b>6.2.1</b> 价格走势</a></li>
+<li class="chapter" data-level="6.2.2" data-path="data.html"><a href="data.html#subsec:canabalt"><i class="fa fa-check"></i><b>6.2.2</b> 末日狂奔</a></li>
+<li class="chapter" data-level="6.2.3" data-path="data.html"><a href="data.html#subsec:music"><i class="fa fa-check"></i><b>6.2.3</b> 音乐之声</a></li>
+<li class="chapter" data-level="6.2.4" data-path="data.html"><a href="data.html#subsec:tvearn"><i class="fa fa-check"></i><b>6.2.4</b> 绝望主妇</a></li>
+<li class="chapter" data-level="6.2.5" data-path="data.html"><a href="data.html#section-37"><i class="fa fa-check"></i><b>6.2.5</b> 灌篮高手</a></li>
+<li class="chapter" data-level="6.2.6" data-path="data.html"><a href="data.html#subsec:percentage"><i class="fa fa-check"></i><b>6.2.6</b> 神奇数字</a></li>
+<li class="chapter" data-level="6.2.7" data-path="data.html"><a href="data.html#subsec:lowess"><i class="fa fa-check"></i><b>6.2.7</b> 化点为线</a></li>
+<li class="chapter" data-level="6.2.8" data-path="data.html"><a href="data.html#subsec:ternary"><i class="fa fa-check"></i><b>6.2.8</b> 三足鼎立</a></li>
+<li class="chapter" data-level="6.2.9" data-path="data.html"><a href="data.html#section-38"><i class="fa fa-check"></i><b>6.2.9</b> 背景地图</a></li>
+<li class="chapter" data-level="6.2.10" data-path="data.html"><a href="data.html#subsec:cluster"><i class="fa fa-check"></i><b>6.2.10</b> 统计词话</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="data.html"><a href="data.html#sec:simulations"><i class="fa fa-check"></i><b>6.3</b> 统计模拟</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data.html"><a href="data.html#section-39"><i class="fa fa-check"></i><b>6.3.1</b> 线性回归</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data.html"><a href="data.html#section-40"><i class="fa fa-check"></i><b>6.3.2</b> 稳健回归</a></li>
+<li class="chapter" data-level="6.3.3" data-path="data.html"><a href="data.html#section-41"><i class="fa fa-check"></i><b>6.3.3</b> 离群检测</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data.html"><a href="data.html#section-42"><i class="fa fa-check"></i><b>6.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="principle.html"><a href="principle.html"><i class="fa fa-check"></i><b>7</b> 原则</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="principle.html"><a href="principle.html#sec:data-priority"><i class="fa fa-check"></i><b>7.1</b> 数据至上</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="principle.html"><a href="principle.html#subsec:element-priority"><i class="fa fa-check"></i><b>7.1.1</b> 分清主次</a></li>
+<li class="chapter" data-level="7.1.2" data-path="principle.html"><a href="principle.html#subsec:clear-symbols"><i class="fa fa-check"></i><b>7.1.2</b> 符号明确可分</a></li>
+<li class="chapter" data-level="7.1.3" data-path="principle.html"><a href="principle.html#subsec:data-processing"><i class="fa fa-check"></i><b>7.1.3</b> 谨慎处理数据</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="principle.html"><a href="principle.html#section-43"><i class="fa fa-check"></i><b>7.2</b> 节约墨水</a></li>
+<li class="chapter" data-level="7.3" data-path="principle.html"><a href="principle.html#section-44"><i class="fa fa-check"></i><b>7.3</b> 设计布局</a></li>
+<li class="chapter" data-level="7.4" data-path="principle.html"><a href="principle.html#section-45"><i class="fa fa-check"></i><b>7.4</b> 附带解释</a></li>
+<li class="chapter" data-level="7.5" data-path="principle.html"><a href="principle.html#sec:psychology"><i class="fa fa-check"></i><b>7.5</b> 考虑心理</a></li>
+<li class="chapter" data-level="7.6" data-path="principle.html"><a href="principle.html#section-46"><i class="fa fa-check"></i><b>7.6</b> 统计原则</a></li>
+<li class="chapter" data-level="7.7" data-path="principle.html"><a href="principle.html#section-47"><i class="fa fa-check"></i><b>7.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>A</b> 程序初步</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="programming.html"><a href="programming.html#sec:object"><i class="fa fa-check"></i><b>A.1</b> 对象类型</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="programming.html"><a href="programming.html#section-48"><i class="fa fa-check"></i><b>A.1.1</b> 向量</a></li>
+<li class="chapter" data-level="A.1.2" data-path="programming.html"><a href="programming.html#section-49"><i class="fa fa-check"></i><b>A.1.2</b> 因子</a></li>
+<li class="chapter" data-level="A.1.3" data-path="programming.html"><a href="programming.html#section-50"><i class="fa fa-check"></i><b>A.1.3</b> 数组和矩阵</a></li>
+<li class="chapter" data-level="A.1.4" data-path="programming.html"><a href="programming.html#section-51"><i class="fa fa-check"></i><b>A.1.4</b> 数据框和列表</a></li>
+<li class="chapter" data-level="A.1.5" data-path="programming.html"><a href="programming.html#section-52"><i class="fa fa-check"></i><b>A.1.5</b> 函数</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="programming.html"><a href="programming.html#section-53"><i class="fa fa-check"></i><b>A.2</b> 操作方法</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="programming.html"><a href="programming.html#section-54"><i class="fa fa-check"></i><b>A.2.1</b> 选择与循环</a></li>
+<li class="chapter" data-level="A.2.2" data-path="programming.html"><a href="programming.html#section-55"><i class="fa fa-check"></i><b>A.2.2</b> 输入与输出</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="programming.html"><a href="programming.html#section-56"><i class="fa fa-check"></i><b>A.3</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="tricks.html"><a href="tricks.html"><i class="fa fa-check"></i><b>B</b> 细节技巧</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="tricks.html"><a href="tricks.html#sec:par"><i class="fa fa-check"></i><b>B.1</b> <code>par()</code> 函数</a></li>
+<li class="chapter" data-level="B.2" data-path="tricks.html"><a href="tricks.html#sec:plot"><i class="fa fa-check"></i><b>B.2</b> <code>plot()</code> 函数</a></li>
+<li class="chapter" data-level="B.3" data-path="tricks.html"><a href="tricks.html#sec:plotmath"><i class="fa fa-check"></i><b>B.3</b> 数学公式</a></li>
+<li class="chapter" data-level="B.4" data-path="tricks.html"><a href="tricks.html#sec:multipage"><i class="fa fa-check"></i><b>B.4</b> 一页多图</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="tricks.html"><a href="tricks.html#section-57"><i class="fa fa-check"></i><b>B.4.1</b> 设置图形参数</a></li>
+<li class="chapter" data-level="B.4.2" data-path="tricks.html"><a href="tricks.html#section-58"><i class="fa fa-check"></i><b>B.4.2</b> 设置图形版面</a></li>
+<li class="chapter" data-level="B.4.3" data-path="tricks.html"><a href="tricks.html#section-59"><i class="fa fa-check"></i><b>B.4.3</b> 拆分设备屏幕</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="tricks.html"><a href="tricks.html#sec:interaction"><i class="fa fa-check"></i><b>B.5</b> 交互操作</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="tricks.html"><a href="tricks.html#section-60"><i class="fa fa-check"></i><b>B.5.1</b> 获取鼠标位置的坐标</a></li>
+<li class="chapter" data-level="B.5.2" data-path="tricks.html"><a href="tricks.html#section-61"><i class="fa fa-check"></i><b>B.5.2</b> 识别鼠标附近的数据</a></li>
+<li class="chapter" data-level="B.5.3" data-path="tricks.html"><a href="tricks.html#section-62"><i class="fa fa-check"></i><b>B.5.3</b> 响应鼠标键盘的动作</a></li>
+</ul></li>
+<li class="chapter" data-level="B.6" data-path="tricks.html"><a href="tricks.html#sec:device"><i class="fa fa-check"></i><b>B.6</b> 图形设备</a></li>
+<li class="chapter" data-level="B.7" data-path="tricks.html"><a href="tricks.html#section-63"><i class="fa fa-check"></i><b>B.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="gui.html"><a href="gui.html"><i class="fa fa-check"></i><b>C</b> 图形界面</a></li>
+<li class="chapter" data-level="D" data-path="msg-pkgs.html"><a href="msg-pkgs.html"><i class="fa fa-check"></i><b>D</b> 本书 R 包</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="msg-pkgs.html"><a href="msg-pkgs.html#sec:MSG-fun"><i class="fa fa-check"></i><b>D.1</b> 函数说明</a></li>
+<li class="chapter" data-level="D.2" data-path="msg-pkgs.html"><a href="msg-pkgs.html#section-64"><i class="fa fa-check"></i><b>D.2</b> 数据说明</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="postscript.html"><a href="postscript.html"><i class="fa fa-check"></i><b>E</b> 后记</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">现代统计图形</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chap:MSG" class="section level1 hasAnchor" number="11">
+<h1><span class="header-section-number">D</span> 本书 R 包<a href="msg-pkgs.html#chap:MSG" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>为了配合本书的写作，作者特意编写了一个 R 包名为 <strong>MSG</strong>（Modern Statistical Graphics 的缩写），该包目前已经发布到 CRAN，所以读者可以用以下方式直接安装：</p>
+<div class="sourceCode" id="cb592"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb592-1"><a href="msg-pkgs.html#cb592-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&#39;MSG&#39;</span>)</span></code></pre></div>
+<p>也可以从作者开发页面下载（<a href="https://github.com/yihui/MSG" class="uri">https://github.com/yihui/MSG</a>）并自行编译安装。这里简要介绍一下它包含的函数和数据。</p>
+<div id="sec:MSG-fun" class="section level2 hasAnchor" number="11.1">
+<h2><span class="header-section-number">D.1</span> 函数说明<a href="msg-pkgs.html#sec:MSG-fun" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<dl>
+<dt><code>andrews_curve()</code></dt>
+<dd>
+根据数据矩阵画调和曲线图，参见 <a href="gallery.html#sec:andrews-curve">4.37</a> 小节
+</dd>
+<dt><code>char_gen()</code></dt>
+<dd>
+<p>给定一个长度为 2 的字符向量，生成一个字符矩阵，其中包含若干个第 2 个字符和一个第 1 个字符，看用户从一大堆第 2 个字符中辨别第 1 个字符的难度，这可以是我们选择点的外观的一种依据，参见 <a href="principle.html#subsec:clear-symbols">7.1.2</a> 小节</p>
+<div class="sourceCode" id="cb593"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb593-1"><a href="msg-pkgs.html#cb593-1" tabindex="-1"></a><span class="fu">char_gen</span>(<span class="fu">c</span>(<span class="st">&#39;6&#39;</span>, <span class="st">&#39;9&#39;</span>))  <span class="co"># 你能找出 6 吗？</span></span></code></pre></div>
+<pre><code>## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999999
+## 999999999999999999999999999699</code></pre>
+</dd>
+<dt><code>cut_plot()</code></dt>
+<dd>
+将一幅散点图的横坐标离散化，并计算每组内点的纵坐标的均值，参见 <a href="principle.html#subsec:data-processing">7.1.3</a> 小节
+</dd>
+<dt><code>heart_curve()</code></dt>
+<dd>
+画心形曲线，用作低层作图函数的练习
+</dd>
+<dt><code>vec2col()</code></dt>
+<dd>
+将一个向量通过 <strong>RColorBrewer</strong> 包中的调色板转化为颜色向量，如：
+</dd>
+</dl>
+<div class="sourceCode" id="cb595"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb595-1"><a href="msg-pkgs.html#cb595-1" tabindex="-1"></a><span class="co"># factor 类型的向量通常用离散调色板</span></span>
+<span id="cb595-2"><a href="msg-pkgs.html#cb595-2" tabindex="-1"></a><span class="fu">vec2col</span>(<span class="fu">factor</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>))) </span></code></pre></div>
+<pre><code>## [1] &quot;#7FC97F&quot; &quot;#7FC97F&quot; &quot;#BEAED4&quot; &quot;#FDC086&quot; &quot;#FFFF99&quot; &quot;#FFFF99&quot; &quot;#FFFF99&quot;</code></pre>
+<div class="sourceCode" id="cb597"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb597-1"><a href="msg-pkgs.html#cb597-1" tabindex="-1"></a><span class="co"># 数值型数据用连续调色板</span></span>
+<span id="cb597-2"><a href="msg-pkgs.html#cb597-2" tabindex="-1"></a><span class="fu">vec2col</span>(<span class="fu">rnorm</span>(<span class="dv">20</span>))</span></code></pre></div>
+<pre><code>##  [1] &quot;#C6DBEF&quot; &quot;#F7FBFF&quot; &quot;#6BAED6&quot; &quot;#08519C&quot; &quot;#08306B&quot; &quot;#F7FBFF&quot; &quot;#6BAED6&quot;
+##  [8] &quot;#DEEBF7&quot; &quot;#9ECAE1&quot; &quot;#08519C&quot; &quot;#C6DBEF&quot; &quot;#9ECAE1&quot; &quot;#DEEBF7&quot; &quot;#DEEBF7&quot;
+## [15] &quot;#DEEBF7&quot; &quot;#C6DBEF&quot; &quot;#9ECAE1&quot; &quot;#2171B5&quot; &quot;#9ECAE1&quot; &quot;#4292C6&quot;</code></pre>
+</div>
+<div id="section-64" class="section level2 hasAnchor" number="11.2">
+<h2><span class="header-section-number">D.2</span> 数据说明<a href="msg-pkgs.html#section-64" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<dl>
+<dt><code>assists</code></dt>
+<dd>
+湖人和骑士比赛中的助攻数据
+</dd>
+<dt><code>BinormCircle</code></dt>
+<dd>
+人造数据：两个独立的正态分布随机变量（10000 行实现值），加上半径为 0.5 的圆上的点的坐标（10000 行）
+</dd>
+<dt><code>canabalt</code></dt>
+<dd>
+游戏末日狂奔中的得分和游戏设备数据（从 Twitter 消息获得）
+</dd>
+<dt><code>ChinaLifeEdu</code></dt>
+<dd>
+2005 年中国各省市的人均预期寿命和受高等教育人数
+</dd>
+<dt><code>cn_vs_us</code></dt>
+<dd>
+中美国力对比数据
+</dd>
+<dt><code>eq2010</code></dt>
+<dd>
+四川省在 2010 年的地震数据，包括发生地点的经纬度和震级
+</dd>
+<dt><code>Export.USCN</code></dt>
+<dd>
+1994 年到 2004 年中美出口额数据
+</dd>
+<dt><code>gov.cn.pct</code></dt>
+<dd>
+中国政府网站中出现的各个百分比数据的频数（2009 年 12 月 17 日通过 Google 抓取）
+</dd>
+<dt><code>murcia</code></dt>
+<dd>
+西班牙 Murcia 省的土壤成分数据
+</dd>
+<dt><code>music</code></dt>
+<dd>
+四类艺术家的音乐频率数据，两类来自古典乐，两类来自摇滚乐
+</dd>
+<dt><code>PlantCounts</code></dt>
+<dd>
+植物数目与海拔高度的数据，共两列，每一行数据记录了某一海拔高度上植物数目
+</dd>
+<dt><code>quake6</code></dt>
+<dd>
+1973 年到 2010 年全球地震中超过 6 级的地震数据，包括经度、纬度、时间等信息
+</dd>
+<dt><code>tvearn</code></dt>
+<dd>
+2011 年 2 月最高收入的美剧演员数据，包括收入、电视剧类型、性别、电视剧评分等信息
+</dd>
+</dl>
+
+</div>
+</div>
+<script>
+window.onload = function() {
+
+  var imgs = document.querySelectorAll('img');
+
+  // Upon clicking an image, open a new window with the
+  // dimensions of the image, pointing the `data-url` link
+  var on_click = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      // Add some extra height for the modebar
+      var height = 'height=' + (e.target.clientHeight * 1.05);
+      var width = 'width=' + e.target.clientWidth;
+      var param = 'location=yes,' + height + ',' + width + ',scrollbars=yes,status=yes';
+      window.open(e.target.dataset.url, '_blank', param);
+    }
+  };
+
+  var on_hover = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      e.target.style.cursor = 'pointer';
+    }
+  };
+
+  for (var i = 0; i < imgs.length; i++) {
+    imgs[i].addEventListener('click', on_click);
+    imgs[i].addEventListener('mouseover', on_hover);
+  }
+};
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="gui.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="postscript.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/MSG-Book/edit/master/msg-pkgs.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

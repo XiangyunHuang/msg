@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 7 章 原则 | 现代统计图形</title>
+  <meta name="description" content="第 7 章 原则 | 现代统计图形书稿" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 7 章 原则 | 现代统计图形" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="第 7 章 原则 | 现代统计图形书稿" />
+  <meta name="github-repo" content="XiangyunHuang/msg" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 7 章 原则 | 现代统计图形" />
+  
+  <meta name="twitter:description" content="第 7 章 原则 | 现代统计图形书稿" />
+  
+
+<meta name="author" content="赵鹏" />
+<meta name="author" content="谢益辉" />
+<meta name="author" content="黄湘云" />
+
+
+<meta name="date" content="2024-05-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data.html"/>
+<link rel="next" href="programming.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { extensions: ["cancel.js"] }
+    });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6EJ5FTG9E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V6EJ5FTG9E');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">现代统计图形</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>推荐语</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>自序</a></li>
+<li class="chapter" data-level="" data-path="foreword.html"><a href="foreword.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="1" data-path="history.html"><a href="history.html"><i class="fa fa-check"></i><b>1</b> 历史</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="history.html"><a href="history.html#sec:pie-and-line-of-history"><i class="fa fa-check"></i><b>1.1</b> 饼图和线图的起源</a></li>
+<li class="chapter" data-level="1.2" data-path="history.html"><a href="history.html#sec:the-mystery-of-cholera-infection"><i class="fa fa-check"></i><b>1.2</b> 霍乱传染之谜</a></li>
+<li class="chapter" data-level="1.3" data-path="history.html"><a href="history.html#sec:nightingale"><i class="fa fa-check"></i><b>1.3</b> 提灯女士的玫瑰图</a></li>
+<li class="chapter" data-level="1.4" data-path="history.html"><a href="history.html#sec:charles-joseph-minard"><i class="fa fa-check"></i><b>1.4</b> 拿破仑的俄罗斯远征</a></li>
+<li class="chapter" data-level="1.5" data-path="history.html"><a href="history.html#sec:begin"><i class="fa fa-check"></i><b>1.5</b> 小结与开始</a></li>
+<li class="chapter" data-level="1.6" data-path="history.html"><a href="history.html#section"><i class="fa fa-check"></i><b>1.6</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> 工具</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tools.html"><a href="tools.html#section-1"><i class="fa fa-check"></i><b>2.1</b> 选择作图工具</a></li>
+<li class="chapter" data-level="2.2" data-path="tools.html"><a href="tools.html#sec:R-intro"><i class="fa fa-check"></i><b>2.2</b> R 语言简介</a></li>
+<li class="chapter" data-level="2.3" data-path="tools.html"><a href="tools.html#r-"><i class="fa fa-check"></i><b>2.3</b> 安装 R 语言</a></li>
+<li class="chapter" data-level="2.4" data-path="tools.html"><a href="tools.html#section-2"><i class="fa fa-check"></i><b>2.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="elements.html"><a href="elements.html"><i class="fa fa-check"></i><b>3</b> 元素</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="elements.html"><a href="elements.html#sec:color"><i class="fa fa-check"></i><b>3.1</b> 颜色</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="elements.html"><a href="elements.html#sec:palette"><i class="fa fa-check"></i><b>3.1.1</b> 固定颜色选择函数</a></li>
+<li class="chapter" data-level="3.1.2" data-path="elements.html"><a href="elements.html#section-3"><i class="fa fa-check"></i><b>3.1.2</b> 颜色生成和转换函数</a></li>
+<li class="chapter" data-level="3.1.3" data-path="elements.html"><a href="elements.html#subsec:palette"><i class="fa fa-check"></i><b>3.1.3</b> 特定颜色主题调色板</a></li>
+<li class="chapter" data-level="3.1.4" data-path="elements.html"><a href="elements.html#section-4"><i class="fa fa-check"></i><b>3.1.4</b> 渐变色的简单原理及应用</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="elements.html"><a href="elements.html#sec:points"><i class="fa fa-check"></i><b>3.2</b> 点</a></li>
+<li class="chapter" data-level="3.3" data-path="elements.html"><a href="elements.html#sec:lines"><i class="fa fa-check"></i><b>3.3</b> 曲线、直线、线段、箭头、X-样条</a></li>
+<li class="chapter" data-level="3.4" data-path="elements.html"><a href="elements.html#sec:polygon"><i class="fa fa-check"></i><b>3.4</b> 矩形、多边形</a></li>
+<li class="chapter" data-level="3.5" data-path="elements.html"><a href="elements.html#sec:grid"><i class="fa fa-check"></i><b>3.5</b> 网格线</a></li>
+<li class="chapter" data-level="3.6" data-path="elements.html"><a href="elements.html#sec:text"><i class="fa fa-check"></i><b>3.6</b> 标题、任意文本、周边文本</a></li>
+<li class="chapter" data-level="3.7" data-path="elements.html"><a href="elements.html#sec:legend"><i class="fa fa-check"></i><b>3.7</b> 图例</a></li>
+<li class="chapter" data-level="3.8" data-path="elements.html"><a href="elements.html#sec:axis"><i class="fa fa-check"></i><b>3.8</b> 坐标轴</a></li>
+<li class="chapter" data-level="3.9" data-path="elements.html"><a href="elements.html#section-5"><i class="fa fa-check"></i><b>3.9</b> 图形元素应用示例</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="elements.html"><a href="elements.html#subsec:waterfall-chart"><i class="fa fa-check"></i><b>3.9.1</b> 瀑布图</a></li>
+<li class="chapter" data-level="3.9.2" data-path="elements.html"><a href="elements.html#subsec:grad-desc"><i class="fa fa-check"></i><b>3.9.2</b> 梯度下降算法</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="elements.html"><a href="elements.html#section-6"><i class="fa fa-check"></i><b>3.10</b> 小结</a></li>
+<li class="chapter" data-level="3.11" data-path="elements.html"><a href="elements.html#section-7"><i class="fa fa-check"></i><b>3.11</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gallery.html"><a href="gallery.html"><i class="fa fa-check"></i><b>4</b> 图库</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gallery.html"><a href="gallery.html#sec:hist"><i class="fa fa-check"></i><b>4.1</b> 直方图</a></li>
+<li class="chapter" data-level="4.2" data-path="gallery.html"><a href="gallery.html#section-8"><i class="fa fa-check"></i><b>4.2</b> 茎叶图</a></li>
+<li class="chapter" data-level="4.3" data-path="gallery.html"><a href="gallery.html#sec:boxplot"><i class="fa fa-check"></i><b>4.3</b> 箱线图</a></li>
+<li class="chapter" data-level="4.4" data-path="gallery.html"><a href="gallery.html#sec:barplot"><i class="fa fa-check"></i><b>4.4</b> 条形图</a></li>
+<li class="chapter" data-level="4.5" data-path="gallery.html"><a href="gallery.html#sec:plot-default"><i class="fa fa-check"></i><b>4.5</b> 散点图</a></li>
+<li class="chapter" data-level="4.6" data-path="gallery.html"><a href="gallery.html#sec:assocplot"><i class="fa fa-check"></i><b>4.6</b> 关联图</a></li>
+<li class="chapter" data-level="4.7" data-path="gallery.html"><a href="gallery.html#sec:cdplot"><i class="fa fa-check"></i><b>4.7</b> 条件密度图</a></li>
+<li class="chapter" data-level="4.8" data-path="gallery.html"><a href="gallery.html#sec:contour"><i class="fa fa-check"></i><b>4.8</b> 等高图/等高线</a></li>
+<li class="chapter" data-level="4.9" data-path="gallery.html"><a href="gallery.html#sec:coplot"><i class="fa fa-check"></i><b>4.9</b> 条件分割图</a></li>
+<li class="chapter" data-level="4.10" data-path="gallery.html"><a href="gallery.html#sec:curve"><i class="fa fa-check"></i><b>4.10</b> 一元函数曲线图</a></li>
+<li class="chapter" data-level="4.11" data-path="gallery.html"><a href="gallery.html#sec:dotchart"><i class="fa fa-check"></i><b>4.11</b> Cleveland 点图</a></li>
+<li class="chapter" data-level="4.12" data-path="gallery.html"><a href="gallery.html#sec:filled-contour"><i class="fa fa-check"></i><b>4.12</b> 颜色等高图/层次图</a></li>
+<li class="chapter" data-level="4.13" data-path="gallery.html"><a href="gallery.html#sec:fourfoldplot"><i class="fa fa-check"></i><b>4.13</b> 四瓣图</a></li>
+<li class="chapter" data-level="4.14" data-path="gallery.html"><a href="gallery.html#sec:image"><i class="fa fa-check"></i><b>4.14</b> 颜色图</a></li>
+<li class="chapter" data-level="4.15" data-path="gallery.html"><a href="gallery.html#sec:matplot"><i class="fa fa-check"></i><b>4.15</b> 矩阵图、矩阵点、矩阵线</a></li>
+<li class="chapter" data-level="4.16" data-path="gallery.html"><a href="gallery.html#sec:mosaicplot"><i class="fa fa-check"></i><b>4.16</b> 马赛克图</a></li>
+<li class="chapter" data-level="4.17" data-path="gallery.html"><a href="gallery.html#sec:scatterplot-matrix"><i class="fa fa-check"></i><b>4.17</b> 散点图矩阵</a></li>
+<li class="chapter" data-level="4.18" data-path="gallery.html"><a href="gallery.html#sec:persp"><i class="fa fa-check"></i><b>4.18</b> 三维透视图</a></li>
+<li class="chapter" data-level="4.19" data-path="gallery.html"><a href="gallery.html#plot-design"><i class="fa fa-check"></i><b>4.19</b> 因素效应图</a></li>
+<li class="chapter" data-level="4.20" data-path="gallery.html"><a href="gallery.html#sec:rug"><i class="fa fa-check"></i><b>4.20</b> 坐标轴须</a></li>
+<li class="chapter" data-level="4.21" data-path="gallery.html"><a href="gallery.html#sec:smoothScatter"><i class="fa fa-check"></i><b>4.21</b> 平滑散点图</a></li>
+<li class="chapter" data-level="4.22" data-path="gallery.html"><a href="gallery.html#sec:spineplot"><i class="fa fa-check"></i><b>4.22</b> 棘状图</a></li>
+<li class="chapter" data-level="4.23" data-path="gallery.html"><a href="gallery.html#sec:stars"><i class="fa fa-check"></i><b>4.23</b> 星状图、蛛网图、雷达图</a></li>
+<li class="chapter" data-level="4.24" data-path="gallery.html"><a href="gallery.html#sec:stripchart"><i class="fa fa-check"></i><b>4.24</b> 带状图</a></li>
+<li class="chapter" data-level="4.25" data-path="gallery.html"><a href="gallery.html#sec:sunflowerplot"><i class="fa fa-check"></i><b>4.25</b> 向日葵散点图</a></li>
+<li class="chapter" data-level="4.26" data-path="gallery.html"><a href="gallery.html#sec:symbols"><i class="fa fa-check"></i><b>4.26</b> 符号图</a></li>
+<li class="chapter" data-level="4.27" data-path="gallery.html"><a href="gallery.html#sec:pie"><i class="fa fa-check"></i><b>4.27</b> 饼图</a></li>
+<li class="chapter" data-level="4.28" data-path="gallery.html"><a href="gallery.html#section-9"><i class="fa fa-check"></i><b>4.28</b> 热图</a></li>
+<li class="chapter" data-level="4.29" data-path="gallery.html"><a href="gallery.html#section-10"><i class="fa fa-check"></i><b>4.29</b> 交互效应图</a></li>
+<li class="chapter" data-level="4.30" data-path="gallery.html"><a href="gallery.html#sec:qqplot"><i class="fa fa-check"></i><b>4.30</b> QQ 图</a></li>
+<li class="chapter" data-level="4.31" data-path="gallery.html"><a href="gallery.html#section-11"><i class="fa fa-check"></i><b>4.31</b> 生存函数图</a></li>
+<li class="chapter" data-level="4.32" data-path="gallery.html"><a href="gallery.html#sec:rpart"><i class="fa fa-check"></i><b>4.32</b> 分类与回归树图</a></li>
+<li class="chapter" data-level="4.33" data-path="gallery.html"><a href="gallery.html#sec:vioplot"><i class="fa fa-check"></i><b>4.33</b> 小提琴图</a></li>
+<li class="chapter" data-level="4.34" data-path="gallery.html"><a href="gallery.html#sec:maps"><i class="fa fa-check"></i><b>4.34</b> 地图</a></li>
+<li class="chapter" data-level="4.35" data-path="gallery.html"><a href="gallery.html#sec:faces"><i class="fa fa-check"></i><b>4.35</b> 脸谱图</a></li>
+<li class="chapter" data-level="4.36" data-path="gallery.html"><a href="gallery.html#sec:parcoords"><i class="fa fa-check"></i><b>4.36</b> 平行坐标图</a></li>
+<li class="chapter" data-level="4.37" data-path="gallery.html"><a href="gallery.html#sec:andrews-curve"><i class="fa fa-check"></i><b>4.37</b> 调和曲线图</a></li>
+<li class="chapter" data-level="4.38" data-path="gallery.html"><a href="gallery.html#sec:bagplot"><i class="fa fa-check"></i><b>4.38</b> 二维箱线图</a></li>
+<li class="chapter" data-level="4.39" data-path="gallery.html"><a href="gallery.html#sec:base-graph-ext"><i class="fa fa-check"></i><b>4.39</b> 延伸与小结</a></li>
+<li class="chapter" data-level="4.40" data-path="gallery.html"><a href="gallery.html#section-12"><i class="fa fa-check"></i><b>4.40</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="system.html"><a href="system.html"><i class="fa fa-check"></i><b>5</b> 系统</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="system.html"><a href="system.html#sec:ggplot2"><i class="fa fa-check"></i><b>5.1</b> ggplot2 图形</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="system.html"><a href="system.html#section-13"><i class="fa fa-check"></i><b>5.1.1</b> 几何形状</a></li>
+<li class="chapter" data-level="5.1.2" data-path="system.html"><a href="system.html#section-14"><i class="fa fa-check"></i><b>5.1.2</b> 统计量</a></li>
+<li class="chapter" data-level="5.1.3" data-path="system.html"><a href="system.html#section-15"><i class="fa fa-check"></i><b>5.1.3</b> 标度</a></li>
+<li class="chapter" data-level="5.1.4" data-path="system.html"><a href="system.html#section-16"><i class="fa fa-check"></i><b>5.1.4</b> 坐标系</a></li>
+<li class="chapter" data-level="5.1.5" data-path="system.html"><a href="system.html#subsec:facet"><i class="fa fa-check"></i><b>5.1.5</b> 切片</a></li>
+<li class="chapter" data-level="5.1.6" data-path="system.html"><a href="system.html#section-17"><i class="fa fa-check"></i><b>5.1.6</b> 位置调整</a></li>
+<li class="chapter" data-level="5.1.7" data-path="system.html"><a href="system.html#subsec:theme"><i class="fa fa-check"></i><b>5.1.7</b> 主题</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="system.html"><a href="system.html#section-18"><i class="fa fa-check"></i><b>5.2</b> 网格图形</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="system.html"><a href="system.html#section-19"><i class="fa fa-check"></i><b>5.2.1</b> 视图区</a></li>
+<li class="chapter" data-level="5.2.2" data-path="system.html"><a href="system.html#section-20"><i class="fa fa-check"></i><b>5.2.2</b> 旋转</a></li>
+<li class="chapter" data-level="5.2.3" data-path="system.html"><a href="system.html#section-21"><i class="fa fa-check"></i><b>5.2.3</b> 图形对象</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="system.html"><a href="system.html#lattice-"><i class="fa fa-check"></i><b>5.3</b> lattice 图形</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="system.html"><a href="system.html#subsec:lattice-intro"><i class="fa fa-check"></i><b>5.3.1</b> 简介</a></li>
+<li class="chapter" data-level="5.3.2" data-path="system.html"><a href="system.html#section-22"><i class="fa fa-check"></i><b>5.3.2</b> 公式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="system.html"><a href="system.html#section-23"><i class="fa fa-check"></i><b>5.3.3</b> 选项</a></li>
+<li class="chapter" data-level="5.3.4" data-path="system.html"><a href="system.html#section-24"><i class="fa fa-check"></i><b>5.3.4</b> 数据</a></li>
+<li class="chapter" data-level="5.3.5" data-path="system.html"><a href="system.html#section-25"><i class="fa fa-check"></i><b>5.3.5</b> 细节</a></li>
+<li class="chapter" data-level="5.3.6" data-path="system.html"><a href="system.html#section-26"><i class="fa fa-check"></i><b>5.3.6</b> 面板</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="system.html"><a href="system.html#sec:dynamic-graphics"><i class="fa fa-check"></i><b>5.4</b> rggobi 动态图形</a></li>
+<li class="chapter" data-level="5.5" data-path="system.html"><a href="system.html#sec:rgl"><i class="fa fa-check"></i><b>5.5</b> rgl 三维图形</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="system.html"><a href="system.html#section-27"><i class="fa fa-check"></i><b>5.5.1</b> 三维点线图</a></li>
+<li class="chapter" data-level="5.5.2" data-path="system.html"><a href="system.html#section-28"><i class="fa fa-check"></i><b>5.5.2</b> 三维透视图</a></li>
+<li class="chapter" data-level="5.5.3" data-path="system.html"><a href="system.html#section-29"><i class="fa fa-check"></i><b>5.5.3</b> 动画和截图</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="system.html"><a href="system.html#sec:animation"><i class="fa fa-check"></i><b>5.6</b> 动画视频</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="system.html"><a href="system.html#section-30"><i class="fa fa-check"></i><b>5.6.1</b> 动画导出工具</a></li>
+<li class="chapter" data-level="5.6.2" data-path="system.html"><a href="system.html#section-31"><i class="fa fa-check"></i><b>5.6.2</b> 统计学动画</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="system.html"><a href="system.html#section-32"><i class="fa fa-check"></i><b>5.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>6</b> 数据</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data.html"><a href="data.html#sec:data-type"><i class="fa fa-check"></i><b>6.1</b> 数据类型</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data.html"><a href="data.html#section-33"><i class="fa fa-check"></i><b>6.1.1</b> 分类数据</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data.html"><a href="data.html#section-34"><i class="fa fa-check"></i><b>6.1.2</b> 连续数据</a></li>
+<li class="chapter" data-level="6.1.3" data-path="data.html"><a href="data.html#section-35"><i class="fa fa-check"></i><b>6.1.3</b> 混合数据</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data.html"><a href="data.html#sec:data-case"><i class="fa fa-check"></i><b>6.2</b> 数据案例</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="data.html"><a href="data.html#section-36"><i class="fa fa-check"></i><b>6.2.1</b> 价格走势</a></li>
+<li class="chapter" data-level="6.2.2" data-path="data.html"><a href="data.html#subsec:canabalt"><i class="fa fa-check"></i><b>6.2.2</b> 末日狂奔</a></li>
+<li class="chapter" data-level="6.2.3" data-path="data.html"><a href="data.html#subsec:music"><i class="fa fa-check"></i><b>6.2.3</b> 音乐之声</a></li>
+<li class="chapter" data-level="6.2.4" data-path="data.html"><a href="data.html#subsec:tvearn"><i class="fa fa-check"></i><b>6.2.4</b> 绝望主妇</a></li>
+<li class="chapter" data-level="6.2.5" data-path="data.html"><a href="data.html#section-37"><i class="fa fa-check"></i><b>6.2.5</b> 灌篮高手</a></li>
+<li class="chapter" data-level="6.2.6" data-path="data.html"><a href="data.html#subsec:percentage"><i class="fa fa-check"></i><b>6.2.6</b> 神奇数字</a></li>
+<li class="chapter" data-level="6.2.7" data-path="data.html"><a href="data.html#subsec:lowess"><i class="fa fa-check"></i><b>6.2.7</b> 化点为线</a></li>
+<li class="chapter" data-level="6.2.8" data-path="data.html"><a href="data.html#subsec:ternary"><i class="fa fa-check"></i><b>6.2.8</b> 三足鼎立</a></li>
+<li class="chapter" data-level="6.2.9" data-path="data.html"><a href="data.html#section-38"><i class="fa fa-check"></i><b>6.2.9</b> 背景地图</a></li>
+<li class="chapter" data-level="6.2.10" data-path="data.html"><a href="data.html#subsec:cluster"><i class="fa fa-check"></i><b>6.2.10</b> 统计词话</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="data.html"><a href="data.html#sec:simulations"><i class="fa fa-check"></i><b>6.3</b> 统计模拟</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data.html"><a href="data.html#section-39"><i class="fa fa-check"></i><b>6.3.1</b> 线性回归</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data.html"><a href="data.html#section-40"><i class="fa fa-check"></i><b>6.3.2</b> 稳健回归</a></li>
+<li class="chapter" data-level="6.3.3" data-path="data.html"><a href="data.html#section-41"><i class="fa fa-check"></i><b>6.3.3</b> 离群检测</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data.html"><a href="data.html#section-42"><i class="fa fa-check"></i><b>6.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="principle.html"><a href="principle.html"><i class="fa fa-check"></i><b>7</b> 原则</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="principle.html"><a href="principle.html#sec:data-priority"><i class="fa fa-check"></i><b>7.1</b> 数据至上</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="principle.html"><a href="principle.html#subsec:element-priority"><i class="fa fa-check"></i><b>7.1.1</b> 分清主次</a></li>
+<li class="chapter" data-level="7.1.2" data-path="principle.html"><a href="principle.html#subsec:clear-symbols"><i class="fa fa-check"></i><b>7.1.2</b> 符号明确可分</a></li>
+<li class="chapter" data-level="7.1.3" data-path="principle.html"><a href="principle.html#subsec:data-processing"><i class="fa fa-check"></i><b>7.1.3</b> 谨慎处理数据</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="principle.html"><a href="principle.html#section-43"><i class="fa fa-check"></i><b>7.2</b> 节约墨水</a></li>
+<li class="chapter" data-level="7.3" data-path="principle.html"><a href="principle.html#section-44"><i class="fa fa-check"></i><b>7.3</b> 设计布局</a></li>
+<li class="chapter" data-level="7.4" data-path="principle.html"><a href="principle.html#section-45"><i class="fa fa-check"></i><b>7.4</b> 附带解释</a></li>
+<li class="chapter" data-level="7.5" data-path="principle.html"><a href="principle.html#sec:psychology"><i class="fa fa-check"></i><b>7.5</b> 考虑心理</a></li>
+<li class="chapter" data-level="7.6" data-path="principle.html"><a href="principle.html#section-46"><i class="fa fa-check"></i><b>7.6</b> 统计原则</a></li>
+<li class="chapter" data-level="7.7" data-path="principle.html"><a href="principle.html#section-47"><i class="fa fa-check"></i><b>7.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>A</b> 程序初步</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="programming.html"><a href="programming.html#sec:object"><i class="fa fa-check"></i><b>A.1</b> 对象类型</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="programming.html"><a href="programming.html#section-48"><i class="fa fa-check"></i><b>A.1.1</b> 向量</a></li>
+<li class="chapter" data-level="A.1.2" data-path="programming.html"><a href="programming.html#section-49"><i class="fa fa-check"></i><b>A.1.2</b> 因子</a></li>
+<li class="chapter" data-level="A.1.3" data-path="programming.html"><a href="programming.html#section-50"><i class="fa fa-check"></i><b>A.1.3</b> 数组和矩阵</a></li>
+<li class="chapter" data-level="A.1.4" data-path="programming.html"><a href="programming.html#section-51"><i class="fa fa-check"></i><b>A.1.4</b> 数据框和列表</a></li>
+<li class="chapter" data-level="A.1.5" data-path="programming.html"><a href="programming.html#section-52"><i class="fa fa-check"></i><b>A.1.5</b> 函数</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="programming.html"><a href="programming.html#section-53"><i class="fa fa-check"></i><b>A.2</b> 操作方法</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="programming.html"><a href="programming.html#section-54"><i class="fa fa-check"></i><b>A.2.1</b> 选择与循环</a></li>
+<li class="chapter" data-level="A.2.2" data-path="programming.html"><a href="programming.html#section-55"><i class="fa fa-check"></i><b>A.2.2</b> 输入与输出</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="programming.html"><a href="programming.html#section-56"><i class="fa fa-check"></i><b>A.3</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="tricks.html"><a href="tricks.html"><i class="fa fa-check"></i><b>B</b> 细节技巧</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="tricks.html"><a href="tricks.html#sec:par"><i class="fa fa-check"></i><b>B.1</b> <code>par()</code> 函数</a></li>
+<li class="chapter" data-level="B.2" data-path="tricks.html"><a href="tricks.html#sec:plot"><i class="fa fa-check"></i><b>B.2</b> <code>plot()</code> 函数</a></li>
+<li class="chapter" data-level="B.3" data-path="tricks.html"><a href="tricks.html#sec:plotmath"><i class="fa fa-check"></i><b>B.3</b> 数学公式</a></li>
+<li class="chapter" data-level="B.4" data-path="tricks.html"><a href="tricks.html#sec:multipage"><i class="fa fa-check"></i><b>B.4</b> 一页多图</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="tricks.html"><a href="tricks.html#section-57"><i class="fa fa-check"></i><b>B.4.1</b> 设置图形参数</a></li>
+<li class="chapter" data-level="B.4.2" data-path="tricks.html"><a href="tricks.html#section-58"><i class="fa fa-check"></i><b>B.4.2</b> 设置图形版面</a></li>
+<li class="chapter" data-level="B.4.3" data-path="tricks.html"><a href="tricks.html#section-59"><i class="fa fa-check"></i><b>B.4.3</b> 拆分设备屏幕</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="tricks.html"><a href="tricks.html#sec:interaction"><i class="fa fa-check"></i><b>B.5</b> 交互操作</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="tricks.html"><a href="tricks.html#section-60"><i class="fa fa-check"></i><b>B.5.1</b> 获取鼠标位置的坐标</a></li>
+<li class="chapter" data-level="B.5.2" data-path="tricks.html"><a href="tricks.html#section-61"><i class="fa fa-check"></i><b>B.5.2</b> 识别鼠标附近的数据</a></li>
+<li class="chapter" data-level="B.5.3" data-path="tricks.html"><a href="tricks.html#section-62"><i class="fa fa-check"></i><b>B.5.3</b> 响应鼠标键盘的动作</a></li>
+</ul></li>
+<li class="chapter" data-level="B.6" data-path="tricks.html"><a href="tricks.html#sec:device"><i class="fa fa-check"></i><b>B.6</b> 图形设备</a></li>
+<li class="chapter" data-level="B.7" data-path="tricks.html"><a href="tricks.html#section-63"><i class="fa fa-check"></i><b>B.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="gui.html"><a href="gui.html"><i class="fa fa-check"></i><b>C</b> 图形界面</a></li>
+<li class="chapter" data-level="D" data-path="msg-pkgs.html"><a href="msg-pkgs.html"><i class="fa fa-check"></i><b>D</b> 本书 R 包</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="msg-pkgs.html"><a href="msg-pkgs.html#sec:MSG-fun"><i class="fa fa-check"></i><b>D.1</b> 函数说明</a></li>
+<li class="chapter" data-level="D.2" data-path="msg-pkgs.html"><a href="msg-pkgs.html#section-64"><i class="fa fa-check"></i><b>D.2</b> 数据说明</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="postscript.html"><a href="postscript.html"><i class="fa fa-check"></i><b>E</b> 后记</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">现代统计图形</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chap:principle" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">第 7 章</span> 原则<a href="principle.html#chap:principle" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p>“情况的确如此，我在这方面有直觉。偶尔也会出现一些较复杂的案子，那我就得忙碌一阵子，亲自去查访一番。要知道，我有许多特殊知识，可以用来解开这些谜团，而且能轻易地解决问题。那篇文章中讨论的推理的原则，让你很鄙视，但对我的实际工作却是无价之宝。敏锐的观察力是我的第二天性。我们俩第一次见面时；我说起你是从阿富汗来的，你那时似乎很惊讶哩。”</p>
+<p>— 柯南·道尔《血字的研究》</p>
+</blockquote>
+<p>从技术角度来说，作图是一件很容易的事情，但作一幅好的统计图形则并非易事，它需要一些指导原则。那么图形优劣的评判标准是什么？最直接的标准就是，读者能否通过图形清楚地了解数据中的信息。这涉及到对读者群体的心理学研究和对数据的反复思考，比如，饼图和条形图分别用角度和长度来表达数值大小，那么人眼对角度和长度的感知精度是一样的吗？心理学调查结果显示并非如此：人眼对角度的感知较差。迄今为止，专门做过统计图形方面的心理学研究的统计学家寥寥无几，其中成果最显著的当属 <span class="citation">Cleveland (<a href="#ref-Cleveland85">1985</a>)</span> ，本章也主要基于他的一些观点进行总结与展开。</p>
+<div id="sec:data-priority" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> 数据至上<a href="principle.html#sec:data-priority" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>数据是宝贵的，它们也许来自艰辛的问卷调查，或是繁琐的实验测量，因此我们应该尽量珍惜，但现实状况是我们经常有意或无意糟蹋数据，这样的情形包括：表达数据的元素被次要图形元素遮挡，数据的特征无法在图中凸显，或者数据经过了不恰当的人工处理等。</p>
+<div id="subsec:element-priority" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> 分清主次<a href="principle.html#subsec:element-priority" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>对于一幅图形而言，显然并非所有的图形元素都同等重要。例如，散点图中的点应该是最重要的元素，等高线图中的线更重要，等等。因此，我们不能让次要的图形元素干涉数据的表达，要让图形显得干净、清晰。主要元素的外观要仔细选择，使数据在图中占有最重要的视觉地位，而不会被标签等元素遮挡或干涉。用 Cleveland 的话说，就是要让数据突出来（stand out）。</p>
+<p>R 基础图形系统中默认的点的样式是空心点，在很多情况下这并不是一个好的选择，因为空心点在图中看起来太不起眼，尤其是数据点较少的时候。我们延续 <a href="data.html#subsec:tvearn">6.2.4</a> 小节中的美剧演员收入数据，在这里讨论如何突出主要元素。图 <a href="principle.html#fig:pay-rating-points">7.1</a> 是演员收入与电视剧评分的散点图，左图使用了默认的空心点，右图使用了实心点。这批数据的样本量只有 72，左图中的点所用的墨水可能和坐标轴等次要元素差不多，所以数据在图中也显得不够突出，而实心点则很明显占据了一幅图的视觉重心。</p>
+<div class="sourceCode" id="cb426"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb426-1"><a href="principle.html#cb426-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb426-2"><a href="principle.html#cb426-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;tvearn&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span>
+<span id="cb426-3"><a href="principle.html#cb426-3" tabindex="-1"></a><span class="fu">plot</span>(pay<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">4</span> <span class="sc">~</span> rating, <span class="at">data =</span> tvearn, <span class="at">ylab =</span> <span class="st">&quot;pay (10^4)&quot;</span>) <span class="co"># 默认为空心点</span></span>
+<span id="cb426-4"><a href="principle.html#cb426-4" tabindex="-1"></a><span class="fu">plot</span>(pay<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">4</span> <span class="sc">~</span> rating, <span class="at">data =</span> tvearn, <span class="at">pch =</span> <span class="dv">19</span>, <span class="at">ylab =</span> <span class="st">&quot;pay (10^4)&quot;</span>) <span class="co"># 改为实心点</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pay-rating-points"></span>
+<img src="principle_files/figure-html/pay-rating-points-1.svg" alt="演员收入与电视剧评分的空心和实心散点图：右图的视觉冲击力更强。" width="672" />
+<p class="caption">
+图 7.1: 演员收入与电视剧评分的空心和实心散点图：右图的视觉冲击力更强。
+</p>
+</div>
+
+<p>这两幅图实际上有个共同的问题，就是图中空白区域太大，这是由最高收入的那位演员引起的。这种情况也从一定程度上降低了图形元素的表达效率，因为我们放眼望去，一幅图的一半区域都是空白，绝大部分点都集中在图的下半部分。当然，在这个问题上我们也不能绝对化，因为有时候这种大片空白能反衬处离群点 — 取决于我们要显示的重点是什么。当图中存在离群点时，解决办法之一就是取对数，这种办法能减轻数量级的影响，数据越大，则被拉向原点的幅度越大。我们都知道，取对数的前提条件是数字全都大于零，正好本例中的收入数据满足这个条件。对收入取过对数之后的散点图如图 <a href="principle.html#fig:pay-rating-log">7.2</a> 上图，由于此时纵坐标的刻度意义变了，我们在读图的时候需要了解数字 n 实际上代表的是 <span class="math inline">\(10^{n}\)</span>，例如 6 与 5 的差距并非 1，而是 10 倍，即 <span class="math inline">\(10^{6-5}\)</span>。</p>
+<p>如果我们关心的对象是收入和评分的关系，那么一幅散点图就足够了；如果我们还想进一步从图中了解每个点代表的演员是谁，那么我们就需要往图中加文本标签。标签是有很强显示力的工具，它能直截了当告诉我们信息，然而由于它的体积相对较大，若处理不当，反而会让图中充满文本信息，从而失去了数据本身的意义。在本例中添加姓名标签不容易做到自动化，即自动安排标签的位置让它们不要重叠，因为本身这幅图中的点就已经有重叠，不过 <strong>maptools</strong> 包中的 <code>pointLabel()</code> 函数提供了基于模拟退火算法和遗传算法的添加标签方案，它能尽量做到不让标签重叠。事实上即使用这些算法来添加标签，也仍然会出现大量的遮挡现象，如图 <a href="principle.html#fig:pay-rating-log">7.2</a> 下图，这也是受本书版面大小所限，读者可以运行代码在更大的图形窗口中查看结果，重叠程度应该会轻一些。</p>
+<div class="sourceCode" id="cb427"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb427-1"><a href="principle.html#cb427-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">3.2</span>, <span class="fl">3.6</span>, .<span class="dv">05</span>, .<span class="dv">05</span>))</span>
+<span id="cb427-2"><a href="principle.html#cb427-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(pay) <span class="sc">~</span> rating, <span class="at">data =</span> tvearn, <span class="at">pch =</span> <span class="dv">19</span>)</span>
+<span id="cb427-3"><a href="principle.html#cb427-3" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log10</span>(pay) <span class="sc">~</span> rating, <span class="at">data =</span> tvearn, <span class="at">pch =</span> <span class="dv">20</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb427-4"><a href="principle.html#cb427-4" tabindex="-1"></a><span class="fu">with</span>(tvearn, car<span class="sc">::</span><span class="fu">pointLabel</span>(rating, <span class="fu">log10</span>(pay), <span class="at">labels =</span> actor, </span>
+<span id="cb427-5"><a href="principle.html#cb427-5" tabindex="-1"></a>                        <span class="at">cex =</span> .<span class="dv">6</span>, <span class="at">col =</span> <span class="st">&quot;#00000099&quot;</span>, <span class="at">xpd =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:pay-rating-log"></span>
+<img src="principle_files/figure-html/pay-rating-log-1.svg" alt="取对数的收入与评分散点图以及演员名称：纵轴的收入数据经过了以 10 为底的对数处理；下图中加上了演员的名称。" width="672" />
+<p class="caption">
+图 7.2: 取对数的收入与评分散点图以及演员名称：纵轴的收入数据经过了以 10 为底的对数处理；下图中加上了演员的名称。
+</p>
+</div>
+
+<p>顺便提一下，关于文本标签的使用，多维标度分析（Multidimensional Scaling，MDS）是一个非常适合以标签展示为主的统计学方法。简言之，MDS 的思想是将高维空间中个体之间的距离在低维空间中尽量准确地表达出来，这里的低维空间通常是二维平面。因为我们关心的重点是个体与个体之间的距离，那么最好将个体的某种特征画在图中，最直接的想法当然就是个体的名称，此时图的重点就是这些名称标签，所以尽管标签的背后对应着坐标点，我们也不必把点画出来，甚至坐标轴都可以完全去掉。图 <a href="principle.html#fig:music-mds">7.3</a> 是 <a href="data.html#subsec:music">6.2.3</a> 小节提到过的音乐数据的 MDS 平面图，这幅图没有坐标轴，也没有点，只有曲目名称，这就足够了，因为这些名称之间的距离就是它们在标准化之后的原始数据上的距离（注意原始数据有 10 个变量，这里降维为 2），从图中我们可以很快看出曲目之间的相似性。</p>
+<div class="sourceCode" id="cb428"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb428-1"><a href="principle.html#cb428-1" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;music&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span>
+<span id="cb428-2"><a href="principle.html#cb428-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb428-3"><a href="principle.html#cb428-3" tabindex="-1"></a><span class="co"># 标准化所有频率变量到 0-1 之间并计算曲目之间欧式距离</span></span>
+<span id="cb428-4"><a href="principle.html#cb428-4" tabindex="-1"></a>st.music <span class="ot">&lt;-</span> <span class="fu">apply</span>(music[, <span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)], <span class="dv">2</span>, <span class="cf">function</span>(x) {</span>
+<span id="cb428-5"><a href="principle.html#cb428-5" tabindex="-1"></a>  (x <span class="sc">-</span> <span class="fu">min</span>(x)) <span class="sc">/</span> (<span class="fu">max</span>(x) <span class="sc">-</span> <span class="fu">min</span>(x))</span>
+<span id="cb428-6"><a href="principle.html#cb428-6" tabindex="-1"></a>})</span>
+<span id="cb428-7"><a href="principle.html#cb428-7" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(<span class="fu">dist</span>(st.music))</span>
+<span id="cb428-8"><a href="principle.html#cb428-8" tabindex="-1"></a><span class="fu">plot</span>(fit, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">ann =</span> <span class="cn">FALSE</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb428-9"><a href="principle.html#cb428-9" tabindex="-1"></a><span class="fu">text</span>(fit[, <span class="dv">1</span>], fit[, <span class="dv">2</span>], <span class="fu">rownames</span>(music), <span class="at">cex =</span> .<span class="dv">7</span>, <span class="at">xpd =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:music-mds"></span>
+<img src="principle_files/figure-html/music-mds-1.svg" alt="音乐数据的多维标度分析平面图：Eels 的 Saturday Morning 离所有曲目最远，维瓦尔第的 V8 也比较独特。" width="384" />
+<p class="caption">
+图 7.3: 音乐数据的多维标度分析平面图：Eels 的 Saturday Morning 离所有曲目最远，维瓦尔第的 V8 也比较独特。
+</p>
+</div>
+
+<p>关于图形元素主次关系，还牵涉到一些细节设置问题，这也是我们在附录 <a href="tricks.html#cha:tricks">B</a> 介绍那么多图形细节的原因之一。例如，坐标轴的刻度短线的方向默认朝外（<code>tcl</code> 参数），这是合理的设置，如果刻度线朝内伸去的话，就可能会干涉到作图区域的元素；又如 <code>xaxs</code> 和 <code>yaxs</code> 参数，它们默认会先让作图区域的范围向外扩展 4%，这样坐标轴和作图数据的边界之间就留出了一片小空间，数据中的最小值和最大值都不会紧贴坐标轴，也能让主要图形元素充分显示出来，不受坐标轴线的干扰。</p>
+</div>
+<div id="subsec:clear-symbols" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> 符号明确可分<a href="principle.html#subsec:clear-symbols" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>我们经常遇到需要在图中表达分组信息的情况，如图 <a href="elements.html#fig:point-iris">3.4</a>，此时我们应该选择差异最大的外观，以免各组数据无法区分开来。例如空心圆圈和空心方框的区别就不够显著，但空心圆圈和实心圆圈就有很明显的区别。为了检验两种符号是否有足够的区分度，我们可以用 <strong>MSG</strong> 包中的 <code>char_gen()</code> 函数生成一个字符方阵，看我们是否能从中快速找出不同的字符，例如 O 和 Q 很相似，所以从一群 Q 的方阵中找一个 O 可能就很困难，但从一群 Q 中找星号*则要容易得多：</p>
+<div class="sourceCode" id="cb429"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb429-1"><a href="principle.html#cb429-1" tabindex="-1"></a><span class="fu">char_gen</span>(<span class="fu">c</span>(<span class="st">&quot;O&quot;</span>, <span class="st">&quot;Q&quot;</span>), <span class="at">n =</span> <span class="dv">320</span>, <span class="at">nrow =</span> <span class="dv">8</span>) <span class="co"># 从 Q 中找 O</span></span></code></pre></div>
+<pre><code>## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQOQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ</code></pre>
+<div class="sourceCode" id="cb431"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb431-1"><a href="principle.html#cb431-1" tabindex="-1"></a><span class="fu">char_gen</span>(<span class="fu">c</span>(<span class="st">&quot;*&quot;</span>, <span class="st">&quot;Q&quot;</span>), <span class="at">n =</span> <span class="dv">320</span>, <span class="at">nrow =</span> <span class="dv">8</span>) <span class="co"># 从 Q 中找 *</span></span></code></pre></div>
+<pre><code>## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQ*QQQQQQQQQQQQQQQQQQQQQQQQQ
+## QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ</code></pre>
+<p>关于符号使用的问题，<span class="citation">Robinson (<a href="#ref-Robinson03">2003</a>)</span> 是一篇很好的参考短文，这里我们不再深入介绍，但是要提醒注意的是，尽管我们可以小心挑选外形差别大的符号，当数据分组数目特别大的时候这种努力往往过犹不及，因为人眼的识别能力毕竟有限，太多太杂的符号混在同一幅图中很可能无法清楚表达任何信息，仅仅是制造图形垃圾而已。</p>
+</div>
+<div id="subsec:data-processing" class="section level3 hasAnchor" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> 谨慎处理数据<a href="principle.html#subsec:data-processing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>通常数据只有经过处理才能揭示我们想要知道的信息，例如给我们全国所有人的身高数据只会让我们被淹没在数字中，但一个均值或者中位数就能告诉我们身高的平均水平。人们可能因为这个原因形成了处理数据的习惯，但这对于统计图形来说往往是灾难，宝贵的原始信息被毁灭于人为处理。在图形中，我们提倡尽量表达原始数据，而不要人为处理数据，包括不要省略数据，以及不要离散化数据。</p>
+<p><span class="citation">Cleveland (<a href="#ref-Cleveland85">1985</a>)</span> 中给了一个省略数据的例子，可以看作是 1986 年美国挑战者号航天飞机失事的原因之一，大意是航天局的工程师们在发射之前研究了 O 型环的故障与温度的关系，他们看的是一幅散点图，横轴为温度，纵轴为 O 型环发生故障的数量，从散点图中来看，温度与这个零件的故障数量并没有什么联系，然而最终挑战者号还是因为温度原因发射失败并解体爆炸。那么这幅散点图有什么问题呢？首先，它只画出了零件失效的情况，而省略了零件未失效的那些观测数据，退一步讲，他们的散点图中即使没有观察到零件失效与温度的关系，也不能代表温度与零件不失效没有关系，而事实是如果把零件未失效的数量和相应的温度加上去的话，我们就能观察到低温情况下 O 型环容易发生故障；其次，这幅散点图中的温度范围不够大，而发射当前的气温是 31 华氏度（零下 1 摄氏度），属于超低温，这样的情况也没有在以往数据中观察到，因此这个发射行动是非常鲁莽的。</p>
+<p>图形相比起表格的优势之一就是它能以较小的空间展示很多信息，10 行数据和 1000 行数据占用的空间可能没有区别，而表格则不然，数据越多就需要更大的空间展示。我们几乎没有必要刻意删减原始数据再画图，即使需要删减，通常也应该在看完全局数据之后再决定看局部数据。</p>
+<p>离散化数据是人们更常用的数据处理手段，并且这种手段的缺点更不容易被发觉。所有离散化，就是将原本连续的数据人为分组，例如，将年龄分为 0-5 岁、5-10 岁、……。作者猜想这种处理方式一方面是陈旧的计算手段留下来的糟粕，因为分组统计更容易计算，另一方面也是受一些基于分类数据统计方法的引诱，例如列联表的各种“精美”分析，换句话说，我们在拿方法硬套数据。为什么我们不推荐将连续数据离散化？原因非常简单：连续数据包含的信息比离散数据多，离散化处理会损失信息。或者通俗解释：你问一个人的年龄，若得到的回答是“20 岁到 50 岁之间”，你必然觉得不够满意。</p>
+<p>图形中的离散化现象很普遍，如 <a href="gallery.html#sec:base-graph-ext">4.39</a> 小节的风向图就是一个例子，当然风向图中的离散化也许有一定道理。更多情况下是不必要的离散化，如根据不同年龄组计算身高的均值，这种情况下我们完全可以画身高和年龄（连续变量）的散点图，此时身高和年龄的关系一目了然，而不需要从一组组均值中去看它们的关系。更严重的问题是，离散化的分组往往带有任意性，我们可以按 5 岁一个区间分组，也可以按 10 岁一个区间，这种任意性的存在可能会导致结果的截然不同，甚至让我们得出相反的结论。</p>
+<div class="sourceCode" id="cb433"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb433-1"><a href="principle.html#cb433-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">319</span>)</span>
+<span id="cb433-2"><a href="principle.html#cb433-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb433-3"><a href="principle.html#cb433-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb433-4"><a href="principle.html#cb433-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>)) <span class="co"># 以下 cut_plot() 函数来自 MSG 包</span></span>
+<span id="cb433-5"><a href="principle.html#cb433-5" tabindex="-1"></a><span class="fu">cut_plot</span>(x, y, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.02</span>, <span class="sc">-</span><span class="fl">0.9</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="fl">2.5</span>), <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb433-6"><a href="principle.html#cb433-6" tabindex="-1"></a><span class="fu">cut_plot</span>(x, y, <span class="fu">c</span>(<span class="sc">-</span><span class="fl">2.02</span>, <span class="dv">0</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">2.8</span>, <span class="dv">3</span>), <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:cut-plot"></span>
+<img src="principle_files/figure-html/cut-plot-1.svg" alt="任意离散化连续数据得到的不同结果：左右散点图中数据完全相同，只是离散化分组区间不同，导致趋势截然不同。" width="576" />
+<p class="caption">
+图 7.4: 任意离散化连续数据得到的不同结果：左右散点图中数据完全相同，只是离散化分组区间不同，导致趋势截然不同。
+</p>
+</div>
+
+<p>图 <a href="principle.html#fig:cut-plot">7.4</a> 展示了离散化数据的一种弊病：左右两幅图中的数据完全相同，只是两幅图中我们用了不同的分组区间去将变量 x 离散化为 5 组，竖着的虚线表示分组的端点，在每一组内我们计算 y 的均值并连线，左图中我们看到数据有下降趋势，右图则显示为上升趋势，而事实是 x 和 y 是独立的，毫无关系。这就像盲人摸象的故事 — 有人摸到了耳朵说它像扇子，有人摸到了尾巴说像绳子。</p>
+<p>同样我们也不能将“不处理数据”这条原则绝对化，有一种情况下处理数据会让图形表达更清楚，那就是从原始数据中不易直接观察的数据，例如两条折线的差异，或两组数据均值的差异，或观察增长率。 <span class="citation">谢益辉 (<a href="#ref-Xie10Thesis">2010</a>)</span> 分别使用等方差和异方差假设对同一批数据作了 t 检验并得到 P 值，为了比较这两组 P 值的差异，作者将它们作差再画图，原因是绝大多数 P 值都非常接近，若直接画两组 P 值的散点图，那么得到的几乎是一条直线，看不出差异，而作差之后，差异就变得很明显了。这样的数据处理并没有改变原始数据的性质，只是将同样的数据换一种形式表达，没有损失任何信息。读者可以再回顾第 <a href="history.html#cha:history">1</a> 章中的图 <a href="history.html#fig:playfair86">1.1</a>，这幅图可以换个角度来表达，即画出出口减去进口的值，这样只需要和 0 对比就知道顺差逆差的情况了。</p>
+<p>还有一种可能需要略微处理数据的情况，就是当数据中重叠的点很多时，我们要想办法让读者能够读出这些重叠的信息，随机略微打乱数据点的位置是一种处理办法（参见图 <a href="data.html#fig:discrete-var">6.1</a>），尽管它看起来修改了原始数据，但只要经过充分的解释说明，读者应该不会被误导；如果我们不处理数据，当然也有办法表达这些重叠信息，如 <a href="gallery.html#sec:plot-default">4.5</a> 小节。</p>
+<p>实际应用中我们常常还会遇到一种“无意识的处理数据”，即原始数据并没有经过任何中间处理，但最终画到图中的时候被无意识地改变了意义。这一点我们在 <a href="data.html#subsec:music">6.2.3</a> 小节中曾经提到过，即“事后诸葛亮”的做法。当我们已知图中元素分类信息的时候，我们可以用一些特殊标记（如颜色）来表达这个信息，当分类信息未知时，我们就需要慎重了，典型的应用如聚类分析，有时候聚类结果可能比较牵强，但经过给数据标记颜色的处理，读者会被刻意引导到特定结论上。后面 <a href="principle.html#sec:psychology">7.5</a> 小节我们再看例子。</p>
+</div>
+</div>
+<div id="section-43" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> 节约墨水<a href="principle.html#section-43" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>谈到墨水问题，我们不得不提及可视化大师级人物 Edward Tufte，他发明了一个有趣的词，叫图形垃圾（chartjunk），所谓的图形垃圾就是一幅图形中的多余元素，它们对表达数据毫无帮助，甚至掩盖或歪曲数据中的信息。我们身边的图形垃圾实在数不胜数，例如毫无意义的渐变色背景（有人可能会争论这是为了美观考虑），或者用复杂的图形表达简单的数据。</p>
+<p>Cleveland 也有类似的观点，提倡用尽量简单的图形元素表达尽量多的数据信息；用更量化的指标来说，就是“数据/墨水比”要尽量高，意思是用少的墨水打印出多的数据。Cleveland 提出他的点图（<a href="gallery.html#sec:dotchart">4.11</a> 小节）也有此考虑，因为点图中的图形元素占用的空间小，但和条形图一样能表达出数字的大小。</p>
+<p><span class="citation">Tufte (<a href="#ref-Tufte01">2001</a>)</span> 中提到一个浪费墨水的极端例子，他本人的评论为“它可能是史上出版物中最糟糕的图形”（This may well be the worst graphic ever to find its way into print），这幅图由《美国教育》杂志发表，如图 <a href="principle.html#fig:worst-graph">7.5</a> 所示。这幅看起来很炫目的图到底画了什么？其实只是 5 个数字，记录了 1972 到 1976 年中，25 岁及以上的美国大学生录取比例；该图的标题为“大学新生年龄结构”，而这个所谓的“结构”分两类，一类是 25 岁及以上的新生，另一类是 25 岁以下的，这两个比例相加为 100%，图下半边代表了 25 岁及以上的学生，这 5 个比例分别为 28.0%、29.2%、32.8%、33.6% 和 33.0%，这便是这幅三维立体图形要表达的全部，图的上半边是下半边的“倒影”。Michael Friendly 在他的数据可视化网站（<a href="http://www.datavis.ca/" class="uri">http://www.datavis.ca/</a>）中也给出了评价：</p>
+<blockquote>
+<p>一幅图形可以用三种手段之一来装潢，一是让人眼花缭乱的颜色，二是 3D 效果，三是伪装得就像有丰富的内容一样，而这幅图动用了全部三种手段。</p>
+</blockquote>
+<p>通过这一则例子，相信读者可以深刻体会到什么是图形垃圾。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:worst-graph"></span>
+<img src="images/worst-graph.png" alt="史上最糟糕的图形垃圾：一幅超级复杂的图形，一共表达了 5 个数字，即 1972 年到 1976 年中，25 岁及以上的美国大学新生比例。"  />
+<p class="caption">
+图 7.5: 史上最糟糕的图形垃圾：一幅超级复杂的图形，一共表达了 5 个数字，即 1972 年到 1976 年中，25 岁及以上的美国大学新生比例。
+</p>
+</div>
+
+</div>
+<div id="section-44" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> 设计布局<a href="principle.html#section-44" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>这里说的布局主要指 <a href="tricks.html#sec:plot">B.2</a> 小节提到的纵横比，它是一个对图形解释非常重要的概念，尤其是折线图。简单来说，纵横比影响的是图形元素宽高的比率。“瘦高”的图中，折线的斜率大，给人的感觉是升降趋势非常剧烈，而“矮胖”的图中，趋势变化则看起来平缓一些。</p>
+<div class="sourceCode" id="cb434"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb434-1"><a href="principle.html#cb434-1" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, <span class="dv">2</span>), <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb434-2"><a href="principle.html#cb434-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span>))</span>
+<span id="cb434-3"><a href="principle.html#cb434-3" tabindex="-1"></a><span class="fu">plot</span>(sunspots)</span>
+<span id="cb434-4"><a href="principle.html#cb434-4" tabindex="-1"></a><span class="fu">plot</span>(sunspots, <span class="at">asp =</span> .<span class="dv">1</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sunspots-asp"></span>
+<img src="principle_files/figure-html/sunspots-asp-1.svg" alt="不同纵横比设置下的太阳黑子时序图：上图没有特别的纵横比设置，下图的 asp 参数为 0.1，从下图可以看出太阳黑子数量随着时间上升比下降速度更快。" width="460.8" />
+<p class="caption">
+图 7.6: 不同纵横比设置下的太阳黑子时序图：上图没有特别的纵横比设置，下图的 <code>asp</code> 参数为 0.1，从下图可以看出太阳黑子数量随着时间上升比下降速度更快。
+</p>
+</div>
+
+<p>R 基础图形系统中通常用 <code>asp</code> 参数设置纵横比，下面我们给一个经典例子来说明它的作用。图 <a href="principle.html#fig:sunspots-asp">7.6</a> 是 1749 到 1984 年太阳黑子数量的时间序列图，数据为月度数据。我们都知道太阳黑子的数量有周期性，其周期大约为 11 年，这一点在图中可以很容易看出来（折线有规律地起伏）。图 <a href="principle.html#fig:sunspots-asp">7.6</a> 上图使用的是默认纵横比设置，即纵横比随着图形大小自动调整，而下图中固定为 0.1，初看起来这两幅图没有什么不同，但下图揭示了一个重要的发现：太阳黑子数量上升时的速度比下降的速度更快，注意观察图中上升的折线比下降的折线更陡峭，而上图中则很难看出这个现象，因为折线斜率太大。关于图 <a href="principle.html#fig:sunspots-asp">7.6</a> 我们要补充说明的是，下图并不是简单地把高度压缩了一下而已，即使图形的高度更高，图中的折线形状也不会变化，关于这一点读者可以自行验证。</p>
+<p>Cleveland 对这个问题的建议是调整纵横比让所有的折线的倾斜角度平均值接近 <span class="math inline">\(45\,^{\circ}\)</span>（banking to <span class="math inline">\(45\,^{\circ}\)</span>），因为人眼对 <span class="math inline">\(45\,^{\circ}\)</span> 附近的角度感知最精确，而对太大或者太小的角度感知都很差，例如图 <a href="principle.html#fig:sunspots-asp">7.6</a> 中为什么我们更难看出上图中的折线角度差异？</p>
+<p>纵横比是一个很有用的调整图形感观的工具，换句话说，用它来撒谎也是很容易的，不过如今的读者应该都能识破这种小伎俩了。</p>
+</div>
+<div id="section-45" class="section level2 hasAnchor" number="7.4">
+<h2><span class="header-section-number">7.4</span> 附带解释<a href="principle.html#section-45" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>尽管我们说“一图胜千言”，但图形本身对于不同读者来说可能会有不同的解读，甚至有些读者未必能理解一幅图的真正意思，这时候就很有必要提供附带文字解释。附带解释有两种方式，一种是向图中加上文本标注，这种方式有很大的局限性，因为图的空间毕竟有限，而且过多的文本标注可能会使图形本身失去重心（<a href="principle.html#subsec:element-priority">7.1.1</a> 小节）；另外一种方式就是图的标题，据作者的观察，这一点在英语文献中似乎做得相对好一些，图形通常有明确的标题，而且标题就像一段完整的话，但大多数中文文献中的图都惜字如金，图的标题只有一句话，关于图的解释通常放在正文中，这种做法可能会让读者无法专注于图形的阅读，因为需要不断回到正文结合相应的解释文字来理解图形。</p>
+<p>理想情况下，一幅图配上相应的标题文字解释，应该能够形成一个相对独立而完整的故事。但话说回来，如果一幅图需要太多的文字解释，那么这幅图本身的设计质量也值得怀疑，作者可能需要考虑简化图形。本书中大部分图形都遵循了添加详细标题文字解释的原则。从技术上而言，这只是 LaTeX 中 figure 环境的 <code>\caption{}</code> 而已。</p>
+</div>
+<div id="sec:psychology" class="section level2 hasAnchor" number="7.5">
+<h2><span class="header-section-number">7.5</span> 考虑心理<a href="principle.html#sec:psychology" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>图形中有许多的心理因素需要考虑，相信读者应该看过一些关于视觉欺骗的图片，图 <a href="principle.html#fig:optical-illusion">7.7</a> 就是一个经典示例，其实红线和黑线一样长，但由于箭头方向内外朝向的问题，使得红线看起来更长。类似的心理因素还包括：</p>
+<div class="sourceCode" id="cb435"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb435-1"><a href="principle.html#cb435-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">320</span>)</span>
+<span id="cb435-2"><a href="principle.html#cb435-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="at">xpd =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb435-3"><a href="principle.html#cb435-3" tabindex="-1"></a><span class="fu">plot.new</span>()</span>
+<span id="cb435-4"><a href="principle.html#cb435-4" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">4</span>)</span>
+<span id="cb435-5"><a href="principle.html#cb435-5" tabindex="-1"></a>v <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">4</span>, <span class="dv">0</span>, .<span class="dv">4</span>)</span>
+<span id="cb435-6"><a href="principle.html#cb435-6" tabindex="-1"></a><span class="fu">arrows</span>(v[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], h[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], v[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>] <span class="sc">+</span> .<span class="dv">6</span>, h[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], <span class="at">angle =</span> <span class="dv">45</span>, <span class="at">code =</span> <span class="dv">3</span>)</span>
+<span id="cb435-7"><a href="principle.html#cb435-7" tabindex="-1"></a><span class="fu">arrows</span>(v[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>], h[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>], v[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>] <span class="sc">+</span> .<span class="dv">6</span>, h[<span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>], <span class="at">angle =</span> <span class="dv">135</span>, <span class="at">code =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:optical-illusion"></span>
+<img src="principle_files/figure-html/optical-illusion-1.svg" alt="一个经典的视觉欺骗示例：红线和黑线谁更长？" width="460.8" />
+<p class="caption">
+图 7.7: 一个经典的视觉欺骗示例：红线和黑线谁更长？
+</p>
+</div>
+
+<ul>
+<li>红色为夸张色，所以红色区域可能看起来比实际大小更大</li>
+<li>大区域中的填充颜色看起来比小区域更深一些</li>
+<li>同一个角度在不同方向上放置可能会导致它看起来不一样，例如从水平线出发的角度和从 <span class="math inline">\(45\,^{\circ}\)</span> 角出发的同一个角看起来大小不同，这会影响饼图的解读</li>
+</ul>
+<p><span class="citation">Cleveland (<a href="#ref-Cleveland85">1985</a>)</span> 在一些心理学实验基础上将一系列视觉判断任务按照人眼感知精度从高到低排了以下顺序：</p>
+<ol style="list-style-type: decimal">
+<li>位置</li>
+<li>长度</li>
+<li>斜率和角度</li>
+<li>面积</li>
+<li>体积</li>
+<li>颜色（顺序：色调、饱和度和亮度）</li>
+</ol>
+<p>根据这个顺序，散点图和 Cleveland 点图表达的信息最精确，因为我们看的是点的位置，而气泡图表达信息则不太精确，因为我们要看气泡的面积。</p>
+<p>以上的研究结论当然很重要，但这里我们还要指出另一种影响心理的做法。<a href="principle.html#subsec:data-processing">7.1.3</a> 小节提到了对数据附加标记的做法，这在聚类分析中尤其常见，并且它也对人的心理有很大的影响。例如，从原散点图中我们根本看不出聚类现象，但经过颜色或其它方式标注，我们被无意识引导到了聚类现象上。图 <a href="principle.html#fig:kmeans-cluster">7.8</a> 就是这样的例子：数据完全是没有规律的随机数，如果我们对它做 K-Means 聚类，结果如左图；如果做 <span class="math inline">\(\alpha\)</span> 凸包计算，结果如右图。表面上看来，这些随机数中似乎有规律，但实际上我们看到的都是假象。左图用不同样式的点作了标记，所以看起来上下分别有聚类；右图因为有连线的存在，诱使我们认为图中有个“空心”。<span class="math inline">\(\alpha\)</span> 凸包由 <strong>alphahull</strong> 包 <span class="citation">(<a href="#ref-alphahull">Pateiro-Lopez, Rodriguez-Casal, and. 2022</a>)</span> 生成，详细原理我们就不在这里介绍了，大意是从散点图中根据一个参数 <span class="math inline">\(\alpha\)</span> 的取值找出所有的凸包（convex hull，用一个圈包住一些点），<span class="math inline">\(\alpha\)</span> 越小则找到的凸包越多，反之越少。</p>
+<div class="sourceCode" id="cb436"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb436-1"><a href="principle.html#cb436-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">320</span>)</span>
+<span id="cb436-2"><a href="principle.html#cb436-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb436-3"><a href="principle.html#cb436-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">rnorm</span>(<span class="dv">200</span>), <span class="at">ncol =</span> <span class="dv">2</span>)</span>
+<span id="cb436-4"><a href="principle.html#cb436-4" tabindex="-1"></a><span class="fu">plot</span>(x,</span>
+<span id="cb436-5"><a href="principle.html#cb436-5" tabindex="-1"></a>  <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">19</span>)[<span class="fu">kmeans</span>(x, <span class="at">centers =</span> <span class="dv">2</span>)<span class="sc">$</span>cluster],</span>
+<span id="cb436-6"><a href="principle.html#cb436-6" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="fu">expression</span>(x[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(x[<span class="dv">2</span>])</span>
+<span id="cb436-7"><a href="principle.html#cb436-7" tabindex="-1"></a>)</span>
+<span id="cb436-8"><a href="principle.html#cb436-8" tabindex="-1"></a><span class="fu">library</span>(alphahull)</span>
+<span id="cb436-9"><a href="principle.html#cb436-9" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ahull</span>(x, <span class="at">alpha =</span> <span class="fl">0.4</span>), <span class="at">xlab =</span> <span class="fu">expression</span>(x[<span class="dv">1</span>]), <span class="at">ylab =</span> <span class="fu">expression</span>(x[<span class="dv">2</span>]))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:kmeans-cluster"></span>
+<img src="principle_files/figure-html/kmeans-cluster-1.svg" alt="不存在聚类的 K-Means 聚类散点图（左）和 \(\alpha\) 凸包（右）" width="672" />
+<p class="caption">
+图 7.8: 不存在聚类的 K-Means 聚类散点图（左）和 <span class="math inline">\(\alpha\)</span> 凸包（右）
+</p>
+</div>
+
+
+</div>
+<div id="section-46" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> 统计原则<a href="principle.html#section-46" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>对统计图形来说，自然也应该有统计学上的考虑，这些考虑说到底仍然是以“尊重数据”为核心。本节用两个例子来说明统计图形中应该考虑的一些统计原则，一是直方图，二是误差线图。</p>
+<p>直方图实际上也是对数据离散化分组，所以它不可避免有一定的随意性，只是这里的分组有一定的理论背景，并非像 <a href="principle.html#subsec:data-processing">7.1.3</a> 小节中提到的例子那样没有章法、毁灭信息。无论如何，它还是隐藏了原始数据，因此我们认为在画直方图（包括移动平均直方图）时，若有可能，则尽量加上密度曲线，或者坐标轴须（<a href="gallery.html#sec:rug">4.20</a> 小节），因为密度曲线不受分组区间的影响，坐标轴须能反映原始数据的位置。试想，若有一大批数据集中正好在某个分组边界上，那么这个边界点归于左边组或右边组会在很大程度上影响直方图的形状，而在密度曲线上则会显示出这里有较高的密度值。</p>
+<p>误差线图似乎是统计学工作者极为常用的一种图形，本书没有介绍它，因为这种图形对数据的毁灭程度往往更高。误差线图通常是一个连续变量对一个分类变量画的图，基于分类变量的每个类别，分别计算连续变量的均值 <span class="math inline">\(\bar{X}\)</span> 及标准差 <span class="math inline">\(s\)</span>，然后用短横线标记出 <span class="math inline">\(\bar{X}\pm m\cdot s/\sqrt{n}\)</span> 的位置，其中 <span class="math inline">\(n\)</span> 是组内样本量，<span class="math inline">\(m\)</span> 是一个倍数，可以是 1 或 2 或其它数字，这样做的原因是短横线的标记表达了均值的置信区间（置信度取决于 <span class="math inline">\(m\)</span>，例如 <span class="math inline">\(m=2\)</span> 时大约是 95% 置信区间）。当然，这种做法理论上没有什么不对，但问题就在于原本我们有所有的连续变量数据，而误差线图把这些数据压缩为了均值和标准差，严重损失了数据信息；如果我们更挑剔一点，<span class="math inline">\(\bar{X}\pm m\cdot s/\sqrt{n}\)</span> 作为置信区间是需要假设条件的（如正态分布等），为什么我们一定要用这个需要假设前提的对称的区间呢？</p>
+<p><span class="citation">Koyama (<a href="#ref-Koyama10">2010</a>)</span> 给出了一个很好的例子来说明误差线图的弊端，这里我们也可以模拟类似的数据。图 <a href="principle.html#fig:error-bars">7.9</a> 展示了一幅误差线图（左）和它背后的真实数据（右）。如果只看误差线图，那么我们的印象可能是 A 组和 B 组的分布一样，因为它们的均值相同（条形图的高度代表均值），均值的标准误也相同（误差线的高度代表 2 倍的标准误），C 组和 D 组也一样。真实情况是 A、B、C、D 组背后的数据分布大不相同：A 组为均匀分布，样本量 20，B 组只有 2 个点，C 组由 1 个离群点和剩下聚成一团的 9 个点构成，D 组由两类点构成。对数据的压缩掩盖了这些完全不同的分布情况。</p>
+<p>尽管直方图和误差线图都很流行，但读者也需要慎重考虑其使用。借用统计学家 Frank Harrell Jr 的话，“就像人有人权一样，数据也有数据权，请尊重数据权。”</p>
+<div class="sourceCode" id="cb437"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb437-1"><a href="principle.html#cb437-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">321</span>)</span>
+<span id="cb437-2"><a href="principle.html#cb437-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">1</span>))</span>
+<span id="cb437-3"><a href="principle.html#cb437-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">runif</span>(<span class="dv">20</span>), <span class="fu">c</span>(.<span class="dv">43</span>, .<span class="dv">54</span>), <span class="fu">c</span>(.<span class="dv">6</span>, <span class="fu">runif</span>(<span class="dv">9</span>, .<span class="dv">3</span>, .<span class="dv">4</span>)), </span>
+<span id="cb437-4"><a href="principle.html#cb437-4" tabindex="-1"></a>       <span class="fu">c</span>(<span class="fu">runif</span>(<span class="dv">6</span>, .<span class="dv">5</span>, .<span class="dv">6</span>) <span class="sc">-</span> .<span class="dv">12</span>, <span class="fu">runif</span>(<span class="dv">4</span>, .<span class="dv">15</span>, .<span class="dv">22</span>) <span class="sc">+</span> .<span class="dv">12</span>)) <span class="sc">-</span> .<span class="dv">2</span></span>
+<span id="cb437-5"><a href="principle.html#cb437-5" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">rep</span>(LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>], <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">10</span>)))</span>
+<span id="cb437-6"><a href="principle.html#cb437-6" tabindex="-1"></a>mid <span class="ot">&lt;-</span> <span class="fu">barplot</span>(m <span class="ot">&lt;-</span> <span class="fu">tapply</span>(y, x, mean), <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">4</span>))[, <span class="dv">1</span>]</span>
+<span id="cb437-7"><a href="principle.html#cb437-7" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> <span class="fu">tapply</span>(y, x, sd) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">table</span>(x))</span>
+<span id="cb437-8"><a href="principle.html#cb437-8" tabindex="-1"></a><span class="fu">arrows</span>(mid, m <span class="sc">-</span> s, mid, m <span class="sc">+</span> s, <span class="at">code =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">length =</span> .<span class="dv">15</span>)</span>
+<span id="cb437-9"><a href="principle.html#cb437-9" tabindex="-1"></a><span class="fu">stripchart</span>(y <span class="sc">~</span> x, <span class="at">vertical =</span> <span class="cn">TRUE</span>, <span class="at">method =</span> <span class="st">&quot;jitter&quot;</span>, <span class="at">pch =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:error-bars"></span>
+<img src="principle_files/figure-html/error-bars-1.svg" alt="误差线图的弊端：左图为常见的误差线图，右图是误差线图背后的完整数据。" width="672" />
+<p class="caption">
+图 7.9: 误差线图的弊端：左图为常见的误差线图，右图是误差线图背后的完整数据。
+</p>
+</div>
+
+</div>
+<div id="section-47" class="section level2 hasAnchor" number="7.7">
+<h2><span class="header-section-number">7.7</span> 思考与练习<a href="principle.html#section-47" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>我们可以把 <a href="principle.html#subsec:clear-symbols">7.1.2</a> 小节中的找 <code>O</code> 和找 <code>*</code> 的任务当作一个游戏请你的朋友来玩，若有可能，请记录下他 / 她完成这两个任务分别使用的时间以及相关背景信息（在不侵犯隐私的情况下）并发给作者；或者用 <strong>MSG</strong> 包中的 <code>char_gen()</code> 函数生成更多任务去玩。</p></li>
+<li><p>Cleveland 提出了 <a href="gallery.html#sec:dotchart">4.11</a> 小节介绍的 Cleveland 点图，它的优势之一是数据 / 墨水比相对较高，因为一个点占用的面积比一个矩形条要小得多，看起来这些点也表达了和条形图等量的信息。仔细观察 Cleveland 点图，你认为它是否“让数据突出出来”了？或者你认为点图读起来方便吗？</p></li>
+<li><p><span class="citation">Lane and Sándor (<a href="#ref-Lane09">2009</a>)</span> 是一篇相对较新的关于作图原则的论文，它总结了不少有用的原则，请阅读这篇论文并考虑其中的原则是否都有足够的说服力。例如作者建议通常情况下不要用背景颜色，而我们知道 ggplot2 系统的图形通常都带有灰色背景，它们是否有冲突？</p></li>
+<li><p>Michael Friendly 的数据可视化网站是一个具有丰富图形资源的网站，尤其值得称道的是他对统计图形历史的资料总结，同时他也给了很多劣质图形的例子，比如某杂志封面上关于康奈尔大学的学费和排名折线图（<a href="http://www.datavis.ca/gallery/context.php" class="uri">http://www.datavis.ca/gallery/context.php</a>），可以说是极具误导性，请仔细阅读这些案例，并寻找我们身边的杂志和媒体中有哪些糟糕的统计图形。</p></li>
+<li><p>压缩数据导致损失信息并不是统计图形特有的现象，我们身边经常能看到这种例子。比如我们看到一些重要的统计数据只公布均值的时候，甚至觉得不平，感觉就像“被（均值）代表”了一样。我们应该采取怎样的行动让人们拥有足够的保护原始数据的意识？</p></li>
+</ol>
+
+</div>
+</div>
+
+
+
+<h3>参考文献<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Cleveland85" class="csl-entry">
+———. 1985. <em>The Elements of Graphing Data</em>. Monterey, CA: Wadsworth.
+</div>
+<div id="ref-Koyama10" class="csl-entry">
+Koyama, Tatsuki. 2010. <em>Beware OF Dynamite</em>. <a href="http://biostat.mc.vanderbilt.edu/twiki/pub/Main/TatsukiRcode/Poster3.pdf">http://biostat.mc.vanderbilt.edu/twiki/pub/Main/TatsukiRcode/Poster3.pdf</a>.
+</div>
+<div id="ref-Lane09" class="csl-entry">
+Lane, D. M., and A. Sándor. 2009. <span>“Designing Better Graphs by Including Distributional Information and Integrating Words, Numbers, and Images.”</span> <em>Psychological Methods</em> 14 (3): 239–57. <a href="https://doi.org/10.1037/a0016620">https://doi.org/10.1037/a0016620</a>.
+</div>
+<div id="ref-alphahull" class="csl-entry">
+Pateiro-Lopez, Beatriz, Alberto Rodriguez-Casal, and. 2022. <em>Alphahull: Generalization of the Convex Hull of a Sample of Points in the Plane</em>. <a href="https://CRAN.R-project.org/package=alphahull">https://CRAN.R-project.org/package=alphahull</a>.
+</div>
+<div id="ref-Robinson03" class="csl-entry">
+Robinson, Heman. 2003. <span>“Usability of Scatter Plot Symbols.”</span> <em>Statistical Computing and Graphics Newsletter</em> 14 (1). <a href="http://stat-computing.org/newsletter/issues/scgn-14-1.pdf">http://stat-computing.org/newsletter/issues/scgn-14-1.pdf</a>.
+</div>
+<div id="ref-Tufte01" class="csl-entry">
+———. 2001. <em>The Visual Display of Quantitative Information</em>. 2nd ed. Cheshire, CT, USA: Graphics Press.
+</div>
+<div id="ref-Xie10Thesis" class="csl-entry">
+———. 2010. <span>“统计图形和模拟视角下的模型理论解析.”</span> Master’s thesis, 中国人民大学. <a href="http://1t.click/ajnW">http://1t.click/ajnW</a>.
+</div>
+</div>
+<script>
+window.onload = function() {
+
+  var imgs = document.querySelectorAll('img');
+
+  // Upon clicking an image, open a new window with the
+  // dimensions of the image, pointing the `data-url` link
+  var on_click = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      // Add some extra height for the modebar
+      var height = 'height=' + (e.target.clientHeight * 1.05);
+      var width = 'width=' + e.target.clientWidth;
+      var param = 'location=yes,' + height + ',' + width + ',scrollbars=yes,status=yes';
+      window.open(e.target.dataset.url, '_blank', param);
+    }
+  };
+
+  var on_hover = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      e.target.style.cursor = 'pointer';
+    }
+  };
+
+  for (var i = 0; i < imgs.length; i++) {
+    imgs[i].addEventListener('click', on_click);
+    imgs[i].addEventListener('mouseover', on_hover);
+  }
+};
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="programming.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/MSG-Book/edit/master/principle.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

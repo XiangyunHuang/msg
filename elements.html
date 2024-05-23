@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 3 章 元素 | 现代统计图形</title>
+  <meta name="description" content="第 3 章 元素 | 现代统计图形书稿" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 3 章 元素 | 现代统计图形" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="第 3 章 元素 | 现代统计图形书稿" />
+  <meta name="github-repo" content="XiangyunHuang/msg" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 3 章 元素 | 现代统计图形" />
+  
+  <meta name="twitter:description" content="第 3 章 元素 | 现代统计图形书稿" />
+  
+
+<meta name="author" content="赵鹏" />
+<meta name="author" content="谢益辉" />
+<meta name="author" content="黄湘云" />
+
+
+<meta name="date" content="2024-05-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tools.html"/>
+<link rel="next" href="gallery.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { extensions: ["cancel.js"] }
+    });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6EJ5FTG9E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V6EJ5FTG9E');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">现代统计图形</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>推荐语</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>自序</a></li>
+<li class="chapter" data-level="" data-path="foreword.html"><a href="foreword.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="1" data-path="history.html"><a href="history.html"><i class="fa fa-check"></i><b>1</b> 历史</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="history.html"><a href="history.html#sec:pie-and-line-of-history"><i class="fa fa-check"></i><b>1.1</b> 饼图和线图的起源</a></li>
+<li class="chapter" data-level="1.2" data-path="history.html"><a href="history.html#sec:the-mystery-of-cholera-infection"><i class="fa fa-check"></i><b>1.2</b> 霍乱传染之谜</a></li>
+<li class="chapter" data-level="1.3" data-path="history.html"><a href="history.html#sec:nightingale"><i class="fa fa-check"></i><b>1.3</b> 提灯女士的玫瑰图</a></li>
+<li class="chapter" data-level="1.4" data-path="history.html"><a href="history.html#sec:charles-joseph-minard"><i class="fa fa-check"></i><b>1.4</b> 拿破仑的俄罗斯远征</a></li>
+<li class="chapter" data-level="1.5" data-path="history.html"><a href="history.html#sec:begin"><i class="fa fa-check"></i><b>1.5</b> 小结与开始</a></li>
+<li class="chapter" data-level="1.6" data-path="history.html"><a href="history.html#section"><i class="fa fa-check"></i><b>1.6</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> 工具</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tools.html"><a href="tools.html#section-1"><i class="fa fa-check"></i><b>2.1</b> 选择作图工具</a></li>
+<li class="chapter" data-level="2.2" data-path="tools.html"><a href="tools.html#sec:R-intro"><i class="fa fa-check"></i><b>2.2</b> R 语言简介</a></li>
+<li class="chapter" data-level="2.3" data-path="tools.html"><a href="tools.html#r-"><i class="fa fa-check"></i><b>2.3</b> 安装 R 语言</a></li>
+<li class="chapter" data-level="2.4" data-path="tools.html"><a href="tools.html#section-2"><i class="fa fa-check"></i><b>2.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="elements.html"><a href="elements.html"><i class="fa fa-check"></i><b>3</b> 元素</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="elements.html"><a href="elements.html#sec:color"><i class="fa fa-check"></i><b>3.1</b> 颜色</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="elements.html"><a href="elements.html#sec:palette"><i class="fa fa-check"></i><b>3.1.1</b> 固定颜色选择函数</a></li>
+<li class="chapter" data-level="3.1.2" data-path="elements.html"><a href="elements.html#section-3"><i class="fa fa-check"></i><b>3.1.2</b> 颜色生成和转换函数</a></li>
+<li class="chapter" data-level="3.1.3" data-path="elements.html"><a href="elements.html#subsec:palette"><i class="fa fa-check"></i><b>3.1.3</b> 特定颜色主题调色板</a></li>
+<li class="chapter" data-level="3.1.4" data-path="elements.html"><a href="elements.html#section-4"><i class="fa fa-check"></i><b>3.1.4</b> 渐变色的简单原理及应用</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="elements.html"><a href="elements.html#sec:points"><i class="fa fa-check"></i><b>3.2</b> 点</a></li>
+<li class="chapter" data-level="3.3" data-path="elements.html"><a href="elements.html#sec:lines"><i class="fa fa-check"></i><b>3.3</b> 曲线、直线、线段、箭头、X-样条</a></li>
+<li class="chapter" data-level="3.4" data-path="elements.html"><a href="elements.html#sec:polygon"><i class="fa fa-check"></i><b>3.4</b> 矩形、多边形</a></li>
+<li class="chapter" data-level="3.5" data-path="elements.html"><a href="elements.html#sec:grid"><i class="fa fa-check"></i><b>3.5</b> 网格线</a></li>
+<li class="chapter" data-level="3.6" data-path="elements.html"><a href="elements.html#sec:text"><i class="fa fa-check"></i><b>3.6</b> 标题、任意文本、周边文本</a></li>
+<li class="chapter" data-level="3.7" data-path="elements.html"><a href="elements.html#sec:legend"><i class="fa fa-check"></i><b>3.7</b> 图例</a></li>
+<li class="chapter" data-level="3.8" data-path="elements.html"><a href="elements.html#sec:axis"><i class="fa fa-check"></i><b>3.8</b> 坐标轴</a></li>
+<li class="chapter" data-level="3.9" data-path="elements.html"><a href="elements.html#section-5"><i class="fa fa-check"></i><b>3.9</b> 图形元素应用示例</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="elements.html"><a href="elements.html#subsec:waterfall-chart"><i class="fa fa-check"></i><b>3.9.1</b> 瀑布图</a></li>
+<li class="chapter" data-level="3.9.2" data-path="elements.html"><a href="elements.html#subsec:grad-desc"><i class="fa fa-check"></i><b>3.9.2</b> 梯度下降算法</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="elements.html"><a href="elements.html#section-6"><i class="fa fa-check"></i><b>3.10</b> 小结</a></li>
+<li class="chapter" data-level="3.11" data-path="elements.html"><a href="elements.html#section-7"><i class="fa fa-check"></i><b>3.11</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gallery.html"><a href="gallery.html"><i class="fa fa-check"></i><b>4</b> 图库</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gallery.html"><a href="gallery.html#sec:hist"><i class="fa fa-check"></i><b>4.1</b> 直方图</a></li>
+<li class="chapter" data-level="4.2" data-path="gallery.html"><a href="gallery.html#section-8"><i class="fa fa-check"></i><b>4.2</b> 茎叶图</a></li>
+<li class="chapter" data-level="4.3" data-path="gallery.html"><a href="gallery.html#sec:boxplot"><i class="fa fa-check"></i><b>4.3</b> 箱线图</a></li>
+<li class="chapter" data-level="4.4" data-path="gallery.html"><a href="gallery.html#sec:barplot"><i class="fa fa-check"></i><b>4.4</b> 条形图</a></li>
+<li class="chapter" data-level="4.5" data-path="gallery.html"><a href="gallery.html#sec:plot-default"><i class="fa fa-check"></i><b>4.5</b> 散点图</a></li>
+<li class="chapter" data-level="4.6" data-path="gallery.html"><a href="gallery.html#sec:assocplot"><i class="fa fa-check"></i><b>4.6</b> 关联图</a></li>
+<li class="chapter" data-level="4.7" data-path="gallery.html"><a href="gallery.html#sec:cdplot"><i class="fa fa-check"></i><b>4.7</b> 条件密度图</a></li>
+<li class="chapter" data-level="4.8" data-path="gallery.html"><a href="gallery.html#sec:contour"><i class="fa fa-check"></i><b>4.8</b> 等高图/等高线</a></li>
+<li class="chapter" data-level="4.9" data-path="gallery.html"><a href="gallery.html#sec:coplot"><i class="fa fa-check"></i><b>4.9</b> 条件分割图</a></li>
+<li class="chapter" data-level="4.10" data-path="gallery.html"><a href="gallery.html#sec:curve"><i class="fa fa-check"></i><b>4.10</b> 一元函数曲线图</a></li>
+<li class="chapter" data-level="4.11" data-path="gallery.html"><a href="gallery.html#sec:dotchart"><i class="fa fa-check"></i><b>4.11</b> Cleveland 点图</a></li>
+<li class="chapter" data-level="4.12" data-path="gallery.html"><a href="gallery.html#sec:filled-contour"><i class="fa fa-check"></i><b>4.12</b> 颜色等高图/层次图</a></li>
+<li class="chapter" data-level="4.13" data-path="gallery.html"><a href="gallery.html#sec:fourfoldplot"><i class="fa fa-check"></i><b>4.13</b> 四瓣图</a></li>
+<li class="chapter" data-level="4.14" data-path="gallery.html"><a href="gallery.html#sec:image"><i class="fa fa-check"></i><b>4.14</b> 颜色图</a></li>
+<li class="chapter" data-level="4.15" data-path="gallery.html"><a href="gallery.html#sec:matplot"><i class="fa fa-check"></i><b>4.15</b> 矩阵图、矩阵点、矩阵线</a></li>
+<li class="chapter" data-level="4.16" data-path="gallery.html"><a href="gallery.html#sec:mosaicplot"><i class="fa fa-check"></i><b>4.16</b> 马赛克图</a></li>
+<li class="chapter" data-level="4.17" data-path="gallery.html"><a href="gallery.html#sec:scatterplot-matrix"><i class="fa fa-check"></i><b>4.17</b> 散点图矩阵</a></li>
+<li class="chapter" data-level="4.18" data-path="gallery.html"><a href="gallery.html#sec:persp"><i class="fa fa-check"></i><b>4.18</b> 三维透视图</a></li>
+<li class="chapter" data-level="4.19" data-path="gallery.html"><a href="gallery.html#plot-design"><i class="fa fa-check"></i><b>4.19</b> 因素效应图</a></li>
+<li class="chapter" data-level="4.20" data-path="gallery.html"><a href="gallery.html#sec:rug"><i class="fa fa-check"></i><b>4.20</b> 坐标轴须</a></li>
+<li class="chapter" data-level="4.21" data-path="gallery.html"><a href="gallery.html#sec:smoothScatter"><i class="fa fa-check"></i><b>4.21</b> 平滑散点图</a></li>
+<li class="chapter" data-level="4.22" data-path="gallery.html"><a href="gallery.html#sec:spineplot"><i class="fa fa-check"></i><b>4.22</b> 棘状图</a></li>
+<li class="chapter" data-level="4.23" data-path="gallery.html"><a href="gallery.html#sec:stars"><i class="fa fa-check"></i><b>4.23</b> 星状图、蛛网图、雷达图</a></li>
+<li class="chapter" data-level="4.24" data-path="gallery.html"><a href="gallery.html#sec:stripchart"><i class="fa fa-check"></i><b>4.24</b> 带状图</a></li>
+<li class="chapter" data-level="4.25" data-path="gallery.html"><a href="gallery.html#sec:sunflowerplot"><i class="fa fa-check"></i><b>4.25</b> 向日葵散点图</a></li>
+<li class="chapter" data-level="4.26" data-path="gallery.html"><a href="gallery.html#sec:symbols"><i class="fa fa-check"></i><b>4.26</b> 符号图</a></li>
+<li class="chapter" data-level="4.27" data-path="gallery.html"><a href="gallery.html#sec:pie"><i class="fa fa-check"></i><b>4.27</b> 饼图</a></li>
+<li class="chapter" data-level="4.28" data-path="gallery.html"><a href="gallery.html#section-9"><i class="fa fa-check"></i><b>4.28</b> 热图</a></li>
+<li class="chapter" data-level="4.29" data-path="gallery.html"><a href="gallery.html#section-10"><i class="fa fa-check"></i><b>4.29</b> 交互效应图</a></li>
+<li class="chapter" data-level="4.30" data-path="gallery.html"><a href="gallery.html#sec:qqplot"><i class="fa fa-check"></i><b>4.30</b> QQ 图</a></li>
+<li class="chapter" data-level="4.31" data-path="gallery.html"><a href="gallery.html#section-11"><i class="fa fa-check"></i><b>4.31</b> 生存函数图</a></li>
+<li class="chapter" data-level="4.32" data-path="gallery.html"><a href="gallery.html#sec:rpart"><i class="fa fa-check"></i><b>4.32</b> 分类与回归树图</a></li>
+<li class="chapter" data-level="4.33" data-path="gallery.html"><a href="gallery.html#sec:vioplot"><i class="fa fa-check"></i><b>4.33</b> 小提琴图</a></li>
+<li class="chapter" data-level="4.34" data-path="gallery.html"><a href="gallery.html#sec:maps"><i class="fa fa-check"></i><b>4.34</b> 地图</a></li>
+<li class="chapter" data-level="4.35" data-path="gallery.html"><a href="gallery.html#sec:faces"><i class="fa fa-check"></i><b>4.35</b> 脸谱图</a></li>
+<li class="chapter" data-level="4.36" data-path="gallery.html"><a href="gallery.html#sec:parcoords"><i class="fa fa-check"></i><b>4.36</b> 平行坐标图</a></li>
+<li class="chapter" data-level="4.37" data-path="gallery.html"><a href="gallery.html#sec:andrews-curve"><i class="fa fa-check"></i><b>4.37</b> 调和曲线图</a></li>
+<li class="chapter" data-level="4.38" data-path="gallery.html"><a href="gallery.html#sec:bagplot"><i class="fa fa-check"></i><b>4.38</b> 二维箱线图</a></li>
+<li class="chapter" data-level="4.39" data-path="gallery.html"><a href="gallery.html#sec:base-graph-ext"><i class="fa fa-check"></i><b>4.39</b> 延伸与小结</a></li>
+<li class="chapter" data-level="4.40" data-path="gallery.html"><a href="gallery.html#section-12"><i class="fa fa-check"></i><b>4.40</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="system.html"><a href="system.html"><i class="fa fa-check"></i><b>5</b> 系统</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="system.html"><a href="system.html#sec:ggplot2"><i class="fa fa-check"></i><b>5.1</b> ggplot2 图形</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="system.html"><a href="system.html#section-13"><i class="fa fa-check"></i><b>5.1.1</b> 几何形状</a></li>
+<li class="chapter" data-level="5.1.2" data-path="system.html"><a href="system.html#section-14"><i class="fa fa-check"></i><b>5.1.2</b> 统计量</a></li>
+<li class="chapter" data-level="5.1.3" data-path="system.html"><a href="system.html#section-15"><i class="fa fa-check"></i><b>5.1.3</b> 标度</a></li>
+<li class="chapter" data-level="5.1.4" data-path="system.html"><a href="system.html#section-16"><i class="fa fa-check"></i><b>5.1.4</b> 坐标系</a></li>
+<li class="chapter" data-level="5.1.5" data-path="system.html"><a href="system.html#subsec:facet"><i class="fa fa-check"></i><b>5.1.5</b> 切片</a></li>
+<li class="chapter" data-level="5.1.6" data-path="system.html"><a href="system.html#section-17"><i class="fa fa-check"></i><b>5.1.6</b> 位置调整</a></li>
+<li class="chapter" data-level="5.1.7" data-path="system.html"><a href="system.html#subsec:theme"><i class="fa fa-check"></i><b>5.1.7</b> 主题</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="system.html"><a href="system.html#section-18"><i class="fa fa-check"></i><b>5.2</b> 网格图形</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="system.html"><a href="system.html#section-19"><i class="fa fa-check"></i><b>5.2.1</b> 视图区</a></li>
+<li class="chapter" data-level="5.2.2" data-path="system.html"><a href="system.html#section-20"><i class="fa fa-check"></i><b>5.2.2</b> 旋转</a></li>
+<li class="chapter" data-level="5.2.3" data-path="system.html"><a href="system.html#section-21"><i class="fa fa-check"></i><b>5.2.3</b> 图形对象</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="system.html"><a href="system.html#lattice-"><i class="fa fa-check"></i><b>5.3</b> lattice 图形</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="system.html"><a href="system.html#subsec:lattice-intro"><i class="fa fa-check"></i><b>5.3.1</b> 简介</a></li>
+<li class="chapter" data-level="5.3.2" data-path="system.html"><a href="system.html#section-22"><i class="fa fa-check"></i><b>5.3.2</b> 公式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="system.html"><a href="system.html#section-23"><i class="fa fa-check"></i><b>5.3.3</b> 选项</a></li>
+<li class="chapter" data-level="5.3.4" data-path="system.html"><a href="system.html#section-24"><i class="fa fa-check"></i><b>5.3.4</b> 数据</a></li>
+<li class="chapter" data-level="5.3.5" data-path="system.html"><a href="system.html#section-25"><i class="fa fa-check"></i><b>5.3.5</b> 细节</a></li>
+<li class="chapter" data-level="5.3.6" data-path="system.html"><a href="system.html#section-26"><i class="fa fa-check"></i><b>5.3.6</b> 面板</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="system.html"><a href="system.html#sec:dynamic-graphics"><i class="fa fa-check"></i><b>5.4</b> rggobi 动态图形</a></li>
+<li class="chapter" data-level="5.5" data-path="system.html"><a href="system.html#sec:rgl"><i class="fa fa-check"></i><b>5.5</b> rgl 三维图形</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="system.html"><a href="system.html#section-27"><i class="fa fa-check"></i><b>5.5.1</b> 三维点线图</a></li>
+<li class="chapter" data-level="5.5.2" data-path="system.html"><a href="system.html#section-28"><i class="fa fa-check"></i><b>5.5.2</b> 三维透视图</a></li>
+<li class="chapter" data-level="5.5.3" data-path="system.html"><a href="system.html#section-29"><i class="fa fa-check"></i><b>5.5.3</b> 动画和截图</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="system.html"><a href="system.html#sec:animation"><i class="fa fa-check"></i><b>5.6</b> 动画视频</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="system.html"><a href="system.html#section-30"><i class="fa fa-check"></i><b>5.6.1</b> 动画导出工具</a></li>
+<li class="chapter" data-level="5.6.2" data-path="system.html"><a href="system.html#section-31"><i class="fa fa-check"></i><b>5.6.2</b> 统计学动画</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="system.html"><a href="system.html#section-32"><i class="fa fa-check"></i><b>5.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>6</b> 数据</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data.html"><a href="data.html#sec:data-type"><i class="fa fa-check"></i><b>6.1</b> 数据类型</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data.html"><a href="data.html#section-33"><i class="fa fa-check"></i><b>6.1.1</b> 分类数据</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data.html"><a href="data.html#section-34"><i class="fa fa-check"></i><b>6.1.2</b> 连续数据</a></li>
+<li class="chapter" data-level="6.1.3" data-path="data.html"><a href="data.html#section-35"><i class="fa fa-check"></i><b>6.1.3</b> 混合数据</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data.html"><a href="data.html#sec:data-case"><i class="fa fa-check"></i><b>6.2</b> 数据案例</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="data.html"><a href="data.html#section-36"><i class="fa fa-check"></i><b>6.2.1</b> 价格走势</a></li>
+<li class="chapter" data-level="6.2.2" data-path="data.html"><a href="data.html#subsec:canabalt"><i class="fa fa-check"></i><b>6.2.2</b> 末日狂奔</a></li>
+<li class="chapter" data-level="6.2.3" data-path="data.html"><a href="data.html#subsec:music"><i class="fa fa-check"></i><b>6.2.3</b> 音乐之声</a></li>
+<li class="chapter" data-level="6.2.4" data-path="data.html"><a href="data.html#subsec:tvearn"><i class="fa fa-check"></i><b>6.2.4</b> 绝望主妇</a></li>
+<li class="chapter" data-level="6.2.5" data-path="data.html"><a href="data.html#section-37"><i class="fa fa-check"></i><b>6.2.5</b> 灌篮高手</a></li>
+<li class="chapter" data-level="6.2.6" data-path="data.html"><a href="data.html#subsec:percentage"><i class="fa fa-check"></i><b>6.2.6</b> 神奇数字</a></li>
+<li class="chapter" data-level="6.2.7" data-path="data.html"><a href="data.html#subsec:lowess"><i class="fa fa-check"></i><b>6.2.7</b> 化点为线</a></li>
+<li class="chapter" data-level="6.2.8" data-path="data.html"><a href="data.html#subsec:ternary"><i class="fa fa-check"></i><b>6.2.8</b> 三足鼎立</a></li>
+<li class="chapter" data-level="6.2.9" data-path="data.html"><a href="data.html#section-38"><i class="fa fa-check"></i><b>6.2.9</b> 背景地图</a></li>
+<li class="chapter" data-level="6.2.10" data-path="data.html"><a href="data.html#subsec:cluster"><i class="fa fa-check"></i><b>6.2.10</b> 统计词话</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="data.html"><a href="data.html#sec:simulations"><i class="fa fa-check"></i><b>6.3</b> 统计模拟</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data.html"><a href="data.html#section-39"><i class="fa fa-check"></i><b>6.3.1</b> 线性回归</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data.html"><a href="data.html#section-40"><i class="fa fa-check"></i><b>6.3.2</b> 稳健回归</a></li>
+<li class="chapter" data-level="6.3.3" data-path="data.html"><a href="data.html#section-41"><i class="fa fa-check"></i><b>6.3.3</b> 离群检测</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data.html"><a href="data.html#section-42"><i class="fa fa-check"></i><b>6.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="principle.html"><a href="principle.html"><i class="fa fa-check"></i><b>7</b> 原则</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="principle.html"><a href="principle.html#sec:data-priority"><i class="fa fa-check"></i><b>7.1</b> 数据至上</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="principle.html"><a href="principle.html#subsec:element-priority"><i class="fa fa-check"></i><b>7.1.1</b> 分清主次</a></li>
+<li class="chapter" data-level="7.1.2" data-path="principle.html"><a href="principle.html#subsec:clear-symbols"><i class="fa fa-check"></i><b>7.1.2</b> 符号明确可分</a></li>
+<li class="chapter" data-level="7.1.3" data-path="principle.html"><a href="principle.html#subsec:data-processing"><i class="fa fa-check"></i><b>7.1.3</b> 谨慎处理数据</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="principle.html"><a href="principle.html#section-43"><i class="fa fa-check"></i><b>7.2</b> 节约墨水</a></li>
+<li class="chapter" data-level="7.3" data-path="principle.html"><a href="principle.html#section-44"><i class="fa fa-check"></i><b>7.3</b> 设计布局</a></li>
+<li class="chapter" data-level="7.4" data-path="principle.html"><a href="principle.html#section-45"><i class="fa fa-check"></i><b>7.4</b> 附带解释</a></li>
+<li class="chapter" data-level="7.5" data-path="principle.html"><a href="principle.html#sec:psychology"><i class="fa fa-check"></i><b>7.5</b> 考虑心理</a></li>
+<li class="chapter" data-level="7.6" data-path="principle.html"><a href="principle.html#section-46"><i class="fa fa-check"></i><b>7.6</b> 统计原则</a></li>
+<li class="chapter" data-level="7.7" data-path="principle.html"><a href="principle.html#section-47"><i class="fa fa-check"></i><b>7.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>A</b> 程序初步</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="programming.html"><a href="programming.html#sec:object"><i class="fa fa-check"></i><b>A.1</b> 对象类型</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="programming.html"><a href="programming.html#section-48"><i class="fa fa-check"></i><b>A.1.1</b> 向量</a></li>
+<li class="chapter" data-level="A.1.2" data-path="programming.html"><a href="programming.html#section-49"><i class="fa fa-check"></i><b>A.1.2</b> 因子</a></li>
+<li class="chapter" data-level="A.1.3" data-path="programming.html"><a href="programming.html#section-50"><i class="fa fa-check"></i><b>A.1.3</b> 数组和矩阵</a></li>
+<li class="chapter" data-level="A.1.4" data-path="programming.html"><a href="programming.html#section-51"><i class="fa fa-check"></i><b>A.1.4</b> 数据框和列表</a></li>
+<li class="chapter" data-level="A.1.5" data-path="programming.html"><a href="programming.html#section-52"><i class="fa fa-check"></i><b>A.1.5</b> 函数</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="programming.html"><a href="programming.html#section-53"><i class="fa fa-check"></i><b>A.2</b> 操作方法</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="programming.html"><a href="programming.html#section-54"><i class="fa fa-check"></i><b>A.2.1</b> 选择与循环</a></li>
+<li class="chapter" data-level="A.2.2" data-path="programming.html"><a href="programming.html#section-55"><i class="fa fa-check"></i><b>A.2.2</b> 输入与输出</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="programming.html"><a href="programming.html#section-56"><i class="fa fa-check"></i><b>A.3</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="tricks.html"><a href="tricks.html"><i class="fa fa-check"></i><b>B</b> 细节技巧</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="tricks.html"><a href="tricks.html#sec:par"><i class="fa fa-check"></i><b>B.1</b> <code>par()</code> 函数</a></li>
+<li class="chapter" data-level="B.2" data-path="tricks.html"><a href="tricks.html#sec:plot"><i class="fa fa-check"></i><b>B.2</b> <code>plot()</code> 函数</a></li>
+<li class="chapter" data-level="B.3" data-path="tricks.html"><a href="tricks.html#sec:plotmath"><i class="fa fa-check"></i><b>B.3</b> 数学公式</a></li>
+<li class="chapter" data-level="B.4" data-path="tricks.html"><a href="tricks.html#sec:multipage"><i class="fa fa-check"></i><b>B.4</b> 一页多图</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="tricks.html"><a href="tricks.html#section-57"><i class="fa fa-check"></i><b>B.4.1</b> 设置图形参数</a></li>
+<li class="chapter" data-level="B.4.2" data-path="tricks.html"><a href="tricks.html#section-58"><i class="fa fa-check"></i><b>B.4.2</b> 设置图形版面</a></li>
+<li class="chapter" data-level="B.4.3" data-path="tricks.html"><a href="tricks.html#section-59"><i class="fa fa-check"></i><b>B.4.3</b> 拆分设备屏幕</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="tricks.html"><a href="tricks.html#sec:interaction"><i class="fa fa-check"></i><b>B.5</b> 交互操作</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="tricks.html"><a href="tricks.html#section-60"><i class="fa fa-check"></i><b>B.5.1</b> 获取鼠标位置的坐标</a></li>
+<li class="chapter" data-level="B.5.2" data-path="tricks.html"><a href="tricks.html#section-61"><i class="fa fa-check"></i><b>B.5.2</b> 识别鼠标附近的数据</a></li>
+<li class="chapter" data-level="B.5.3" data-path="tricks.html"><a href="tricks.html#section-62"><i class="fa fa-check"></i><b>B.5.3</b> 响应鼠标键盘的动作</a></li>
+</ul></li>
+<li class="chapter" data-level="B.6" data-path="tricks.html"><a href="tricks.html#sec:device"><i class="fa fa-check"></i><b>B.6</b> 图形设备</a></li>
+<li class="chapter" data-level="B.7" data-path="tricks.html"><a href="tricks.html#section-63"><i class="fa fa-check"></i><b>B.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="gui.html"><a href="gui.html"><i class="fa fa-check"></i><b>C</b> 图形界面</a></li>
+<li class="chapter" data-level="D" data-path="msg-pkgs.html"><a href="msg-pkgs.html"><i class="fa fa-check"></i><b>D</b> 本书 R 包</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="msg-pkgs.html"><a href="msg-pkgs.html#sec:MSG-fun"><i class="fa fa-check"></i><b>D.1</b> 函数说明</a></li>
+<li class="chapter" data-level="D.2" data-path="msg-pkgs.html"><a href="msg-pkgs.html#section-64"><i class="fa fa-check"></i><b>D.2</b> 数据说明</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="postscript.html"><a href="postscript.html"><i class="fa fa-check"></i><b>E</b> 后记</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">现代统计图形</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cha:elements" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">第 3 章</span> 元素<a href="elements.html#cha:elements" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p>他从信封里拿出一页四折叠的半张 <span class="math inline">\(13\times17\)</span> 英寸的信纸。他把信纸打开铺在桌上，中间有一行铅字拼贴成的句子：</p>
+<p>若你看重自己生命的价值或还有理性，那就远离沼地。</p>
+<p>只有“沼地”两个字是用墨水写的。</p>
+<p>“现在，”亨利·巴斯克维尔爵士说，“福尔摩斯先生，也许您可以告诉我，这是什么意思，到底是谁对我的事这么感兴趣呢？”</p>
+<p>……“可是，亲爱的华生，两者之间的联系非常紧密，短信中的每个单字都是从这个长句中抽出来的。例如：‘你’、‘你的’、‘生’、‘命’、‘理性’、‘价值’、’远离’等，你现在还看不出这些字是从那里面弄来的吗？”</p>
+<p>“天啊！太对了！唉呀，您可聪明绝顶！”亨利爵士喊了起来。</p>
+<p>— 柯南·道尔《巴斯克维尔的猎犬》</p>
+</blockquote>
+<p>任何一幅统计图形都是由最基础的图形元素构成的，这些元素我们并不陌生，无非就是颜色、点、线（直线、曲线、线段甚至箭头）、矩形、任意多边形、文本以及图例。R 提供了相应的一系列函数，用以向已有的图形中添加图形元素。事实上，R 的所有作图函数分为两类，一类是高层函数（high-level），用以生成新的图形；另一类就是低层函数（low-level），这一类指的正是绘制图形元素的这些基础函数。</p>
+<p>本章所介绍的图形元素都是基础图形系统的元素，关于其它系统的元素，参见第 <a href="system.html#chap:system">5</a> 章，但归根结底，构建图形的原理是类似的。本章的目的是让读者了解如何从底层一步步构造一幅完整图形。当然，这并非对所有读者都有用，若想直接了解 R 高层作图函数，不妨直接跳入第 <a href="gallery.html#cha:gallery">4</a> 章。</p>
+<div id="sec:color" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> 颜色<a href="elements.html#sec:color" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>默认情况下，R 中颜色的设置主要需要依靠 <strong>grDevices</strong> 包的支持，其中提供了大量的颜色选择函数和生成函数，以及几种预先设置好的调色板（Palette），用以表现不同的主题。我们把 <strong>grDevices</strong> 包中所有关于颜色的函数大致分为三类：固定颜色选择函数、颜色生成和转换函数、特定颜色主题调色板，这些函数将在下面三小节中详细介绍。</p>
+<div id="sec:palette" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> 固定颜色选择函数<a href="elements.html#sec:palette" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>固定颜色选择函数也就是 R 提供的它自带固定种类的颜色，主要是函数 <code>colors()</code> 以及 <code>palette()</code>：</p>
+<dl>
+<dt><code>colors(), colours()</code></dt>
+<dd>
+这两个函数完全一样，只是英文的两种不同拼写而已，它们不需要任何参数，会生成 657 种颜色名称，如：<code>'beige'</code>（米色）、 <code>'bisque'</code>（桔黄色）、<code>'chocolate'</code>（巧克力色）、<code>'cyan'</code>（青色）、<code>'gold'</code>（金黄色）、 <code>'ivory'</code>（象牙色）、<code>'lavender'</code>（浅紫色）等。下面的代码表示从 <code>colors()</code> 中随机抽取 20 种颜色（注意，<code>sample()</code> 是随机抽样函数，因此重复这个语句每次得到的结果可能会不一样，这是正常的）：
+</dd>
+</dl>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="elements.html#cb8-1" tabindex="-1"></a><span class="fu">sample</span>(<span class="fu">colors</span>(), <span class="dv">20</span>)</span></code></pre></div>
+<pre><code>##  [1] &quot;sienna3&quot;        &quot;burlywood4&quot;     &quot;gray61&quot;         &quot;grey10&quot;        
+##  [5] &quot;grey52&quot;         &quot;skyblue1&quot;       &quot;grey76&quot;         &quot;seagreen1&quot;     
+##  [9] &quot;slateblue&quot;      &quot;grey81&quot;         &quot;goldenrod4&quot;     &quot;slateblue4&quot;    
+## [13] &quot;red4&quot;           &quot;grey90&quot;         &quot;lightsteelblue&quot; &quot;dimgrey&quot;       
+## [17] &quot;burlywood1&quot;     &quot;gray33&quot;         &quot;gray12&quot;         &quot;cyan4&quot;</code></pre>
+<p>有兴趣观看所有 657 种颜色的读者可以试着运行下面的语句，其中 <code>pdf()</code> 函数的作用是打开一个作图设备，详情参见附录 <a href="tricks.html#sec:device">B.6</a> 节，可以把参数 <code>'colors-bar.pdf'</code> 替换为任意一个可以读写的路径 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>，条形图 <code>barplot()</code> 的说明参见 <a href="gallery.html#sec:barplot">4.4</a> 小节。最后结果是在设定文件路径上获得一个 PDF 文件，展示所有颜色名称及其对应的颜色。</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="elements.html#cb10-1" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">&quot;colors-bar.pdf&quot;</span>, <span class="at">height =</span> <span class="dv">120</span>)</span>
+<span id="cb10-2"><a href="elements.html#cb10-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">0</span>) <span class="sc">+</span> <span class="fl">0.1</span>, <span class="at">yaxs =</span> <span class="st">&quot;i&quot;</span>)</span>
+<span id="cb10-3"><a href="elements.html#cb10-3" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(<span class="fu">colors</span>())),</span>
+<span id="cb10-4"><a href="elements.html#cb10-4" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">rev</span>(<span class="fu">colors</span>()), <span class="at">names.arg =</span> <span class="fu">rev</span>(<span class="fu">colors</span>()), <span class="at">horiz =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb10-5"><a href="elements.html#cb10-5" tabindex="-1"></a>  <span class="at">las =</span> <span class="dv">1</span>, <span class="at">xaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="at">main =</span> <span class="fu">expression</span>(<span class="st">&quot;Bars of colors in&quot;</span> <span class="sc">~</span> <span class="fu">italic</span>(<span class="fu">colors</span>()))</span>
+<span id="cb10-6"><a href="elements.html#cb10-6" tabindex="-1"></a>)</span>
+<span id="cb10-7"><a href="elements.html#cb10-7" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<dl>
+<dt><code>palette()</code></dt>
+<dd>
+调色板函数；用法 <code>palette(value)</code>，这个函数用来设置调色板或者获得调色板颜色值；注意，实际上这个函数的结果可能并非“固定”颜色，但是只要设定好了调色板，它的取值就不会再改变（直到下一次重新设定调色板）。如果不写任何参数，那么该函数返回当前的调色板设置，即一个包含当前调色板中所有颜色的向量；若参数长度为 1 则将当前调色板重新设置为以该参数为名称的调色板，目前这种参数只有 <code>'default'</code> 这一种，即设置为默认调色板：<code>palette('default')</code>；若参数为一个颜色向量，那么将当前调色板中的颜色更改为该参数表示的颜色。如下例：
+</dd>
+</dl>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="elements.html#cb11-1" tabindex="-1"></a><span class="fu">palette</span>() <span class="co"># 默认的调色板颜色</span></span></code></pre></div>
+<pre><code>## [1] &quot;black&quot;   &quot;#DF536B&quot; &quot;#61D04F&quot; &quot;#2297E6&quot; &quot;#28E2E5&quot; &quot;#CD0BBC&quot; &quot;#F5C710&quot;
+## [8] &quot;gray62&quot;</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="elements.html#cb13-1" tabindex="-1"></a><span class="fu">palette</span>(<span class="fu">colors</span>()[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]) <span class="co"># 重新设置调色板为 colors() 的前 10 种颜色</span></span>
+<span id="cb13-2"><a href="elements.html#cb13-2" tabindex="-1"></a><span class="fu">palette</span>() <span class="co"># 更改后的调色板颜色</span></span></code></pre></div>
+<pre><code>##  [1] &quot;white&quot;         &quot;aliceblue&quot;     &quot;antiquewhite&quot;  &quot;antiquewhite1&quot;
+##  [5] &quot;antiquewhite2&quot; &quot;antiquewhite3&quot; &quot;antiquewhite4&quot; &quot;aquamarine&quot;   
+##  [9] &quot;aquamarine&quot;    &quot;aquamarine2&quot;</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="elements.html#cb15-1" tabindex="-1"></a><span class="fu">palette</span>(<span class="st">&quot;default&quot;</span>) <span class="co"># 恢复默认调色板</span></span></code></pre></div>
+<p>调色板的好处在于，我们可以在 R 中使用一个整数来表示颜色，而这个整数对应的颜色就是调色板中相应位置的颜色，比如在某作图函数中调用参数 <code>col = 2</code> 表示取调色板中第 2 种颜色。 若整数值超过了调色板颜色向量的长度，那么 R 会自动取该整数除以调色板颜色向量长度的余数。</p>
+</div>
+<div id="section-3" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> 颜色生成和转换函数<a href="elements.html#section-3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>R 提供了一系列利用颜色生成模型如 RGB 模型（红绿蓝三原色混合）、HSV 色彩模型（色调、饱和度和纯度）、HCL 色彩模型（色调、色度和亮度）和灰色生成模型等。颜色的构造原理比较复杂，超出了本书讨论范围，因此这里仅对相关函数的用法作介绍。</p>
+<dl>
+<dt><code>rgb()</code></dt>
+<dd>
+红绿蓝三原色混合，用法 <code>rgb(red, green, blue, alpha, names = NULL, maxColorValue = 1)</code>；其中前四个参数都取值于区间 [0, maxColorValue]，<code>names</code> 参数用来指定生成颜色向量的名称。这里前三个参数不用过多解释，值越大就说明那种颜色的成分越高；可能 <code>alpha</code> 我们不太熟悉，它指的是颜色的透明度，取 0 表示完全透明，取最大值表示完全不透明（默认），透明度在统计图形中有着重要地位，因为它具有一个非常有用的性质 — 透明度可以叠加，即：两个或多个带有透明色的图形元素重叠在一起时，重叠部分的透明度会变小；这在某些统计图形中可以找到很好的应用，例如当散点图中点的数目过多而导致大量的点相互重叠时，我们可以使用透明色来看清图中的深层规律，其中一个直接的规律就是二维密度，点重叠越密集，则颜色越深（由于透明度的的叠加），该处的密度值也越大，图 <a href="gallery.html#fig:scatter-alpha">4.6</a> 给出了一个半透明色应用的示例。
+</dd>
+<dt><code>hsv()</code></dt>
+<dd>
+用色调（Hue）、饱和度（Saturation）和纯度（Value）来构造颜色，用法 <code>hsv(h = 1, s = 1, v = 1, alpha)</code>；前三个参数分别对应色调、饱和度和纯度，取值于区间 <span class="math inline">\([0, 1]\)</span>；<code>alpha</code> 意思同上，但取值于区间 <span class="math inline">\([0, 1]\)</span>
+</dd>
+<dt><code>hcl()</code></dt>
+<dd>
+用色调（Hue）、色度（Chroma）和亮度（Luminance）构造颜色，用法为 <code>hcl(h = 0, c = 35, l = 85, alpha, fixup = TRUE)</code>；参数 h 取值于区间 <span class="math inline">\([0, 360]\)</span>，可以将它想象为一个角度：<span class="math inline">\(0\,^{\circ}\)</span> 表示红色，<span class="math inline">\(120\,^{\circ}\)</span> 表示绿色，<span class="math inline">\(240\,^{\circ}\)</span> 表示蓝色，中间的都是过渡色；参数 <code>c</code> 取值受 <code>h</code> 和 <code>l</code> 限制；参数 <code>l</code> 取值在区间 <span class="math inline">\([0, 100]\)</span> 上，取值越大生成的颜色越亮；<code>alpha</code> 意思同 <code>hsv()</code>；<code>fixup</code> 表示是否修正生成的颜色值，之所以要修正，是因为有些搭配生成的 RGB 颜色 <code>(r, g, b)</code> 可能出现某一个元素超过 1 的情形
+</dd>
+<dt><code>gray(), grey()</code></dt>
+<dd>
+生成灰色系列；只有一个参数 <code>level</code>，表示灰度水平，取值在 0 到 1 之间，其中 0 表示纯黑色，而 1 表示纯白色；<code>level</code> 取一个向量则可以生成一系列灰色值，如下例：
+</dd>
+</dl>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="elements.html#cb16-1" tabindex="-1"></a><span class="fu">gray</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">5</span>))</span></code></pre></div>
+<pre><code>## [1] &quot;#000000&quot; &quot;#404040&quot; &quot;#808080&quot; &quot;#BFBFBF&quot; &quot;#FFFFFF&quot;</code></pre>
+<p>熟悉十六进制的人应该能看出这些颜色都是由六个十六进制数字组成的，每两位数字（合起来取值从 0 到 255）分别表示红绿蓝（RGB 颜色）的比例。我们知道，当三原色完全混合时，生成的颜色是白色，上面结果的最后一个 <code>'#FFFFFF'</code> 正是纯白色。</p>
+<p>除了颜色生成函数之外，<strong>grDevices</strong> 包还提供了两种颜色转换函数，作用就是把一种颜色从一种颜色系统空间转移到另一种颜色系统空间中表示。这两个函数分别是：</p>
+<dl>
+<dt><code>rgb2hsv()</code></dt>
+<dd>
+将 RGB 颜色转换为 HSV 颜色，用法 <code>rgb2hsv(r, g = NULL, b = NULL, maxColorValue = 255)</code>；所有参数意思已经在上面的列表中解释过，只是要注意，当 <code>r</code> 是一个矩阵时，另外两个参数 <code>g</code> 和 <code>b</code> 就应省略不写。下例中我们将一个 <span class="math inline">\(3\times4\)</span> 的 RGB 颜色矩阵传入函数 <code>rgb2hsv()</code>，该函数会把每一列 RGB 颜色都转化为相应的 HSV 颜色。颜色矩阵的前三列分别是红、绿和蓝色，请观察和对比两种颜色系统的表示方法。
+</dd>
+</dl>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="elements.html#cb18-1" tabindex="-1"></a><span class="co"># 赋值给变量 rgb.mat</span></span>
+<span id="cb18-2"><a href="elements.html#cb18-2" tabindex="-1"></a>(rgb.mat <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">255</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">200</span>), <span class="at">nrow =</span> <span class="dv">3</span>))</span></code></pre></div>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]  255    0    0   10
+## [2,]    0  255    0  100
+## [3,]    0    0  255  200</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="elements.html#cb20-1" tabindex="-1"></a><span class="fu">rgb2hsv</span>(rgb.mat)</span></code></pre></div>
+<pre><code>##   [,1]      [,2]      [,3]      [,4]
+## h    0 0.3333333 0.6666667 0.5877193
+## s    1 1.0000000 1.0000000 0.9500000
+## v    1 1.0000000 1.0000000 0.7843137</code></pre>
+<dl>
+<dt><code>col2rgb()</code></dt>
+<dd>
+将任意一种 R 颜色值转换为 RGB 表示，用法 <code>col2rgb(col, alpha = FALSE)</code>；参数 <code>col</code> 的取值可以有三种形式，第一种是 <code>colors()</code> 函数中的任意一种颜色名称（字符串），第二种是如 <code>#rrggbb</code> 十六进制形式的的 RGB 颜色表示，第三种是一个整数，即调色板中相应位置的颜色。
+</dd>
+</dl>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="elements.html#cb22-1" tabindex="-1"></a><span class="fu">col2rgb</span>(<span class="dv">4</span>) <span class="co"># 调色板中第 4 种颜色默认是蓝色</span></span></code></pre></div>
+<pre><code>##       [,1]
+## red     34
+## green  151
+## blue   230</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="elements.html#cb24-1" tabindex="-1"></a><span class="fu">col2rgb</span>(<span class="st">&quot;yellow&quot;</span>) <span class="co"># 黄色是由红绿混合得到的</span></span></code></pre></div>
+<pre><code>##       [,1]
+## red    255
+## green  255
+## blue     0</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="elements.html#cb26-1" tabindex="-1"></a><span class="fu">col2rgb</span>(<span class="st">&quot;#FF00FF&quot;</span>) <span class="co"># 红蓝混合为紫色</span></span></code></pre></div>
+<pre><code>##       [,1]
+## red    255
+## green    0
+## blue   255</code></pre>
+</div>
+<div id="subsec:palette" class="section level3 hasAnchor" number="3.1.3">
+<h3><span class="header-section-number">3.1.3</span> 特定颜色主题调色板<a href="elements.html#subsec:palette" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>前面介绍的颜色生成过程对于一般人来说也许显得太复杂，除了美术和绘图专业人士，大部分人可能并不懂颜色的透明度、饱和度等概念，那么在配制大批量颜色的时候可能会比较迷惑。此时，R 提供了第三种选择，那就是特定颜色主题的调色板。这些调色板都用一系列渐变的颜色表现了特定的主题，例如彩虹颜色系列、白热化颜色系列、地形颜色系列等等。</p>
+<dl>
+<dt><code>rainbow()</code></dt>
+<dd>
+顾名思义，就是用彩虹的颜色（“红橙黄绿青蓝紫”）来产生一系列颜色，用法 <code>rainbow(n, s = 1, v = 1, start = 0, end = max(1, n - 1)/n)</code>；参数 <code>n</code> 设定产生颜色的数目，参数 <code>s</code>、<code>v</code> 前文已经解释过；参数 <code>start</code> 和 <code>end</code> 设定彩虹颜色的一个子集，生成的颜色将从这个子集中选取，这个子集选取的大致分界线为：红色（red）为 0，黄色（yellow）为 1/6，绿色（green）为 2/6，青色（cyan）为 3/6，蓝色（blue）为 4/6，红紫色（magenta）为 5/6
+</dd>
+<dt><code>heat.colors()</code></dt>
+<dd>
+从红色渐变到黄色再变到白色（以体现“高温”、“白热化”，读者可以在 R 中运行 <code>demo(image)</code> 并观察第二幅等高线图）
+</dd>
+<dt><code>terrain.colors()</code></dt>
+<dd>
+从绿色渐变到黄色再到棕色最后到白色（这些颜色适合表示地理地形，读者可以运行 <code>demo(persp)</code> 并观察最后两幅关于火山的三维图形，以及运行 <code>demo(image)</code> 并观察第一幅等高线图）
+</dd>
+<dt><code>topo.colors()</code></dt>
+<dd>
+从蓝色渐变到青色再到黄色最后到棕色
+</dd>
+<dt><code>cm.colors()</code></dt>
+<dd>
+从青色渐变到白色再到粉红色（读者可以运行 <code>demo(image)</code> 并观察最后几幅颜色图）
+</dd>
+</dl>
+<p>若想要获得更复杂更精细的颜色或调色板，不妨使用 <strong>grDevices</strong> 包中的颜色“插值”函数，如 <code>colorRamp()</code> 和 <code>colorRampPalette()</code> 函数，读者可以根据需要产生符合特定要求的调色板，以适应展示主题的需要，这里不详述这两个函数的使用方法。</p>
+<p>对于缺乏耐心和兴趣去研究颜色的用户来说，附加包 <strong>RColorBrewer</strong><span class="citation">(<a href="#ref-RColorBrewer">Neuwirth 2022</a>)</span> 也不失为一个好的选择。这个包提供了三类调色板，用户只需要指定调色板名称，就可以用包中的 <code>brewer.pal()</code> 函数生成颜色。这三类调色板包括：</p>
+<dl>
+<dt>连续型调色板 Sequential palettes</dt>
+<dd>
+生成一系列连续渐变的颜色，通常用来标记连续型数值的大小
+</dd>
+<dt>极端化调色板 Diverging palettes</dt>
+<dd>
+生成用深色强调两端、浅色标示中部的系列颜色，可用来标记数据中的离群点
+</dd>
+<dt>离散型调色板 Qualitative palettes</dt>
+<dd>
+生成一系列彼此差异比较明显的颜色，通常用来标记分类数据
+</dd>
+</dl>
+<p>每一类调色板下有若干种具体的实现，例如 Blues 是连续型调色板下的一种，用以蓝色主题的渐变颜色：</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="elements.html#cb28-1" tabindex="-1"></a><span class="fu">library</span>(RColorBrewer)</span>
+<span id="cb28-2"><a href="elements.html#cb28-2" tabindex="-1"></a><span class="fu">brewer.pal</span>(<span class="dv">9</span>, <span class="st">&quot;Blues&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;#F7FBFF&quot; &quot;#DEEBF7&quot; &quot;#C6DBEF&quot; &quot;#9ECAE1&quot; &quot;#6BAED6&quot; &quot;#4292C6&quot; &quot;#2171B5&quot;
+## [8] &quot;#08519C&quot; &quot;#08306B&quot;</code></pre>
+<p>所有调色板名称及其展示参见图 <a href="elements.html#fig:ColorBrewer-all">3.1</a>。这些调色板并非一些简单的颜色组合，而是有一定科学根据的。例如离散型调色板下的颜色对大多数人来说都有较好的区分度，甚至色盲也可以辨认其中不同类的颜色。如果用户对颜色选取拿捏不准，不妨用这个包来生成颜色。实际上这个 R 包是一款叫 ColorBrewer 的产品的重新实现，更多信息可以访问网站 <a href="http://colorbrewer2.org/" class="uri">http://colorbrewer2.org/</a>。</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="elements.html#cb30-1" tabindex="-1"></a><span class="fu">layout</span>(<span class="fu">matrix</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="dv">3</span>), <span class="at">heights =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb30-2"><a href="elements.html#cb30-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">0</span>, <span class="dv">0</span>))</span>
+<span id="cb30-3"><a href="elements.html#cb30-3" tabindex="-1"></a><span class="fu">display.brewer.all</span>(<span class="at">type =</span> <span class="st">&quot;seq&quot;</span>) <span class="co"># 连续型：18 种</span></span>
+<span id="cb30-4"><a href="elements.html#cb30-4" tabindex="-1"></a><span class="fu">display.brewer.all</span>(<span class="at">type =</span> <span class="st">&quot;div&quot;</span>) <span class="co"># 极端化：9 种</span></span>
+<span id="cb30-5"><a href="elements.html#cb30-5" tabindex="-1"></a><span class="fu">display.brewer.all</span>(<span class="at">type =</span> <span class="st">&quot;qual&quot;</span>) <span class="co"># 离散型：8 种</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ColorBrewer-all"></span>
+<img src="elements_files/figure-html/ColorBrewer-all-1.svg" alt="RColorBrewer 包中所有调色板颜色的演示：从上至下依次是连续型、极端化和离散型调色板。" width="672" />
+<p class="caption">
+图 3.1: RColorBrewer 包中所有调色板颜色的演示：从上至下依次是连续型、极端化和离散型调色板。
+</p>
+</div>
+
+</div>
+<div id="section-4" class="section level3 hasAnchor" number="3.1.4">
+<h3><span class="header-section-number">3.1.4</span> 渐变色的简单原理及应用<a href="elements.html#section-4" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="elements.html#cb31-1" tabindex="-1"></a>xx <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1912</span>, <span class="dv">1912</span><span class="sc">:</span><span class="dv">1971</span>, <span class="dv">1971</span>)</span>
+<span id="cb31-2"><a href="elements.html#cb31-2" tabindex="-1"></a>yy <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">min</span>(nhtemp), nhtemp, <span class="fu">min</span>(nhtemp))</span>
+<span id="cb31-3"><a href="elements.html#cb31-3" tabindex="-1"></a><span class="fu">plot</span>(xx, yy, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Temperatures&quot;</span>)</span>
+<span id="cb31-4"><a href="elements.html#cb31-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq</span>(<span class="dv">255</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="dv">3</span>)) {</span>
+<span id="cb31-5"><a href="elements.html#cb31-5" tabindex="-1"></a>  yy <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">45</span>, nhtemp <span class="sc">-</span> (nhtemp <span class="sc">-</span> <span class="fu">min</span>(nhtemp)) <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> i <span class="sc">/</span> <span class="dv">255</span>), <span class="dv">45</span>) <span class="co"># rgb() 中的绿色成分逐渐变小</span></span>
+<span id="cb31-6"><a href="elements.html#cb31-6" tabindex="-1"></a>  <span class="fu">polygon</span>(xx, yy, <span class="at">col =</span> <span class="fu">rgb</span>(<span class="dv">1</span>, i <span class="sc">/</span> <span class="dv">255</span>, <span class="dv">0</span>), <span class="at">border =</span> <span class="cn">NA</span>)</span>
+<span id="cb31-7"><a href="elements.html#cb31-7" tabindex="-1"></a>  <span class="co"># 读者可以在这里加上 Sys.sleep(0.05) 以便看清作图过程</span></span>
+<span id="cb31-8"><a href="elements.html#cb31-8" tabindex="-1"></a>}</span>
+<span id="cb31-9"><a href="elements.html#cb31-9" tabindex="-1"></a><span class="fu">box</span>() <span class="co"># 补齐边框</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:grad-color"></span>
+<img src="elements_files/figure-html/grad-color-1.svg" alt="New Haven 地区的年均气温（1912~1971 年）：统计图形的应用应该根据数据和事实的环境灵活选取图形的样式。本图的数据为 1912 年至 1971 年 New Haven 地区的年均气温。数据来源：datasets 包中的 nhtemp。" width="672" />
+<p class="caption">
+图 3.2: New Haven 地区的年均气温（1912~1971 年）：统计图形的应用应该根据数据和事实的环境灵活选取图形的样式。本图的数据为 1912 年至 1971 年 New Haven 地区的年均气温。数据来源：<strong>datasets</strong> 包中的 nhtemp。
+</p>
+</div>
+
+<p>在此我们特别用一节来讲述“渐变色”，原因在于在图形中应用渐变色往往能让图形看起来更美观、避免单调的颜色在图形中显得突兀。不难想象，所谓“渐变”，也就是逐渐变化的意思，这种变化必然对应着某种单调或非单调的（可导）函数，这些函数用来控制颜色值逐步变化。最简单的例子莫过于线性函数：从一种颜色值到另一种颜色值线性变化。比如我们在 <code>rgb()</code> 函数中用一元线性函数控制绿色在 <span class="math inline">\([0, 1]\)</span> 上的取值，同时将红色和蓝色分别控制为 1 和 0， 那么我们将得到从纯红色到黄色的一个颜色渐变。如：</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="elements.html#cb32-1" tabindex="-1"></a>(x <span class="ot">&lt;-</span> <span class="fu">rgb</span>(<span class="dv">1</span>, <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">30</span>), <span class="dv">0</span>))</span></code></pre></div>
+<pre><code>##  [1] &quot;#FF0000&quot; &quot;#FF0900&quot; &quot;#FF1200&quot; &quot;#FF1A00&quot; &quot;#FF2300&quot; &quot;#FF2C00&quot; &quot;#FF3500&quot;
+##  [8] &quot;#FF3E00&quot; &quot;#FF4600&quot; &quot;#FF4F00&quot; &quot;#FF5800&quot; &quot;#FF6100&quot; &quot;#FF6A00&quot; &quot;#FF7200&quot;
+## [15] &quot;#FF7B00&quot; &quot;#FF8400&quot; &quot;#FF8D00&quot; &quot;#FF9500&quot; &quot;#FF9E00&quot; &quot;#FFA700&quot; &quot;#FFB000&quot;
+## [22] &quot;#FFB900&quot; &quot;#FFC100&quot; &quot;#FFCA00&quot; &quot;#FFD300&quot; &quot;#FFDC00&quot; &quot;#FFE500&quot; &quot;#FFED00&quot;
+## [29] &quot;#FFF600&quot; &quot;#FFFF00&quot;</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="elements.html#cb34-1" tabindex="-1"></a><span class="co"># 读者不妨用 barplot(rep(1, 30), col = x) 看看效果</span></span></code></pre></div>
+<p>显然本小节的内容与前一小节所讲到的调色板是一致的，只不过调色板是预先配置好了的渐变色系列；我们在这里“重复”讲述渐变色的简单原理，目的是尽量让读者了解各种看起来比较神秘和高深的颜色使用招数的本质。</p>
+<p>在本节的最后，我们要再次强调颜色的艺术性：根据不同的环境选用不同的颜色。虽然统计专业人士对绘画、美学可能不必深入了解，但是漂亮、适宜的统计图形总是受人欢迎的。作者曾经在 <a href="https://www.stat.auckland.ac.nz/~ihaka/">Ross Ihaka</a> 的个人主页上看到一个很好的例子，内容是展示全球气候变暖的温度随年份变化的折线图，这幅图使用了从黄色到红色的渐变色，而这样的颜色恰好能体现温度的灼热感，对于警示温室效应来说，这种渐变色是极为恰当的（思考一下我们平时作折线图是否会考虑这样的颜色搭配）；Ross Ihaka 并没有给出具体的代码，但通过前面的介绍和后面 <a href="elements.html#sec:polygon">3.4</a> 小节的阅读，相信读者一定可以自己动手作出类似的折线图。这里我们也给出一段示例代码，核心部分在于控制多边形的 <code>col</code> 参数；事实上，这幅“折线图”是由多个颜色渐变的多边形重叠而成的，效果见图 <a href="elements.html#fig:grad-color">3.2</a>（图中数据为真实气温数据）。</p>
+</div>
+</div>
+<div id="sec:points" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> 点<a href="elements.html#sec:points" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>关于点的设置，我们既可以在很多作图函数中用 <code>pch</code> 等参数实现，也可以在用低层函数 <code>points()</code> 向已有图形中添加点来实现。后一种方法往往更灵活自由。<code>points()</code> 用法：</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="elements.html#cb35-1" tabindex="-1"></a><span class="fu">usage</span>(points, <span class="st">&quot;default&quot;</span>)</span></code></pre></div>
+<pre><code>## points(x, ...)</code></pre>
+<p>函数 <code>points()</code> 的参数如 <code>pch</code> 和 <code>col</code> 等在 <a href="tricks.html#sec:par">B.1</a> 小节介绍 <code>par()</code> 函数时中有详细解释，但这两个函数中相同名称的参数最主要的一点区别就是，前者可以使用向量，而后者只能接受一个单值作为参数。此外还有一点细小差异在于参数 <code>bg</code>，它在函数 <code>points()</code> 中表示的是点的背景色而非图形的背景色。为了向图中添加一系列不同样式的点，我们可以使用向量作为 <code>points()</code> 的参数。</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="elements.html#cb37-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;pointTypes&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:point-type"></span>
+<img src="elements_files/figure-html/point-type-1.svg" alt="点的类型：pch 参数取值从 1 到 25 及其它符号。注意：21~25 的点可以填充背景颜色。" width="672" />
+<p class="caption">
+图 3.3: 点的类型：<code>pch</code> 参数取值从 1 到 25 及其它符号。注意：21~25 的点可以填充背景颜色。
+</p>
+</div>
+
+
+<p>本节不再赘述参数的意思（读者可以自行查阅帮助），但有三点仍需特别说明一下。首先是 <code>lwd</code> 参数，我们知道这是设定线条宽度的，对于点来说，这个参数同样可以设置点的边缘“线条”宽度；其次，<code>pch</code> 参数同样可以接受字符作为参数值，而不仅仅是数字；最后，参数 <code>pch</code> 取值从 21~25 的点可以填充背景颜色。注意观察，图 <a href="elements.html#fig:point-type">3.3</a> 中 21~25 的点边缘线颜色和背景色是不同的，而在 25 之后的点则采用了文本符号作为参数 <code>pch</code> 的值。图 <a href="elements.html#fig:point-type">3.3</a> 中也有几对形状一样的点，但是它们实质上是不一样的，例如 0、15 和 22 对应的点都是正方形，但前二者分别是空心正方形和实心正方形，且都不可填充背景，而 22 对应的点是空心正方形，可以填充背景。</p>
+<p>一次性作出不同样式的点对于图形阅读和统计分析来说是很有利的，比如有时候我们可以把样本根据某一特征分为几组，对每一组子样本都采用不同的样式作点图，那么我们或许可以从图中点的散布情况发现组间的差异特征。图 <a href="elements.html#fig:point-iris">3.4</a> 给出了一个鸢尾花散点图的示例（注意向量的使用），很明显，setosa 这一类花的型号较小，因为它们都处于散点图的左下角。</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="elements.html#cb38-1" tabindex="-1"></a><span class="co"># 先将鸢尾花的类型转化为整数 1、2、3，便于使用向量</span></span>
+<span id="cb38-2"><a href="elements.html#cb38-2" tabindex="-1"></a>idx <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(iris[[<span class="st">&quot;Species&quot;</span>]])</span>
+<span id="cb38-3"><a href="elements.html#cb38-3" tabindex="-1"></a><span class="fu">plot</span>(iris[, <span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>],</span>
+<span id="cb38-4"><a href="elements.html#cb38-4" tabindex="-1"></a>  <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">21</span>, <span class="dv">25</span>)[idx],</span>
+<span id="cb38-5"><a href="elements.html#cb38-5" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>)[idx], <span class="at">panel.first =</span> <span class="fu">grid</span>()</span>
+<span id="cb38-6"><a href="elements.html#cb38-6" tabindex="-1"></a>)</span>
+<span id="cb38-7"><a href="elements.html#cb38-7" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">&quot;topleft&quot;</span>,</span>
+<span id="cb38-8"><a href="elements.html#cb38-8" tabindex="-1"></a>  <span class="at">legend =</span> <span class="fu">levels</span>(iris[[<span class="st">&quot;Species&quot;</span>]]),</span>
+<span id="cb38-9"><a href="elements.html#cb38-9" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>, <span class="st">&quot;blue&quot;</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">21</span>, <span class="dv">25</span>), <span class="at">bty =</span> <span class="st">&quot;n&quot;</span></span>
+<span id="cb38-10"><a href="elements.html#cb38-10" tabindex="-1"></a>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:point-iris"></span>
+<img src="elements_files/figure-html/point-iris-1.svg" alt="鸢尾花的花瓣长宽散点图：我们可以给每一种鸢尾花标记不同类型的点和颜色，这样可以帮助我们更清楚地区分鸢尾花类型。" width="672" />
+<p class="caption">
+图 3.4: 鸢尾花的花瓣长宽散点图：我们可以给每一种鸢尾花标记不同类型的点和颜色，这样可以帮助我们更清楚地区分鸢尾花类型。
+</p>
+</div>
+<p>图 <a href="elements.html#fig:point-random">3.5</a> 为本书的一例“彩蛋”：基于随机性的图形可能会具有某种艺术性。这里仅仅展示了四幅可能的输出，其它更多可能的结果参见：<a href="https://yihui.org/cn/2010/08/art-of-points-in-r/" class="uri">https://yihui.org/cn/2010/08/art-of-points-in-r/</a>，或观看演示 <code>demo('pointArts', package = 'MSG')</code>。若读者感兴趣，甚至可以用 R 为自己生成一幅桌面背景图片，制作方法在前面链接中有介绍。</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="elements.html#cb39-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>, <span class="fl">0.2</span>), <span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb39-2"><a href="elements.html#cb39-2" tabindex="-1"></a><span class="cf">for</span> (n <span class="cf">in</span> <span class="fu">c</span>(<span class="dv">63</span>, <span class="dv">60</span>, <span class="dv">76</span>, <span class="dv">74</span>)) {</span>
+<span id="cb39-3"><a href="elements.html#cb39-3" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">711</span>)</span>
+<span id="cb39-4"><a href="elements.html#cb39-4" tabindex="-1"></a>  <span class="fu">plot.new</span>()</span>
+<span id="cb39-5"><a href="elements.html#cb39-5" tabindex="-1"></a>  <span class="fu">box</span>()</span>
+<span id="cb39-6"><a href="elements.html#cb39-6" tabindex="-1"></a>  size <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">replicate</span>(n, <span class="dv">1</span> <span class="sc">/</span> <span class="fu">rbeta</span>(<span class="dv">2</span>, <span class="fl">1.5</span>, <span class="dv">4</span>)))</span>
+<span id="cb39-7"><a href="elements.html#cb39-7" tabindex="-1"></a>  center <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">replicate</span>(n, <span class="fu">runif</span>(<span class="dv">2</span>)))[<span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span>n, <span class="at">each =</span> <span class="dv">2</span>), ]</span>
+<span id="cb39-8"><a href="elements.html#cb39-8" tabindex="-1"></a>  color <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">&quot;#&quot;</span>, <span class="fu">apply</span>(</span>
+<span id="cb39-9"><a href="elements.html#cb39-9" tabindex="-1"></a>    <span class="fu">replicate</span>(<span class="dv">2</span> <span class="sc">*</span> n, <span class="fu">sample</span>(<span class="fu">c</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">9</span>, LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]), <span class="dv">8</span>, <span class="cn">TRUE</span>)), <span class="dv">2</span>, paste,</span>
+<span id="cb39-10"><a href="elements.html#cb39-10" tabindex="-1"></a>    <span class="at">collapse =</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb39-11"><a href="elements.html#cb39-11" tabindex="-1"></a>  ), <span class="at">sep =</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb39-12"><a href="elements.html#cb39-12" tabindex="-1"></a>  <span class="fu">points</span>(center, <span class="at">cex =</span> size, <span class="at">pch =</span> <span class="fu">rep</span>(<span class="dv">20</span><span class="sc">:</span><span class="dv">21</span>, n), <span class="at">col =</span> color)</span>
+<span id="cb39-13"><a href="elements.html#cb39-13" tabindex="-1"></a>}</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:point-random"></span>
+<img src="elements_files/figure-html/point-random-1.svg" alt="点的随机艺术作品：随机生成点的大小、颜色和位置，分别用空心点和实心点画图。" width="672" />
+<p class="caption">
+图 3.5: 点的随机艺术作品：随机生成点的大小、颜色和位置，分别用空心点和实心点画图。
+</p>
+</div>
+
+
+</div>
+<div id="sec:lines" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> 曲线、直线、线段、箭头、X-样条<a href="elements.html#sec:lines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>在 <a href="tricks.html#sec:par">B.1</a> 小节介绍函数 <code>par()</code> 时我们提到了关于线条的一些参数设置，例如 <code>lwd</code> 和 <code>lty</code> 等。类似地，我们可以用函数 <code>lines()</code> 来向图中添加曲线（这里所说的曲线本质上是一些线段的连接，并非光滑的曲线）；下面主要补充说明一下关于线条样式 <code>lty</code> 的设定。</p>
+<p>R 中可以实现几乎无数种线条样式，因为它的 <code>lty</code> 参数相当灵活，除了取值 0~6 之外，可以根据一个十六进制的数字串（位数必须是偶数位，且非零）来设定线条的虚实，具体原理是这样：数字串的奇数位上的数字表示画相应长度的实线，然后偶数位上的数字则表示空缺相应的长度，这样就构成了一条虚线。例如，<code>'A5'</code> 表示先画 11 单位长的实线，再接着画 5 单位长的空白，紧接着又画 11 单位长的实线，……，就这样重复下去，完成一条虚线；同理，<code>'711911'</code> 表示：7 单位长实线、1 单位长空白、1 单位长实线、9 单位长空白、1 单位长实线、1 单位长空白。这个十六进制的数字串的最长长度限制为 8 位。</p>
+<p>当设定 <code>type = 'h'</code> 时，<code>col</code> 参数可以使用向量，此时各条竖线都将使用不同的颜色；除此情况之外，若其它参数使用了向量，那么只有向量的第一个元素会被使用，其它元素都将被忽略掉。</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="elements.html#cb40-1" tabindex="-1"></a><span class="co"># 不作图，只画出框架，且指定坐标轴范围</span></span>
+<span id="cb40-2"><a href="elements.html#cb40-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">10</span>))</span>
+<span id="cb40-3"><a href="elements.html#cb40-3" tabindex="-1"></a><span class="fu">lines</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">abs</span>(<span class="fu">rnorm</span>(<span class="dv">10</span>))) <span class="co"># 10 个正态随机数绝对值的波动线</span></span>
+<span id="cb40-4"><a href="elements.html#cb40-4" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">a =</span> <span class="dv">0</span>, <span class="at">b =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>) <span class="co"># 不同的直线</span></span>
+<span id="cb40-5"><a href="elements.html#cb40-5" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">2</span>, <span class="at">h =</span> <span class="dv">2</span>, <span class="at">lty =</span> <span class="dv">2</span>)</span>
+<span id="cb40-6"><a href="elements.html#cb40-6" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">8</span>, <span class="dv">3</span>, <span class="st">&quot;abline(a = 0, b = 1)&quot;</span>) <span class="co"># 添加文本</span></span>
+<span id="cb40-7"><a href="elements.html#cb40-7" tabindex="-1"></a><span class="fu">arrows</span>(<span class="dv">8</span>, <span class="fl">3.5</span>, <span class="dv">6</span>, <span class="fl">5.7</span>, <span class="at">angle =</span> <span class="dv">40</span>) <span class="co"># 添加箭头</span></span>
+<span id="cb40-8"><a href="elements.html#cb40-8" tabindex="-1"></a><span class="co"># 参数用了向量：不同灰度的线段</span></span>
+<span id="cb40-9"><a href="elements.html#cb40-9" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">rep</span>(<span class="dv">3</span>, <span class="dv">4</span>), <span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>, <span class="fu">rep</span>(<span class="dv">5</span>, <span class="dv">4</span>), <span class="dv">6</span><span class="sc">:</span><span class="dv">9</span>, <span class="at">col =</span> <span class="fu">gray</span>(<span class="fu">seq</span>(<span class="fl">0.2</span>, <span class="fl">0.8</span>, <span class="at">length =</span> <span class="dv">4</span>)))</span>
+<span id="cb40-10"><a href="elements.html#cb40-10" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">4</span>, <span class="fl">9.8</span>, <span class="st">&quot;segments&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lines-demo"></span>
+<img src="elements_files/figure-html/lines-demo-1.svg" alt=" 曲线、直线、直线段、箭头的展示说明 " width="672" />
+<p class="caption">
+图 3.6:  曲线、直线、直线段、箭头的展示说明
+</p>
+</div>
+<p>关于直线，我们在平面坐标系中只需要确定两个因素就可以确定它的位置：即斜率和截距。函数 <code>abline()</code> 就是用来添加直线的，参数同样可以使用向量（这一点在低层函数中几乎普遍适用，所以后面不再重复说明）。函数用法如下：</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="elements.html#cb41-1" tabindex="-1"></a><span class="fu">usage</span>(abline)</span></code></pre></div>
+<pre><code>## abline(a = NULL, b = NULL, h = NULL, v = NULL, reg = NULL, coef = NULL,
+##   untf = FALSE, ...)</code></pre>
+<p>其中，<code>a</code> 是截距，<code>b</code> 是斜率，<code>h</code> 是画水平线时的纵轴值，<code>v</code> 是画垂直线时的横轴值，<code>reg</code> 是一个能用函数 <code>coef()</code> 提取系数（包含斜率和截距）的 R 对象，典型的就是用线性模型（回归）生成的对象，系数是一个长度为 2 的向量，分别为截距和斜率；后面的 <code>...</code> 表示还可以传入其它参数（比如 <code>lty</code>、<code>col</code> 等）。</p>
+<p>线段可以用函数 <code>segments()</code> 生成，用法如下：</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="elements.html#cb43-1" tabindex="-1"></a><span class="fu">usage</span>(segments)</span></code></pre></div>
+<pre><code>## segments(x0, y0, x1 = x0, y1 = y0, col = par(&quot;fg&quot;), lty = par(&quot;lty&quot;),
+##   lwd = par(&quot;lwd&quot;), ...)</code></pre>
+<p>前四个参数表示线段的起点和终点坐标，后面的参数相信读者也都已经熟悉。箭头可以用函数 <code>arrows()</code> 生成，用法如下：</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="elements.html#cb45-1" tabindex="-1"></a><span class="fu">usage</span>(arrows)</span></code></pre></div>
+<pre><code>## arrows(x0, y0, x1 = x0, y1 = y0, length = 0.25, angle = 30, code = 2,
+##   col = par(&quot;fg&quot;), lty = par(&quot;lty&quot;), lwd = par(&quot;lwd&quot;), ...)</code></pre>
+<p>类似于线段，前四个参数表示箭头的起点和终点坐标，<code>length</code> 表示箭头尖上短线的长度（单位：英寸），<code>angle</code> 表示箭头尖短线的角度（默认为 <span class="math inline">\(30\,^{\circ}\)</span>），<code>code</code> 表示箭头的样式（整数 1~3 分别表示尾部箭头、首部箭头和两端都带箭头），注意若 <code>length</code> 设置为 0，那么将不会画出箭头（只有箭头线的主体即一条线段）。关于曲线、直线、线段和箭头函数的示例代码和效果参见图 <a href="elements.html#fig:lines-demo">3.6</a></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="elements.html#cb47-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;xsplineDemo&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:xspline-demo"></span>
+<img src="elements_files/figure-html/xspline-demo-1.svg" alt="X-样条各种形状的展示：观察 shape 参数的取值（图中标注的数字）与样条形状的对应关系。" width="672" />
+<p class="caption">
+图 3.7: X-样条各种形状的展示：观察 <code>shape</code> 参数的取值（图中标注的数字）与样条形状的对应关系。
+</p>
+</div>
+
+
+<p>下面我们再介绍一下一种特殊的曲线 — X-样条（X-spline），样条是用光滑曲线连接若干数据点的曲线，注意它与前面提到的曲线 <code>lines()</code> 的区别在于数据点之间的连接线。样条函数用法如下：</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="elements.html#cb48-1" tabindex="-1"></a><span class="fu">usage</span>(xspline)</span></code></pre></div>
+<pre><code>## xspline(x, y = NULL, shape = 0, open = TRUE, repEnds = TRUE, draw = TRUE,
+##   border = par(&quot;fg&quot;), col = NA, ...)</code></pre>
+<p>前两个参数给定点的位置，<code>shape</code> 为样条的形状，取值在 <span class="math inline">\([-1, 1]\)</span> 之间，当取值为负数时，曲线穿过给定的点，负值绝对值越小则曲线的角度越尖锐，反之角度越圆滑，<code>shape</code> 取值为正数时，曲线脱离给定的点，正值越小越靠近给定点；<code>open</code> 决定是否样条曲线封闭；<code>repEnds</code> 为逻辑值，当样条曲线不封闭时，该参数决定是否重复使用端点上的点；<code>draw</code> 决定是否画线，若为 <code>FALSE</code>，则仅仅计算曲线的坐标位置而不画线；<code>border</code> 为曲线的颜色；<code>col</code> 为封闭曲线的填充颜色。图 <a href="elements.html#fig:xspline-demo">3.7</a> 为各种形状的 X-样条，注意观察 <code>shape</code> 参数与曲线形状的对应关系。</p>
+</div>
+<div id="sec:polygon" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> 矩形、多边形<a href="elements.html#sec:polygon" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>R 中绘制多边形也是很方便的，主要使用 <code>polygon()</code> 函数，矩形是多边形的特例，不过 R 也提供了专门的函数 <code>rect()</code> 来绘制它。多边形的主要特征在于增加了一些填充选项，比如颜色填充，或者用阴影线填充。关于颜色、线条样式的设置就不必再重复说明。矩形和多边形的用法如下：</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="elements.html#cb50-1" tabindex="-1"></a><span class="fu">usage</span>(rect)</span></code></pre></div>
+<pre><code>## rect(xleft, ybottom, xright, ytop, density = NULL, angle = 45, col = NA,
+##   border = NULL, lty = par(&quot;lty&quot;), lwd = par(&quot;lwd&quot;), ...)</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="elements.html#cb52-1" tabindex="-1"></a><span class="fu">usage</span>(polygon)</span></code></pre></div>
+<pre><code>## polygon(x, y = NULL, density = NULL, angle = 45, border = NULL, col = NA,
+##   lty = par(&quot;lty&quot;), ..., fillOddEven = FALSE)</code></pre>
+<p>矩形函数的前四个参数分别制定左下角和右上角的坐标，用以确定矩形的位置，同样，多边形函数的前两个参数给出一系列坐标点，用以围成一个多边形；<code>density</code> 参数设置阴影线的填充密度（每英寸填充多少条线），如果设置了一个正值，那么颜色填充参数 <code>col</code> 将被用到阴影线上，只有当 <code>density</code> 被设置为负数或 <code>NA</code> 或 <code>NULL</code> 时 <code>col</code> 才可以填充整个区块颜色；<code>angle</code> 参数设置填充线条的角度；<code>col</code> 设置填充颜色；<code>border</code> 设置边框颜色，若设置为 <code>FALSE</code> 或 <code>NA</code>，那么边框线将被省略。</p>
+<p>绘制多边形时要清楚它的过程：线条会随着横纵坐标逐点延伸，也就是画普通折线的过程，当走到最后一点时，就会重新延伸回第一点，这就是多边形的绘制基本原理。一般来说，大部分作图函数对于缺失数据都会默认省略不画，不会对图形造成什么影响，而对于多边形函数，数据中的缺失将构成“分界点”，用以分隔缺失点两端的点群，因此，若数据含缺失值，那么会有多个多边形被作出来。这一点性质对与多边形的灵活运用也是很重要的，我们有时可以故意设置缺失值，用以将图形分割为不同的区域；下文我们将马上看到一个例子。</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="elements.html#cb54-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">40</span>) <span class="co"># 产生 40 个正态随机数</span></span>
+<span id="cb54-2"><a href="elements.html#cb54-2" tabindex="-1"></a><span class="fu">plot</span>(x, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">type =</span> <span class="st">&quot;l&quot;</span>) <span class="co"># 画线图</span></span>
+<span id="cb54-3"><a href="elements.html#cb54-3" tabindex="-1"></a><span class="co"># 请思考为什么坐标值要这样设置：多边形的连线路径</span></span>
+<span id="cb54-4"><a href="elements.html#cb54-4" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">40</span>, <span class="dv">40</span>), <span class="fu">c</span>(<span class="dv">0</span>, x, <span class="dv">0</span>), <span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb54-5"><a href="elements.html#cb54-5" tabindex="-1"></a>xy <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="st">&quot;usr&quot;</span>) <span class="co"># 获取当前图形区域坐标范围，以便下用</span></span>
+<span id="cb54-6"><a href="elements.html#cb54-6" tabindex="-1"></a><span class="co"># 用白色矩形挡住了 0 以下的部分</span></span>
+<span id="cb54-7"><a href="elements.html#cb54-7" tabindex="-1"></a><span class="fu">rect</span>(xy[<span class="dv">1</span>], xy[<span class="dv">3</span>], xy[<span class="dv">2</span>], <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;white&quot;</span>)</span>
+<span id="cb54-8"><a href="elements.html#cb54-8" tabindex="-1"></a><span class="fu">lines</span>(x) <span class="co"># 重画一遍 x 的线条</span></span>
+<span id="cb54-9"><a href="elements.html#cb54-9" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">&quot;lightgray&quot;</span>) <span class="co"># 添加水平线</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:polygon-demo"></span>
+<img src="elements_files/figure-html/polygon-demo-1.svg" alt="多边形和矩形结合使用的一个巧妙图示：将 0 上下的数值分别用不同颜色填充。本图也可以利用 clip() 函数更方便地完成，请读者自行查阅帮助。" width="672" />
+<p class="caption">
+图 3.8: 多边形和矩形结合使用的一个巧妙图示：将 0 上下的数值分别用不同颜色填充。本图也可以利用 <code>clip()</code> 函数更方便地完成，请读者自行查阅帮助。
+</p>
+</div>
+
+
+<p>最后要说明，其实还有一个特殊的“矩形”，那就是整幅图形的边框，它可以用 <code>box()</code> 函数来完成。我们可以不使用任何参数以添加默认的边框，也可以调整一些参数画出不同样式的方框（如虚线框等），具体参见 <code>?box</code>。</p>
+<p>关于多边形和矩形，我们用一个比较巧妙的例子来说明具体用法，代码和效果参见图 <a href="elements.html#fig:polygon-demo">3.8</a>。这幅图的目的在于只填充 y 值在 0 以上的部分，0 以下的部分留空。采取的手段是：先用多边形整体填充颜色，然后根据当前图形的坐标范围（用 <code>par('usr')</code> 获得（或者等价使用 <code>par()$usr</code>），参见 <a href="tricks.html#sec:par">B.1</a> 小节）画一个白色的矩形覆盖 0 以下的图形部分，此时下面部分的线条也被覆盖了，因此接着我们必须再次画线，将所有线条补充完整，最后，添加一条高度为 0 的水平线，即完成本图。</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="elements.html#cb55-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;kaleidoscope&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:polygon-kaleidoscope"></span>
+<img src="elements_files/figure-html/polygon-kaleidoscope-1.svg" alt="用多边形生成的“万花筒”：若干彩色三角形（或者称之为“千纸鹤图”？）" width="672" />
+<p class="caption">
+图 3.9: 用多边形生成的“万花筒”：若干彩色三角形（或者称之为“千纸鹤图”？）
+</p>
+</div>
+
+<p>图 <a href="elements.html#fig:polygon-kaleidoscope">3.9</a> 是利用含有缺失值的数据画出来的多边形，它看起来与万花筒图案有些相似（本例为“彩蛋”）。这幅图的生成过程是：随机生成 3 个标准正态分布随机数，然后插入一个缺失值 NA，下一次再以上一批随机数的最后一个为均值生成 3 个随机数，依此类推生成若干组“三个随机数加上一个 NA”这样的数据，这样最后画多边形的时候，得到的就是若干个独立的三角形。我们将这一组三角形分别向右、向上和向下平移，得到四组三角形，也就是不太精确地模仿了万花筒的原理。该演示收录在 <strong>MSG</strong> 包中，读者可用 <code>demo('kaleidoscope', package = 'MSG')</code> 查看源代码。</p>
+</div>
+<div id="sec:grid" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> 网格线<a href="elements.html#sec:grid" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>有时为了方便图形阅读者知道图中元素的更精确的位置，我们可以用添加背景网格线的办法来辅助读者的视线对齐坐标轴。函数 <code>grid()</code> 所实现的就是这一个功能，它的用法较简单：</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="elements.html#cb56-1" tabindex="-1"></a><span class="fu">usage</span>(grid)</span></code></pre></div>
+<pre><code>## grid(nx = NULL, ny = nx, col = &quot;lightgray&quot;, lty = &quot;dotted&quot;, lwd = par(&quot;lwd&quot;),
+##   equilogs = TRUE)</code></pre>
+<p>可以看到，这个函数已经使用了一些默认的参数设置，例如将网格线的颜色设置为浅灰色，线条样式设置为点线，这是一种比较美观的设置，让网格线既不显得太突兀，又能达到辅助的效果；一般情况下，我们可以直接使用不带参数的 <code>grid()</code> 函数添加网格。参数 <code>nx</code> 和 <code>ny</code> 分别表示横纵轴上网格线的条数，颜色、线条样式和线条宽度参数不必再说明，最后 <code>equilogs</code> 参数意思是，当坐标取了对数之后，是依然使用等距的网格线（<code>TRUE</code>）还是根据对数函数使用不等距的网格线（<code>FALSE</code>）。</p>
+<p>细心的读者也许能发现，其实前面讲到的内容中已经有两处可以实现“网格线”的功能，第一处是 <code>par()</code> 函数中的 <code>tcl</code>（或 <code>tck</code>），将坐标轴的刻度线长度设置为图形的宽高就可以构成一种粗略的网格；第二处是 <code>abline()</code> 函数，使用参数 <code>h</code> 和 <code>v</code> 即可实现更细致的网格线。</p>
+</div>
+<div id="sec:text" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> 标题、任意文本、周边文本<a href="elements.html#sec:text" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本节中的文本以及下一节中的图例都是用来辅助解释图形的信息，图形中的所有文本可以分为三类：标题（主副标题和坐标轴标题）、任意文本和图形周边文本。<code>title()</code> 函数用来添加标题，<code>text()</code> 函数用来向图形中任意位置添加文本，<code>mtext()</code> 函数用来向图的四条边上添加文本。用法如下：</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="elements.html#cb58-1" tabindex="-1"></a><span class="fu">usage</span>(title)</span></code></pre></div>
+<pre><code>## title(main = NULL, sub = NULL, xlab = NULL, ylab = NULL, line = NA,
+##   outer = FALSE, ...)</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="elements.html#cb60-1" tabindex="-1"></a><span class="fu">usage</span>(text, <span class="st">&quot;default&quot;</span>)</span></code></pre></div>
+<pre><code>## text(x, ...)</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="elements.html#cb62-1" tabindex="-1"></a><span class="fu">usage</span>(mtext)</span></code></pre></div>
+<pre><code>## mtext(text, side = 3, line = 0, outer = FALSE, at = NA, adj = NA, padj = NA,
+##   cex = NA, col = NA, font = NA, ...)</code></pre>
+<p>若无特别设定，这些文本的样式都将根据当前的函数 <code>par()</code> 结果来设置，比如颜色、字体等。函数 <code>title()</code> 的前四个参数就是主、副、x 轴、y 轴标题的字符串，<code>line</code> 设置一个距离图形边缘的行数（即：文本与图形边缘的距离为 line<span class="math inline">\(\times\)</span> 行高）；<code>outer</code> 表示是否将文本放在外边界中（参见 <a href="tricks.html#sec:par">B.1</a> 小节的说明）；函数 <code>text()</code> 的参数 <code>labels</code> 就是欲添加的文本（对应横纵坐标的设置，可以是字符串向量），若不指定本参数，那么默认将以数字 <code>1:length(x)</code> 作为文本标记添加到图中；<code>adj</code> 与 <code>par()</code> 中说明相同；<code>pos</code> 参数取值整数 1~4 分别表示文本的位置在坐标点的下、左、上、右方，注意，它会覆盖参数 <code>adj</code> 的设置；<code>offset</code> 参数会根据 <code>pos</code> 参数的取值将文本向相应的方向移动一定比例的距离；<code>vfont</code> 参数用 Hershey 矢量字体来设置文本的字体式样，取值长度为 2 的向量，第一个元素指定字体（Typeface），第二个元素指定式样（Style），关于字体和式样的搭配种类，请查看帮助 <code>?Hershey</code>，使用 Hershey 矢量字体的优势在于：</p>
+<ul>
+<li>Hershey 字体会产生更好的输出，特别在计算机屏幕上，或者用于旋转以及小字体时</li>
+<li>Hershey 字体提供一些标准字体库没有的字体。如提供星座记号，地图符号和天文学符号</li>
+<li>Hershey 字体提供西里尔字符（cyrillic）和日语字符（假名和日本汉字）</li>
+</ul>
+<p>此外，等高线图中通常使用 Hershey 矢量字体以使等高线上的文本更清晰好看，由于字体设置搭配内容体系比较庞大，因此感兴趣的读者请仔细阅读帮助（该字体的一个缺陷是不能用在数学公式中）；<code>side</code> 参数取值为整数 1~4 分别把周边文本作在表示图形的下、左、上、右边；其它参数基本已经都已经接触过，有些不常用的参数在此处省略不讲。</p>
+</div>
+<div id="sec:legend" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> 图例<a href="elements.html#sec:legend" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="elements.html#cb64-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>))</span>
+<span id="cb64-2"><a href="elements.html#cb64-2" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">12</span>))</span>
+<span id="cb64-3"><a href="elements.html#cb64-3" tabindex="-1"></a><span class="fu">grid</span>(<span class="at">col =</span> <span class="st">&quot;gray&quot;</span>)</span>
+<span id="cb64-4"><a href="elements.html#cb64-4" tabindex="-1"></a><span class="fu">title</span>(</span>
+<span id="cb64-5"><a href="elements.html#cb64-5" tabindex="-1"></a>  <span class="at">main =</span> <span class="st">&quot;Demonstration of text in R Graphics&quot;</span>,</span>
+<span id="cb64-6"><a href="elements.html#cb64-6" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;X-axis title&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Y-axis title&quot;</span></span>
+<span id="cb64-7"><a href="elements.html#cb64-7" tabindex="-1"></a>)</span>
+<span id="cb64-8"><a href="elements.html#cb64-8" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Here is </span><span class="sc">\&quot;</span><span class="st">side = 4</span><span class="sc">\&quot;</span><span class="st">&quot;</span>, <span class="at">side =</span> <span class="dv">4</span>, <span class="at">line =</span> <span class="dv">1</span>)</span>
+<span id="cb64-9"><a href="elements.html#cb64-9" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb64-10"><a href="elements.html#cb64-10" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">5</span>)</span>
+<span id="cb64-11"><a href="elements.html#cb64-11" tabindex="-1"></a>s <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">90</span>, <span class="dv">180</span>, <span class="dv">270</span>)</span>
+<span id="cb64-12"><a href="elements.html#cb64-12" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb64-13"><a href="elements.html#cb64-13" tabindex="-1"></a>  <span class="fu">text</span>(x[i], y[i], <span class="fu">sprintf</span>(<span class="st">&quot;srt = %d&quot;</span>, s[i]), <span class="at">srt =</span> s[i])</span>
+<span id="cb64-14"><a href="elements.html#cb64-14" tabindex="-1"></a>}</span>
+<span id="cb64-15"><a href="elements.html#cb64-15" tabindex="-1"></a><span class="fu">segments</span>(<span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">12</span>), <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="dv">12</span>, <span class="dv">6</span>),</span>
+<span id="cb64-16"><a href="elements.html#cb64-16" tabindex="-1"></a>  <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">10</span>),</span>
+<span id="cb64-17"><a href="elements.html#cb64-17" tabindex="-1"></a>  <span class="at">lty =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb64-18"><a href="elements.html#cb64-18" tabindex="-1"></a>)</span>
+<span id="cb64-19"><a href="elements.html#cb64-19" tabindex="-1"></a><span class="fu">legend</span>(<span class="sc">-</span><span class="fl">0.2</span>, <span class="fl">9.8</span>, <span class="fu">c</span>(<span class="st">&quot;Upper&quot;</span>, <span class="st">&quot;Lower&quot;</span>),</span>
+<span id="cb64-20"><a href="elements.html#cb64-20" tabindex="-1"></a>  <span class="at">lty =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">1</span>, <span class="at">cex =</span> <span class="fl">0.8</span>,</span>
+<span id="cb64-21"><a href="elements.html#cb64-21" tabindex="-1"></a>  <span class="at">bty =</span> <span class="st">&quot;n&quot;</span></span>
+<span id="cb64-22"><a href="elements.html#cb64-22" tabindex="-1"></a>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:text"></span>
+<img src="elements_files/figure-html/text-1.svg" alt="添加标题、任意文本和周边文本的一个演示" width="672" />
+<p class="caption">
+图 3.10: 添加标题、任意文本和周边文本的一个演示
+</p>
+</div>
+<p>函数 <code>legend()</code> 的作用是添加图例，总所周知，图例也是很重要的辅助信息，告诉图形使用者图中各组不同样式的元素分别代表何种对象。它的参数比较多，但实际应用中通常仅仅用到其中少数几个：</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="elements.html#cb65-1" tabindex="-1"></a><span class="fu">usage</span>(legend)</span></code></pre></div>
+<pre><code>## legend(x, y = NULL, legend, fill = NULL, col = par(&quot;col&quot;), border = &quot;black&quot;,
+##   lty, lwd, pch, angle = 45, density = NULL, bty = &quot;o&quot;, bg = par(&quot;bg&quot;),
+##   box.lwd = par(&quot;lwd&quot;), box.lty = par(&quot;lty&quot;), box.col = par(&quot;fg&quot;), pt.bg = NA,
+##   cex = 1, pt.cex = cex, pt.lwd = lwd, xjust = 0, yjust = 1, x.intersp = 1,
+##   y.intersp = 1, adj = c(0, 0.5), text.width = NULL, text.col = par(&quot;col&quot;),
+##   text.font = NULL, merge = do.lines &amp;&amp; has.pch, trace = FALSE, plot = TRUE,
+##   ncol = 1, horiz = FALSE, title = NULL, inset = 0, xpd,
+##   title.col = text.col[1], title.adj = 0.5, title.cex = cex[1],
+##   title.font = text.font[1], seg.len = 2)</code></pre>
+<p>前两个参数 <code>x</code> 和 <code>y</code> 表示图例的坐标位置（左上角顶点的坐标）；<code>legend</code> 参数通常为一个字符向量，表示图例中的文字；<code>fill</code> 参数指定一个与图例字符向量对应的颜色向量用以在文本左边绘制一个颜色填充方块；<code>col</code> 参数设置图例中点和线的颜色；<code>lty</code>、<code>lwd</code> 和 <code>pch</code> 参数指定图例中点线的样式；<code>angle</code> 和 <code>density</code> 参数效果类似于 <code>fill</code> 参数，只是换成指定角度和密度的阴影线填充方块；<code>bty</code> 参数设置图例框的样式，很类似 <code>par()</code> 中的同名参数；<code>title</code> 参数设定图例的标题；剩余参数用来设置更细微的地方，不太常用。</p>
+<p>从以上几节对图形元素的介绍可以看出，R 可以设置极其细微的元素特征，当然，读者不必过于细究所有的参数，对于大多数函数来说，都只有两三个核心参数，比如，坐标位置向量是几乎所有函数的共同核心参数，而 <code>legend()</code> 函数的主要参数除此之外还有字符向量 <code>legend</code>。对于其它参数，请在使用时即时查阅即可。</p>
+<p>关于网格线、文本和图例，图 <a href="elements.html#fig:text">3.10</a> 给出了它们的示例。</p>
+</div>
+<div id="sec:axis" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> 坐标轴<a href="elements.html#sec:axis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>坐标轴是图中元素所代表数值大小的参照物，因此它在图形中的作用也很重要，特别是有时候我们需要对坐标轴做一定的特殊设置，比如作一幅双坐标轴的图形，或者在坐标轴标记中使用特殊的文本，那么就必须使用 <code>axis()</code> 函数来辅助完成对坐标轴的设置和调整。该函数的用法如下：</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="elements.html#cb67-1" tabindex="-1"></a><span class="fu">usage</span>(axis)</span></code></pre></div>
+<pre><code>## axis(side, at = NULL, labels = TRUE, tick = TRUE, line = NA, pos = NA,
+##   outer = FALSE, font = NA, lty = &quot;solid&quot;, lwd = 1, lwd.ticks = lwd,
+##   col = NULL, col.ticks = NULL, hadj = NA, padj = NA, gap.axis = NA, ...)</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="elements.html#cb69-1" tabindex="-1"></a><span class="fu">data</span>(Export.USCN, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span>
+<span id="cb69-2"><a href="elements.html#cb69-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="fl">4.5</span>, .<span class="dv">1</span>, <span class="fl">4.5</span>))</span>
+<span id="cb69-3"><a href="elements.html#cb69-3" tabindex="-1"></a><span class="co"># 看似条形图，实为粗线条，宽度 lwd = 10</span></span>
+<span id="cb69-4"><a href="elements.html#cb69-4" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>, Export.USCN<span class="sc">$</span>Export,</span>
+<span id="cb69-5"><a href="elements.html#cb69-5" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;Year / Country&quot;</span>,</span>
+<span id="cb69-6"><a href="elements.html#cb69-6" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;US Dollars ($10^{16}$)&quot;</span>, <span class="at">xaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="at">type =</span> <span class="st">&quot;h&quot;</span>,</span>
+<span id="cb69-7"><a href="elements.html#cb69-7" tabindex="-1"></a>  <span class="at">lwd =</span> <span class="dv">10</span>, <span class="at">col =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="cn">NA</span>, <span class="fu">rep</span>(<span class="dv">4</span>, <span class="dv">6</span>)), <span class="at">lend =</span> <span class="dv">1</span>,</span>
+<span id="cb69-8"><a href="elements.html#cb69-8" tabindex="-1"></a>  <span class="at">panel.first =</span> <span class="fu">grid</span>()</span>
+<span id="cb69-9"><a href="elements.html#cb69-9" tabindex="-1"></a>)</span>
+<span id="cb69-10"><a href="elements.html#cb69-10" tabindex="-1"></a><span class="co"># 设置 x 轴的刻度标记：\n 的意思是换行符</span></span>
+<span id="cb69-11"><a href="elements.html#cb69-11" tabindex="-1"></a>xlabel <span class="ot">&lt;-</span> <span class="fu">paste</span>(Export.USCN<span class="sc">$</span>Year, <span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>, Export.USCN<span class="sc">$</span>Country)</span>
+<span id="cb69-12"><a href="elements.html#cb69-12" tabindex="-1"></a>xlabel[<span class="dv">7</span>] <span class="ot">&lt;-</span> <span class="st">&quot;&quot;</span></span>
+<span id="cb69-13"><a href="elements.html#cb69-13" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">7</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="co"># 添加一条分隔线</span></span>
+<span id="cb69-14"><a href="elements.html#cb69-14" tabindex="-1"></a><span class="co"># 使用带有换行符的刻度标记</span></span>
+<span id="cb69-15"><a href="elements.html#cb69-15" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">13</span>, <span class="at">labels =</span> xlabel, <span class="at">tick =</span> <span class="cn">FALSE</span>, <span class="at">cex.axis =</span> <span class="fl">0.75</span>)</span>
+<span id="cb69-16"><a href="elements.html#cb69-16" tabindex="-1"></a><span class="co"># 换算为人民币再计算另一个坐标轴刻度（汇率 8.27）</span></span>
+<span id="cb69-17"><a href="elements.html#cb69-17" tabindex="-1"></a>ylabel <span class="ot">&lt;-</span> <span class="fu">pretty</span>(Export.USCN<span class="sc">$</span>Export <span class="sc">*</span> <span class="fl">8.27</span>)</span>
+<span id="cb69-18"><a href="elements.html#cb69-18" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">4</span>, <span class="at">at =</span> ylabel <span class="sc">/</span> <span class="fl">8.27</span>, <span class="at">labels =</span> ylabel)</span>
+<span id="cb69-19"><a href="elements.html#cb69-19" tabindex="-1"></a><span class="fu">mtext</span>(<span class="st">&quot;Chinese RMB ($10^{16}$)&quot;</span>, <span class="at">side =</span> <span class="dv">4</span>, <span class="at">line =</span> <span class="dv">2</span>)</span>
+<span id="cb69-20"><a href="elements.html#cb69-20" tabindex="-1"></a><span class="fu">box</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:axis-demo"></span>
+<img src="elements_files/figure-html/axis-demo-1.png" alt="双坐标轴图示：中美两国 1999~2004 年出口额，分别以美元和人民币表示。注意图中 x 轴标签文本是如何换行的。" width="672" />
+<p class="caption">
+图 3.11: 双坐标轴图示：中美两国 1999~2004 年出口额，分别以美元和人民币表示。注意图中 x 轴标签文本是如何换行的。
+</p>
+</div>
+
+<p>其中，<code>side</code> 参数与 <code>mtext()</code> 函数中的参数意思相类似，表示将坐标轴画在哪条边上，事实上通过前面一些图形元素参数的讲解，读者应该能意识到，R 中上下左右方向的顺序一般都是“下、左、上、右”，分别用 1、2、3、4 表示；<code>at</code> 参数表示在什么位置画坐标轴标记线；<code>labels</code> 参数指定坐标轴刻度标记的字符。</p>
+<p><span class="citation">Murrell (<a href="#ref-Murrell05">2018</a>)</span> 中第 3.4.5 小节举了一个双坐标轴图形的例子，图中用左右两边的纵轴分别表示摄氏和华氏的温度，即：对于图中同一点，既可以对照左边看摄氏度，也可以对照右边看华氏度；这就是双坐标轴的用途。此处我们不妨也举一个类似的例子来说明 <code>axis()</code> 函数的功能。图 <a href="elements.html#fig:axis-demo">3.11</a> 展示的是从 1999~2004 年中美两国的出口贸易总额，其中 <code>axis()</code> 函数主要作用在于两个地方：第一点是横轴的刻度标记，注意这些刻度标记与我们平时看到的标记有所不同，主要是这一系列标记都是两行文本，原因就在于 <code>labels</code> 参数中使用了换行符，对 C 语言比较熟悉的读者对此不会感到陌生，这里第一行是年份，第二行说明了国家：CN 表示中国，US 表示美国；第二点是图的右边多了一根坐标轴，左边的纵轴表示出口额按美元计价（单位：<span class="math inline">\(10^{16}\)</span> 美元，出口额数值太大，因此采用较大的单位），右边表示同样的出口额用人民币计价（例如右边轴上 400 人民币对应左边 <span class="math inline">\(400/8.27\approx48.4\)</span> 美元），同一个数值在图中既可以从左边观察美元金额，又可以从右边观察人民币金额。本例中使用的数据来源为：汇率数据来自联合国统计署网站 <a href="https://unstats.un.org" class="uri">https://unstats.un.org</a>，从 1999~2004 年人民币和美元的平均汇率稳定在 8.27，出口额年度数据来自 WTO 网站：<a href="https://data.wto.org" class="uri">https://data.wto.org</a>。整理后的数据如下，程序代码可以参见图 <a href="elements.html#fig:axis-demo">3.11</a>。</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="elements.html#cb70-1" tabindex="-1"></a><span class="fu">data</span>(Export.USCN, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span>
+<span id="cb70-2"><a href="elements.html#cb70-2" tabindex="-1"></a>Export.USCN</span></code></pre></div>
+<pre><code>##     Export Year Country
+## 1  19.4931 1999      CN
+## 2  24.9203 2000      CN
+## 3  26.6098 2001      CN
+## 4  32.5596 2002      CN
+## 5  43.8228 2003      CN
+## 6  59.3326 2004      CN
+## 7       NA   NA    &lt;NA&gt;
+## 8  69.5797 1999      US
+## 9  78.1918 2000      US
+## 10 72.9100 2001      US
+## 11 69.3103 2002      US
+## 12 72.4771 2003      US
+## 13 81.8520 2004      US</code></pre>
+</div>
+<div id="section-5" class="section level2 hasAnchor" number="3.9">
+<h2><span class="header-section-number">3.9</span> 图形元素应用示例<a href="elements.html#section-5" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>在介绍了图形的基本构成元素的作法之后，我们应该可以理解 R 作图的自由——几乎所有图形的细节都可以被我们控制。下面我们举几个例子来说明如何利用图形元素来构造完整的图形。</p>
+<div id="subsec:waterfall-chart" class="section level3 hasAnchor" number="3.9.1">
+<h3><span class="header-section-number">3.9.1</span> 瀑布图<a href="elements.html#subsec:waterfall-chart" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>瀑布图（Waterfall Chart）的最初发明者我们无法考证，但可以在麦肯锡的报告中看到它的身影。如果在 Google 中搜索 Excel 瀑布图，我们可以看见一些令人无奈的结果，例如</p>
+<blockquote>
+<p>步步致赢瀑布图(步行图)制作系统 1.1 […] 下载 […] 共享版最多支持 6 个数，正式版无限制。</p>
+</blockquote>
+<p>或是</p>
+<blockquote>
+<p>瀑布图的完美解决方案 [Excel 图表] […] 简单说明一下：[…] （分为 6 步）</p>
+</blockquote>
+<p>作者曾在某咨询公司听过一场关于 Excel 作图的培训，其中也大谈瀑布图的技巧，大致思路是用一些本来不直观的方法来完成瀑布图的制作，例如用白色填充矩形条，使之“隐藏”起来，而上面的矩形条才能得到“悬空”的效果。</p>
+<p>瀑布图究竟是什么呢？只不过是一系列矩形而已（<a href="elements.html#sec:polygon">3.4</a> 小节）。它的外观类似于条形图，区别在于除了第一个矩形条之外，后面的矩形条都不再以零点为基准线来画，而是以前一个矩形条的高度为起点画矩形到该矩形条位置上的取值，这样可以反映一个变量取值的上下变化情况（主要是体现相邻矩形条的差值）。下面我们结合一个数据实例来说明瀑布图的简单思想和简单做法。</p>
+<p>我们选取了 2010 年 8 月第一周“统计之都”网站的“绝对唯一访问次数”（Absolute Unique Visitors）来画瀑布图，数据如下</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="elements.html#cb72-1" tabindex="-1"></a><span class="co"># 七天之内的唯一访问次数数据（周一为 2010 年 8 月 2 日）</span></span>
+<span id="cb72-2"><a href="elements.html#cb72-2" tabindex="-1"></a>auv <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">939</span>, <span class="dv">1005</span>, <span class="dv">973</span>, <span class="dv">910</span>, <span class="dv">875</span>, <span class="dv">658</span>, <span class="dv">688</span>)</span>
+<span id="cb72-3"><a href="elements.html#cb72-3" tabindex="-1"></a><span class="co"># 相邻两天作差</span></span>
+<span id="cb72-4"><a href="elements.html#cb72-4" tabindex="-1"></a><span class="fu">diff</span>(auv)</span></code></pre></div>
+<pre><code>## [1]   66  -32  -63  -35 -217   30</code></pre>
+<p>瀑布图中第一个矩形条高度为 939，第二个矩形则从 939 继续向上画 <span class="math inline">\(1005-939=66\)</span> 单位，第三个矩形则从 1005 开始向下画 32 单位，依此类推。对于访问量下滑的那些日期，可以用特殊颜色标示（比如红色警告），以区分访问量增长的日期。图 <a href="elements.html#fig:waterfall-chart">3.12</a> 给出了 R 代码和瀑布图结果，其中核心代码只有最后一句，前面的代码仅以布局和美观为目的。从代码可以看到，我们用低层作图函数 <code>rect()</code> 来画瀑布图是非常直观的：前四个参数给定了矩形的位置坐标，而这些位置经过简单的逻辑思考很容易得到。所有任务只是画矩形而已，在缺少对图形元素充分支持的软件包中，我们付出了不必要的代价。</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="elements.html#cb74-1" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">5</span>, .<span class="dv">1</span>))</span>
+<span id="cb74-2"><a href="elements.html#cb74-2" tabindex="-1"></a><span class="fu">plot</span>(auv,</span>
+<span id="cb74-3"><a href="elements.html#cb74-3" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;八月第一周&quot;</span>,</span>
+<span id="cb74-4"><a href="elements.html#cb74-4" tabindex="-1"></a>  <span class="at">ylab =</span> <span class="st">&quot;绝对唯一访问次数&quot;</span>, <span class="at">type =</span> <span class="st">&quot;n&quot;</span>,</span>
+<span id="cb74-5"><a href="elements.html#cb74-5" tabindex="-1"></a>  <span class="at">xlim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">7.5</span>),</span>
+<span id="cb74-6"><a href="elements.html#cb74-6" tabindex="-1"></a>  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(auv)),</span>
+<span id="cb74-7"><a href="elements.html#cb74-7" tabindex="-1"></a>  <span class="at">xaxt =</span> <span class="st">&quot;n&quot;</span>, <span class="at">panel.first =</span> <span class="fu">grid</span>()</span>
+<span id="cb74-8"><a href="elements.html#cb74-8" tabindex="-1"></a>)</span>
+<span id="cb74-9"><a href="elements.html#cb74-9" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, <span class="fu">sprintf</span>(<span class="st">&quot;周%s&quot;</span>, <span class="fu">c</span>(</span>
+<span id="cb74-10"><a href="elements.html#cb74-10" tabindex="-1"></a>  <span class="st">&quot;一&quot;</span>, <span class="st">&quot;二&quot;</span>, <span class="st">&quot;三&quot;</span>, <span class="st">&quot;四&quot;</span>, <span class="st">&quot;五&quot;</span>, <span class="st">&quot;六&quot;</span>, <span class="st">&quot;日&quot;</span></span>
+<span id="cb74-11"><a href="elements.html#cb74-11" tabindex="-1"></a>)))</span>
+<span id="cb74-12"><a href="elements.html#cb74-12" tabindex="-1"></a><span class="fu">rect</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span> <span class="sc">-</span> <span class="fl">0.3</span>, <span class="fu">c</span>(<span class="dv">0</span>, auv[<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>]), <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span> <span class="sc">+</span> <span class="fl">0.3</span>, auv,</span>
+<span id="cb74-13"><a href="elements.html#cb74-13" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">ifelse</span>(<span class="fu">diff</span>(auv) <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">&quot;red&quot;</span>, <span class="cn">NA</span>))</span>
+<span id="cb74-14"><a href="elements.html#cb74-14" tabindex="-1"></a>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:waterfall-chart"></span>
+<img src="elements_files/figure-html/waterfall-chart-1.svg" alt="“统计之都”网站八月第一周访问数据瀑布图：周一访问量为 939， 周二上升，周三开始下降（红色矩形表示访问量下降），直到周末降到最低。这个规律在其它星期都存在，也许它反映了大众普遍的劳累和忙碌规律？" width="672" />
+<p class="caption">
+图 3.12: “统计之都”网站八月第一周访问数据瀑布图：周一访问量为 939， 周二上升，周三开始下降（红色矩形表示访问量下降），直到周末降到最低。这个规律在其它星期都存在，也许它反映了大众普遍的劳累和忙碌规律？
+</p>
+</div>
+
+
+</div>
+<div id="subsec:grad-desc" class="section level3 hasAnchor" number="3.9.2">
+<h3><span class="header-section-number">3.9.2</span> 梯度下降算法<a href="elements.html#subsec:grad-desc" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>箭头在图形中的作用通常是指示，例如图 <a href="elements.html#fig:lines-demo">3.6</a> 中的箭头用来将文本标注指向一条直线，这样使得文本的位置可以灵活安排。下面我们再给一个看起来更复杂的例子，来说明箭头的一个自然而然应用。很多统计计算过程都涉及到迭代，因为这些计算问题没有显式解（即：没有明确的数学表达式），很难一步得到答案，但可以通过迭代来一步步逼近真实解，梯度下降算法就是诸多具有迭代特征方法中的一种。梯度下降算法的目标在于寻找一个函数 <span class="math inline">\(F(\mathsf{x})\)</span> 的极值，不失一般性，我们假设寻找的是极小值。这里我们简单描述一些梯度下降算法的原理：</p>
+<p>假设函数 <span class="math inline">\(F(\mathsf{x})\)</span> 在点 <span class="math inline">\(\mathsf{a}\)</span> 的一个小邻域内可导（这里 <span class="math inline">\(\mathsf{x}\)</span> 可以是多维向量），那么从点 <span class="math inline">\(\mathsf{a}\)</span> 出发，<span class="math inline">\(F(\mathsf{x})\)</span> 沿负梯度方向 <span class="math inline">\(-\nabla F(\mathsf{a})\)</span> 函数值下降最快。可以证明对足够小的 <span class="math inline">\(\gamma&gt;0\)</span>，若</p>
+<p><span class="math display">\[\mathsf{b} = \mathsf{a}-\gamma\nabla F(\mathsf{a})\]</span>
+那么 <span class="math inline">\(F(\mathsf{a})\geq F(\mathsf{b})\)</span>。这样，我们随机猜测一个迭代的起点 <span class="math inline">\(\mathsf{x}_{0}\)</span>，然后按以下方式迭代计算下一步的解 <span class="math inline">\(\mathsf{x}_{n}\)</span>：</p>
+<p><span class="math display">\[\mathsf{x}_{n+1} = \mathsf{x}_{n}-\gamma\nabla F(\mathsf{x}_{n}),\ n\ge0\]</span></p>
+<p>即可满足：</p>
+<p><span class="math display">\[F(\mathsf{x}_{0})\ge F(\mathsf{x}_{1})\ge F(\mathsf{x}_{2})\ge\cdots\]</span></p>
+<p>这样序列 <span class="math inline">\(\left\{ \mathsf{x}_{n}\right\}\)</span> 将收敛到局部最小值。</p>
+<p>上述算法中，核心计算就是目标函数 F 的导数（多维情况下通常称为梯度），剩下的就是简单的四则运算。求导可以用 R 自身的函数 <code>deriv()</code>，所以这个计算实现起来并不困难，而我们想要通过一个例子来说明几个在统计计算中容易被广大统计应用者忽略的问题：</p>
+<ol style="list-style-type: decimal">
+<li>迭代的起点</li>
+<li>步长（本算法中可以看作是 <span class="math inline">\(\gamma\)</span>）</li>
+<li>迭代次数</li>
+<li>误差</li>
+</ol>
+<p>我们在实际应用中，往往过于依赖和相信计算机程序，认为所有默认设置都是最优或最可靠的，实际并非如此，否则所有的函数都没有必要设置参数了。以上四个问题是大多数迭代性质的算法都会涉及到的：迭代起点通常需要和真实的解相隔较近，但这个要求不具备可操作性，因为我们并不知道真实解在哪里；步长通常尽量小，保证迭代能稳定收敛，否则迭代过程中跳跃很大不容易找到解，但小步长的缺点也很明显，它使得迭代进行得很慢；迭代次数通常需要尽量大；误差显然应该越小越好，例如在求根的问题中，我们希望目标函数值越接近于 0 越好。图 <a href="elements.html#fig:gradArrows">3.13</a> 选取了一个二元函数</p>
+<p><span class="math display">\[f(x,y)=\sin(x^{2}/2-y^{2}/4+3)\cos(2x+1-\exp(y)),\]</span></p>
+<p>目标是在 <span class="math inline">\(\left\{ (x,y)|x\in[-1,1],\ y\in[0.5,2.2]\right\}\)</span> 范围内求得一对 <span class="math inline">\((x,y)\)</span> 使得 <span class="math inline">\(f(\cdot,\cdot)\)</span> 最小，整幅图的背景是一幅颜色图（<a href="gallery.html#sec:image">4.14</a> 小节将会介绍），图中横轴表示 x，纵轴表示 y，每一对 <span class="math inline">\((x,y)\)</span> 对应的地方有一个颜色方块，它的颜色深浅代表了函数 <span class="math inline">\(f(x,y)\)</span> 的取值大小，越深表示值越小。理想情况是，我们随意选取一个迭代起点，梯度下降算法能把我们带到图中的最深处去，这个过程在图中用一系列首尾相接的箭头表示，但图 <a href="elements.html#fig:gradArrows">3.13</a> 显示的情况并不完全与我们的预期相符：有些起始点能把我们带到低处，有些则不能；有些步长下收敛较稳定，有些步长则让迭代路径蜿蜒崎岖；有的箭头还没到最低点就停滞不前了，有些则一直能往最低的地方走。本例的目标函数也可以用 R 自身的 <code>optim()</code> 函数来求极小值，它的收敛代码为 0，表示这个计算结果在一定条件下可以收敛（但不代表找到了全局最小值，甚至不代表找到了局部最小值）：</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="elements.html#cb75-1" tabindex="-1"></a>f2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="fu">sin</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> x[<span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="dv">4</span> <span class="sc">*</span> x[<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span>) <span class="sc">*</span></span>
+<span id="cb75-2"><a href="elements.html#cb75-2" tabindex="-1"></a>    <span class="fu">cos</span>(<span class="dv">2</span> <span class="sc">*</span> x[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">exp</span>(x[<span class="dv">2</span>]))</span>
+<span id="cb75-3"><a href="elements.html#cb75-3" tabindex="-1"></a><span class="co"># par 为局部解；value 为目标函数值； convergence 为收敛指示代码</span></span>
+<span id="cb75-4"><a href="elements.html#cb75-4" tabindex="-1"></a><span class="fu">optim</span>(<span class="fu">c</span>(<span class="sc">-</span>.<span class="dv">9</span>, .<span class="dv">9</span>), f2, <span class="at">method =</span> <span class="st">&quot;L-BFGS-B&quot;</span>, <span class="at">lower =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, .<span class="dv">5</span>), <span class="at">upper =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">2.2</span>))</span></code></pre></div>
+<pre><code>## $par
+## [1] 0.3227365 1.6024052
+## 
+## $value
+## [1] -0.6574
+## 
+## $counts
+## function gradient 
+##       13       13 
+## 
+## $convergence
+## [1] 0
+## 
+## $message
+## [1] &quot;CONVERGENCE: REL_REDUCTION_OF_F &lt;= FACTR*EPSMCH&quot;</code></pre>
+<p>为了叙述方便，我们将图中最高的点编号为 1，其它点按逆时针方向依次编号。点 1 初始位置在“山脊”上，最初几步迭代可能使它到达了一个“陡峭”的区域（即导数值很大），所以在某一步迭代中一下跳到图的下方，然后不知所终；点 3 的步长大，也有跳跃性，但迂回几次之后最终还是步入了“正轨”；点 6 表现很好，但由于迭代次数很少，因此停在了在离最低点很远的地方；左下角的点 7 到点 15 都表现较好，只是有些点的迭代次数不够，停在了半路；右下角那个点迭代了几步就超出了搜索范围，可能前往另一个局部最小值去了；最后两个点由于已经足够靠近最低点，所以步长显得太大，迭代过程左右大幅摇晃，但前进方向是对的。图中每一个箭头所指的方向都是当前位置上的负梯度方向，理论上它与等高线是垂直的（本图没有加等高线，读者凭眼睛从颜色区域中简单勾勒），显然，负梯度方向大致说来都是使得函数值下降最快的方向，因为大多数箭头都是尽快往颜色最深的地方走，这使得“梯度”的含义非常直观；另外，20 个点的表现告诉我们，有些数值计算方法在特定条件下可能并不会收敛到极大值或极小值。作者对流行的结构方程模型一直持保守态度，原因就是很少有人关心计算层面的东西，把一切都交给计算机去做，殊不知结构方程模型的目标函数是何等的复杂：一个普通的模型可能就包含三十个参数，这些参数是矩阵的构成元素，而目标函数又是由矩阵的逆、行列式等运算构成。也许作者在这个问题上多虑了，但作者所看到的模型应用者几乎无人关心迭代起始点和迭代次数，甚至有人为了防止“坏情况”发生，故意将迭代初始值或者随机数种子固定住，这样的运算毫无疑问是稳定的，但它是否可靠，还值得验证。</p>
+<p>图 <a href="elements.html#fig:gradArrows">3.13</a> 同时展示了梯度下降算法的原理以及在应用中可能出现的问题（演示 <code>demo('gradArrows2', package = 'MSG')</code> 可以获得更好的图形质量以及箭头动画效果），它充分显示了 R 语言的统计图形能力可以紧密结合它的统计计算优势，创造出有意义的统计图形。我们使用的只是简单的图形元素（箭头）和基本的计算（求导），但结果的深刻远大于过程的简单。从某种程度上来说，在 R 语言中作图缺的不是工具（工具俯拾皆是），而是创意、思考以及对数据的理解。</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="elements.html#cb77-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;gradArrows1&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:gradArrows"></span>
+<img src="elements_files/figure-html/gradArrows-1.png" alt="梯度下降算法的过程演示：对于同一个函数，我们选取 20 个迭代起点（外围大实心点），分别用不同的步长和迭代次数来进行迭代（里围相应颜色的小实心点为迭代终止位置）。从每一个起始点开始的迭代过程都由一系列箭头表示，最终这些箭头都大致指向同一个区域。本图是 2008 年作者为中国人民大学统计学院学生刊物《统计功课》设计的封面图形，底部一行附注“一沙一世界，一花一天堂”，取自英国诗人布莱克的诗《天真的预言》，意即仔细观察统计计算过程，会看到一个我们没注意过的微观世界。" width="672" />
+<p class="caption">
+图 3.13: 梯度下降算法的过程演示：对于同一个函数，我们选取 20 个迭代起点（外围大实心点），分别用不同的步长和迭代次数来进行迭代（里围相应颜色的小实心点为迭代终止位置）。从每一个起始点开始的迭代过程都由一系列箭头表示，最终这些箭头都大致指向同一个区域。本图是 2008 年作者为中国人民大学统计学院学生刊物《统计功课》设计的封面图形，底部一行附注“一沙一世界，一花一天堂”，取自英国诗人布莱克的诗《天真的预言》，意即仔细观察统计计算过程，会看到一个我们没注意过的微观世界。
+</p>
+</div>
+
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="elements.html#cb78-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;signSTAT&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sign-stat"></span>
+<img src="elements_files/figure-html/sign-stat-1.svg" alt="在统计学的轨道中（彩蛋）：本图综合运用了折线、多边形、箭头、文本和圆圈等元素，它原本是作者于 2007 年为中国人民大学统计学院 06 级硕士班设计的一件班徽作品，但后来很多同学认为该图应重命名为“美人鱼图”。作者初衷是将“STAT”四个字母抽象表达为一些图形元素，例如图中一系列圆圈代表“S”，两端的箭头代表“T”，中间的正态分布曲线以及阴影部分代表“A”。" width="672" />
+<p class="caption">
+图 3.14: 在统计学的轨道中（彩蛋）：本图综合运用了折线、多边形、箭头、文本和圆圈等元素，它原本是作者于 2007 年为中国人民大学统计学院 06 级硕士班设计的一件班徽作品，但后来很多同学认为该图应重命名为“美人鱼图”。作者初衷是将“STAT”四个字母抽象表达为一些图形元素，例如图中一系列圆圈代表“S”，两端的箭头代表“T”，中间的正态分布曲线以及阴影部分代表“A”。
+</p>
+</div>
+
+</div>
+</div>
+<div id="section-6" class="section level2 hasAnchor" number="3.10">
+<h2><span class="header-section-number">3.10</span> 小结<a href="elements.html#section-6" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>本章对图形元素的介绍就到此为止，后面章节的统计图形构造仍然会用到这些基础元素。具备这些低层函数的知识之后，只要我们不嫌麻烦，其实所有的统计图形都可以用它们的组合使用加上一定的统计计算而一步步构建出来。当然，一般也不会有人真用这样的方法去作图（练习除外）。我们指出这一点，也是为了说明，统计图形并没有任何神秘可言，随着对图形元素的绘制以及统计量的逐渐深入了解，当一幅统计图形摆在我们面前，我们也应该能如“庖丁解牛”一般洞穿其架构。例如，从纯粹作图的意义上来讲，直方图、条形图、棘状图和马赛克图不过是矩形，条件密度图和饼图是多边形，散点图和带状图是点，折线图和向日葵散点图是线段，等等。事实上，用 R 语言的作图功能作音乐五线谱、画地图、做动画等等，都不足为奇。本书 <a href="system.html#sec:animation">5.6</a> 小节中所谈到的统计学动画则是图形元素的另类应用，动画包 <strong>animation</strong> <span class="citation">(<a href="#ref-animation">Xie 2013</a>)</span> 几乎完全是依靠统计计算与 R 基础图形系统而写成，例如前面提到的梯度下降算法的动画演示可以参考 <strong>animation</strong> 包中的 <code>grad.desc()</code> 函数。</p>
+<p>前两章中，我们对 R 的作图基础元素和大部分参数都作了比较详细的介绍，大致掌握这些知识之后，下一章我们就可以正式进入本书的核心部分 — 统计图形，在那些图形中，我们还会多次遇到这些基础知识的应用，到时读者可以再回顾复习。图 <a href="elements.html#fig:sign-stat">3.14</a> 是本章最后一例“彩蛋”，供读者体会折线、多边形、箭头和文本等图形元素的用法。</p>
+</div>
+<div id="section-7" class="section level2 hasAnchor" number="3.11">
+<h2><span class="header-section-number">3.11</span> 思考与练习<a href="elements.html#section-7" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>彩色图形虽然在外观上很吸引人，但是它的一个局限是可能受客观条件限制而不能被打印出来（例如黑白打印机），我们在选取颜色的时候该如何平衡外观和打印效果？另外，男性和女性的色盲 / 色弱比例各是多少？（可以查阅维基百科：<a href="https://en.wikipedia.org/wiki/Color_blindness" class="uri">https://en.wikipedia.org/wiki/Color_blindness</a>）</p></li>
+<li><p>图 <a href="elements.html#fig:point-iris">3.4</a> 在点的样式选取上是否有明显的缺陷？或者说散点图中的点应该如何选取形状以使得各组点之间的外观差异尽量大？第 <a href="principle.html#subsec:clear-symbols">7.1.2</a> 小节会对这个问题有详细评论。</p></li>
+<li><p>当箭头角度参数 <code>angle</code> 为 <span class="math inline">\(90\,^{\circ}\)</span>、<code>code</code> 参数为 3 时，箭头的形状是怎样的？这种形状是否和数学上的“区间”有类似之处？请考虑如何利用这种“双箭头”表达统计学中的置信区间。</p></li>
+<li><p>利用三角形的边长关系画一个指北箭头如下</p>
+<p><img src="elements_files/figure-html/north-arrow-1.svg" width="192" style="display: block; margin: auto;" /></p></li>
+<li><p>一些数学上函数可以产生有趣的“心形曲线”，例如在极坐标系下 <span class="math inline">\(r(\theta)=1-\sin(\theta)\)</span> 生成的就是心形的曲线，笛卡尔坐标下方程 <span class="math inline">\((x^{2}+y^{2}-1)^{3}-x^{2}y^{3}=0\)</span> 对应的解也可以形成心形曲线。这里我们考虑一种简单的心形曲线如下图所示：</p>
+<p><img src="elements_files/figure-html/heart-curve-1.svg" width="192" style="display: block; margin: auto;" /></p>
+<p>这是个左右对称的形状，因此只需要知道左右任一侧的画法就知道整体画法了。实际上，右侧由上下两部分构成，上面是直径为 1 的半圆，下面是翻转了 <span class="math inline">\(90\,^{\circ}\)</span> 的曲线 <span class="math inline">\(y=\sin(x)，x\in[0,\pi/2]\)</span>。请思考如何用多边形构造这个形状。MSG 包中的函数 <code>heart_curve()</code> 可供参考。</p></li>
+<li><p>温度计形状用来表达比例数据通常很形象，我们可以设定温度计的范围在 <span class="math inline">\([0,\,1]\)</span> 之间，用汞柱的高度来表达比例。用 R 构造一支“温度计”很简单，如下图：这些温度计实际上由一个灰圆点、一个红圆点、一条灰线段和一条红线段叠加构成，红线段的长度表示比例大小，其它图形元素都只是背景。请尝试用四个图形元素构造温度计，注意这些图形元素的叠加顺序（例如红线必须在灰线之后画，否则会被覆盖）。<a href="gallery.html#sec:symbols">4.26</a> 小节的符号图中，“符号”的选项之一就是用温度计，但不如这里的温度计形象。对于追求细节完美的用户来说，这里线段末端的样式也值得注意，因为我们实际生活中看到的汞柱末端是弧形的，所以这里要是画成矩形就不合适了；线段末端的三种样式在 <a href="tricks.html#sec:par">B.1</a> 小节中有介绍。</p>
+<p><img src="elements_files/figure-html/thermometer-demo-1.svg" width="384" style="display: block; margin: auto;" /></p></li>
+</ol>
+
+</div>
+</div>
+<h3>参考文献<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-Murrell05" class="csl-entry">
+Murrell, Paul. 2018. <em>R Graphics</em>. 3rd ed. Boca Raton, Florida: Chapman; Hall/CRC. <a href="https://www.stat.auckland.ac.nz/~paul/RG3e/">https://www.stat.auckland.ac.nz/~paul/RG3e/</a>.
+</div>
+<div id="ref-RColorBrewer" class="csl-entry">
+Neuwirth, Erich. 2022. <em>RColorBrewer: ColorBrewer Palettes</em>. <a href="https://CRAN.R-project.org/package=RColorBrewer">https://CRAN.R-project.org/package=RColorBrewer</a>.
+</div>
+<div id="ref-animation" class="csl-entry">
+———. 2013. <span>“<span class="nocase">animation</span>: An <span>R</span> Package for Creating Animations and Demonstrating Statistical Methods.”</span> <em>Journal of Statistical Software</em> 53 (1): 1–27. <a href="https://www.jstatsoft.org/v53/i01/">https://www.jstatsoft.org/v53/i01/</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p>Windows 用户注意路径的写法，不能用通常的单反斜杠 \，而应该把路径中的单反斜杠换成双反斜杠 \\ 或者用单斜杠 /；如 <code>D:/colors.pdf</code> 或 <code>D:\\colors.pdf</code><a href="elements.html#fnref1" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<script>
+window.onload = function() {
+
+  var imgs = document.querySelectorAll('img');
+
+  // Upon clicking an image, open a new window with the
+  // dimensions of the image, pointing the `data-url` link
+  var on_click = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      // Add some extra height for the modebar
+      var height = 'height=' + (e.target.clientHeight * 1.05);
+      var width = 'width=' + e.target.clientWidth;
+      var param = 'location=yes,' + height + ',' + width + ',scrollbars=yes,status=yes';
+      window.open(e.target.dataset.url, '_blank', param);
+    }
+  };
+
+  var on_hover = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      e.target.style.cursor = 'pointer';
+    }
+  };
+
+  for (var i = 0; i < imgs.length; i++) {
+    imgs[i].addEventListener('click', on_click);
+    imgs[i].addEventListener('mouseover', on_hover);
+  }
+};
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tools.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gallery.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/MSG-Book/edit/master/elements.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

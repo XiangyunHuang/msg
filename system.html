@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>第 5 章 系统 | 现代统计图形</title>
+  <meta name="description" content="第 5 章 系统 | 现代统计图形书稿" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="第 5 章 系统 | 现代统计图形" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="第 5 章 系统 | 现代统计图形书稿" />
+  <meta name="github-repo" content="XiangyunHuang/msg" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="第 5 章 系统 | 现代统计图形" />
+  
+  <meta name="twitter:description" content="第 5 章 系统 | 现代统计图形书稿" />
+  
+
+<meta name="author" content="赵鹏" />
+<meta name="author" content="谢益辉" />
+<meta name="author" content="黄湘云" />
+
+
+<meta name="date" content="2024-05-23" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="gallery.html"/>
+<link rel="next" href="data.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      TeX: { extensions: ["cancel.js"] }
+    });
+</script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V6EJ5FTG9E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V6EJ5FTG9E');
+</script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">现代统计图形</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>推荐语</a></li>
+<li class="chapter" data-level="" data-path="preface.html"><a href="preface.html"><i class="fa fa-check"></i>自序</a></li>
+<li class="chapter" data-level="" data-path="foreword.html"><a href="foreword.html"><i class="fa fa-check"></i>前言</a></li>
+<li class="chapter" data-level="1" data-path="history.html"><a href="history.html"><i class="fa fa-check"></i><b>1</b> 历史</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="history.html"><a href="history.html#sec:pie-and-line-of-history"><i class="fa fa-check"></i><b>1.1</b> 饼图和线图的起源</a></li>
+<li class="chapter" data-level="1.2" data-path="history.html"><a href="history.html#sec:the-mystery-of-cholera-infection"><i class="fa fa-check"></i><b>1.2</b> 霍乱传染之谜</a></li>
+<li class="chapter" data-level="1.3" data-path="history.html"><a href="history.html#sec:nightingale"><i class="fa fa-check"></i><b>1.3</b> 提灯女士的玫瑰图</a></li>
+<li class="chapter" data-level="1.4" data-path="history.html"><a href="history.html#sec:charles-joseph-minard"><i class="fa fa-check"></i><b>1.4</b> 拿破仑的俄罗斯远征</a></li>
+<li class="chapter" data-level="1.5" data-path="history.html"><a href="history.html#sec:begin"><i class="fa fa-check"></i><b>1.5</b> 小结与开始</a></li>
+<li class="chapter" data-level="1.6" data-path="history.html"><a href="history.html#section"><i class="fa fa-check"></i><b>1.6</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="tools.html"><a href="tools.html"><i class="fa fa-check"></i><b>2</b> 工具</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="tools.html"><a href="tools.html#section-1"><i class="fa fa-check"></i><b>2.1</b> 选择作图工具</a></li>
+<li class="chapter" data-level="2.2" data-path="tools.html"><a href="tools.html#sec:R-intro"><i class="fa fa-check"></i><b>2.2</b> R 语言简介</a></li>
+<li class="chapter" data-level="2.3" data-path="tools.html"><a href="tools.html#r-"><i class="fa fa-check"></i><b>2.3</b> 安装 R 语言</a></li>
+<li class="chapter" data-level="2.4" data-path="tools.html"><a href="tools.html#section-2"><i class="fa fa-check"></i><b>2.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="elements.html"><a href="elements.html"><i class="fa fa-check"></i><b>3</b> 元素</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="elements.html"><a href="elements.html#sec:color"><i class="fa fa-check"></i><b>3.1</b> 颜色</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="elements.html"><a href="elements.html#sec:palette"><i class="fa fa-check"></i><b>3.1.1</b> 固定颜色选择函数</a></li>
+<li class="chapter" data-level="3.1.2" data-path="elements.html"><a href="elements.html#section-3"><i class="fa fa-check"></i><b>3.1.2</b> 颜色生成和转换函数</a></li>
+<li class="chapter" data-level="3.1.3" data-path="elements.html"><a href="elements.html#subsec:palette"><i class="fa fa-check"></i><b>3.1.3</b> 特定颜色主题调色板</a></li>
+<li class="chapter" data-level="3.1.4" data-path="elements.html"><a href="elements.html#section-4"><i class="fa fa-check"></i><b>3.1.4</b> 渐变色的简单原理及应用</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="elements.html"><a href="elements.html#sec:points"><i class="fa fa-check"></i><b>3.2</b> 点</a></li>
+<li class="chapter" data-level="3.3" data-path="elements.html"><a href="elements.html#sec:lines"><i class="fa fa-check"></i><b>3.3</b> 曲线、直线、线段、箭头、X-样条</a></li>
+<li class="chapter" data-level="3.4" data-path="elements.html"><a href="elements.html#sec:polygon"><i class="fa fa-check"></i><b>3.4</b> 矩形、多边形</a></li>
+<li class="chapter" data-level="3.5" data-path="elements.html"><a href="elements.html#sec:grid"><i class="fa fa-check"></i><b>3.5</b> 网格线</a></li>
+<li class="chapter" data-level="3.6" data-path="elements.html"><a href="elements.html#sec:text"><i class="fa fa-check"></i><b>3.6</b> 标题、任意文本、周边文本</a></li>
+<li class="chapter" data-level="3.7" data-path="elements.html"><a href="elements.html#sec:legend"><i class="fa fa-check"></i><b>3.7</b> 图例</a></li>
+<li class="chapter" data-level="3.8" data-path="elements.html"><a href="elements.html#sec:axis"><i class="fa fa-check"></i><b>3.8</b> 坐标轴</a></li>
+<li class="chapter" data-level="3.9" data-path="elements.html"><a href="elements.html#section-5"><i class="fa fa-check"></i><b>3.9</b> 图形元素应用示例</a>
+<ul>
+<li class="chapter" data-level="3.9.1" data-path="elements.html"><a href="elements.html#subsec:waterfall-chart"><i class="fa fa-check"></i><b>3.9.1</b> 瀑布图</a></li>
+<li class="chapter" data-level="3.9.2" data-path="elements.html"><a href="elements.html#subsec:grad-desc"><i class="fa fa-check"></i><b>3.9.2</b> 梯度下降算法</a></li>
+</ul></li>
+<li class="chapter" data-level="3.10" data-path="elements.html"><a href="elements.html#section-6"><i class="fa fa-check"></i><b>3.10</b> 小结</a></li>
+<li class="chapter" data-level="3.11" data-path="elements.html"><a href="elements.html#section-7"><i class="fa fa-check"></i><b>3.11</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="gallery.html"><a href="gallery.html"><i class="fa fa-check"></i><b>4</b> 图库</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="gallery.html"><a href="gallery.html#sec:hist"><i class="fa fa-check"></i><b>4.1</b> 直方图</a></li>
+<li class="chapter" data-level="4.2" data-path="gallery.html"><a href="gallery.html#section-8"><i class="fa fa-check"></i><b>4.2</b> 茎叶图</a></li>
+<li class="chapter" data-level="4.3" data-path="gallery.html"><a href="gallery.html#sec:boxplot"><i class="fa fa-check"></i><b>4.3</b> 箱线图</a></li>
+<li class="chapter" data-level="4.4" data-path="gallery.html"><a href="gallery.html#sec:barplot"><i class="fa fa-check"></i><b>4.4</b> 条形图</a></li>
+<li class="chapter" data-level="4.5" data-path="gallery.html"><a href="gallery.html#sec:plot-default"><i class="fa fa-check"></i><b>4.5</b> 散点图</a></li>
+<li class="chapter" data-level="4.6" data-path="gallery.html"><a href="gallery.html#sec:assocplot"><i class="fa fa-check"></i><b>4.6</b> 关联图</a></li>
+<li class="chapter" data-level="4.7" data-path="gallery.html"><a href="gallery.html#sec:cdplot"><i class="fa fa-check"></i><b>4.7</b> 条件密度图</a></li>
+<li class="chapter" data-level="4.8" data-path="gallery.html"><a href="gallery.html#sec:contour"><i class="fa fa-check"></i><b>4.8</b> 等高图/等高线</a></li>
+<li class="chapter" data-level="4.9" data-path="gallery.html"><a href="gallery.html#sec:coplot"><i class="fa fa-check"></i><b>4.9</b> 条件分割图</a></li>
+<li class="chapter" data-level="4.10" data-path="gallery.html"><a href="gallery.html#sec:curve"><i class="fa fa-check"></i><b>4.10</b> 一元函数曲线图</a></li>
+<li class="chapter" data-level="4.11" data-path="gallery.html"><a href="gallery.html#sec:dotchart"><i class="fa fa-check"></i><b>4.11</b> Cleveland 点图</a></li>
+<li class="chapter" data-level="4.12" data-path="gallery.html"><a href="gallery.html#sec:filled-contour"><i class="fa fa-check"></i><b>4.12</b> 颜色等高图/层次图</a></li>
+<li class="chapter" data-level="4.13" data-path="gallery.html"><a href="gallery.html#sec:fourfoldplot"><i class="fa fa-check"></i><b>4.13</b> 四瓣图</a></li>
+<li class="chapter" data-level="4.14" data-path="gallery.html"><a href="gallery.html#sec:image"><i class="fa fa-check"></i><b>4.14</b> 颜色图</a></li>
+<li class="chapter" data-level="4.15" data-path="gallery.html"><a href="gallery.html#sec:matplot"><i class="fa fa-check"></i><b>4.15</b> 矩阵图、矩阵点、矩阵线</a></li>
+<li class="chapter" data-level="4.16" data-path="gallery.html"><a href="gallery.html#sec:mosaicplot"><i class="fa fa-check"></i><b>4.16</b> 马赛克图</a></li>
+<li class="chapter" data-level="4.17" data-path="gallery.html"><a href="gallery.html#sec:scatterplot-matrix"><i class="fa fa-check"></i><b>4.17</b> 散点图矩阵</a></li>
+<li class="chapter" data-level="4.18" data-path="gallery.html"><a href="gallery.html#sec:persp"><i class="fa fa-check"></i><b>4.18</b> 三维透视图</a></li>
+<li class="chapter" data-level="4.19" data-path="gallery.html"><a href="gallery.html#plot-design"><i class="fa fa-check"></i><b>4.19</b> 因素效应图</a></li>
+<li class="chapter" data-level="4.20" data-path="gallery.html"><a href="gallery.html#sec:rug"><i class="fa fa-check"></i><b>4.20</b> 坐标轴须</a></li>
+<li class="chapter" data-level="4.21" data-path="gallery.html"><a href="gallery.html#sec:smoothScatter"><i class="fa fa-check"></i><b>4.21</b> 平滑散点图</a></li>
+<li class="chapter" data-level="4.22" data-path="gallery.html"><a href="gallery.html#sec:spineplot"><i class="fa fa-check"></i><b>4.22</b> 棘状图</a></li>
+<li class="chapter" data-level="4.23" data-path="gallery.html"><a href="gallery.html#sec:stars"><i class="fa fa-check"></i><b>4.23</b> 星状图、蛛网图、雷达图</a></li>
+<li class="chapter" data-level="4.24" data-path="gallery.html"><a href="gallery.html#sec:stripchart"><i class="fa fa-check"></i><b>4.24</b> 带状图</a></li>
+<li class="chapter" data-level="4.25" data-path="gallery.html"><a href="gallery.html#sec:sunflowerplot"><i class="fa fa-check"></i><b>4.25</b> 向日葵散点图</a></li>
+<li class="chapter" data-level="4.26" data-path="gallery.html"><a href="gallery.html#sec:symbols"><i class="fa fa-check"></i><b>4.26</b> 符号图</a></li>
+<li class="chapter" data-level="4.27" data-path="gallery.html"><a href="gallery.html#sec:pie"><i class="fa fa-check"></i><b>4.27</b> 饼图</a></li>
+<li class="chapter" data-level="4.28" data-path="gallery.html"><a href="gallery.html#section-9"><i class="fa fa-check"></i><b>4.28</b> 热图</a></li>
+<li class="chapter" data-level="4.29" data-path="gallery.html"><a href="gallery.html#section-10"><i class="fa fa-check"></i><b>4.29</b> 交互效应图</a></li>
+<li class="chapter" data-level="4.30" data-path="gallery.html"><a href="gallery.html#sec:qqplot"><i class="fa fa-check"></i><b>4.30</b> QQ 图</a></li>
+<li class="chapter" data-level="4.31" data-path="gallery.html"><a href="gallery.html#section-11"><i class="fa fa-check"></i><b>4.31</b> 生存函数图</a></li>
+<li class="chapter" data-level="4.32" data-path="gallery.html"><a href="gallery.html#sec:rpart"><i class="fa fa-check"></i><b>4.32</b> 分类与回归树图</a></li>
+<li class="chapter" data-level="4.33" data-path="gallery.html"><a href="gallery.html#sec:vioplot"><i class="fa fa-check"></i><b>4.33</b> 小提琴图</a></li>
+<li class="chapter" data-level="4.34" data-path="gallery.html"><a href="gallery.html#sec:maps"><i class="fa fa-check"></i><b>4.34</b> 地图</a></li>
+<li class="chapter" data-level="4.35" data-path="gallery.html"><a href="gallery.html#sec:faces"><i class="fa fa-check"></i><b>4.35</b> 脸谱图</a></li>
+<li class="chapter" data-level="4.36" data-path="gallery.html"><a href="gallery.html#sec:parcoords"><i class="fa fa-check"></i><b>4.36</b> 平行坐标图</a></li>
+<li class="chapter" data-level="4.37" data-path="gallery.html"><a href="gallery.html#sec:andrews-curve"><i class="fa fa-check"></i><b>4.37</b> 调和曲线图</a></li>
+<li class="chapter" data-level="4.38" data-path="gallery.html"><a href="gallery.html#sec:bagplot"><i class="fa fa-check"></i><b>4.38</b> 二维箱线图</a></li>
+<li class="chapter" data-level="4.39" data-path="gallery.html"><a href="gallery.html#sec:base-graph-ext"><i class="fa fa-check"></i><b>4.39</b> 延伸与小结</a></li>
+<li class="chapter" data-level="4.40" data-path="gallery.html"><a href="gallery.html#section-12"><i class="fa fa-check"></i><b>4.40</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="system.html"><a href="system.html"><i class="fa fa-check"></i><b>5</b> 系统</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="system.html"><a href="system.html#sec:ggplot2"><i class="fa fa-check"></i><b>5.1</b> ggplot2 图形</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="system.html"><a href="system.html#section-13"><i class="fa fa-check"></i><b>5.1.1</b> 几何形状</a></li>
+<li class="chapter" data-level="5.1.2" data-path="system.html"><a href="system.html#section-14"><i class="fa fa-check"></i><b>5.1.2</b> 统计量</a></li>
+<li class="chapter" data-level="5.1.3" data-path="system.html"><a href="system.html#section-15"><i class="fa fa-check"></i><b>5.1.3</b> 标度</a></li>
+<li class="chapter" data-level="5.1.4" data-path="system.html"><a href="system.html#section-16"><i class="fa fa-check"></i><b>5.1.4</b> 坐标系</a></li>
+<li class="chapter" data-level="5.1.5" data-path="system.html"><a href="system.html#subsec:facet"><i class="fa fa-check"></i><b>5.1.5</b> 切片</a></li>
+<li class="chapter" data-level="5.1.6" data-path="system.html"><a href="system.html#section-17"><i class="fa fa-check"></i><b>5.1.6</b> 位置调整</a></li>
+<li class="chapter" data-level="5.1.7" data-path="system.html"><a href="system.html#subsec:theme"><i class="fa fa-check"></i><b>5.1.7</b> 主题</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="system.html"><a href="system.html#section-18"><i class="fa fa-check"></i><b>5.2</b> 网格图形</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="system.html"><a href="system.html#section-19"><i class="fa fa-check"></i><b>5.2.1</b> 视图区</a></li>
+<li class="chapter" data-level="5.2.2" data-path="system.html"><a href="system.html#section-20"><i class="fa fa-check"></i><b>5.2.2</b> 旋转</a></li>
+<li class="chapter" data-level="5.2.3" data-path="system.html"><a href="system.html#section-21"><i class="fa fa-check"></i><b>5.2.3</b> 图形对象</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="system.html"><a href="system.html#lattice-"><i class="fa fa-check"></i><b>5.3</b> lattice 图形</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="system.html"><a href="system.html#subsec:lattice-intro"><i class="fa fa-check"></i><b>5.3.1</b> 简介</a></li>
+<li class="chapter" data-level="5.3.2" data-path="system.html"><a href="system.html#section-22"><i class="fa fa-check"></i><b>5.3.2</b> 公式</a></li>
+<li class="chapter" data-level="5.3.3" data-path="system.html"><a href="system.html#section-23"><i class="fa fa-check"></i><b>5.3.3</b> 选项</a></li>
+<li class="chapter" data-level="5.3.4" data-path="system.html"><a href="system.html#section-24"><i class="fa fa-check"></i><b>5.3.4</b> 数据</a></li>
+<li class="chapter" data-level="5.3.5" data-path="system.html"><a href="system.html#section-25"><i class="fa fa-check"></i><b>5.3.5</b> 细节</a></li>
+<li class="chapter" data-level="5.3.6" data-path="system.html"><a href="system.html#section-26"><i class="fa fa-check"></i><b>5.3.6</b> 面板</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="system.html"><a href="system.html#sec:dynamic-graphics"><i class="fa fa-check"></i><b>5.4</b> rggobi 动态图形</a></li>
+<li class="chapter" data-level="5.5" data-path="system.html"><a href="system.html#sec:rgl"><i class="fa fa-check"></i><b>5.5</b> rgl 三维图形</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="system.html"><a href="system.html#section-27"><i class="fa fa-check"></i><b>5.5.1</b> 三维点线图</a></li>
+<li class="chapter" data-level="5.5.2" data-path="system.html"><a href="system.html#section-28"><i class="fa fa-check"></i><b>5.5.2</b> 三维透视图</a></li>
+<li class="chapter" data-level="5.5.3" data-path="system.html"><a href="system.html#section-29"><i class="fa fa-check"></i><b>5.5.3</b> 动画和截图</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="system.html"><a href="system.html#sec:animation"><i class="fa fa-check"></i><b>5.6</b> 动画视频</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="system.html"><a href="system.html#section-30"><i class="fa fa-check"></i><b>5.6.1</b> 动画导出工具</a></li>
+<li class="chapter" data-level="5.6.2" data-path="system.html"><a href="system.html#section-31"><i class="fa fa-check"></i><b>5.6.2</b> 统计学动画</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="system.html"><a href="system.html#section-32"><i class="fa fa-check"></i><b>5.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>6</b> 数据</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data.html"><a href="data.html#sec:data-type"><i class="fa fa-check"></i><b>6.1</b> 数据类型</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data.html"><a href="data.html#section-33"><i class="fa fa-check"></i><b>6.1.1</b> 分类数据</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data.html"><a href="data.html#section-34"><i class="fa fa-check"></i><b>6.1.2</b> 连续数据</a></li>
+<li class="chapter" data-level="6.1.3" data-path="data.html"><a href="data.html#section-35"><i class="fa fa-check"></i><b>6.1.3</b> 混合数据</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="data.html"><a href="data.html#sec:data-case"><i class="fa fa-check"></i><b>6.2</b> 数据案例</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="data.html"><a href="data.html#section-36"><i class="fa fa-check"></i><b>6.2.1</b> 价格走势</a></li>
+<li class="chapter" data-level="6.2.2" data-path="data.html"><a href="data.html#subsec:canabalt"><i class="fa fa-check"></i><b>6.2.2</b> 末日狂奔</a></li>
+<li class="chapter" data-level="6.2.3" data-path="data.html"><a href="data.html#subsec:music"><i class="fa fa-check"></i><b>6.2.3</b> 音乐之声</a></li>
+<li class="chapter" data-level="6.2.4" data-path="data.html"><a href="data.html#subsec:tvearn"><i class="fa fa-check"></i><b>6.2.4</b> 绝望主妇</a></li>
+<li class="chapter" data-level="6.2.5" data-path="data.html"><a href="data.html#section-37"><i class="fa fa-check"></i><b>6.2.5</b> 灌篮高手</a></li>
+<li class="chapter" data-level="6.2.6" data-path="data.html"><a href="data.html#subsec:percentage"><i class="fa fa-check"></i><b>6.2.6</b> 神奇数字</a></li>
+<li class="chapter" data-level="6.2.7" data-path="data.html"><a href="data.html#subsec:lowess"><i class="fa fa-check"></i><b>6.2.7</b> 化点为线</a></li>
+<li class="chapter" data-level="6.2.8" data-path="data.html"><a href="data.html#subsec:ternary"><i class="fa fa-check"></i><b>6.2.8</b> 三足鼎立</a></li>
+<li class="chapter" data-level="6.2.9" data-path="data.html"><a href="data.html#section-38"><i class="fa fa-check"></i><b>6.2.9</b> 背景地图</a></li>
+<li class="chapter" data-level="6.2.10" data-path="data.html"><a href="data.html#subsec:cluster"><i class="fa fa-check"></i><b>6.2.10</b> 统计词话</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="data.html"><a href="data.html#sec:simulations"><i class="fa fa-check"></i><b>6.3</b> 统计模拟</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="data.html"><a href="data.html#section-39"><i class="fa fa-check"></i><b>6.3.1</b> 线性回归</a></li>
+<li class="chapter" data-level="6.3.2" data-path="data.html"><a href="data.html#section-40"><i class="fa fa-check"></i><b>6.3.2</b> 稳健回归</a></li>
+<li class="chapter" data-level="6.3.3" data-path="data.html"><a href="data.html#section-41"><i class="fa fa-check"></i><b>6.3.3</b> 离群检测</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="data.html"><a href="data.html#section-42"><i class="fa fa-check"></i><b>6.4</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="principle.html"><a href="principle.html"><i class="fa fa-check"></i><b>7</b> 原则</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="principle.html"><a href="principle.html#sec:data-priority"><i class="fa fa-check"></i><b>7.1</b> 数据至上</a>
+<ul>
+<li class="chapter" data-level="7.1.1" data-path="principle.html"><a href="principle.html#subsec:element-priority"><i class="fa fa-check"></i><b>7.1.1</b> 分清主次</a></li>
+<li class="chapter" data-level="7.1.2" data-path="principle.html"><a href="principle.html#subsec:clear-symbols"><i class="fa fa-check"></i><b>7.1.2</b> 符号明确可分</a></li>
+<li class="chapter" data-level="7.1.3" data-path="principle.html"><a href="principle.html#subsec:data-processing"><i class="fa fa-check"></i><b>7.1.3</b> 谨慎处理数据</a></li>
+</ul></li>
+<li class="chapter" data-level="7.2" data-path="principle.html"><a href="principle.html#section-43"><i class="fa fa-check"></i><b>7.2</b> 节约墨水</a></li>
+<li class="chapter" data-level="7.3" data-path="principle.html"><a href="principle.html#section-44"><i class="fa fa-check"></i><b>7.3</b> 设计布局</a></li>
+<li class="chapter" data-level="7.4" data-path="principle.html"><a href="principle.html#section-45"><i class="fa fa-check"></i><b>7.4</b> 附带解释</a></li>
+<li class="chapter" data-level="7.5" data-path="principle.html"><a href="principle.html#sec:psychology"><i class="fa fa-check"></i><b>7.5</b> 考虑心理</a></li>
+<li class="chapter" data-level="7.6" data-path="principle.html"><a href="principle.html#section-46"><i class="fa fa-check"></i><b>7.6</b> 统计原则</a></li>
+<li class="chapter" data-level="7.7" data-path="principle.html"><a href="principle.html#section-47"><i class="fa fa-check"></i><b>7.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="appendix"><span><b>附录</b></span></li>
+<li class="chapter" data-level="A" data-path="programming.html"><a href="programming.html"><i class="fa fa-check"></i><b>A</b> 程序初步</a>
+<ul>
+<li class="chapter" data-level="A.1" data-path="programming.html"><a href="programming.html#sec:object"><i class="fa fa-check"></i><b>A.1</b> 对象类型</a>
+<ul>
+<li class="chapter" data-level="A.1.1" data-path="programming.html"><a href="programming.html#section-48"><i class="fa fa-check"></i><b>A.1.1</b> 向量</a></li>
+<li class="chapter" data-level="A.1.2" data-path="programming.html"><a href="programming.html#section-49"><i class="fa fa-check"></i><b>A.1.2</b> 因子</a></li>
+<li class="chapter" data-level="A.1.3" data-path="programming.html"><a href="programming.html#section-50"><i class="fa fa-check"></i><b>A.1.3</b> 数组和矩阵</a></li>
+<li class="chapter" data-level="A.1.4" data-path="programming.html"><a href="programming.html#section-51"><i class="fa fa-check"></i><b>A.1.4</b> 数据框和列表</a></li>
+<li class="chapter" data-level="A.1.5" data-path="programming.html"><a href="programming.html#section-52"><i class="fa fa-check"></i><b>A.1.5</b> 函数</a></li>
+</ul></li>
+<li class="chapter" data-level="A.2" data-path="programming.html"><a href="programming.html#section-53"><i class="fa fa-check"></i><b>A.2</b> 操作方法</a>
+<ul>
+<li class="chapter" data-level="A.2.1" data-path="programming.html"><a href="programming.html#section-54"><i class="fa fa-check"></i><b>A.2.1</b> 选择与循环</a></li>
+<li class="chapter" data-level="A.2.2" data-path="programming.html"><a href="programming.html#section-55"><i class="fa fa-check"></i><b>A.2.2</b> 输入与输出</a></li>
+</ul></li>
+<li class="chapter" data-level="A.3" data-path="programming.html"><a href="programming.html#section-56"><i class="fa fa-check"></i><b>A.3</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="B" data-path="tricks.html"><a href="tricks.html"><i class="fa fa-check"></i><b>B</b> 细节技巧</a>
+<ul>
+<li class="chapter" data-level="B.1" data-path="tricks.html"><a href="tricks.html#sec:par"><i class="fa fa-check"></i><b>B.1</b> <code>par()</code> 函数</a></li>
+<li class="chapter" data-level="B.2" data-path="tricks.html"><a href="tricks.html#sec:plot"><i class="fa fa-check"></i><b>B.2</b> <code>plot()</code> 函数</a></li>
+<li class="chapter" data-level="B.3" data-path="tricks.html"><a href="tricks.html#sec:plotmath"><i class="fa fa-check"></i><b>B.3</b> 数学公式</a></li>
+<li class="chapter" data-level="B.4" data-path="tricks.html"><a href="tricks.html#sec:multipage"><i class="fa fa-check"></i><b>B.4</b> 一页多图</a>
+<ul>
+<li class="chapter" data-level="B.4.1" data-path="tricks.html"><a href="tricks.html#section-57"><i class="fa fa-check"></i><b>B.4.1</b> 设置图形参数</a></li>
+<li class="chapter" data-level="B.4.2" data-path="tricks.html"><a href="tricks.html#section-58"><i class="fa fa-check"></i><b>B.4.2</b> 设置图形版面</a></li>
+<li class="chapter" data-level="B.4.3" data-path="tricks.html"><a href="tricks.html#section-59"><i class="fa fa-check"></i><b>B.4.3</b> 拆分设备屏幕</a></li>
+</ul></li>
+<li class="chapter" data-level="B.5" data-path="tricks.html"><a href="tricks.html#sec:interaction"><i class="fa fa-check"></i><b>B.5</b> 交互操作</a>
+<ul>
+<li class="chapter" data-level="B.5.1" data-path="tricks.html"><a href="tricks.html#section-60"><i class="fa fa-check"></i><b>B.5.1</b> 获取鼠标位置的坐标</a></li>
+<li class="chapter" data-level="B.5.2" data-path="tricks.html"><a href="tricks.html#section-61"><i class="fa fa-check"></i><b>B.5.2</b> 识别鼠标附近的数据</a></li>
+<li class="chapter" data-level="B.5.3" data-path="tricks.html"><a href="tricks.html#section-62"><i class="fa fa-check"></i><b>B.5.3</b> 响应鼠标键盘的动作</a></li>
+</ul></li>
+<li class="chapter" data-level="B.6" data-path="tricks.html"><a href="tricks.html#sec:device"><i class="fa fa-check"></i><b>B.6</b> 图形设备</a></li>
+<li class="chapter" data-level="B.7" data-path="tricks.html"><a href="tricks.html#section-63"><i class="fa fa-check"></i><b>B.7</b> 思考与练习</a></li>
+</ul></li>
+<li class="chapter" data-level="C" data-path="gui.html"><a href="gui.html"><i class="fa fa-check"></i><b>C</b> 图形界面</a></li>
+<li class="chapter" data-level="D" data-path="msg-pkgs.html"><a href="msg-pkgs.html"><i class="fa fa-check"></i><b>D</b> 本书 R 包</a>
+<ul>
+<li class="chapter" data-level="D.1" data-path="msg-pkgs.html"><a href="msg-pkgs.html#sec:MSG-fun"><i class="fa fa-check"></i><b>D.1</b> 函数说明</a></li>
+<li class="chapter" data-level="D.2" data-path="msg-pkgs.html"><a href="msg-pkgs.html#section-64"><i class="fa fa-check"></i><b>D.2</b> 数据说明</a></li>
+</ul></li>
+<li class="chapter" data-level="E" data-path="postscript.html"><a href="postscript.html"><i class="fa fa-check"></i><b>E</b> 后记</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>参考文献</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">现代统计图形</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chap:system" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">第 5 章</span> 系统<a href="system.html#chap:system" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<blockquote>
+<p>“我不想用各种说法和怀疑来影响你，华生，”他说，“我只要求你将各种事实尽可能详尽地报告给我，至于归纳推理就留给我好了。”</p>
+<p>“哪些事实呢？”我问道。</p>
+<p>“与该案可能有关的任何事实，无论是多么地间接，特别是年轻的巴斯克维尔与邻里的关系或与查尔兹爵士暴卒有关的任何新的问题。”</p>
+<p>— 柯南·道尔《巴斯克维尔的猎犬》</p>
+</blockquote>
+<p>除了基础图形系统之外，R 还自带另一套图形系统即 <strong>grid</strong>（网格图形），网格图形系统是一套基础设施性质的图形系统，它本身不包含统计图形，只是提供了一些画图形元素的工具。在此基础上诞生了 <strong>lattice</strong> 图形系统和 <strong>ggplot2</strong> 图形系统，其中 <strong>lattice</strong> 包已经随 R 本身发布，<strong>ggplot2</strong> 包目前的地位还只是一个附加包，但由于它的灵活和美观，用户数量与日俱增，所以我们在本章优先介绍它，并且建议读者可以不必学习 <strong>lattice</strong> 系统。除了这些静态图形系统之外，R 还有一些附加包支持动态图形和交互式图形，即：用户可以用鼠标或键盘和图形进行交互，比如用鼠标选取图中的点并高亮，或者拖拉旋转图形；代表性的附加包有 <strong>rggobi</strong> 、 <strong>iplots</strong> 、 <strong>rgl</strong> 和 <strong>playwith</strong> 等。另外我们还可以利用 R 包 <strong>animation</strong> 生成动画。这些附加包极大增强了统计图形的探索功能和趣味性。</p>
+<div id="sec:ggplot2" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> ggplot2 图形<a href="system.html#sec:ggplot2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>基础图形系统虽然灵活，但它无穷无尽的选项往往让用户感到迷茫，后面的 <strong>lattice</strong> 系统也有同样的问题（甚至更严重）。<strong>ggplot2</strong> 包 <span class="citation">(<a href="#ref-ggplot2">Wickham 2016</a>)</span> 从易用性出发，结合了基础图形系统的简便以及 <strong>grid</strong> 和 <strong>lattice</strong> 的灵活，并以“The Grammar of Graphics”一书 <span class="citation">(<a href="#ref-Wilkinson05">Wilkinson 2005</a>)</span> 的理论为支撑，构建了一套易用、实用而且美观的图形系统。ggplot2 的核心概念是“层”，所有的图形都是由层的叠加构成，这是对统计图形的一个非常形象的抽象；另外，它在程序实现上也很巧妙：它扩展了泛型函数 <code>+</code>，也许用户会对此感到迷茫，后面我们看了具体例子马上就能明白。加号实际上是一个函数，我们平时看到的加法可以写成函数调用的形式：</p>
+<div class="sourceCode" id="cb304"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb304-1"><a href="system.html#cb304-1" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="co"># 我们看到的加法</span></span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb306"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb306-1"><a href="system.html#cb306-1" tabindex="-1"></a><span class="st">`</span><span class="at">+</span><span class="st">`</span>(<span class="dv">1</span>, <span class="dv">2</span>) <span class="co"># 加号作为一个函数使用</span></span></code></pre></div>
+<pre><code>## [1] 3</code></pre>
+<div class="sourceCode" id="cb308"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb308-1"><a href="system.html#cb308-1" tabindex="-1"></a><span class="fu">methods</span>(<span class="st">&quot;+&quot;</span>) <span class="co"># 加号上的 S3 方法</span></span></code></pre></div>
+<pre><code>## [1] +.Date   +.POSIXt
+## see &#39;?methods&#39; for accessing help and source code</code></pre>
+<p>在 <strong>ggplot2</strong> 中，画图只需要将若干个图层简单相加即可，语法非常精炼，如：</p>
+<div class="sourceCode" id="cb310"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb310-1"><a href="system.html#cb310-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb310-2"><a href="system.html#cb310-2" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hp, <span class="at">y =</span> mpg), <span class="at">data =</span> mtcars) <span class="sc">+</span></span>
+<span id="cb310-3"><a href="system.html#cb310-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="co"># 先画一个散点图的图层</span></span>
+<span id="cb310-4"><a href="system.html#cb310-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="co"># 用散点图加上平滑层</span></span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="system_files/figure-html/plus-ggplot2-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>使用 ggplot2 时通常我们不必担心细节问题，例如图形的边距会自动调整，不会留出大片空白，元素颜色会自动根据变量取值从调色板中选取，图例会自动添加，等等。这些自动化的设计可以为我们节省大量的调整细节的时间，相比之下，我们使用基础图形常常需要缩小边距（默认值太大）、手工添加图例，显得非常麻烦。函数 <code>ggplot()</code> 是 ggplot2 中的核心函数之一，它能让我们快速画出灵活的图形，其用法如下：</p>
+<div class="sourceCode" id="cb312"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb312-1"><a href="system.html#cb312-1" tabindex="-1"></a><span class="fu">usage</span>(qplot)</span></code></pre></div>
+<pre><code>## qplot(x, y, ..., data, facets = NULL, margins = FALSE, geom = &quot;auto&quot;,
+##   xlim = c(NA, NA), ylim = c(NA, NA), log = &quot;&quot;, main = NULL, xlab = NULL,
+##   ylab = NULL, asp = NA, stat = deprecated(), position = deprecated())</code></pre>
+<p>其中 x、y、z 分别是要画图的变量，data 可以提供一个数据框（在这里面寻找前面提到的变量）；geom 默认值为“自动”，它会根据提供的数据类型自动生成合适的图形，例如，如果我们提供的 x 和 y 是数值型变量，那么画出来的就是散点图；如果只提供数值型的 x，那么就画直方图；如果提供离散型的 x，那么就按照各分类的频数画条形图；下一节我们我们再详细介绍它；stat 指定对数据做的统计变换；剩下的参数都是一些细节调整，可以根据具体任务设定；特别要提到的是 … 参数，这里面还有很多灵活设置，最常见的可能是切片（facet），即以某些分类变量对数据切分后分别对小块数据作图。</p>
+<p>整个 ggplot2 系统大致由几何形状（geom）、统计量（statistic）、标度（scale）、坐标系（coordinate system）和切片（facet）构成，下面我们分别作介绍。</p>
+<div id="section-13" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> 几何形状<a href="system.html#section-13" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb314"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb314-1"><a href="system.html#cb314-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hp, <span class="at">y =</span> mpg), <span class="at">data =</span> mtcars) <span class="sc">+</span></span>
+<span id="cb314-2"><a href="system.html#cb314-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb314-3"><a href="system.html#cb314-3" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>)</span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:mtcars-smooth"></span>
+<img src="system_files/figure-html/mtcars-smooth-1.svg" alt="汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的。" width="672" />
+<p class="caption">
+图 5.1: 汽车马力与每加仑汽油行驶里程的关系：随着马力增大，汽车油耗也变大，但这个关系并不是线性的。
+</p>
+</div>
+
+
+<p>在 ggplot2 中几何形状简称 geom （Geometric objects），这些形状包括：点、条、线、箱线图和文本等。实际上它们就是第 <a href="elements.html#cha:elements">3</a> 章介绍的图形元素，但是 ggplot2 在这些元素上做了更多工作，例如箱线图并非基础图形元素，但它在 ggplot2 中的地位也是基础形状，还有平滑曲线和平滑带，背后都涉及到大量的统计计算，而 ggplot2 对它打包之后，用户用起来就简单多了，否则我们需要手工建立平滑模型（可能是线性回归，可能是 LOWESS，或是分位数回归等），然后取一系列 x 值并拟合 y 值。</p>
+<p>几何形状通常和统计量紧密相关，因为要画出几何形状，必须计算一些坐标值（例如箱线图中的分位数、条形图的高度），所以我们必须要知道对数据做什么样的统计变换或汇总。</p>
+<p>图 <a href="system.html#fig:mtcars-smooth">5.1</a> 展示了 <a href="gallery.html#sec:stars">4.23</a> 小节曾经提到过的汽车数据。从图中我们可以看到，随着汽车马力增大，每加仑汽油能行驶的英里数在降低，但并非直线下降，而是在逐渐变缓，这也符合常识— 不可能有哪种汽车的马力大到无法开动的程度。图中的平滑曲线基于 LOWESS 生成，它是散点图的重要辅助工具，后面 <a href="data.html#subsec:percentage">6.2.6</a> 小节和 <a href="data.html#subsec:lowess">6.2.7</a> 小节还会详细介绍。</p>
+</div>
+<div id="section-14" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> 统计量<a href="system.html#section-14" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>统计量指定了对原始数据做何种变换，进而用几何形状表达出来。ggplot2 中除了划分直方图区间求频数、求分位数、计算密度值这些普通的变换功能之外，还有一些新颖的统计量，例如根据二维数据用网格划分区间求每个格子内的数据频数（实际上就是二维直方图），或者用蜂巢形状将平面划分为一系列的六边形区间再求数据频数。</p>
+<div class="sourceCode" id="cb316"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb316-1"><a href="system.html#cb316-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat, <span class="at">y =</span> price), <span class="at">data =</span> diamonds) <span class="sc">+</span></span>
+<span id="cb316-2"><a href="system.html#cb316-2" tabindex="-1"></a>  <span class="fu">geom_hex</span>() <span class="sc">+</span></span>
+<span id="cb316-3"><a href="system.html#cb316-3" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low =</span> <span class="st">&quot;blue3&quot;</span>, <span class="at">high =</span> <span class="st">&quot;red3&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:diamonds-hex"></span>
+<img src="system_files/figure-html/diamonds-hex-1.svg" alt="钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小。" width="672" />
+<p class="caption">
+图 5.2: 钻石重量与价格的蜂巢图：大多数钻石的重量和价格都偏小。
+</p>
+</div>
+
+
+<p>图 <a href="system.html#fig:diamonds-hex">5.2</a> 是 <strong>ggplot2</strong> 包中 diamonds 数据的一幅蜂巢图，它展示了在每个蜂巢格子里的数据频数大小，这种图形和平滑散点图的思想类似，都是要展示二维数据的密度，只不过实现方法不同而已。蜂巢图的背后是散点图，但具体的点都没有显示出来，我们看到的只有蜂巢及其颜色，从图例中可以看出，红色表示该单元格内的数据频数为 7000 左右，蓝色表示 1000。该数据内大多数钻石的价格（纵轴）和重量（横轴为克拉数）都偏小。另外，我们也很容易看出，随着克拉数增大，价格也相应升高，这也是符合常识的，但有些 3 克拉的钻石价格和 0.5 克拉的一样，这可能是因为打磨质量的问题。</p>
+<p>当散点图中的点的数目非常大时，蜂巢图既能保持散点图中两个变量的关系，又能提供对数据密度的概括。蜂巢图的计算基于 <strong>hexbin</strong> 包 <span class="citation">(<a href="#ref-hexbin">Carr, Lewin-Koh, and Maechler 2023</a>)</span>，这个包自身也可以画蜂巢图，<strong>ggplot2</strong> 包只是调用其中的函数完成蜂巢的计算。</p>
+<p>统计量相关函数通常会生成一些新的变量，这些变量可以用来手工构造图形。例如计算密度的 <code>stat_density()</code> 函数会生成一个 density 变量，即密度值，回忆 <a href="gallery.html#sec:vioplot">4.33</a> 小节介绍的小提琴图，它就是基于密度值围成的多边形区域，在 ggplot2 中，我们同样可以构造小提琴图，以下是一个根据钻石数据价格变量生成的小提琴图：</p>
+<div class="sourceCode" id="cb317"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb317-1"><a href="system.html#cb317-1" tabindex="-1"></a><span class="fu">ggplot</span>(diamonds, <span class="fu">aes</span>(<span class="at">x =</span> price)) <span class="sc">+</span></span>
+<span id="cb317-2"><a href="system.html#cb317-2" tabindex="-1"></a>  <span class="fu">stat_density</span>(<span class="fu">aes</span>(<span class="at">ymax =</span> <span class="fu">after_stat</span>(density), <span class="at">ymin =</span> <span class="sc">-</span><span class="fu">after_stat</span>(density)),</span>
+<span id="cb317-3"><a href="system.html#cb317-3" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">&quot;ribbon&quot;</span>, <span class="at">position =</span> <span class="st">&quot;identity&quot;</span></span>
+<span id="cb317-4"><a href="system.html#cb317-4" tabindex="-1"></a>  )</span></code></pre></div>
+<p><img src="system_files/figure-html/ggplot2-violin-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>注意其中 density 变量需要传递给函数 <code>after_stat()</code>，这是 ggplot2 的语法规定，这种写法表示变量从统计量函数中计算而来，并非原始数据自带的。 ribbon 是带状的几何形状，本质上是多边形，通常带有填充色。</p>
+</div>
+<div id="section-15" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> 标度<a href="system.html#section-15" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>标度通常指定如何从数据映射到几何形状的颜色、符号和大小等属性，这也是 ggplot2 系统的一个非常吸引人的特征。大多数情况下，我们只需要指定用来做标度的变量即可，剩下的映射工作 ggplot2 会自动完成。例如图 <a href="system.html#fig:iris-ggplot2">5.3</a> 中，我们指定 <code>color</code> 和 <code>shape</code> 两个参数之后， ggplot2 就能自动用 <strong>RColorBrewer</strong> 包的离散调色板生成颜色并添加图例。图 <a href="elements.html#fig:point-iris">3.4</a> 画的是几乎是同样的散点图，但其代码显然相形见绌。</p>
+<div class="sourceCode" id="cb318"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb318-1"><a href="system.html#cb318-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Petal.Length, <span class="at">y =</span> Petal.Width), <span class="at">data =</span> iris) <span class="sc">+</span></span>
+<span id="cb318-2"><a href="system.html#cb318-2" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Species, <span class="at">shape =</span> Species))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:iris-ggplot2"></span>
+<img src="system_files/figure-html/iris-ggplot2-1.svg" alt="ggplot2 中的鸢尾花花瓣长宽散点图：对比图 3.4 看看 ggplot2 中语法之简洁，颜色、形状、图例一气呵成。" width="672" />
+<p class="caption">
+图 5.3: ggplot2 中的鸢尾花花瓣长宽散点图：对比图 <a href="elements.html#fig:point-iris">3.4</a> 看看 ggplot2 中语法之简洁，颜色、形状、图例一气呵成。
+</p>
+</div>
+
+
+<p>标度除了用在颜色和符号上之外，还可以用在大小上，例如用图中圆圈的大小表示第三维变量的大小，这与 <a href="gallery.html#sec:symbols">4.26</a> 小节的符号图很相似。ggplot2 中可以用 size 参数还设置和元素大小对应的变量，并可以用 <code>scale_size()</code> 函数来调整映射的端点（最小值和最大值）。图 <a href="system.html#fig:quake6-bubbles">5.4</a> 就是这样的一个示例。<strong>MSG</strong> 包中的 <code>quake6</code> 数据记录了 1973 年到 2010 年每个月发生的 6 级以上的地震信息，我们可以按照年份和月份汇总地震发生的频数，然后画年份和月份的散点图，并将频数信息附着在点上。从图中可以看到，地震发生的频数似乎随着年份在增加，尤其是 2007 年 4 月和 2009 年 10 月地震活动非常频繁。另外，7 月似乎是地震低发期。注意这批数据来自美国地震局（USGS），这让我们考虑到地震频数逐年增加可能是个假象，很可能是因为近年来地震记录设备越来越先进，更多地震活动被探测到并记录了下来。</p>
+</div>
+<div id="section-16" class="section level3 hasAnchor" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> 坐标系<a href="system.html#section-16" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb319"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb319-1"><a href="system.html#cb319-1" tabindex="-1"></a><span class="fu">data</span>(quake6, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span>
+<span id="cb319-2"><a href="system.html#cb319-2" tabindex="-1"></a><span class="fu">ggplot</span>(quake6, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb319-3"><a href="system.html#cb319-3" tabindex="-1"></a>  <span class="fu">stat_sum</span>(<span class="fu">aes</span>(<span class="at">size =</span> <span class="fu">after_stat</span>(n))) <span class="sc">+</span> <span class="fu">scale_size</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">8</span>))</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:quake6-bubbles"></span>
+<img src="system_files/figure-html/quake6-bubbles-1.svg" alt="1973 年以来全球 6 级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7 月的地震频率相对较低？" width="672" />
+<p class="caption">
+图 5.4: 1973 年以来全球 6 级以上地震的时间频数图：圆点大小代表频数高低。近年来地震发生的频率是否在升高？7 月的地震频率相对较低？
+</p>
+</div>
+
+
+<div class="sourceCode" id="cb320"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb320-1"><a href="system.html#cb320-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cut, <span class="at">y =</span> <span class="fu">log</span>(price)), <span class="at">data =</span> diamonds) <span class="sc">+</span></span>
+<span id="cb320-2"><a href="system.html#cb320-2" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>()</span>
+<span id="cb320-3"><a href="system.html#cb320-3" tabindex="-1"></a>p</span>
+<span id="cb320-4"><a href="system.html#cb320-4" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">coord_flip</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:diamonds-cut"></span>
+<img src="system_files/figure-html/diamonds-cut-1.svg" alt="钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 Fair 到 Ideal 雕琢水平逐渐增高，但价格并没有严格上升。" width="672" /><img src="system_files/figure-html/diamonds-cut-2.svg" alt="钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 Fair 到 Ideal 雕琢水平逐渐增高，但价格并没有严格上升。" width="672" />
+<p class="caption">
+图 5.5: 钻石雕琢水平和对数价格的关系：垂直方向和水平方向的箱线图。从 <code>Fair</code> 到 <code>Ideal</code> 雕琢水平逐渐增高，但价格并没有严格上升。
+</p>
+</div>
+
+
+<p>我们平时用到的坐标系大多数都是笛卡尔坐标系，ggplot2 也提供了极坐标系和地图坐标系，并支持笛卡尔坐标系的翻转，即交换 x 轴和 y 轴。函数 <code>coord_flip()</code> 可以用来翻转几乎任何图形，而且由于 ggplot2 的“图层分解”概念，我们可以先画一幅图保存在一个变量中，如果想翻转就加上 <code>coord_flip()</code> 再打印即可。图 <a href="system.html#fig:diamonds-cut">5.5</a> 是钻石数据的价格在每个雕琢水平下的箱线图，上图为垂直箱线图，下图为水平箱线图，它只是在上图的基础上加上了翻转坐标“层”。</p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb321-1"><a href="system.html#cb321-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> cut, <span class="at">fill =</span> cut), <span class="at">data =</span> diamonds) <span class="sc">+</span></span>
+<span id="cb321-2"><a href="system.html#cb321-2" tabindex="-1"></a>  <span class="fu">coord_polar</span>() <span class="sc">+</span></span>
+<span id="cb321-3"><a href="system.html#cb321-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">width =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:diamonds-polar"></span>
+<img src="system_files/figure-html/diamonds-polar-1.svg" alt="钻石雕琢水平的极坐标条形图：各种雕琢水平下的钻石数量差别很大。" width="672" />
+<p class="caption">
+图 5.6: 钻石雕琢水平的极坐标条形图：各种雕琢水平下的钻石数量差别很大。
+</p>
+</div>
+
+
+<p>图 <a href="system.html#fig:diamonds-polar">5.6</a> 是钻石雕琢水平频数的极坐标图，实际上它是一幅条形图，只是把坐标系换成了极坐标而已。每个扇形的高度代表钻石的频数；前面我们观察到雕琢水平最好的钻石在价格上平均而言并不如次一等的钻石，也许是因为大多数钻石都雕琢得很好。尽管极坐标图有其新颖之处，但用扇形表达频数常常会造成信息误导。</p>
+</div>
+<div id="subsec:facet" class="section level3 hasAnchor" number="5.1.5">
+<h3><span class="header-section-number">5.1.5</span> 切片<a href="system.html#subsec:facet" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>切片的思想来自于 Trellis 图形：将整批数据按照某一个或两个分类变量切成一个个子集，然后对这些子集画图。在 ggplot2 中实现切片也很简单，使用 <code>qplot()</code> 的时候指定 <code>facets</code> 参数通常就可以了，这个参数取值为一个公式，公式左侧决定在行上摆放的子集图形，右侧决定列上的图形。</p>
+<p>图 <a href="system.html#fig:diamonds-carat">5.7</a> 给出了每一种雕琢水平下的钻石重量密度曲线，整幅图形按照雕琢水平切片，公式为 <code>cut ~ .</code>，意思是每一行摆放一种 cut 值。五种雕琢水平下，雕琢最好的钻石的重量大多都在 1 克拉以下，密度曲线严重右偏。</p>
+<div class="sourceCode" id="cb322"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb322-1"><a href="system.html#cb322-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> carat), <span class="at">data =</span> diamonds) <span class="sc">+</span></span>
+<span id="cb322-2"><a href="system.html#cb322-2" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb322-3"><a href="system.html#cb322-3" tabindex="-1"></a>  <span class="fu">facet_grid</span>(cut <span class="sc">~</span> .)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:diamonds-carat"></span>
+<img src="system_files/figure-html/diamonds-carat-1.svg" alt="按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻。" width="672" />
+<p class="caption">
+图 5.7: 按雕琢水平切片后的钻石重量密度曲线：雕琢得好的钻石大多很轻。
+</p>
+</div>
+
+
+<p>切片的版面设置除了上面介绍的行列排列之外，还有一种从左到右、从上到下的排列方式，有时候切片生成的子集数目如果太多的话，无论按行或按列摆放可能都摆不下，这时候可以考虑这种顺序排列的方式，参见 <code>facet_wrap()</code> 的帮助文档（前一种排列叫 <code>facet_grid()</code>）。</p>
+</div>
+<div id="section-17" class="section level3 hasAnchor" number="5.1.6">
+<h3><span class="header-section-number">5.1.6</span> 位置调整<a href="system.html#section-17" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>位置调整主要针对条形图中的矩形条的位置摆放。在 <a href="gallery.html#sec:barplot">4.4</a> 小节中我们讲到了基础图形系统中的条形图，里面有个 beside 参数可以指定矩形条是并排排列还是堆砌排列，ggplot2 系统中的位置调整也类似。当然，不仅条形图中有矩形条，直方图中也有，所以我们同样可以画堆砌直方图。另外在散点图中也有一类重要的位置调整，即随机打乱，这一点在 <a href="gallery.html#sec:stripchart">4.24</a> 小节和图 <a href="data.html#fig:discrete-var">6.1</a> 中都提到过。略微随机打乱散点图中的点的位置，能减轻图的重叠程度，尤其是有很多个点都在同一个位置上时，由于重叠的原因，我们可能会被误导（以为该处只有 1 个点）。随机打乱也可以作为一种几何形状添加到图中，如：</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb323-1"><a href="system.html#cb323-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Petal.Length, <span class="at">y =</span> Petal.Width), <span class="at">data =</span> iris) <span class="sc">+</span></span>
+<span id="cb323-2"><a href="system.html#cb323-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb323-3"><a href="system.html#cb323-3" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="co"># 对比随机打乱的散点</span></span></code></pre></div>
+<p><img src="system_files/figure-html/geom-jitter-demo-1.svg" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="subsec:theme" class="section level3 hasAnchor" number="5.1.7">
+<h3><span class="header-section-number">5.1.7</span> 主题<a href="system.html#subsec:theme" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>可能读者已经注意到，ggplot2 图形有一套自己的独特风格，它与别的图形系统在外观上的典型区别就是它通常会画一个灰色的背景，背景中有网格线。首先，网格线是为了辅助阅读图形而画的，这是非常重要的图形组成部分；其次，灰色的背景也有其原因：因为一篇文章的文字通常是黑色，所以灰底的图形会和黑色文字能融合得更好，这是一点美学上的考虑。有的用户可能喜欢这样的设置，有的用户则可能很不习惯这种默认设置。ggplot2 可以自定义主题，例如 <code>theme_bw()</code> 就是黑白主题，但它的黑白主题几乎仅限于设定灰色背景为白色，图中元素的颜色不会受到影响，如：</p>
+<div class="sourceCode" id="cb324"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb324-1"><a href="system.html#cb324-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> wt), <span class="at">data =</span> mtcars) <span class="sc">+</span></span>
+<span id="cb324-2"><a href="system.html#cb324-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="co"># 默认主题下的图</span></span></code></pre></div>
+<p><img src="system_files/figure-html/ggplot2-theme-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb325"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb325-1"><a href="system.html#cb325-1" tabindex="-1"></a>old <span class="ot">&lt;-</span> <span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()) <span class="co"># 设置黑白主题</span></span>
+<span id="cb325-2"><a href="system.html#cb325-2" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> mpg, <span class="at">y =</span> wt), <span class="at">data =</span> mtcars) <span class="sc">+</span></span>
+<span id="cb325-3"><a href="system.html#cb325-3" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="co"># 黑白主题下的图</span></span></code></pre></div>
+<p><img src="system_files/figure-html/ggplot2-theme-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb326"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb326-1"><a href="system.html#cb326-1" tabindex="-1"></a><span class="fu">theme_set</span>(old) <span class="co"># 恢复原来的主题设定</span></span></code></pre></div>
+<p>主题还涉及到大量的细节问题，如文字的大小、颜色、旋转角度、图例的位置等等，读者可以参考 <code>theme_set()</code> 函数的帮助文档。</p>
+<p>经过这些“图层”的分解与抽象，ggplot2 系统中的图形可以像一个魔方一样任意组合，这也是一种重要的编程思想—让对象可重用。例如我们可以创建一个散点图的图层，然后加上平滑层，或者加上切片层，这些“相加”的操作都不需要重新写创建散点图图层的代码，大大减轻了代码量。</p>
+<div class="sourceCode" id="cb327"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb327-1"><a href="system.html#cb327-1" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hp, <span class="at">y =</span> mpg), <span class="at">data =</span> mtcars) <span class="sc">+</span></span>
+<span id="cb327-2"><a href="system.html#cb327-2" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="co"># 散点图的图层</span></span>
+<span id="cb327-3"><a href="system.html#cb327-3" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="co"># 用散点图加上平滑层并打印出来</span></span></code></pre></div>
+<pre><code>## `geom_smooth()` using formula = &#39;y ~ x&#39;</code></pre>
+<p><img src="system_files/figure-html/ggplot2-layers-1.svg" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb329-1"><a href="system.html#cb329-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">facet_grid</span>(<span class="sc">~</span>am) <span class="co"># 用自动档和手动挡将散点图切片并打印</span></span></code></pre></div>
+<p><img src="system_files/figure-html/ggplot2-layers-2.svg" width="672" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb330"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb330-1"><a href="system.html#cb330-1" tabindex="-1"></a>p <span class="sc">+</span> <span class="fu">geom_density2d</span>() <span class="co"># 散点图上加上二维核密度估计层</span></span></code></pre></div>
+<p><img src="system_files/figure-html/ggplot2-layers-3.svg" width="672" style="display: block; margin: auto;" /></p>
+<p>本节对 ggplot2 系统的介绍非常粗略，详细内容可以阅读 <span class="citation">Wickham (<a href="#ref-ggplot2">2016</a>)</span>， 该系统的作者也提供了配套的网站示例，这个网站也是本作者经常参考的资源：<a href="https://ggplot2.tidyverse.org/" class="uri">https://ggplot2.tidyverse.org/</a>。</p>
+</div>
+</div>
+<div id="section-18" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> 网格图形<a href="system.html#section-18" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>网格图形（grid graphics）是与基础图形（base graphics）相平行的一套图形系统，在 R 中由 <strong>grid</strong> 包实现。相对于基础图形而言，网格图形具有更高的可控度和灵活性，但其本身只提供了非常底层的绘图命令，如果要绘制较复杂的图形，则可以考虑使用 lattice 和 ggplot2 图形系统。这两个图形系统都是基于网格图形构建的。</p>
+<p>和基础图形系统相比，网格图形有三个非常突出的特性：对绘图区域的灵活控制，支持图形的旋转，以及图形元素的动态编辑。下面本节就从这三个方面对网格图形进行简要的介绍。需要指出的是，由于 <strong>grid</strong> 包主要的作用是提供底层的绘图支持，因此本节不会涉及具体的绘图细节，而是着重介绍其特性和优势所在。</p>
+<div id="section-19" class="section level3 hasAnchor" number="5.2.1">
+<h3><span class="header-section-number">5.2.1</span> 视图区<a href="system.html#section-19" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb331"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb331-1"><a href="system.html#cb331-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;subplot&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:grid-subplot"></span>
+<img src="system_files/figure-html/grid-subplot-1.svg" alt="用 grid 包实现的图形局部放大效果：将大图的局部区域放大显示在空白处。" width="672" />
+<p class="caption">
+图 5.8: 用 <strong>grid</strong> 包实现的图形局部放大效果：将大图的局部区域放大显示在空白处。
+</p>
+</div>
+
+
+<p>在网格图形系统中，最为重要的一个概念即是所谓的“视图区”（Viewport），一个视图区也就是一个绘图区域。在网格图形中，可以创建任意多个视图区，每个视图区都可以有自己的一套坐标体系和绘图参数，这是与基础图形系统最大的不同。打个比方来说，基础图形系统就是在一张桌子上放置了一张白纸，然后在这唯一的一张白纸上绘图；而在网格图形系统中，你可以拥有任意数量的白纸并在每一张上进行绘图，然后将图纸按一定的层次堆叠好，作为最终的图形展现。</p>
+<p>采用这种设计的一个直接好处是可以在已有的一张图形中嵌入子图，如图 <a href="system.html#fig:grid-subplot">5.8</a> 所示。这张完整的图形实际上是由两个视图区堆叠而成的，第一个视图区包含了除虚线框区域之外的坐标轴、散点图和曲线等图形元素，第二个视图区就是图中带虚线框的区域，它将第一个视图区的图形元素进行了复制并放大，然后放置在第一个视图区之上。</p>
+<p>在 <strong>grid</strong> 包中，创建视图区的命令是 <code>viewport()</code>，函数的参数包括视图区的位置、大小、度量单位、坐标尺度等信息。需要注意的是，<code>viewport()</code> 函数只是创建了一个视图区对象，而并没有把它应用到图形设备上，如果要完成这一过程，则需要使用 <code>popViewport()</code> 函数。此外，<strong>grid</strong> 包还提供了 <code>upViewport()</code>，<code>popViewport()</code> 和 <code>downViewport()</code> 等函数来对视图区进行进一步的操作，这些函数可以参考 <strong>grid</strong> 包自带的帮助文档来学习使用。</p>
+</div>
+<div id="section-20" class="section level3 hasAnchor" number="5.2.2">
+<h3><span class="header-section-number">5.2.2</span> 旋转<a href="system.html#section-20" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb332"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb332-1"><a href="system.html#cb332-1" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb332-2"><a href="system.html#cb332-2" tabindex="-1"></a><span class="fu">grid.newpage</span>()</span>
+<span id="cb332-3"><a href="system.html#cb332-3" tabindex="-1"></a><span class="fu">pushViewport</span>(<span class="fu">viewport</span>(<span class="at">h =</span> <span class="fl">0.8</span>, <span class="at">w =</span> <span class="fl">0.8</span>, <span class="at">angle =</span> <span class="dv">15</span>))</span>
+<span id="cb332-4"><a href="system.html#cb332-4" tabindex="-1"></a><span class="fu">grid.multipanel</span>(<span class="at">newpage =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb332-5"><a href="system.html#cb332-5" tabindex="-1"></a><span class="fu">popViewport</span>()</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:grid-rotate"></span>
+<img src="system_files/figure-html/grid-rotate-1.svg" alt="grid 系统中旋转的视图区：倾斜 \(15\,^{\circ}\) 的图形" width="672" />
+<p class="caption">
+图 5.9: grid 系统中旋转的视图区：倾斜 <span class="math inline">\(15\,^{\circ}\)</span> 的图形
+</p>
+</div>
+
+
+<p>图形的旋转是网格图形的一大特色。<strong>grid</strong> 包自带的帮助文档中给出了一个简单的例子，如图 <a href="system.html#fig:grid-rotate">5.9</a> 的代码和图形所示。从程序代码中可以看出，控制图形旋转的实际上就是创建视图区时 <code>viewport()</code> 函数的 <code>angle</code> 参数，其数值表示图形逆时针旋转的角度。因此，在网格图形系统中旋转图形元素是非常方便的，只需先创建一个新的视图区，并在其中指定 <code>angle</code> 参数，然后在这个视图区中绘制图形即可。</p>
+<p>图 <a href="system.html#fig:grid-princomp">5.10</a> 是对网格图形旋转功能的一个应用，其中涉及了主成分分析的相关知识。图中首先绘制了两个变量之间的散点图，然后通过主成分分析找到了这两个主成分的方向，在图中是用红色的坐标轴表示的。散点图中的每一个点在红色轴线上的坐标就是它在两个主成分上的得分。</p>
+<p>根据主成分分析的相关理论，我们知道主成分实际上就是原始变量的一个线性组合，而且每个主成分彼此之间是相互正交的，这在图形中反映就是一套经过平移和旋转的坐标系，其中坐标系的原点定位在原始变量的重心，而 x 轴则是原始变量方差最大的那个方向。</p>
+</div>
+<div id="section-21" class="section level3 hasAnchor" number="5.2.3">
+<h3><span class="header-section-number">5.2.3</span> 图形对象<a href="system.html#section-21" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb333"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb333-1"><a href="system.html#cb333-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;princomp&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:grid-princomp"></span>
+<img src="system_files/figure-html/grid-princomp-1.svg" alt="基于旋转坐标系的主成分分析示意图：红色坐标系为主成分方向。" width="672" />
+<p class="caption">
+图 5.10: 基于旋转坐标系的主成分分析示意图：红色坐标系为主成分方向。
+</p>
+</div>
+
+<p>图形对象的动态编辑是网格图形系统的另一大优势。在基础图形系统中，图形元素一旦被绘制到设备上，就无法再对其进行编辑，除非采取覆盖的办法将图形重新绘制一遍。而在网格图形系统中，图形元素会以对象的形式保存在内存中，在需要的时候可以对其进行更改，例如修改颜色、大小等。下面的例子展示了编辑图形对象的方法：</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb334-1"><a href="system.html#cb334-1" tabindex="-1"></a><span class="co"># 参见 demo(&#39;editRect&#39;, package = &#39;MSG&#39;, ask = FALSE)</span></span>
+<span id="cb334-2"><a href="system.html#cb334-2" tabindex="-1"></a><span class="fu">library</span>(grid)</span>
+<span id="cb334-3"><a href="system.html#cb334-3" tabindex="-1"></a><span class="fu">grid.rect</span>(</span>
+<span id="cb334-4"><a href="system.html#cb334-4" tabindex="-1"></a>  <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.1</span>,</span>
+<span id="cb334-5"><a href="system.html#cb334-5" tabindex="-1"></a>  <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">col =</span> <span class="cn">NA</span>, <span class="at">fill =</span> <span class="st">&quot;red&quot;</span>), <span class="at">name =</span> <span class="st">&quot;rect0&quot;</span></span>
+<span id="cb334-6"><a href="system.html#cb334-6" tabindex="-1"></a>)</span>
+<span id="cb334-7"><a href="system.html#cb334-7" tabindex="-1"></a><span class="fu">grid.rect</span>(</span>
+<span id="cb334-8"><a href="system.html#cb334-8" tabindex="-1"></a>  <span class="at">x =</span> <span class="fl">0.1</span>, <span class="at">y =</span> <span class="fl">0.9</span>, <span class="at">width =</span> <span class="fl">0.1</span>, <span class="at">height =</span> <span class="fl">0.1</span>,</span>
+<span id="cb334-9"><a href="system.html#cb334-9" tabindex="-1"></a>  <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">col =</span> <span class="cn">NA</span>, <span class="at">fill =</span> <span class="st">&quot;green&quot;</span>), <span class="at">name =</span> <span class="st">&quot;rect1&quot;</span></span>
+<span id="cb334-10"><a href="system.html#cb334-10" tabindex="-1"></a>)</span>
+<span id="cb334-11"><a href="system.html#cb334-11" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>) {</span>
+<span id="cb334-12"><a href="system.html#cb334-12" tabindex="-1"></a>  <span class="fu">grid.edit</span>(<span class="st">&quot;rect0&quot;</span>, <span class="at">x =</span> <span class="fu">unit</span>(i <span class="sc">/</span> <span class="dv">100</span>, <span class="st">&quot;npc&quot;</span>), <span class="at">y =</span> <span class="fu">unit</span>(</span>
+<span id="cb334-13"><a href="system.html#cb334-13" tabindex="-1"></a>    i <span class="sc">/</span> <span class="dv">100</span>,</span>
+<span id="cb334-14"><a href="system.html#cb334-14" tabindex="-1"></a>    <span class="st">&quot;npc&quot;</span></span>
+<span id="cb334-15"><a href="system.html#cb334-15" tabindex="-1"></a>  ), <span class="at">gp =</span> <span class="fu">gpar</span>(<span class="at">fill =</span> <span class="fu">rainbow</span>(<span class="dv">100</span>)[i])) <span class="co"># 修改位置和颜色</span></span>
+<span id="cb334-16"><a href="system.html#cb334-16" tabindex="-1"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.05</span>)</span>
+<span id="cb334-17"><a href="system.html#cb334-17" tabindex="-1"></a>}</span></code></pre></div>
+<p>如果在电脑屏幕上运行这段代码，应该会看到一个静止的正方形（“rect1”）和一个移动的正方形（“rect0”）。rect0 的位置和颜色会在循环语句中不断被修改，而 rect1 则保持不变。</p>
+<p>以上介绍的内容只是网格图形系统中非常小的一部分，感兴趣的读者可以自行阅读 <strong>grid</strong> 包附带的帮助文档，来进一步认识和了解网格图形的全貌。当然，在大部分的情况下，读者无需花费太多的时间来研究 <strong>grid</strong> 包的细节，因为以它为基础的 <strong>lattice</strong> 包和 <strong>ggplot2</strong> 包已经可以完成大部分的绘图任务。</p>
+</div>
+</div>
+<div id="lattice-" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> lattice 图形<a href="system.html#lattice-" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>lattice <span class="citation">(<a href="#ref-Sarkar08">Sarkar 2008</a>)</span> 是基于 <strong>grid</strong> 包的一套统计图形系统，它的图形设计理念来自于 <span class="citation">Cleveland (<a href="#ref-Cleveland93">1993</a>)</span> 的 Trellis 图形 <a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>，其主要特征是根据特定变量（往往是分类变量）将数据分解为若干子集，并对每个子集画图。就像数理统计中的条件期望、条件概率一样，lattice 的图形也是一种“条件作图”。</p>
+<div id="subsec:lattice-intro" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> 简介<a href="system.html#subsec:lattice-intro" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>lattice 这个单词是格子、格子状的意思。和它意义相近的还有两个词 — grid 和 trellis，这两个词都与 lattice 有着密不可分的关系，lattice 中一些底层作图的实现，靠的就是 <strong>grid</strong> 包；而 trellis 则代表了 lattice 的另一个特点，即面向对象的思想。</p>
+<p>我们知道，在 R 的基础图形中，有一些函数被称为低层作图函数（第 <a href="elements.html#cha:elements">3</a> 章），例如 <code>points()</code>、<code>lines()</code>、<code>arrows()</code> 等。这些低层作图函数能够帮助我们画出更为复杂的图形。<strong>grid</strong> 包也借鉴了这个方法，内置了 <code>grid.points()</code>、<code>grid.lines()</code>、<code>grid.arrows()</code> 等函数。这些函数在功能上要强于传统作图，并且帮助 lattice 实现了自己的低层作图函数。不过在 lattice 中，它们的名字相应变为了 <code>panel.points()</code>、<code>panel.lines()</code>、<code>panel.arrows()</code> 等。用好面板（panel）系列函数，是熟练使用 lattice 画图的关键。高层作图函数只给我们勾勒出了一幅草图，细节的完善和和图形的个性化则需要面板函数来完成。</p>
+<p>lattice 的另一显著特点就是面向对象的思想，这是 lattice 区别于 R 传统作图的重要特点。在 R 的传统作图中，运行一个高级作图函数，通常会直接生成一幅可见的图形。而在 lattice 里，高层作图函数返回结果的是一个 trellis 对象，要想显示图形，必须使用对象的 <code>print()</code> 方法才可以。我们通过下面的一个小例子来说明这一点：</p>
+<div class="sourceCode" id="cb335"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb335-1"><a href="system.html#cb335-1" tabindex="-1"></a><span class="fu">library</span>(lattice) <span class="co"># 默认 lattice 包不随 R 启动，须手动载入</span></span></code></pre></div>
+<div class="sourceCode" id="cb336"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb336-1"><a href="system.html#cb336-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">hist</span>(iris<span class="sc">$</span>Sepal.Length) <span class="co"># 图形立刻显示出来</span></span>
+<span id="cb336-2"><a href="system.html#cb336-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">histogram</span>(<span class="sc">~</span>Sepal.Length, <span class="at">data =</span> iris) <span class="co"># 图形不显示</span></span></code></pre></div>
+<p>这两条语句分别调用了基础图形中的 <code>hist()</code> 函数和 lattice 中的 <code>histogram()</code> 函数，将运行的结果分别赋予了变量 x 和 y。这时如果我们调用 <code>str()</code> 函数分别观察 <code>str(x)</code> 和 <code>str(y)</code> 结果，就会发现 x 中只是保存了作图所需的一些通过计算得出的数据，而 y 中的内容则要更加丰富，有 45 条之多。仔细观察 y 中的条目，描述的都是作图的细节，比如图片的标题，座标轴的属性等等。这时我们再分别运行 <code>print(x)</code> 和 <code>print(y)</code>，x 的输出结果保持不变，而 y 的输出结果则成为了图形。如果我们想对 y 生成的图形作一些微调，那么只须调用 <code>update()</code> 函数修改相应的选项即可。例如 <code>update(y, main = 'Hello Lattice!')</code>，这条语句就为图片增加了一个标题。当我们写自定义函数的时候，也应当特别注意 lattice 的这一特点。比如自定义一个函数：</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb337-1"><a href="system.html#cb337-1" tabindex="-1"></a>custom_iris <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
+<span id="cb337-2"><a href="system.html#cb337-2" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="fu">histogram</span>(<span class="sc">~</span>Sepal.Length, <span class="at">data =</span> iris)</span>
+<span id="cb337-3"><a href="system.html#cb337-3" tabindex="-1"></a>  <span class="fu">return</span>(z)</span>
+<span id="cb337-4"><a href="system.html#cb337-4" tabindex="-1"></a>}</span></code></pre></div>
+<p>运行它似乎不会有任何输出内容；只有在函数中加上一句 <code>print(z)</code> 或者对函数返回的结果进行 <code>print()</code> 之后，才能顺利地输出图形。</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb338-1"><a href="system.html#cb338-1" tabindex="-1"></a>iris.hist <span class="ot">&lt;-</span> <span class="fu">custom_iris</span>() <span class="co"># 没有任何图形输出</span></span>
+<span id="cb338-2"><a href="system.html#cb338-2" tabindex="-1"></a><span class="fu">print</span>(iris.hist) <span class="co"># 此时才有图形输出</span></span></code></pre></div>
+<p>grid 和 trellis 是 lattice 的最基础的特点，除此之外它还有两个最直观的特点，一个是所谓“条件作图”，另一个就是稍显复杂的选项系统。</p>
+<p>我们先看一个条件作图的例子：<code>iris</code> 数据中有五个变量，四个数值变量分别代表了花的四个部位的属性，一个分类变量表示花的种类。假设现在我们想观察一下三种花的花萼长度的分布情况，并且把它们作一个对比。如果只使用基础图形的方法，无外乎有两种方案。一是分别对每类花的花萼长度画一张直方图，前后总共画三张图。这个方法显得冗繁，而且不易于图形间的对比观察。二是在同一画布上划分出三个区域，把三张图画到同一画布上。这个方法虽然易于图形间的对比，但是仍然显得有些复杂。那么有没有更为简单的方法呢？当然有，在 lattice 中往往只需一条简单的语句就能解决这个问题:</p>
+<div class="sourceCode" id="cb339"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb339-1"><a href="system.html#cb339-1" tabindex="-1"></a><span class="fu">histogram</span>(<span class="sc">~</span> Sepal.Length <span class="sc">|</span> Species, <span class="at">layout =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">data =</span> iris)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lattice-iris-hist"></span>
+<img src="system_files/figure-html/lattice-iris-hist-1.svg" alt="三种鸢尾花各自的花萼长度直方图：作图区域被拆分为三个面板分别放置各类的直方图。" width="672" />
+<p class="caption">
+图 5.11: 三种鸢尾花各自的花萼长度直方图：作图区域被拆分为三个面板分别放置各类的直方图。
+</p>
+</div>
+
+<p>图 <a href="system.html#fig:lattice-iris-hist">5.11</a> 就是由 <strong>lattice</strong> 包中的 <code>histogram()</code> 函数生成的分类直方图。观察作图语句，两个逗号把括号里的内容分为了三部分，第一部分是公式，第二部分是选项，第三部分是数据。实际上，还有隐藏的第四部分 — 面板函数。本节的内容也将按照公式、选项、数据的顺序来对 lattice 系统做介绍。</p>
+</div>
+<div id="section-22" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> 公式<a href="system.html#section-22" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>相信读者在使用 R 的过程中，或多或少地都已经接触过它的公式系统，基础图形系统中我们也常常遇到使用公式的情况，例如 <a href="gallery.html#sec:boxplot">4.3</a> 小节的箱线图函数中就可以使用公式参数。在 lattice 系统中，公式系统发挥着至关重要的作用。我们可以把公式简单地概括成下面的形式：</p>
+<p><span class="math display">\[\text{纵坐标变量}\sim\text{横坐标变量}|\text{条件变量}\]</span></p>
+<p>在上节中，我们已经遇到了一个公式，但是由于分析是单变量的性质，因此公式的纵座标变量是缺失的。另一个分析单变量性质的函数 <code>densityplot()</code>，它与 <code>histogram()</code> 有着相似的特点，因此这两个函数共享一个帮助页面。除此之外，我们还会遇到 <code>xyplot()</code>、<code>dotplot()</code> 等函数，它们都被用来分析两个变量之间的关系，同样也共享一个帮助页面。这意味着，这些函数的选项和参数几乎相同，读者可以举一反三、触类旁通。</p>
+<p>横纵座标的变量类型要根据具体情况而定，并没有严格的要求。而条件变量则要求变量类型必须是分类型变量。如果用户想将数值型变量作为条件变量，那就需要利用 lattice 中的一种特殊的数据类型 — 重叠区间（Shingles）。Shingles 的本意是一种由交叠的瓦片搭成的屋顶（用 Google 图片搜索看一下就明白），在 lattice 系统中对它最直观的理解就是，将数值型变量“砍”为 N 段，形成一个类数为 N 的分类型变量，每一段作为分类变量的一类，而且这些区间段之间可能有重叠。为了实现这个“砍”的过程，<strong>base</strong> 包和 <strong>lattice</strong> 包都提供了一些函数，常见的有 <code>cut()</code> 和 <code>equal.count()</code>。一般情况下，我们不提倡将连续型数据当作分类数据来处理，因为这样会造成源数据信息的丢失，但偶尔将连续数据离散化也有助于我们观察数据随着这个连续变量取值水平变化而发生的变化。</p>
+<p>条件变量可以包含多个具体的变量，假设我们有 a、b 两个分类型变量，a 包括三类，b 包含四类。公式 <code>y ~ x | a + b</code> 就表示这幅图一共有 <span class="math inline">\(3\times4=12\)</span> 个小格，格的数量等于两个分类变量分类数的乘积。</p>
+</div>
+<div id="section-23" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> 选项<a href="system.html#section-23" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>从上两节的例子来看，lattice 的入门很容易，只要把数据整理成既定格式，用公式一套就能出结果，配色、线型等细节问题统统不用考虑；然而画图的工作往往不能一蹴而就，总会有不满意或者不合适的地方需要改进，默认的配置常常不能满足用户的个性化要求。要想实现这些改进，就需要对 lattice 系统的选项系统有一个比较深入的了解，这样才能对症下药，取得到自己想要的效果。</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb340-1"><a href="system.html#cb340-1" tabindex="-1"></a><span class="fu">dotplot</span>(VADeaths,</span>
+<span id="cb340-2"><a href="system.html#cb340-2" tabindex="-1"></a>  <span class="at">groups =</span> <span class="cn">FALSE</span>, <span class="at">aspect =</span> <span class="fl">0.3</span>, <span class="at">type =</span> <span class="fu">c</span>(<span class="st">&quot;p&quot;</span>, <span class="st">&quot;h&quot;</span>),</span>
+<span id="cb340-3"><a href="system.html#cb340-3" tabindex="-1"></a>  <span class="at">layout =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">between =</span> <span class="fu">list</span>(<span class="at">x =</span> <span class="fl">0.5</span>)</span>
+<span id="cb340-4"><a href="system.html#cb340-4" tabindex="-1"></a>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lattice-vadeaths"></span>
+<img src="system_files/figure-html/lattice-vadeaths-1.svg" alt="弗吉尼亚死亡率数据在 lattice 中的点图：四种人群组合各自的死亡率。" width="480" />
+<p class="caption">
+图 5.12: 弗吉尼亚死亡率数据在 lattice 中的点图：四种人群组合各自的死亡率。
+</p>
+</div>
+
+<p>下面我们以图 <a href="system.html#fig:lattice-vadeaths">5.12</a> 为例，介绍一些常用的选项。首先从全图来看，整个图被分割成了四部分，每一部分被称为一个面板，每个面板的顶部被称为分类条（strip），里面显示了分类的名称。以下是各个选项的说明：</p>
+<dl>
+<dt><code>layout</code></dt>
+<dd>
+控制面板的格局，这里取 <code>c(2, 2)</code> 表示两列两行的分布格局
+</dd>
+<dt><code>aspect</code></dt>
+<dd>
+控制每个面板的纵横比（参见 <a href="tricks.html#sec:plot">B.2</a> 小节）
+</dd>
+<dt><code>type</code></dt>
+<dd>
+用于设定所有面板中的线型
+</dd>
+<dt><code>between</code></dt>
+<dd>
+设定面板之间的距离，默认值都是 0，表示各个面板间紧紧相连，如同图 <a href="system.html#fig:lattice-iris-hist">5.11</a> 中那样
+</dd>
+<dt><code>groups</code></dt>
+<dd>
+取值为逻辑型，本例中取值 <code>FALSE</code>，于是四类数据被分别画在了四个小面板中。如果它的取值是 <code>TRUE</code>，那么四类数据将会画在同一个大面板中，并使用不同的颜色标注出来，这时我们需要使用另一个选项 <code>auto.key</code>，来将图例添加进去
+</dd>
+</dl>
+<p>最后要说明的是，lattice 的每个选项取值有类型限制，常见的有数值和列表等，在图 <a href="system.html#fig:lattice-vadeaths">5.12</a> 中，<code>between</code> 选项的取值就是列表型。有的时候还会碰到列表的嵌套形式，第一眼看上去显得很复杂。其实只要弄清里面的层次结构，它们未必像看上去的那么复杂。</p>
+</div>
+<div id="section-24" class="section level3 hasAnchor" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> 数据<a href="system.html#section-24" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>图形的基础是数据，对于大部分人来说，图形常常是简洁美妙的，而数据的整理工作却非常枯燥。使用 lattice 作图，要求数据的结构必须要满足既定的形式。然而理想的数据有时候并非直接存在，因此需要使用函数，将数据整理成要求的形式。本节的主要内容是 lattice 作图，所以我们只看 <strong>lattice</strong> 包中提供的函数 <code>make.groups()</code>。从名称上看，这个函数是用来制造“组”的，具体的用法如下例：</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb341-1"><a href="system.html#cb341-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">100</span>) <span class="co"># 首先生成三个向量数据</span></span>
+<span id="cb341-2"><a href="system.html#cb341-2" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb341-3"><a href="system.html#cb341-3" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb341-4"><a href="system.html#cb341-4" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">rchisq</span>(<span class="dv">100</span>, <span class="dv">2</span>)</span>
+<span id="cb341-5"><a href="system.html#cb341-5" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">make.groups</span>(x, y, z) <span class="co"># 将三个向量合并到同一数据框中</span></span>
+<span id="cb341-6"><a href="system.html#cb341-6" tabindex="-1"></a><span class="fu">str</span>(comp)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    300 obs. of  2 variables:
+##  $ data : num  3.078 2.577 5.523 0.564 4.685 ...
+##  $ which: Factor w/ 3 levels &quot;x&quot;,&quot;y&quot;,&quot;z&quot;: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>此时数据框中包括两列数据，第一列是 data，即 x、y、z 三个向量的 300 个数，第二列是 which，表示各个数据分别来自哪个向量，取值是 100 个 1、100 个 2 和 100 个 3，即前 100 个数来自于 x，中间 100 个来自于 y，最后 100 个来自于 z。我们可以在新的数据基础上画原来三个变量的箱线图如图 <a href="system.html#fig:lattice-data-par">5.13</a> 的上图。</p>
+<p>这只是数据整理的“冰山一角”，真正复杂的工作还需要结合 R 自身的函数来完成，常用的函数有 <code>apply()</code> 系列函数，<code>reshape()</code>、<code>xtabs()</code> 和 <code>subset()</code> 等等。</p>
+</div>
+<div id="section-25" class="section level3 hasAnchor" number="5.3.5">
+<h3><span class="header-section-number">5.3.5</span> 细节<a href="system.html#section-25" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>读者可以阅读一下 R 基础图形系统中的 <code>par()</code> 函数（<a href="tricks.html#sec:par">B.1</a> 小节），它用来设定作图所需的各种参数。在 lattice 里，同样也有一套图形参数，由于作图的需求是千变万化的，因此有时候需要对 lattice 的默认图形参数进行一些必要的修改。主要用到的函数有两个：<code>trellis.par.get()</code> 和 <code>trellis.par.set()</code>，名字很直观，先取出来（<code>get</code>），修改完成后，再放回去（<code>set</code>），注意这两个函数仅仅对当前图形设备有效，如果要设置全局选项，则需要使用 <code>lattice.options()</code> 函数。</p>
+<p>我们以图 <a href="system.html#fig:lattice-data-par">5.13</a> 的上图为例，读者可能会认为图中的蓝色线条过于细，并且颜色也不够醒目，想将线条修改为红色并且加粗，则可以按图 <a href="system.html#fig:lattice-data-par">5.13</a> 下图中的步骤来完成，其中省略了我们可以随时用 <code>trellis.par.get()</code> 来观察当前的参数取值情况；实际这是一个经验积累的过程，当有一定的作图经验后，就可以大概知道参数中都有什么样的取值。</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb343-1"><a href="system.html#cb343-1" tabindex="-1"></a><span class="fu">print</span>(bxp0 <span class="ot">&lt;-</span> <span class="fu">bwplot</span>(which <span class="sc">~</span> data, <span class="at">data =</span> comp, <span class="at">horizontal =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb343-2"><a href="system.html#cb343-2" tabindex="-1"></a><span class="fu">trellis.par.set</span>(</span>
+<span id="cb343-3"><a href="system.html#cb343-3" tabindex="-1"></a>  <span class="at">plot.symbol =</span> <span class="fu">list</span>(<span class="at">pch =</span> <span class="dv">19</span>, <span class="at">col =</span> <span class="st">&quot;black&quot;</span>),</span>
+<span id="cb343-4"><a href="system.html#cb343-4" tabindex="-1"></a>  <span class="at">box.rectangle =</span> <span class="fu">list</span>(<span class="at">lwd =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb343-5"><a href="system.html#cb343-5" tabindex="-1"></a>  <span class="at">box.umbrella =</span> <span class="fu">list</span>(<span class="at">lwd =</span> <span class="dv">4</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>)</span>
+<span id="cb343-6"><a href="system.html#cb343-6" tabindex="-1"></a>)</span>
+<span id="cb343-7"><a href="system.html#cb343-7" tabindex="-1"></a><span class="fu">print</span>(bxp0) <span class="co"># 这里的 bxp0 对象来自前一幅图，可重用</span></span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lattice-data-par"></span>
+<img src="system_files/figure-html/lattice-data-par-1.svg" alt="制作 lattice 需要的数据框以及修改 lattice 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点。" width="460.8" /><img src="system_files/figure-html/lattice-data-par-2.svg" alt="制作 lattice 需要的数据框以及修改 lattice 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点。" width="460.8" />
+<p class="caption">
+图 5.13: 制作 lattice 需要的数据框以及修改 lattice 的图形参数：上图为三个向量的箱线图，下图中箱线图的箱子改为红色粗线，点改为黑色实心圆点。
+</p>
+</div>
+
+
+<div class="sourceCode" id="cb344"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb344-1"><a href="system.html#cb344-1" tabindex="-1"></a>iris.panel <span class="ot">&lt;-</span> <span class="fu">histogram</span>(<span class="sc">~</span> Sepal.Length <span class="sc">|</span> Species,</span>
+<span id="cb344-2"><a href="system.html#cb344-2" tabindex="-1"></a>  <span class="at">layout =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">data =</span> iris, <span class="at">type =</span> <span class="st">&quot;density&quot;</span>,</span>
+<span id="cb344-3"><a href="system.html#cb344-3" tabindex="-1"></a>  <span class="at">panel =</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb344-4"><a href="system.html#cb344-4" tabindex="-1"></a>    <span class="fu">panel.histogram</span>(x, ...)</span>
+<span id="cb344-5"><a href="system.html#cb344-5" tabindex="-1"></a>    <span class="fu">panel.mathdensity</span>(</span>
+<span id="cb344-6"><a href="system.html#cb344-6" tabindex="-1"></a>      <span class="at">dmath =</span> dnorm, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>,</span>
+<span id="cb344-7"><a href="system.html#cb344-7" tabindex="-1"></a>      <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="fu">mean</span>(x), <span class="at">sd =</span> <span class="fu">sd</span>(x))</span>
+<span id="cb344-8"><a href="system.html#cb344-8" tabindex="-1"></a>    )</span>
+<span id="cb344-9"><a href="system.html#cb344-9" tabindex="-1"></a>  }</span>
+<span id="cb344-10"><a href="system.html#cb344-10" tabindex="-1"></a>)</span>
+<span id="cb344-11"><a href="system.html#cb344-11" tabindex="-1"></a><span class="fu">print</span>(iris.panel)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:lattice-panel-function"></span>
+<img src="system_files/figure-html/lattice-panel-function-1.svg" alt="lattice 中添加了密度曲线的直方图：通过自定义面板函数添加密度曲线。" width="672" />
+<p class="caption">
+图 5.14: lattice 中添加了密度曲线的直方图：通过自定义面板函数添加密度曲线。
+</p>
+</div>
+
+</div>
+<div id="section-26" class="section level3 hasAnchor" number="5.3.6">
+<h3><span class="header-section-number">5.3.6</span> 面板<a href="system.html#section-26" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在本节开头，我们提到过面板函数，它才是 lattice 的核心。在 lattice 中，高层作图函数不做画图这种底层工作，所有的画图任务都由面板函数来完成。</p>
+<p>我们先来看图 <a href="system.html#fig:lattice-iris-hist">5.11</a> 中的那条语句：</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb345-1"><a href="system.html#cb345-1" tabindex="-1"></a><span class="fu">histogram</span>(<span class="sc">~</span> Sepal.Length <span class="sc">|</span> Species, <span class="at">layout =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">data =</span> iris)</span></code></pre></div>
+<p>这条语句还有另一版本，二者的作图结果是一样的：</p>
+<div class="sourceCode" id="cb346"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb346-1"><a href="system.html#cb346-1" tabindex="-1"></a><span class="fu">histogram</span>(<span class="sc">~</span> Sepal.Length <span class="sc">|</span> Species,</span>
+<span id="cb346-2"><a href="system.html#cb346-2" tabindex="-1"></a>  <span class="at">layout =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">1</span>), <span class="at">data =</span> iris,</span>
+<span id="cb346-3"><a href="system.html#cb346-3" tabindex="-1"></a>  <span class="at">panel =</span> <span class="cf">function</span>(x, ...) {</span>
+<span id="cb346-4"><a href="system.html#cb346-4" tabindex="-1"></a>    <span class="fu">panel.histogram</span>(x, ...)</span>
+<span id="cb346-5"><a href="system.html#cb346-5" tabindex="-1"></a>  }</span>
+<span id="cb346-6"><a href="system.html#cb346-6" tabindex="-1"></a>)</span></code></pre></div>
+<p>尽管结果一样，但是第二个版本更好地说明了 lattice 的画图过程。这里有两点值得注意，第一，高级作图函数 <code>histogram()</code> 是管理层人士，它设定了整个程序的框架和一些必要的参数，真正的画图任务是由“打工人员”面板函数来完成的；第二，<code>histogram()</code> 函数有很多的参数，有一部分参数因为取了默认值，因而没有在程序代码中显示出来，但是这些参数需要传递给面板函数。这时，使用者不必知道这些参数具体是什么，只需要在面板函数的参数栏中输入 …，就相当于把所有必需的参数传递给了面板函数。</p>
+<p>明白了 lattice 的作图过程后，我们就可以利用自定义面板函数，来自定义图形的显示；还是以图 <a href="system.html#fig:lattice-iris-hist">5.11</a> 为例，假设我们现在想要对比一下，各类数据的分布和对应同均值方差正态分布的差别，就可以利用自定义面板函数，来为图中添加正态分布的曲线如图 <a href="system.html#fig:lattice-panel-function">5.14</a> 所示。</p>
+<p>这只是面板函数的一个最简单的应用，相信读者在熟悉了更多的面板函数之后，一定能够作出更加有说服力的、简洁而美观的统计图形。</p>
+</div>
+</div>
+<div id="sec:dynamic-graphics" class="section level2 hasAnchor" number="5.4">
+<h2><span class="header-section-number">5.4</span> rggobi 动态图形<a href="system.html#sec:dynamic-graphics" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>动态图形指的是可以动态变化的图形，例如三维散点图的自动旋转；交互式图形指的是在图形窗口中，我们可以用鼠标或键盘和图形进行交互，例如用鼠标选取图中的点并高亮之（加深颜色或放大选中的元素）。R 本身并不擅长交互式图形，它的基础图形系统中有非常简单的交互函数，参见附录 <a href="tricks.html#sec:interaction">B.5</a>，但是我们可以利用一些 R 包和第三方软件来克服这个缺陷，一个典型的软件就是 GGobi <span class="citation">(<a href="#ref-Cook07">Cook and Swayne 2007</a>)</span>，在 R 中我们也可以用 <strong>rggobi</strong> 包 <span class="citation">(<a href="#ref-rggobi">Wickham et al. 2018</a>)</span> 来调用 GGobi。GGobi 是开源软件，可以从 <a href="http://www.ggobi.org" class="uri">http://www.ggobi.org</a> 免费下载安装。装好 GGobi 之后我们可以打开 R 安装 <strong>rggobi</strong> 包并开始使用它：</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb347-1"><a href="system.html#cb347-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">&quot;rggobi&quot;</span>) <span class="co"># 安装 rggobi 以及依赖包</span></span>
+<span id="cb347-2"><a href="system.html#cb347-2" tabindex="-1"></a><span class="fu">library</span>(rggobi)</span>
+<span id="cb347-3"><a href="system.html#cb347-3" tabindex="-1"></a><span class="fu">ggobi</span>(mtcars)</span></code></pre></div>
+<p>注意由于 <strong>rggobi</strong> 依赖于 <strong>RGtk2</strong> 包 <span class="citation">(<a href="#ref-RGtk2">Lawrence and Temple Lang 2010</a>)</span>，所以安装的时候也会一并安装 <strong>RGtk2</strong>，而 <strong>RGtk2</strong> 又依赖于 GTK+ 软件，进而也会自动安装 GTK+。读者不必了解这些包或软件之间的依赖关系，只需要按照提示一步步安装即可。从 R 中启动 GGobi 可以对一个数据框使用 <code>ggobi()</code> 函数， 这样我们就会得到如图 <a href="system.html#fig:GGobi-main-window">5.15</a> 的窗口。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:GGobi-main-window"></span>
+<img src="images/GGobi-main-window.png" alt="GGobi 软件的主窗口（左）和图形窗口（右）：我们可以在主窗口中选择要画散点图的两个变量。" width="45%" /><img src="images/GGobi-scatterplot.png" alt="GGobi 软件的主窗口（左）和图形窗口（右）：我们可以在主窗口中选择要画散点图的两个变量。" width="45%" />
+<p class="caption">
+图 5.15: GGobi 软件的主窗口（左）和图形窗口（右）：我们可以在主窗口中选择要画散点图的两个变量。
+</p>
+</div>
+
+<p>主窗口中有一套菜单系统，左侧是一些图形控制选项，右侧是当前画图所用的变量。下面我们简单介绍一下菜单：</p>
+<dl>
+<dt>Display</dt>
+<dd>
+新建图形类型：我们可以用散点图、散点图矩阵、平行坐标图、时间序列图和条形图，前四种基本上是针对连续数据的，而条形图则适合离散数据，这些图形我们在前面章节中都已经介绍过
+</dd>
+<dt>View</dt>
+<dd>
+视图：可以是一维图（实际上是一维密度曲线）、XY 散点图、一维巡游（Tour）、三维旋转和二维巡游等，巡游是一种很有用的视图模式，后面我们详细介绍
+</dd>
+<dt>Interaction</dt>
+<dd>
+交互：可以是缩放（Zoom）和平移（Pan）、选取（Brush）、识别（Identify）和移动点等；缩放可以通过鼠标滚轮实现，平移可以用鼠标点住图形往任意方向拖动，选取则可以通过一个矩形框（通常称之为“刷子”）选择图中的元素如点、条等，识别可以让我们在选取元素的时候知道所选的元素的相关信息，移动则可以让我们手工操纵图形元素的位置（用鼠标把它们拖到新的位置）
+</dd>
+<dt>Tools</dt>
+<dd>
+工具：这里面的工具较多，我们只介绍其中一种 — 自动配色（Automatic Brushing），打开这个工具之后，我们会得到一个变量列表框，选取一个变量后，图中的元素会根据这个变量来配色，尤其是数据中有分类变量时这个功能会变得非常有用，我们可以根据一个分类变量的不同类别将图形元素标记为不同颜色，这样在散点图或者巡游视图中我们可以很方便观察各分类之间的区别
+</dd>
+</dl>
+<p>交互是 GGobi 的一个重要特征，而各种交互模式中，选取可能是最重要的一种。选取背后有一套连接逻辑，即各图形窗口实际上是被连接在一起的，当我们在其中一个图形窗口中操作时，其它图形窗口也会根据当前窗口中选取的观测相应更新，这些图形窗口也许是同一种图形，也许不是同一种图形。例如我们在散点图中选中一个点，它对应着原数据的一行观测，那么另一个窗口中平行坐标图的一条线也会被刷上，因为这条线对应着同一行观测。总之，选取和连接的逻辑就是从一幅图映射到原数据的行，再从行映射到另一幅图。</p>
+<p>选取至少有两方面的意义：</p>
+<ol style="list-style-type: decimal">
+<li><p>让一部分数据凸显出来，让我们观察这部分数据的特征，典型的例子如离群点</p></li>
+<li><p>让“条件分割”操作变为动态操作：我们已经不止一次提到图形中的“条件分割”，如 <a href="gallery.html#fig:coplot">4.12</a> 小节的条件分割图、 lattice 系统和 ggplot2 系统的切片功能，所有的这些分割都是对数据的静态、固定分割，例如根据一个分类变量把数据分成子集；当我们使用刷子的时候，实际上也是一种条件分割：我们可以观察随着刷子位置的有序移动（如从左到右），其它图中的图形元素的位置变化，尤其是我们用鼠标右键拖动改变刷子形状为一个狭长的矩形条时，这种条件分割的意味就更加清楚，这一点可能不太好理解，参见后面思考与练习 <a href="system.html#fig:GGobi-narrow-brush">5.23</a></p></li>
+</ol>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:GGobi-brush"></span>
+<img src="images/GGobi-hp-mpg.png" alt="GGobi 中选取一个观测对应所有图形窗口的更新：我们在左上角的散点图中选取一个点，右上角的散点图也相应选取了一个点，而底部的平行坐标图则选取了一条线。所有的这些选取都代表了同一行数据。" width="45%" /><img src="images/GGobi-qsec-wt.png" alt="GGobi 中选取一个观测对应所有图形窗口的更新：我们在左上角的散点图中选取一个点，右上角的散点图也相应选取了一个点，而底部的平行坐标图则选取了一条线。所有的这些选取都代表了同一行数据。" width="45%" /><img src="images/GGobi-parcoords.png" alt="GGobi 中选取一个观测对应所有图形窗口的更新：我们在左上角的散点图中选取一个点，右上角的散点图也相应选取了一个点，而底部的平行坐标图则选取了一条线。所有的这些选取都代表了同一行数据。" width="45%" />
+<p class="caption">
+图 5.16: GGobi 中选取一个观测对应所有图形窗口的更新：我们在左上角的散点图中选取一个点，右上角的散点图也相应选取了一个点，而底部的平行坐标图则选取了一条线。所有的这些选取都代表了同一行数据。
+</p>
+</div>
+
+<p>图 <a href="system.html#fig:GGobi-brush">5.16</a> 显示了一个 GGobi 刷子选取的场景，我们首先基于 <code>mtcars</code> 数据画了三幅图形，分别为 <code>hp</code> 和 <code>mpg</code> 的散点图、<code>qsec</code> 和 <code>wt</code> 的散点图以及其它七个变量的平行坐标图，其次用自动配色功能根据汽缸数量 <code>cyl</code> 将数据展示为三种颜色，分别对应着 4 （紫）、6 （绿）、8 （黄）个汽缸，然后我们发现第一幅散点图中似乎有个离群点 — 有一款车的马力 <code>hp</code> 超大且比较费油（每加仑汽油行驶英里数比较小），这款车在其它变量上有什么特征呢？通过使用刷子选取这个点（刷子颜色设置为橙色），我们观察到第二幅散点图中底部也有一个点被刷中了，这款车的重量 <code>wt</code> 一般，但速度超快（行驶 1/4 英里所需时间 <code>qsec</code> 很短），类似地，我们还可以看平行坐标图中其它指标的取值，例如它是手动档的车（<code>am</code> 为 1）。</p>
+<p>交互操作在若干图形系统中都存在，且逻辑都差不多，而巡游则几乎是 GGobi 的独特特征，它让我们能够观察高维情况下数据的“形状”。在介绍巡游之前，我们必须了解一项基础知识，即投影。投影的理论很简单，它只是将高维空间映射到低维空间，这种映射通常是通过一个投影矩阵来实现的。最简单的投影例子就是影子：物体本身是三维的，但被光照投射到地面上时我们得到的是二维的形状（影子）。从数学上而言，高维的原始数据可以用矩阵表达：</p>
+<p><span class="math display">\[X_{n\times p} = \left[\begin{array}{cccc}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p}\\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p}\\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots\\
+x_{n1} &amp; x_{n2} &amp; \cdots &amp; x_{np}
+\end{array}\right]\]</span></p>
+<p>其中 <span class="math inline">\(x_{ij}\)</span> 表示第 <span class="math inline">\(i\)</span> 行、第 <span class="math inline">\(j\)</span> 列的数据。这是一个 <span class="math inline">\(p\)</span> 维矩阵，如果我们要将它投影到二维平面上，则需要右乘一个 <span class="math inline">\(p\times2\)</span> 的投影矩阵：</p>
+<p><span class="math display">\[A_{p\times2} = \left[\begin{array}{cc}
+a_{11} &amp; a_{12}\\
+a_{21} &amp; a_{22}\\
+\vdots &amp; \vdots\\
+a_{p1} &amp; a_{p2}
+\end{array}\right]\]</span></p>
+<p>这样我们就可以得到一个 <span class="math inline">\(n\times2\)</span> 的矩阵，从而可以画散点图，因为新的数据只有两列。举个最简单的例子，假设投影矩阵如下：</p>
+<p><span class="math display">\[A = \left[\begin{array}{cc}
+1 &amp; 0\\
+0 &amp; 1\\
+0 &amp; 0\\
+\vdots &amp; \vdots\\
+0 &amp; 0
+\end{array}\right]\]</span></p>
+<p>那么根据矩阵乘法：</p>
+<p><span class="math display">\[XA = \left[\begin{array}{cc}
+x_{11} &amp; x_{12}\\
+x_{21} &amp; x_{22}\\
+\vdots &amp; \vdots\\
+x_{n1} &amp; x_{n2}
+\end{array}\right]\]</span></p>
+<p>不难看出，实际上这个投影就是原始数据的前两列。通常我们约束投影矩阵的列平方和为 1。</p>
+<p>通过对投影矩阵的系数不断改变，我们可以不断得到新的散点图，这就是二维巡游的基本原理。类似的，一维巡游是将高维数据投影到一维直线上。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:GGobi-2d-tour"></span>
+<img src="images/GGobi-2d-tour.png" alt="GGobi 中的二维巡游模式：寻找投影将手动档和自动档的车分开。"  />
+<p class="caption">
+图 5.17: GGobi 中的二维巡游模式：寻找投影将手动档和自动档的车分开。
+</p>
+</div>
+
+<p>图 <a href="system.html#fig:GGobi-2d-tour">5.17</a> 是 <code>mtcars</code> 数据的一幅二维巡游截图，图中不同颜色的点分别表示自动档（紫色）和手动档（黄色）的车。我们一共选取了 5 个变量进入巡游，如图左下角的“坐标轴”所示。这里的坐标轴显示的是一个单位圆，半径为 1，其中每个小短轴代表了各个变量的投影系数：轴的长短代表了系数的大小，方向表示投影系数的正负，每根轴都可以分解到水平方向和垂直方向上，水平方向表示对第一维的投影（即散点图的横轴），垂直方向上表示对第二维的投影（即散点图纵轴）。从图中可以看出，如果我们想把手动档和自动档的车分开，那么 <code>mpg</code> 这个变量不太重要，因为它的投影系数几乎为 0，<code>wt</code> 和 <code>hp</code> 对水平方向上的分离有较大贡献，<code>qsec</code> 对垂直方向上的分离有贡献，而 <code>drat</code> 变量对两个方向上都有贡献（分解到两个方向上后系数都会相对较大）。这些投影系数都可以通过菜单 Tour2D-&gt;Show Projection Vals 显示出来。</p>
+<p>和巡游紧密相连的一个统计方法是投影寻踪（Projection Pursuit）。前面介绍的巡游若非特别设定，只是随机改变某些投影系数的值并重新画散点图，这样就生成了不断运动的点。投影寻踪顾名思义，是要寻找投影系数让我们能够发现特殊的现象，并非让巡游图随机巡游。这里的特殊现象有很多种，我们可以从 GGobi 主窗口中打开投影寻踪窗口并选择我们想要的寻踪方式，例如寻找投影使得“散点云”中的“空洞”最大，或者寻找线性判别分析（LDA）的系数，让分类变量的各类能尽量分开。图 <a href="system.html#fig:GGobi-2d-tour">5.17</a> 实际上是 LDA 的结果，我们可以看到黄色的点都在图的左下角，紫色的点都在右上角。在进行巡游时，我们同样可以使用刷子选取点，有时候一些数据点在一种投影下不是离群点，但换一种投影则会变成离群点，这种情况下刷子能帮我们标记这种点，进而研究它究竟有什么特殊之处。</p>
+<p>本节仅仅对 GGobi 做了初步介绍，关于它的更多功能，读者可以通过配套书籍 <span class="citation">Cook and Swayne (<a href="#ref-Cook07">2007</a>)</span> 了解，该书中有大量的实际案例，充分展现了 GGobi 在数据可视化和模型可视化方面的探索功能。</p>
+<p>GGobi 擅长的是连续数据的动态和交互式图形，关于离散数据的交互式图形系统，Mondrian <span class="citation">(<a href="#ref-Theus02">Theus 2002</a>)</span> 可能是更好的选择，参见 <a href="http://www.theusrus.de/Mondrian/" class="uri">http://www.theusrus.de/Mondrian/</a>；另外还有一个基于 Java 的 R 包 <strong>iplots</strong> <span class="citation">(<a href="#ref-iplots">Urbanek and Wichtrey 2018</a>)</span> 也可以是一种选择。</p>
+<p>本作者也一直在参与开发 GGobi 的下一代（GGobi 本身已经几乎停止开发），我们的工作基于诺基亚的 Qt，它的交互性能更好，而且 GGobi 的原开发人员也提供了从 Qt 到 R 的 API 接口，这使得我们的新软件可以利用 R 自身强大的统计计算功能，功能上可能超越现有的任何动态与交互式图形系统，关于这些开发工作，感兴趣的读者可以访问 <a href="https://github.com/ggobi" class="uri">https://github.com/ggobi</a>。</p>
+</div>
+<div id="sec:rgl" class="section level2 hasAnchor" number="5.5">
+<h2><span class="header-section-number">5.5</span> rgl 三维图形<a href="system.html#sec:rgl" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>rgl</strong> 是 R 的一个附加包（名字来自 R 和 <a href="https://www.opengl.org/">OpenGL</a>），利用它可以在 R 中绘制可交互的三维图形，用户通过鼠标的点击拖拽和滚轮滚动可以对图形进行旋转和缩放等操作。<strong>rgl</strong> 包提供了一系列的函数来绘制三维图形，这些函数分为两类，一类是 <code>xxx3d()</code>，如 <code>plot3d()</code>、<code>points3d()</code>、<code>lines3d()</code>、<code>persp3d()</code> 等，另一类是 <code>rgl.xxx()</code>，如 <code>rgl.lines()</code> 和 <code>rgl.points()</code>。这两类函数通常不建议混用，本节只介绍前一类。不难看出，这些函数的名字是与基础图形系统中的 <code>plot()</code>、<code>points()</code> 等函数相对应的，它们的用法也有很多相似的地方，因此只要我们掌握了基础图形的绘制，<strong>rgl</strong> 包也会变得很容易学习。</p>
+<div id="section-27" class="section level3 hasAnchor" number="5.5.1">
+<h3><span class="header-section-number">5.5.1</span> 三维点线图<a href="system.html#section-27" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>绘制三维点线的方法与二维时非常相像，只需使用 <code>plot3d()</code> 函数并提供 x 轴、y 轴和 z 轴的坐标向量即可。此外，<code>plot3d()</code> 函数还提供了 <code>type</code> 参数，用来指定图形的形式，其可能的取值有 <code>p</code>、<code>s</code>、<code>l</code> 和 <code>h</code>，分别表示绘制点、球体、折线和到零点的垂线。如果要在已有的图形中加上新的点或线，则可以使用 <code>points3d()</code> 和 <code>lines3d()</code> 函数，其用法与 <code>plot3d()</code> 类似。</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb348-1"><a href="system.html#cb348-1" tabindex="-1"></a><span class="fu">library</span>(rgl)</span>
+<span id="cb348-2"><a href="system.html#cb348-2" tabindex="-1"></a><span class="fu">usage</span>(plot3d, <span class="st">&quot;default&quot;</span>)</span></code></pre></div>
+<pre><code>## plot3d(x, ...)</code></pre>
+<p>图 <a href="system.html#fig:rgl-ch4">5.18</a> 提供了一个简单的示例，即模拟甲烷分子（<span class="math inline">\(\mathrm{CH_{4}}\)</span>）的构造。</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb350-1"><a href="system.html#cb350-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb350-2"><a href="system.html#cb350-2" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="fl">0.5</span>)</span>
+<span id="cb350-3"><a href="system.html#cb350-3" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb350-4"><a href="system.html#cb350-4" tabindex="-1"></a><span class="fu">plot3d</span>(x, y, z,</span>
+<span id="cb350-5"><a href="system.html#cb350-5" tabindex="-1"></a>  <span class="at">type =</span> <span class="st">&quot;s&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb350-6"><a href="system.html#cb350-6" tabindex="-1"></a>  <span class="at">box =</span> <span class="cn">FALSE</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">radius =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="fl">0.2</span>, <span class="dv">4</span>), <span class="fl">0.4</span>),</span>
+<span id="cb350-7"><a href="system.html#cb350-7" tabindex="-1"></a>  <span class="at">col =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;blue&quot;</span>, <span class="dv">4</span>), <span class="st">&quot;black&quot;</span>)</span>
+<span id="cb350-8"><a href="system.html#cb350-8" tabindex="-1"></a>)</span>
+<span id="cb350-9"><a href="system.html#cb350-9" tabindex="-1"></a>ind <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">4</span>)</span>
+<span id="cb350-10"><a href="system.html#cb350-10" tabindex="-1"></a><span class="fu">lines3d</span>(x[ind], y[ind], z[ind], <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rgl-ch4"></span>
+<img src="images/rgl-ch4.png" alt="用 rgl 包画出来的甲烷分子立体结构：四个氢原子和一个碳原子。"  />
+<p class="caption">
+图 5.18: 用 <strong>rgl</strong> 包画出来的甲烷分子立体结构：四个氢原子和一个碳原子。
+</p>
+</div>
+
+
+</div>
+<div id="section-28" class="section level3 hasAnchor" number="5.5.2">
+<h3><span class="header-section-number">5.5.2</span> 三维透视图<a href="system.html#section-28" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>三维透视图对于探索二元函数的形状非常有帮助。在基础图形系统中，已经有 <code>persp()</code> 函数可以绘制三维透视图，但其视角是固定的，无法进行交互。<strong>rgl</strong> 包中提供了类似的函数 <code>persp3d()</code>，它支持对图形进行旋转和缩放，因此可以方便地观察图形的每个细节。</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb351-1"><a href="system.html#cb351-1" tabindex="-1"></a>x <span class="ot">&lt;-</span> y <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">5</span>, .<span class="dv">1</span>)</span>
+<span id="cb351-2"><a href="system.html#cb351-2" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">outer</span>(x, y, <span class="cf">function</span>(a, b) <span class="fu">beta</span>(a, b))</span>
+<span id="cb351-3"><a href="system.html#cb351-3" tabindex="-1"></a><span class="fu">persp3d</span>(x, y, m, <span class="at">col =</span> <span class="st">&quot;green3&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;Beta(x, y)&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rgl-beta"></span>
+<img src="images/rgl-beta.png" alt="Beta 函数的三维透视图：\(\mathrm{Beta}(x,\,y) = \Gamma(x)\Gamma(y)/\Gamma(x+y)\)"  />
+<p class="caption">
+图 5.19: Beta 函数的三维透视图：<span class="math inline">\(\mathrm{Beta}(x,\,y) = \Gamma(x)\Gamma(y)/\Gamma(x+y)\)</span>
+</p>
+</div>
+
+
+<p>函数中 <code>x</code> 和 <code>y</code> 都是一个向量，<code>z</code> 是一个矩阵，它第 <span class="math inline">\(i\)</span> 行第 <span class="math inline">\(j\)</span> 列的元素就是函数在 <code>x[i]</code> 和 <code>y[j]</code> 上的取值；<code>z</code> 矩阵一般可以通过 <code>outer()</code> 函数生成，但其中的 <code>FUN</code> 参数必须是向量化的函数。图 <a href="system.html#fig:rgl-beta">5.19</a> 展示了二元函数 <span class="math inline">\(z = \mathrm{Beta}(x,\,y) = \Gamma(x)\Gamma(y)/\Gamma(x+y) = \int_{0}^{1}t^{x-1}(1-t)^{y-1}\,\mathrm{dt}\)</span> 的形状。<code>persp3d()</code> 还有一些有趣的应用，例如图 <a href="system.html#fig:rgl-china-map">5.20</a> 绘制出了中国及周边地区的地势图，图中可以很清楚看见青藏高原、塔里木盆地、四川盆地等我们熟悉的地区；为了更好地显示 3D 效果，高度在图中按比例调整过。</p>
+<div class="sourceCode" id="cb352"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb352-1"><a href="system.html#cb352-1" tabindex="-1"></a><span class="co"># 读入地势数据</span></span>
+<span id="cb352-2"><a href="system.html#cb352-2" tabindex="-1"></a>mat <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">read.csv</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata&quot;</span>, <span class="st">&quot;ChinaGeoMap.csv&quot;</span>, <span class="at">package =</span> <span class="st">&quot;MSG&quot;</span>)))</span>
+<span id="cb352-3"><a href="system.html#cb352-3" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(mat))</span>
+<span id="cb352-4"><a href="system.html#cb352-4" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">20</span> <span class="sc">*</span> (<span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(mat))</span>
+<span id="cb352-5"><a href="system.html#cb352-5" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="sc">*</span> mat</span>
+<span id="cb352-6"><a href="system.html#cb352-6" tabindex="-1"></a><span class="fu">persp3d</span>(x, y, z,</span>
+<span id="cb352-7"><a href="system.html#cb352-7" tabindex="-1"></a>  <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">zlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb352-8"><a href="system.html#cb352-8" tabindex="-1"></a>  <span class="at">col =</span> <span class="st">&quot;green&quot;</span>, <span class="at">aspect =</span> <span class="st">&quot;iso&quot;</span>, <span class="at">axes =</span> <span class="cn">FALSE</span>, <span class="at">box =</span> <span class="cn">FALSE</span></span>
+<span id="cb352-9"><a href="system.html#cb352-9" tabindex="-1"></a>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:rgl-china-map"></span>
+<img src="images/rgl-china-map.png" alt="基于 rgl 包绘制的中国地势图"  />
+<p class="caption">
+图 5.20: 基于 <strong>rgl</strong> 包绘制的中国地势图
+</p>
+</div>
+
+
+</div>
+<div id="section-29" class="section level3 hasAnchor" number="5.5.3">
+<h3><span class="header-section-number">5.5.3</span> 动画和截图<a href="system.html#section-29" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>在 rgl 绘图设备中，除了通过鼠标拖动来控制图形的旋转，还可以调用函数来使图形“自动播放”。感兴趣的读者可以运行 <code>demo('flag', package = 'rgl')</code> 来观看动画效果，其原理就是使用了 <code>play3d()</code> 函数； <code>play3d()</code> 函数的第一个参数 <code>f</code> 是一个控制绘图参数的函数，一般可以通过 <code>spin3d()</code> 和 <code>par3dinterp()</code> 这两个函数生成，具体的细节可以参阅 <strong>rgl</strong> 包自带的帮助文档。</p>
+<p>如果想将 rgl 动画保存下来，则可以使用 <code>movie3d()</code> 函数。下面的命令会将动画逐帧保存为 PNG 图片，存放在当前的工作目录下。</p>
+<div class="sourceCode" id="cb353"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb353-1"><a href="system.html#cb353-1" tabindex="-1"></a><span class="fu">library</span>(rgl)</span>
+<span id="cb353-2"><a href="system.html#cb353-2" tabindex="-1"></a><span class="fu">open3d</span>()</span>
+<span id="cb353-3"><a href="system.html#cb353-3" tabindex="-1"></a><span class="fu">plot3d</span>(<span class="fu">cube3d</span>(<span class="at">col =</span> <span class="st">&quot;green&quot;</span>))</span>
+<span id="cb353-4"><a href="system.html#cb353-4" tabindex="-1"></a><span class="fu">movie3d</span>(<span class="fu">spin3d</span>(), <span class="at">duration =</span> <span class="dv">5</span>, <span class="at">convert =</span> <span class="cn">FALSE</span>, <span class="at">dir =</span> <span class="st">&quot;.&quot;</span>)</span></code></pre></div>
+<p>如果系统中安装了 ImageMagick 软件，则可以在上述命令中指定 <code>convert = TRUE</code>，这可以使动画保存为单个的 GIF 文件。除此之外，<strong>rgl</strong> 包还提供了 <code>snapshot3d()</code> 函数来保存单张的窗口截图。用户只需将三维图形调整到合适的角度，然后调用这个函数即可。<a href="system.html#sec:animation">5.6</a> 小节的动画包也可以很方便抓取 rgl 图形直接生成动画。</p>
+</div>
+</div>
+<div id="sec:animation" class="section level2 hasAnchor" number="5.6">
+<h2><span class="header-section-number">5.6</span> 动画视频<a href="system.html#sec:animation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>作者的个人兴趣之一是统计学动画，这里也简要介绍一下动画的基本原理以及它与统计学理论的内在联系。<strong>animation</strong> 包 <span class="citation">(<a href="#ref-animation">Xie 2013</a>)</span> 利用 R 基础图形系统生成了一系列统计学动画；从这个附加包的展示中，读者可以更加深刻认识到对图形元素的控制是一门具有广泛意义的艺术。</p>
+<p>动画的基本原理很简单，即快速连续展示一幅幅静态图形，利用人眼的视觉错觉功能造成动态效果；下文中我们把一幅静态图形称为动画的一帧。在 R 中我们可以快速生成一系列的静态图片并播放出来，这样就可以构成基本的动画了。整个动画包的代码设计方案如下：</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb354-1"><a href="system.html#cb354-1" tabindex="-1"></a><span class="fu">library</span>(animation)</span>
+<span id="cb354-2"><a href="system.html#cb354-2" tabindex="-1"></a>oopt <span class="ot">&lt;-</span> <span class="fu">ani.options</span>(<span class="at">interval =</span> <span class="fl">0.2</span>, <span class="at">nmax =</span> <span class="dv">10</span>) <span class="co"># 设置动画选项</span></span>
+<span id="cb354-3"><a href="system.html#cb354-3" tabindex="-1"></a><span class="co"># 用一个循环不断创建静态图形</span></span>
+<span id="cb354-4"><a href="system.html#cb354-4" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">ani.options</span>(<span class="st">&quot;nmax&quot;</span>)) {</span>
+<span id="cb354-5"><a href="system.html#cb354-5" tabindex="-1"></a>  <span class="fu">draw_plot</span>() <span class="co"># 画图</span></span>
+<span id="cb354-6"><a href="system.html#cb354-6" tabindex="-1"></a>  <span class="fu">ani.pause</span>() <span class="co"># 停顿（用 ani.options(&#39;interval&#39;) 设置）</span></span>
+<span id="cb354-7"><a href="system.html#cb354-7" tabindex="-1"></a>}</span>
+<span id="cb354-8"><a href="system.html#cb354-8" tabindex="-1"></a><span class="fu">ani.options</span>(oopt) <span class="co"># 重置动画选项</span></span></code></pre></div>
+<p>其中 <code>ani.options()</code> 可以用来设定一些和动画有关的选项，例如 <code>interval</code> 是动画中的停顿时间，<code>nmax</code> 是循环的次数，通常也是动画的总帧数。上面的代码大意就是用一个循环不断画图，每一次画图之后停顿一小会儿。这里的停顿是基于 R 函数 <code>Sys.sleep()</code> 实现的，后面我们可以看到 <code>ani.pause()</code> 函数的源代码。首先我们以一个具体实例“布朗运动”说明动画构建过程，参见 <strong>animation</strong> 包中的函数 <code>brownian.motion()</code>：</p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb355-1"><a href="system.html#cb355-1" tabindex="-1"></a><span class="fu">library</span>(animation)</span>
+<span id="cb355-2"><a href="system.html#cb355-2" tabindex="-1"></a>brownian.motion</span></code></pre></div>
+<pre><code>## function (n = 10, xlim = c(-20, 20), ylim = c(-20, 20), ...) 
+## {
+##     x = rnorm(n)
+##     y = rnorm(n)
+##     for (i in seq_len(ani.options(&quot;nmax&quot;))) {
+##         dev.hold()
+##         plot(x, y, xlim = xlim, ylim = ylim, ...)
+##         text(x, y)
+##         x = x + rnorm(n)
+##         y = y + rnorm(n)
+##         ani.pause()
+##     }
+## }
+## &lt;bytecode: 0x1385d9878&gt;
+## &lt;environment: namespace:animation&gt;</code></pre>
+<div class="sourceCode" id="cb357"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb357-1"><a href="system.html#cb357-1" tabindex="-1"></a><span class="co"># 函数 ani.pause() 定义如下</span></span>
+<span id="cb357-2"><a href="system.html#cb357-2" tabindex="-1"></a>ani.pause</span></code></pre></div>
+<pre><code>## function (interval = ani.options(&quot;interval&quot;)) 
+## {
+##     if (dev.interactive()) {
+##         dev.flush()
+##         Sys.sleep(interval)
+##     }
+## }
+## &lt;bytecode: 0x138435ae8&gt;
+## &lt;environment: namespace:animation&gt;</code></pre>
+<p>布朗运动就是一些点在平面上随机游走，下一次的位置坐标是在上一次的位置坐标上加上独立同分布的正态随机数。注意这个动画中我们需要固定图的坐标范围，这样所有的点的位置才有一个固定的参照系，从而显示出“动感”。</p>
+<p><strong>animation</strong> 包主要有两方面的贡献，一方面是它有一套完善的动画导出工具，另一方面是它收录了大量的统计学主题相关的动画函数。下面我们分别介绍包中的导出工具和统计学主题。</p>
+<p>gifski 将 PNG 图形合成制作 GIF 动态图形</p>
+<div class="sourceCode" id="cb359"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb359-1"><a href="system.html#cb359-1" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>) {</span>
+<span id="cb359-2"><a href="system.html#cb359-2" tabindex="-1"></a>  <span class="fu">pie</span>(<span class="fu">c</span>(i <span class="sc">%%</span> <span class="dv">2</span>, <span class="dv">6</span>), <span class="at">col =</span> <span class="fu">c</span>(<span class="st">&#39;red&#39;</span>, <span class="st">&#39;yellow&#39;</span>), <span class="at">labels =</span> <span class="cn">NA</span>)</span>
+<span id="cb359-3"><a href="system.html#cb359-3" tabindex="-1"></a>}</span></code></pre></div>
+<p><img src="system_files/figure-html/unnamed-chunk-1-.gif" width="672" style="display: block; margin: auto;" /></p>
+<p>上面那个例子是用 Base R 生成基本图形，下面这个例子将使用 ggplot2 生成的图形，并结合 gganimate 制作动画 <a href="https://github.com/thomasp85/gganimate" class="uri">https://github.com/thomasp85/gganimate</a></p>
+<div class="sourceCode" id="cb360"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb360-1"><a href="system.html#cb360-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb360-2"><a href="system.html#cb360-2" tabindex="-1"></a><span class="fu">library</span>(gganimate)</span>
+<span id="cb360-3"><a href="system.html#cb360-3" tabindex="-1"></a><span class="fu">ggplot</span>(mtcars, <span class="fu">aes</span>(<span class="fu">factor</span>(cyl), mpg)) <span class="sc">+</span> </span>
+<span id="cb360-4"><a href="system.html#cb360-4" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb360-5"><a href="system.html#cb360-5" tabindex="-1"></a>  <span class="co"># Here comes the gganimate code</span></span>
+<span id="cb360-6"><a href="system.html#cb360-6" tabindex="-1"></a>  <span class="fu">transition_states</span>(</span>
+<span id="cb360-7"><a href="system.html#cb360-7" tabindex="-1"></a>    gear,</span>
+<span id="cb360-8"><a href="system.html#cb360-8" tabindex="-1"></a>    <span class="at">transition_length =</span> <span class="dv">2</span>,</span>
+<span id="cb360-9"><a href="system.html#cb360-9" tabindex="-1"></a>    <span class="at">state_length =</span> <span class="dv">1</span></span>
+<span id="cb360-10"><a href="system.html#cb360-10" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb360-11"><a href="system.html#cb360-11" tabindex="-1"></a>  <span class="fu">enter_fade</span>() <span class="sc">+</span> </span>
+<span id="cb360-12"><a href="system.html#cb360-12" tabindex="-1"></a>  <span class="fu">exit_shrink</span>() <span class="sc">+</span></span>
+<span id="cb360-13"><a href="system.html#cb360-13" tabindex="-1"></a>  <span class="fu">ease_aes</span>(<span class="st">&#39;sine-in-out&#39;</span>)</span></code></pre></div>
+<div id="section-30" class="section level3 hasAnchor" number="5.6.1">
+<h3><span class="header-section-number">5.6.1</span> 动画导出工具<a href="system.html#section-30" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>根据前面的描述，我们已经可以马上写一些 R 动画，但是我们会立刻遇到问题：因为 R 图形默认显示在图形窗口中，而 R 的图形窗口对双重缓冲（double buffering）的支持还不太完善，目前只是 Windows 下的图形窗口支持双重缓冲，Linux 和 Mac OS 的图形窗口都会因为不支持缓冲而导致动画很“卡”。此外，按照前面的代码方案，在 R 里面播放动画时所有的计算都得重新实时进行，这些计算可能会很耗时间。综合这两个原因，我们可能需要将 R 中的动画导出为其它可以直接观看的格式。<strong>animation</strong> 包提供了五种导出格式，对应着以下五个函数：</p>
+<dl>
+<dt><code>saveHTML()</code></dt>
+<dd>
+HTML 格式：将所有的帧用图形设备（<a href="tricks.html#sec:device">B.6</a> 小节）记录为图片文件，并生成一个 HTML 页面，其中用 JavaScript 调用这些静态图片逐个显示形成动画；这个 HTML 页面的界面就像一个影音播放器，有开始/停止/前进/后退等功能，特别值得一提的是这个函数会把制作动画的 R 代码也写入 HTML 页面，这样观看动画的用户也能知道页面内的动画是如何生成的
+</dd>
+<dt><code>saveLatex()</code></dt>
+<dd>
+PDF 格式：同样用图形设备记录所有帧并写入一个 LaTeX 文件，然后基于 LaTeX 宏包 animate 将这些帧编译为 PDF 文件中的动画，可以用 Adobe Reader 在页面内直接观看动画（其它 PDF 阅读器无法观看），实际上这里的动画也是用 JavaScript 驱动的；注意 <code>saveLatex()</code> 函数可以结合 Sweave 实时生成动画，这样我们可以将动画动态嵌入 LaTeX 文档
+</dd>
+<dt><code>saveGIF()</code></dt>
+<dd>
+GIF 动画格式：GIF 是一种最常见的动画图片格式，这里我们调用的是第三方软件 <a href="https://imagemagick.org/">ImageMagick</a> 或者 <a href="http://www.graphicsmagick.org">GraphicsMagick</a> 将 R 的图片转化为 GIF 动画，因此用户必须安装这两个软件中的一种（都是免费开源软件）
+</dd>
+<dt><code>saveSWF()</code></dt>
+<dd>
+Flash 格式：这也是网络上最常见的动画格式，这个函数可以调用第三方软件 <a href="http://swftools.org">SWFTools</a> 将 R 图片转化为 Flash 动画
+</dd>
+<dt><code>saveVideo()</code></dt>
+<dd>
+影音格式：调用第三方软件 <a href="https://ffmpeg.org/">FFmpeg</a> 将图片转化为常见的影音格式，如 AVI 和 MP4 等
+</dd>
+</dl>
+<p>这五种导出方式中，<code>saveHTML()</code> 是最便利的，它不需要借助任何第三方软件，而且通常我们都有网页浏览器（如 Firefox ），这样就足够观看动画了。这些函数的用法都比较类似，一般情况下我们只需要提供一段生成多幅图片的 R 代码，利用默认参数设置就足够导出动画。它们的具体用法如下：</p>
+<div class="sourceCode" id="cb361"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb361-1"><a href="system.html#cb361-1" tabindex="-1"></a><span class="fu">usage</span>(saveHTML)</span></code></pre></div>
+<pre><code>## saveHTML(expr, img.name = &quot;Rplot&quot;, global.opts = &quot;&quot;, single.opts = &quot;&quot;,
+##   navigator = ani.options(&quot;nmax&quot;) &lt;= 100 &amp;&amp; ani.options(&quot;interval&quot;) &gt;= 0.05,
+##   htmlfile = &quot;index.html&quot;, ...)</code></pre>
+<div class="sourceCode" id="cb363"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb363-1"><a href="system.html#cb363-1" tabindex="-1"></a><span class="fu">usage</span>(saveLatex)</span></code></pre></div>
+<pre><code>## saveLatex(expr, nmax, img.name = &quot;Rplot&quot;, ani.opts, centering = TRUE,
+##   caption = NULL, label = NULL, pkg.opts = NULL, documentclass = &quot;article&quot;,
+##   latex.filename = &quot;animation.tex&quot;, pdflatex = &quot;pdflatex&quot;,
+##   install.animate = TRUE, overwrite = TRUE, full.path = FALSE, ...)</code></pre>
+<div class="sourceCode" id="cb365"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb365-1"><a href="system.html#cb365-1" tabindex="-1"></a><span class="fu">usage</span>(saveGIF)</span></code></pre></div>
+<pre><code>## saveGIF(expr, movie.name = &quot;animation.gif&quot;, img.name = &quot;Rplot&quot;,
+##   convert = &quot;magick&quot;, cmd.fun, clean = TRUE, extra.opts = &quot;&quot;, ...)</code></pre>
+<div class="sourceCode" id="cb367"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb367-1"><a href="system.html#cb367-1" tabindex="-1"></a><span class="fu">usage</span>(saveSWF)</span></code></pre></div>
+<pre><code>## saveSWF(expr, swf.name = &quot;animation.swf&quot;, img.name = &quot;Rplot&quot;, swftools = NULL,
+##   ...)</code></pre>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb369-1"><a href="system.html#cb369-1" tabindex="-1"></a><span class="fu">usage</span>(saveVideo)</span></code></pre></div>
+<pre><code>## saveVideo(expr, video.name = &quot;animation.mp4&quot;, img.name = &quot;Rplot&quot;,
+##   ffmpeg = ani.options(&quot;ffmpeg&quot;),
+##   other.opts = if (grepl(&quot;[.]mp4$&quot;, video.name)) &quot;-pix_fmt yuv420p&quot;, ...)</code></pre>
+<p>所有函数的第一个参数都是 <code>expr</code>，它通常是一段用大括号括起来的 R 代码。下面的代码是一个导出布朗运动动画为 HTML 页面的例子，其中 <code>img.name</code> 设定了图片的基础文件名，即所有图片将以 bm-plot1、bm-plot2、……、bm-plot50 依次命名（扩展名默认为 <code>.png</code>），<code>title</code> 指定了 HTML 页面的标题，<code>description</code> 是对动画的一个描述，将会被以 R 注释的形式写入 HTML 页面，<code>ani.height</code> 和 <code>ani.width</code> 分别设定动画的高度和宽度，单位默认为像素。这段代码生成的结果如图 <a href="system.html#fig:html-interface">5.21</a> 所示。</p>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb371-1"><a href="system.html#cb371-1" tabindex="-1"></a><span class="fu">saveHTML</span>({</span>
+<span id="cb371-2"><a href="system.html#cb371-2" tabindex="-1"></a>  <span class="fu">ani.options</span>(<span class="at">interval =</span> <span class="fl">0.05</span>, <span class="at">nmax =</span> <span class="dv">50</span>)</span>
+<span id="cb371-3"><a href="system.html#cb371-3" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, .<span class="dv">1</span>, <span class="fl">0.1</span>), <span class="at">mgp =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="fl">0.7</span>, <span class="dv">0</span>))</span>
+<span id="cb371-4"><a href="system.html#cb371-4" tabindex="-1"></a>  <span class="fu">brownian.motion</span>(<span class="at">pch =</span> <span class="dv">21</span>, <span class="at">cex =</span> <span class="dv">5</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">bg =</span> <span class="st">&quot;yellow&quot;</span>)</span>
+<span id="cb371-5"><a href="system.html#cb371-5" tabindex="-1"></a>},</span>
+<span id="cb371-6"><a href="system.html#cb371-6" tabindex="-1"></a><span class="at">img.name =</span> <span class="st">&quot;bm-plot&quot;</span>,</span>
+<span id="cb371-7"><a href="system.html#cb371-7" tabindex="-1"></a><span class="at">title =</span> <span class="st">&quot;Demonstration of the Brownian Motion&quot;</span>,</span>
+<span id="cb371-8"><a href="system.html#cb371-8" tabindex="-1"></a><span class="at">description =</span> <span class="fu">c</span>(</span>
+<span id="cb371-9"><a href="system.html#cb371-9" tabindex="-1"></a>  <span class="st">&quot;Random walk&quot;</span>, <span class="st">&quot;on the 2D plane: for each point&quot;</span>,</span>
+<span id="cb371-10"><a href="system.html#cb371-10" tabindex="-1"></a>  <span class="st">&quot;(x, y), x = x + rnorm(1) and y = y + rnorm(1).&quot;</span></span>
+<span id="cb371-11"><a href="system.html#cb371-11" tabindex="-1"></a>), <span class="at">ani.height =</span> <span class="dv">300</span>, <span class="at">ani.width =</span> <span class="dv">550</span></span>
+<span id="cb371-12"><a href="system.html#cb371-12" tabindex="-1"></a>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:html-interface"></span>
+<img src="images/html-interface.png" alt="这一系列动画导出函数默认都用 PNG 图形设备抓取并保存每一帧图片，这是由选项 ani.options('ani.dev') 设定的，我们也可以使用别的图形设备来记录 R 图形；animation 包中的一个演示 demo('rgl_animation') 就展示了这种功能。"  />
+<p class="caption">
+图 5.21: 这一系列动画导出函数默认都用 PNG 图形设备抓取并保存每一帧图片，这是由选项 <code>ani.options('ani.dev')</code> 设定的，我们也可以使用别的图形设备来记录 R 图形；<strong>animation</strong> 包中的一个演示 <code>demo('rgl_animation')</code> 就展示了这种功能。
+</p>
+</div>
+
+</div>
+<div id="section-31" class="section level3 hasAnchor" number="5.6.2">
+<h3><span class="header-section-number">5.6.2</span> 统计学动画<a href="system.html#section-31" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>统计学中的很多理论方法都与动画有紧密联系，这些方法通常有一个共性，就是它们不能一步完成，而是涉及到一个变化的过程，所以我们可以用动画的形式把这些过程详细展示出来。这些统计学主题大致可归为四类：</p>
+<dl>
+<dt>迭代算法</dt>
+<dd>
+统计计算中经常涉及到迭代算法，典型的如二分法、牛顿法和梯度下降法；<a href="elements.html#subsec:grad-desc">3.9.2</a> 小节中给出的是梯度下降法的静态展示，实际上我们也可以把这个迭代过程一步一步显示出来，用户可以看到箭头在图中的移动过程
+</dd>
+<dt>随机模拟</dt>
+<dd>
+模拟通常不会只有一步，而是会重复多次，例如经典的布丰投针问题中，我们需要不断把一根针扔到平行线上看它是否与平行线相交，在这个过程中，我们每投一次针都可以计算一下 <span class="math inline">\(\pi\)</span> 的估计值，看随着投针次数的增加，估计值是否趋近真值 <span class="math inline">\(3.1415926\ldots\)</span>
+</dd>
+<dt>重抽样</dt>
+<dd>
+Bootstrap 是应用最广泛的统计方法之一，它的核心就是有放回的重抽样，这个过程同随机模拟一样，也需要重复多次，我们也可以用动画展示每次重抽样的结果，<strong>animation</strong> 包中的 <code>boot.iid()</code> 函数就是这样的一个演示
+</dd>
+<dt>动态趋势</dt>
+<dd>
+动画最直观的应用可能就是动态趋势，这也最符合人们通常概念上的“动画”，如卡通动画片就是人物的运动，在统计学中（尤其是数据分析中）我们也经常需要展示某个统计量随着时间的变化或随着另一个变量的变化，例如时序图本身是静态图形，但如果我们不断取一个时间区间上的数据并画图，那么随着这个区间的推进，这些静态图形也可以构成动画
+</dd>
+</dl>
+<p>从版本 2.6 开始，<strong>animation</strong> 包已经收录了大约 30 个统计学主题相关的函数，函数主题包括布朗运动、布丰投针、大数定律、中心极限定理、牛顿法求根、二分法求根、梯度下降法、抛硬币、置信区间、交叉验证、K-Means 聚类、k 近邻方法、最小二乘法、蒙特卡罗、豌豆机和抽样方法等。感兴趣的读者可以访问网站 <a href="https://yihui.org/animation/examples/" class="uri">https://yihui.org/animation/examples/</a> 看在线演示。</p>
+<p>此外 <strong>animation</strong> 包还带有大量的演示（demo），这些演示展示了一些另类功能，如 <code>demo('rgl_animation')</code> 展示了如何捕捉 rgl 生成的 3D 动画并转化为动画如图 <a href="system.html#fig:animation-pollen">5.22</a>，<code>demo('game_of_life')</code> 展示了经典游戏 Game of Life，<code>demo('hanoi')</code> 展示了我们熟知的汉诺塔游戏（演示递归），<code>demo('fire')</code> 展示了跳动火焰的模拟，<code>demo('flowers')</code> 展示了从网络上下载图片并转化为动画，<code>demo('CLEvsLAL')</code> 则是一场 NBA 球赛的“回放”，等等。</p>
+<div class="sourceCode" id="cb372"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb372-1"><a href="system.html#cb372-1" tabindex="-1"></a><span class="fu">demo</span>(<span class="st">&quot;rgl_animation&quot;</span>, <span class="at">package =</span> <span class="st">&quot;animation&quot;</span>)</span></code></pre></div>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:animation-pollen"></span>
+<img src="images/rgl-animation4.png" alt="pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧。" width="45%" /><img src="images/rgl-animation19.png" alt="pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧。" width="45%" />
+<p class="caption">
+图 5.22: pollen 数据中暗藏的特征：通过图形的不断放大，我们会发现一团随机的点中隐藏着六个字母。这里只显示了动画的首尾两帧。
+</p>
+</div>
+
+
+</div>
+</div>
+<div id="section-32" class="section level2 hasAnchor" number="5.7">
+<h2><span class="header-section-number">5.7</span> 思考与练习<a href="system.html#section-32" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ol style="list-style-type: decimal">
+<li><p>lattice 和 ggplot2 系统都可以用两个或多个分类变量拆分数据形成数据子集并分别画图，当这些分类变量的类数特别多的时候，图形必然会变得非常拥挤，因为画布被拆分为很小的矩形块，此时我们也几乎无法从图中清楚看到数据的特征，对这种情况你有什么解决办法？动态图形系统或者动画是否有帮助？如果我们感兴趣的只是某一个特定的子集，我们是否可以通过数据变换的方式来凸显这个子集？（例如新生成一个逻辑变量来标明某些行是否属于这个子集）</p></li>
+<li><p>ggplot2 默认背景为灰色的理由是否令你信服？</p></li>
+<li><p>图 <a href="system.html#fig:diamonds-cut">5.5</a> 的上图和下图看起来唯一的区别就是箱线图的方向不同，但下图至少从排版上而言略占优势，这个优势是什么？</p></li>
+<li><p><strong>ggplot2</strong> 包中的钻石数据 <code>diamonds</code> 中提供了钻石的长 <code>x</code> 宽 <code>y</code> 深 <code>z</code> 三个变量，请用这些变量画散点图并指出这批数据可能存在的问题。</p></li>
+<li><p>对钻石数据的重量 <code>carat</code> 和价格 <code>price</code> 画散点图，其中不同的 <code>cut</code> 分类标记不同颜色，并观察：</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>图中是否有异常区域？例如空白区域。克拉数的分布是否均匀？</p></li>
+<li><p>图中五种颜色的点是否清楚可辨？如果觉得某些点覆盖了另一些点，那么你是否有办法对这幅散点图进行简化？（提示：可以不画点，只画平滑曲线）</p></li>
+<li><p>对数据作对数变换是否能增强图形的可读性？</p></li>
+</ol></li>
+<li><p>在介绍 GGobi 时我们提到动态的“条件分割”，请思考当刷子在散点图中从左到右或者从下到上移动时，对数据来说，我们实际上是在选取具有何种特征的子集？如图 <a href="system.html#fig:GGobi-narrow-brush">5.23</a>。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:GGobi-narrow-brush"></span>
+<img src="images/GGobi-narrow-brush.png" alt="GGobi 中用刷子实现动态条件分割：这把狭长的刷子可以从下到上移动。"  />
+<p class="caption">
+图 5.23: GGobi 中用刷子实现动态条件分割：这把狭长的刷子可以从下到上移动。
+</p>
+</div></li>
+<li><p><strong>fun</strong> 包 <span class="citation">(<a href="#ref-fun">Xie, Qiu, and Wei 2020</a>)</span> 中有一个 3D 版本的“我的中国心”，效果如图 <a href="system.html#fig:China-Heart-3D">5.24</a>；请对照 <code>demo('ChinaHeart3D', package = 'fun')</code> 以及代码中的源链接思考它的制作过程，并学习如何将平面图形嵌入 rgl 三维图形。</p>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:China-Heart-3D"></span>
+<img src="images/China-Heart-3D.png" alt="3D 版本的“中国心”：基于 rgl 包和求根函数制成。"  />
+<p class="caption">
+图 5.24: 3D 版本的“中国心”：基于 <strong>rgl</strong> 包和求根函数制成。
+</p>
+</div></li>
+<li><p>网络上已经有无数的关于中心极限定理（CLT）的动画展示，大意就是随着样本量增加，样本均值 <span class="math inline">\(\bar{X}_{n}\)</span> 的分布密度曲线逐渐变成了“钟形曲线”，而正态分布的密度曲线也是钟形曲线，所以人们就下结论说 CLT 成立。这样的结论是否可靠？<strong>animation</strong> 包中的 <code>clt.ani()</code> 函数也可以用来演示 CLT，但角度略有不同，它将每个样本量下的样本均值拿来做了正态性检验，并将相应的 P 值画出来，以刻画当前的这些样本均值和正态分布的拟合好坏，这样做是否让 CLT 的动画演示更加严谨？</p></li>
+<li><p>比较 <strong>animation</strong> 包中的五种导出格式：HTML、PDF、GIF、Flash 和视频，它们各自有什么优势劣势？（如：HTML 页面适合网络发布而且对播放器的要求非常低，但它包含了太多文件，不方便复制传播）</p></li>
+</ol>
+
+
+
+</div>
+</div>
+<h3>参考文献<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-hexbin" class="csl-entry">
+Carr, Dan, Nicholas Lewin-Koh, and Martin Maechler. 2023. <em>Hexbin: Hexagonal Binning Routines</em>. <a href="https://github.com/edzer/hexbin">https://github.com/edzer/hexbin</a>.
+</div>
+<div id="ref-Cleveland93" class="csl-entry">
+———. 1993. <em>Visualizing Data</em>. Hobart Press.
+</div>
+<div id="ref-Cook07" class="csl-entry">
+Cook, Dianne, and Deborah F. Swayne. 2007. <em>Interactive and Dynamic Graphics for Data Analysis with r and GGobi</em>. Springer.
+</div>
+<div id="ref-RGtk2" class="csl-entry">
+Lawrence, Michael, and Duncan Temple Lang. 2010. <span>“<span>RGtk2</span>: A Graphical User Interface Toolkit for <span>R</span>.”</span> <em>Journal of Statistical Software</em> 37 (8): 1–52. <a href="https://www.jstatsoft.org/v37/i08/">https://www.jstatsoft.org/v37/i08/</a>.
+</div>
+<div id="ref-Sarkar08" class="csl-entry">
+Sarkar, Deepayan. 2008. <em>Lattice: Multivariate Data Visualization with r</em>. New York, NY: Springer. <a href="http://lmdvr.r-forge.r-project.org">http://lmdvr.r-forge.r-project.org</a>.
+</div>
+<div id="ref-Theus02" class="csl-entry">
+Theus, Martin. 2002. <span>“Interactive Data Visualization Using <span>Mondrian</span>.”</span> <em>Journal of Statistical Software</em> 7 (11): 1–9. <a href="https://www.jstatsoft.org/v07/i11">https://www.jstatsoft.org/v07/i11</a>.
+</div>
+<div id="ref-iplots" class="csl-entry">
+Urbanek, Simon, and Tobias Wichtrey. 2018. <em>Iplots: iPlots - Interactive Graphics for r</em>. <a href="https://CRAN.R-project.org/package=iplots">https://CRAN.R-project.org/package=iplots</a>.
+</div>
+<div id="ref-ggplot2" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. 2nd ed. Springer-Verlag New York. <a href="https://ggplot2-book.org/">https://ggplot2-book.org/</a>.
+</div>
+<div id="ref-rggobi" class="csl-entry">
+Wickham, Hadley, Duncan Temple Lang, Debby Swayne, and Michael Lawrence. 2018. <em><span class="nocase">rggobi</span>: Interface Between <span>R</span> and <span>GGobi</span></em>. <a href="https://CRAN.R-project.org/package=rggobi">https://CRAN.R-project.org/package=rggobi</a>.
+</div>
+<div id="ref-Wilkinson05" class="csl-entry">
+Wilkinson, Leland. 2005. <em>The Grammar of Graphics</em>. 2nd ed. New York, NY: Springer. <a href="https://doi.org/10.1007/0-387-28695-0">https://doi.org/10.1007/0-387-28695-0</a>.
+</div>
+<div id="ref-animation" class="csl-entry">
+———. 2013. <span>“<span class="nocase">animation</span>: An <span>R</span> Package for Creating Animations and Demonstrating Statistical Methods.”</span> <em>Journal of Statistical Software</em> 53 (1): 1–27. <a href="https://www.jstatsoft.org/v53/i01/">https://www.jstatsoft.org/v53/i01/</a>.
+</div>
+<div id="ref-fun" class="csl-entry">
+Xie, Yihui, Yixuan Qiu, and Taiyun Wei. 2020. <em>Fun: Use r for Fun</em>. <a href="https://github.com/yihui/fun">https://github.com/yihui/fun</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="7">
+<li id="fn7"><p>原网页 <a href="http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/" class="uri">http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/</a> 已失效，<a href="https://web.archive.org/web/20081019072358/http://cm.bell-labs.com/cm/ms/departments/sia/project/trellis/">快照</a><a href="system.html#fnref7" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<script>
+window.onload = function() {
+
+  var imgs = document.querySelectorAll('img');
+
+  // Upon clicking an image, open a new window with the
+  // dimensions of the image, pointing the `data-url` link
+  var on_click = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      // Add some extra height for the modebar
+      var height = 'height=' + (e.target.clientHeight * 1.05);
+      var width = 'width=' + e.target.clientWidth;
+      var param = 'location=yes,' + height + ',' + width + ',scrollbars=yes,status=yes';
+      window.open(e.target.dataset.url, '_blank', param);
+    }
+  };
+
+  var on_hover = function (e) {
+    var d = e.target.dataset || {};
+    if (d.url) {
+      e.target.style.cursor = 'pointer';
+    }
+  };
+
+  for (var i = 0; i < imgs.length; i++) {
+    imgs[i].addEventListener('click', on_click);
+    imgs[i].addEventListener('mouseover', on_hover);
+  }
+};
+</script>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="gallery.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": {}
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/XiangyunHuang/MSG-Book/edit/master/system.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
