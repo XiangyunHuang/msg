@@ -406,7 +406,7 @@ temperature = c(53, 57, 58, 63, 66, 67, 67, 67, 68, 69, 70,
   70, 70, 70, 72, 73, 75, 75, 76, 76, 78, 79, 81
 )
 fail_temperature <- data.frame(fail = fail, temperature = temperature)
-ggplot(fail_temperature, aes(temperature, ..count.., fill = fail)) +
+ggplot(fail_temperature, aes(temperature, after_stat(count), fill = fail)) +
   geom_density(position = "fill") +
   geom_point(aes(temperature, c(0.75, 0.25)[as.integer(fail)]),
     shape = 21, colour = "blue", fill = "yellow") +
@@ -1309,7 +1309,7 @@ boxplots
 
 (ref:fig-symbols) 符号图提供的六种基本符号
 
-```{r symbols,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)"}
+```{r symbols,fig.width=4.8,fig.height=4.8,fig.cap="(ref:fig-symbols)",fig.scap="(ref:fig-symbols-s)",warning=FALSE}
 demo("symbols_all", echo = FALSE, package = "MSG")
 ```
 
@@ -1464,7 +1464,7 @@ qnorm(seq(0.1, .9, .2))
 
 R 中 QQ 图的函数为 `qqplot()` ，由于正态分布是我们经常检验的分布，R 也直接提供了一个画正态分布 QQ 图的函数 `qqnorm()` ，这两个函数都在基础包 **stats** 包中，它们的用法如下：
 
-```{r qqplot-usage}
+```{r qqplot-usage,warning=FALSE}
 usage(qqplot)
 usage(stats:::qqnorm.default)
 usage(qqline)
@@ -1864,7 +1864,7 @@ print(rpart(Species ~ ., iris), digits = 2)
 
 R 中 **aplpack** 包 [@aplpack] 提供了一个函数 `bagplot()` 可以用来画二维箱线图，其用法如下：
 
-```{r bagplot-usage}
+```{r bagplot-usage,warning=FALSE}
 library(aplpack, warn.conflicts = FALSE)
 usage(bagplot)
 ```
@@ -1923,7 +1923,7 @@ News 上关于这个包的一篇介绍性文章，文章标题将这个包描述
 
 (ref:fig-windrose) 展示风力大小和频数的风向图：将风向分为八个方向，每个方向用一根“指针”来表示该方向上风力的具体情况。图的上方是风向和风速的图例。从图中可以看出，该地区最常刮东北风，因为东北方向的指针最长；相对来说西风较少。从里到外第一节指针的长度大约是 7 \%，因此 0 \~ 10 km/h 的东北风的频率大约是 7 \%。无风的频率大约是 8 \%。
 
-```{r windrose,fig.width=5.4,fig.height=4.6,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",small.mar = FALSE}
+```{r windrose,fig.width=5.4,fig.height=4.6,results="hide",fig.cap="(ref:fig-windrose)",fig.scap="(ref:fig-windrose-s)",small.mar = FALSE,warning=FALSE}
 library(plotrix) # 直接取自 oz.windrose() 函数的例子
 windagg <- matrix(c(
   8, 0, 0, 0, 0, 0, 0, 
@@ -1933,8 +1933,7 @@ windagg <- matrix(c(
   1, 4, 1, 2, 1, 2, 4, 
   0, 3, 1, 3, 1
 ), nrow = 5, byrow = TRUE)
-par(mar = c(0.5, 0.5, 4.0, 0.5))
-oz.windrose(windagg)
+oz.windrose(windagg, wrmar = c(0.5, 0.5, 4.0, 0.5))
 ```
 
 
