@@ -2,11 +2,11 @@
 
 ## 现代统计图形
 
-本仓库作为 [《现代统计图形》](https://bookdown.org/xiangyun/msg/) 书稿源码的托管地址，《现代统计图形》印刷版的主页见 <https://msg2020.pzhao.org/>。
+本仓库作为 [《现代统计图形》](https://xiangyunhuang.github.io/msg/) 书稿源码的托管地址。
 
 ## Modern Statistical Graphics
 
-This is code and text behind the [Modern Statistical Graphics](https://bookdown.org/xiangyun/msg/).
+This is code and text behind the [Modern Statistical Graphics](https://xiangyunhuang.github.io/msg/).
 
 ## 授权 LICENSE
 

@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - {os: macos-14, r: '4.4.0'}
+          - {os: macos-26, r: '4.6.0'}
 
     env:
       LANG: "en_US.UTF-8"
@@ -31,7 +31,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
@@ -44,7 +44,7 @@ jobs:
       - name: Install Pandoc
         uses: r-lib/actions/setup-pandoc@v2
         with:
-          pandoc-version: '3.1.11'
+          pandoc-version: '3.8.3'
 
       - name: Install ghostscript and Others
         run: |
@@ -99,23 +99,15 @@ jobs:
 
       - name: Upload book folder for debug
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Upload Book
           path: _book
 
-      - name: Deploy book to bookdown.org
-        if: github.event_name == 'push'
-        env:
-          CONNECT_API_KEY: ${{ secrets.RSC_BOOKDOWN_ORG_TOKEN }}
-          CONTENT_ID: 2868
-        run: |
-          Rscript '_deploy-book.R'
-
       # 先本地创建一个 Github Pages 分支推送上来才行
       # https://bookdown.org/yihui/bookdown/github.html
       - name: Checkout the gh-pages branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: gh-pages
           path: book-output
