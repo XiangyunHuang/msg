@@ -494,7 +494,7 @@ col <- c("greenyellow", "cadetblue1", "cornflowerblue", "blue", "darkblue")
 E(g)$color <- col[ff]
 par(mar = c(0, 0, 0, 0))
 set.seed(2011)
-L.sc <- layout.fruchterman.reingold(g, niter = 500)
+L.sc <- layout_with_fr(g, niter = 500)
 plot(g,
   layout = L.sc, vertex.frame.color = NA,
   vertex.label = attr(V(g), "names"), vertex.label.cex = 0.6,
